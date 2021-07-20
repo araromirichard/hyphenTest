@@ -3,7 +3,7 @@
     <v-col cols="12" sm="8" height="100%" class="d-flex justify-center">
       <Login
     /></v-col>
-    <v-col cols="12" sm="4" height="100%" class="white full-height"> B</v-col>
+    <v-col cols="12" sm="4" height="100%" class="white full-height"></v-col>
   </v-row>
 </template>
 
