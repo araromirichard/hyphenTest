@@ -1,5 +1,5 @@
 <template>
-  <v-form class="ma-auto" ref="form">
+  <v-form class="ma-auto">
     <v-card class="ma-auto elevation-0.5" width="514">
       <v-card-title
         class="card-items text--secondary font-weight-bold pt-lg-16"
@@ -12,11 +12,7 @@
           label="Your Name"
           single-line
           outlined
-          type="text"
-          required
           class="font-weight-regular text-subtitle-2 label--text"
-          v-model="fullName"
-          :rules="fullNameRules"
         ></v-text-field>
 
         <v-text-field
@@ -24,10 +20,6 @@
           single-line
           outlined
           class="font-weight-regular text-subtitle-2 label--text pb-0 mb-0"
-          v-model="password"
-          type="password"
-          required
-          :rules="passwordRules"
         ></v-text-field>
         <div class="message-details d-flex justify-end">
           <router-link to="#" style="text-decoration: none; color: inherit">
@@ -40,10 +32,9 @@
         <v-btn
           block
           color="primary"
-          elevation="20"
+          elevation="24"
           large
           class="text-capitalize"
-          @click="submit"
         >
           Sign in</v-btn
         >
@@ -71,39 +62,13 @@
 
 <script>
 export default {
-  name: "Login",
-
-  data() {
-    return {
-      fullName: "",
-      password: "",
-      fullNameRules: [
-        (value) => !!value || "Name field is required",
-        (value) =>
-          (value && value.length <= 10) ||
-          "Name must be less than 10 characters",
-      ],
-      passwordRules: [
-        (value) => !!value || "Password is required",
-        (value) => {
-          const pattern =
-            /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#+%+&+*])(?=.{8,})/;
-          return (
-            pattern.test(value) ||
-            "Min. 8 characters with at least one capital letter, a number and a special character."
-          );
-        },
-      ],
-    };
+  name: "SignUp",
+  components: {
+    //SignUp2,
   },
-
-  methods: {
-    submit() {
-      if (this.$refs.form.validate()) {
-        console.log(this.fullName, this.password);
-      }
-    },
-  },
+  data: () => ({
+    //
+  }),
 };
 </script>
 

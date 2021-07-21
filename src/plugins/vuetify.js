@@ -16,7 +16,7 @@ export default new Vuetify({
         warning: "#FFC107",
         primer: "#FEFCF8",
         heading: "#596A73",
-        label: "#00233880",
+        label: "#002338",
       },
     },
   },
