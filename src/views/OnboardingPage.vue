@@ -1,20 +1,85 @@
 <template>
   <div class="d-flex">
-    <span class="header text-h5 font-weight-black ma-auto justify-center"
-      >Choose your account type</span
-    >
+    <div class="justify-center ma-auto">
+      <div class="main-title font-weight-black mx-auto">
+        Choose your account type
+      </div>
+      <v-card class="card1 ma-auto" elevation="0" width="400">
+        <v-card-text>
+          <v-row class="d-flex">
+            <v-col class="ma-auto justify-center pl-6" cols="3"
+              ><v-avatar size="80" color="#FDF9EF"
+                ><v-icon> mdi-account-outline</v-icon></v-avatar
+              ></v-col
+            >
+            <v-col cols="9"
+              ><v-card-titile class="card-title pl-4 py-auto"
+                >Advisor</v-card-titile
+              >
+              <v-card-text class="card-text py-auto"
+                >You provide funding/finance advise services to 5 or more
+                businesses</v-card-text
+              ></v-col
+            >
+          </v-row>
+        </v-card-text>
+      </v-card>
+      <v-card
+        elevation="0"
+        class="card2 ma-auto flat"
+        width="400"
+        style="border: 1px solid rgba(49, 27, 146, 0.2)"
+      >
+        <v-card-text>
+          <v-row class="d-flex">
+            <v-col class="ma-auto justify-center pl-6" cols="3"
+              ><v-avatar size="80" color="#FDF9EF"
+                ><v-icon> mdi-account-outline</v-icon></v-avatar
+              ></v-col
+            >
+            <v-col cols="9"
+              ><v-card-titile class="card-title pl-4 py-auto"
+                >Business</v-card-titile
+              >
+              <v-card-text class="card-text py-auto"
+                >You work at a business, in a finance or senior executive
+                role</v-card-text
+              ></v-col
+            >
+          </v-row>
+        </v-card-text>
+      </v-card>
+
+      <v-btn
+        height="54px"
+        width="400px"
+        block
+        color="primary"
+        elevation="20"
+        large
+        class="btn text-capitalize mx-auto"
+        @click="submit"
+      >
+        Next</v-btn
+      >
+    </div>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      //
+    };
+  },
+};
 </script>
 
 <style scoped>
-.header {
-  width: 427px;
+.main-title {
+  position: absolute;
   height: 39px;
-  left: 506px;
   top: 224px;
 
   font-family: Inter;
@@ -24,8 +89,52 @@ export default {};
   line-height: 39px;
   /* identical to box height */
 
-  letter-spacing: 0.646465px;
+  letter-spacing: 1px;
 
   color: #596a73;
+}
+.card1 {
+  position: absolute;
+  height: 130px;
+  top: 329px;
+  background: #ffffff;
+  border-radius: 7px;
+}
+.card2 {
+  position: absolute;
+  height: 130px;
+  top: 479px;
+
+  background: #ffffff;
+  box-sizing: border-box;
+  border-radius: 7px;
+}
+.card-title {
+  font-family: Inter;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 22px;
+  letter-spacing: 0.818182px;
+
+  color: rgba(0, 35, 56, 0.5);
+}
+.card-text {
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 16px;
+  /* or 160% */
+
+  color: rgba(0, 35, 56, 0.5);
+}
+
+.card-items {
+  padding-left: 84px;
+  padding-right: 84px;
+}
+.btn {
+  top: 658px;
 }
 </style>
