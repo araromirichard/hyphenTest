@@ -1,60 +1,101 @@
 <template>
-  <v-card class="ma-auto elevation-0.5" width="514">
-    <v-card-title class="card-items text--secondary font-weight-bold pt-lg-16">
-      Sign in
-    </v-card-title>
-
-    <v-card-text class="card-items">
-      <v-text-field
-        label="Your Name"
-        single-line
-        outlined
-        class="font-weight-regular text-subtitle-2 label--text"
-      ></v-text-field>
-
-      <v-text-field
-        label="Password"
-        single-line
-        outlined
-        class="font-weight-regular text-subtitle-2 label--text pb-0 mb-0"
-      ></v-text-field>
-      <div class="message-details d-flex justify-end">
-        <router-link to="#" style="text-decoration: none; color: inherit">
-          <p>Forgot Password?</p>
-        </router-link>
-      </div>
-    </v-card-text>
-
-    <v-card-actions class="card-items">
-      <v-btn block color="primary" elevation="24" large class="text-capitalize">
-        Sign in</v-btn
+  <div>
+    <v-card>
+      <v-card-title
+        class="card-items text--secondary font-weight-bold pt-lg-16"
       >
-    </v-card-actions>
+        Sign up
+        <v-spacer></v-spacer>
+        /2
+      </v-card-title>
+      <v-form class="ma-auto" ref="form">
+        <v-card-text class="card-items">
+          <v-text-field
+            label="Company Name"
+            single-line
+            outlined
+            type="text"
+            required
+            class="font-weight-regular text-subtitle-2 label--text"
+            v-model="companyName"
+            :rules="companyName"
+          ></v-text-field>
 
-    <div class="d-flex mx-auto justify-center pt-8 pb-16 card-items">
-      <div class="hint">
-        <div class="py-auto d-flex align-content-center">
-          <span class="span-text pl-6 py-auto">Don’t have an account yet?</span>
-          <router-link
-            to="sign-up"
-            style="text-decoration: none; color: inherit; padding-top: 4px"
-            ><span class="span-text-link py-auto">
-              Sign Up Here</span
-            ></router-link
-          >
+          <v-text-field
+            label="Country where company is based"
+            single-line
+            outlined
+            class="font-weight-regular text-subtitle-2 label--text pb-0 mb-0"
+            v-model="country"
+            type="text"
+            required
+            :rules="countryRules"
+          ></v-text-field>
+          <v-text-field
+            label="Your accounting system"
+            single-line
+            outlined
+            class="font-weight-regular text-subtitle-2 label--text pb-0 mb-0"
+            v-model="accountSystem"
+            type="text"
+            required
+            :rules="accountSystemRules"
+          ></v-text-field>
+          <v-text-field
+            label="Your role"
+            single-line
+            outlined
+            class="font-weight-regular text-subtitle-2 label--text pb-0 mb-0"
+            v-model="role"
+            type="text"
+            required
+            :rules="roleRules"
+          ></v-text-field>
+        </v-card-text>
+
+        <router-link to="onboarding">
+          <v-card-actions class="card-items">
+            <v-btn
+              block
+              color="primary"
+              elevation="20"
+              large
+              class="text-capitalize"
+              @click="submit"
+            >
+              Submit</v-btn
+            >
+          </v-card-actions>
+        </router-link>
+      </v-form>
+      <div class="d-flex mx-auto justify-center pt-8 pb-16 card-items">
+        <div class="hint">
+          <div class="py-auto d-flex align-content-center">
+            <span class="span-text pl-6 py-auto">Already have an account?</span>
+            <router-link
+              to="login"
+              style="text-decoration: none; color: inherit; padding-top: 4px"
+              ><span class="span-text-link py-auto">
+                Sign In Here</span
+              ></router-link
+            >
+          </div>
         </div>
       </div>
-    </div>
-  </v-card>
+    </v-card>
+  </div>
 </template>
 
 <script>
 export default {
-  name: "Login",
-
-  data: () => ({
-    //
-  }),
+  data() {
+    return {
+      companyName: "",
+      country: "",
+      accountSystem: "",
+      role: "",
+    };
+  },
 };
 </script>
 

@@ -1,12 +1,9 @@
 <template>
-  <v-form class="ma-auto" ref="form">
-    <v-card class="ma-auto elevation-0.5" width="514">
-      <v-card-title
-        class="card-items text--secondary font-weight-bold pt-lg-16"
-      >
-        Sign in
-      </v-card-title>
-
+  <v-card class="ma-auto elevation-0.5" width="514">
+    <v-card-title class="card-items text--secondary font-weight-bold pt-lg-16">
+      Sign in
+    </v-card-title>
+    <v-form class="ma-auto" ref="form">
       <v-card-text class="card-items">
         <v-text-field
           label="Your Name"
@@ -48,25 +45,22 @@
           Sign in</v-btn
         >
       </v-card-actions>
-
-      <div class="d-flex mx-auto justify-center pt-8 pb-16 card-items">
-        <div class="hint">
-          <div class="py-auto d-flex align-content-center">
-            <span class="span-text pl-6 py-auto"
-              >Don’t have an account yet?</span
-            >
-            <router-link
-              to="sign-up"
-              style="text-decoration: none; color: inherit; padding-top: 4px"
-              ><span class="span-text-link py-auto">
-                Sign Up Here</span
-              ></router-link
-            >
-          </div>
+    </v-form>
+    <div class="d-flex mx-auto justify-center pt-8 pb-16 card-items">
+      <div class="hint">
+        <div class="py-auto d-flex align-content-center">
+          <span class="span-text pl-6 py-auto">Don’t have an account yet?</span>
+          <router-link
+            to="sign-up"
+            style="text-decoration: none; color: inherit; padding-top: 4px"
+            ><span class="span-text-link py-auto">
+              Sign Up Here</span
+            ></router-link
+          >
         </div>
       </div>
-    </v-card>
-  </v-form>
+    </div>
+  </v-card>
 </template>
 
 <script>

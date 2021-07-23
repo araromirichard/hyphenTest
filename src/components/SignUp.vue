@@ -1,74 +1,149 @@
 <template>
-  <v-form class="ma-auto">
-    <v-card class="ma-auto elevation-0.5" width="514">
+  <div class="ma-auto">
+    <v-card class="ma-auto elevation-0.5" width="514" v-if="pageTwo">
       <v-card-title
         class="card-items text--secondary font-weight-bold pt-lg-16"
       >
-        Sign in
+        Sign up
       </v-card-title>
+      <v-form class="ma-auto" ref="form">
+        <v-card-text class="card-items">
+          <v-row class="px-3 py-2">
+            <v-text-field
+              label="First Name"
+              single-line
+              outlined
+              type="text"
+              required
+              class="font-weight-regular text-subtitle-2 label--text"
+              v-model="firstName"
+              :rules="nameRules"
+            ></v-text-field>
+            <v-spacer></v-spacer>
+            <v-text-field
+              label="Last Name"
+              single-line
+              outlined
+              type="text"
+              required
+              class="font-weight-regular text-subtitle-2 label--text"
+              v-model="lastName"
+              :rules="nameRules"
+            ></v-text-field>
+          </v-row>
+          <v-text-field
+            label="Email"
+            single-line
+            outlined
+            type="email"
+            required
+            class="font-weight-regular text-subtitle-2 label--text"
+            v-model="email"
+            :rules="emailRules"
+          ></v-text-field>
 
-      <v-card-text class="card-items">
-        <v-text-field
-          label="Your Name"
-          single-line
-          outlined
-          class="font-weight-regular text-subtitle-2 label--text"
-        ></v-text-field>
+          <v-text-field
+            label="Phone number"
+            single-line
+            outlined
+            class="font-weight-regular text-subtitle-2 label--text pb-0 mb-0"
+            v-model="phoneNumber"
+            type="number"
+            required
+            :rules="phoneNumberRules"
+          ></v-text-field>
+          <div class="message-details d-flex justify-end">
+            <router-link to="#" style="text-decoration: none; color: inherit">
+              <p>Forgot Password?</p>
+            </router-link>
+          </div>
+        </v-card-text>
 
-        <v-text-field
-          label="Password"
-          single-line
-          outlined
-          class="font-weight-regular text-subtitle-2 label--text pb-0 mb-0"
-        ></v-text-field>
-        <div class="message-details d-flex justify-end">
-          <router-link to="#" style="text-decoration: none; color: inherit">
-            <p>Forgot Password?</p>
-          </router-link>
-        </div>
-      </v-card-text>
-
-      <v-card-actions class="card-items">
-        <v-btn
-          block
-          color="primary"
-          elevation="24"
-          large
-          class="text-capitalize"
-        >
-          Sign in</v-btn
-        >
-      </v-card-actions>
-
+        <v-card-actions class="card-items">
+          <v-btn
+            block
+            color="primary"
+            elevation="20"
+            large
+            class="text-capitalize"
+            @click="
+              submit;
+              pageTwo = !pageTwo;
+            "
+          >
+            Next</v-btn
+          >
+        </v-card-actions>
+      </v-form>
       <div class="d-flex mx-auto justify-center pt-8 pb-16 card-items">
         <div class="hint">
           <div class="py-auto d-flex align-content-center">
-            <span class="span-text pl-6 py-auto"
-              >Don’t have an account yet?</span
-            >
+            <span class="span-text pl-6 py-auto">Already have an account?</span>
             <router-link
-              to="sign-up"
+              to="login"
               style="text-decoration: none; color: inherit; padding-top: 4px"
               ><span class="span-text-link py-auto">
-                Sign Up Here</span
+                Sign In Here</span
               ></router-link
             >
           </div>
         </div>
       </div>
     </v-card>
-  </v-form>
+
+    <SignUp2 v-else />
+  </div>
 </template>
 
 <script>
+import SignUp2 from "./SignUp2";
+
 export default {
   name: "SignUp",
-  components: {
-    //SignUp2,
+
+  data() {
+    return {
+      firstName: "",
+      lastName: "",
+      email: "",
+      phoneNumber: "",
+      pageTwo: true,
+      nameRules: [
+        (value) => !!value || "Name is required",
+        (value) =>
+          (value && value.length <= 10) ||
+          "First Name must be less than 10 characters",
+      ],
+      emailRules: [
+        (value) => !!value || "Email is required",
+        (value) => value.indexOf("@") !== 0 || "Email should have a Username",
+        (value) => value.includes("@") || "Email should include the @ symbol",
+        (value) =>
+          value.indexOf(".") - value.indexOf("@") > 1 ||
+          "Email should contain a valid domain",
+      ],
+      phoneNumberRules: [
+        (value) => !!value || "Phone Number is required",
+        (value) =>
+          (value && value.length == 11) ||
+          "First Name must be less than 10 characters",
+        (value) => {
+          const pattern = /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s/0-9]*/;
+          return pattern.test(value) || "Phone Number is invalid";
+        },
+      ],
+    };
   },
-  data: () => ({
-    //
-  }),
+  components: {
+    SignUp2,
+  },
+  methods: {
+    submit() {
+      if (this.$refs.form.validate()) {
+        console.log(this.fullName, this.password);
+      }
+    },
+  },
 };
 </script>
 
