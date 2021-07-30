@@ -22,8 +22,8 @@
           </v-col>
           <v-col class="pt-0 mt-0">
             <div>
-              <h6 class="progress-bar-title pt-4">Account status</h6>
               <template>
+                <h6 class="progress-bar-title">Account status</h6>
                 <v-progress-linear
                   color="#16BE98"
                   value="40"
@@ -31,7 +31,31 @@
                   rounded
                   style="background-color: #f9eed2"
                 ></v-progress-linear>
+                <h6 class="sub-text-info">40% completed</h6>
               </template>
+              <div class="pl-6 pt-8">
+                <v-chip
+                  color="#D5F7EF"
+                  text-color="#2BD4AE"
+                  class="pa-2 mx-2" 
+                  x-small
+                >
+                  Done
+                </v-chip>
+                <p
+                  style="
+                    font-family: Inter;
+                    font-style: normal;
+                    font-weight: normal;
+                    font-size: 10px;
+                    line-height: 20px;
+
+                    color: #7f919b;
+                  "
+                >
+                  Complete setup form
+                </p>
+              </div>
             </div>
           </v-col>
           <div>
@@ -84,5 +108,16 @@ export default {
 
 .progress-determinant {
   border-radius: 14px;
+}
+.sub-text-info {
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 10px;
+  line-height: 12px;
+  text-align: center;
+  letter-spacing: 0.530303px;
+
+  color: #7f919b;
 }
 </style>

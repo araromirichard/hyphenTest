@@ -1,7 +1,9 @@
 <template>
   <div>
     <v-divider></v-divider>
-    <v-card> i am the side card </v-card>
+    <v-sheet>
+
+    </v-sheet>
   </div>
 </template>
 
