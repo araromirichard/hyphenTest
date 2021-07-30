@@ -30,7 +30,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style ]>
 .full-height {
   height: 100%;
   min-height: 100vh;

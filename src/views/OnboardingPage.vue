@@ -50,24 +50,26 @@
         </v-card-text>
       </v-card>
 
-      <v-btn
-        height="54px"
-        width="400px"
-        block
-        color="primary"
-        elevation="20"
-        large
-        class="btn text-capitalize mx-auto"
-        @click="submit"
-      >
-        Next</v-btn
-      >
+      <v-router>
+        <Button
+          class="btn text-md-h5"
+          height="54"
+          width="400"
+          to="Overview"
+          label="Next"
+        />
+      </v-router>
     </div>
   </div>
 </template>
 
 <script>
+import Button from "../includes/flat-button.vue";
 export default {
+  components: {
+    Button,
+  },
+
   data() {
     return {
       //

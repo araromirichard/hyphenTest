@@ -17,7 +17,7 @@ export default new Vuetify({
         primer: "#FEFCF8",
         heading: "#596A73",
         label: "#002338",
-        avatar: "#301F78S",
+        avatar: "#301F78",
       },
     },
   },
