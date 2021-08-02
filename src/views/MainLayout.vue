@@ -1,6 +1,13 @@
 <template>
   <div>
-    <v-navigation-drawer app absolute permanent v-model="drawer" class="px-0">
+    <v-navigation-drawer
+      app
+      fixed
+      height="100%"
+      permanent
+      v-model="drawer"
+      class="px-0"
+    >
       <template v-slot:prepend>
         <v-list-item two-line class="pl-10">
           <v-list-item-avatar color="primary" size="60">
@@ -66,14 +73,14 @@
 
 <script>
 export default {
-  created() {
-    return console.log(this.$route);
-  },
+  // created() {
+  //   return console.log(this.$route);
+  // },
   data() {
     return {
       drawer: null,
       items: [
-        { title: "Insights", icon: "mdi-trending-up", path: "/dashboard" },
+        { title: "Insights", icon: "mdi-trending-up", path: "/insight" },
         { title: "Workflows", icon: "mdi-vector-link", path: "/workflow" },
         { title: "Inbox", icon: "mdi-inbox-arrow-down", path: "/message" },
         { title: "Payables", icon: "mdi-cash-multiple", path: "/payable" },

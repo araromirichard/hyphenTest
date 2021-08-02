@@ -113,7 +113,7 @@
             color: #7b4fff;
           "
         >
-          <router-link to="Dashboard">Go to account overview</router-link>
+          <router-link to="insight">Go to account overview</router-link>
         </p>
       </div>
     </div>
@@ -126,8 +126,6 @@ export default {
   data() {
     return {
       publicPath: process.env.BASE_URL,
-      percent: 40,
-      show: false,
     };
   },
 

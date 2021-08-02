@@ -28,18 +28,18 @@ const routes = [
     component: OnBoarding,
   },
   {
-    path: "/overview",
-    name: "Overview",
+    path: "/welcome",
+    name: "Welcome",
     components: {
-      default: () => import("@/views/navigation-bar/Overview.vue"),
+      default: () => import("@/views/navigation-bar/WelcomePage.vue"),
       MainLayout,
     },
   },
   {
-    path: "/dashboard",
-    name: "Dashboard",
+    path: "/insight",
+    name: "Insight",
     components: {
-      default: () => import("@/views/navigation-bar/Dashboard.vue"),
+      default: () => import("@/views/navigation-bar/Insight.vue"),
       MainLayout,
     },
   },

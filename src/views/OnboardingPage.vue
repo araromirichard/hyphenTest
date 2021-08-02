@@ -55,7 +55,7 @@
           class="btn text-md-h5"
           height="54"
           width="400"
-          to="Overview"
+          to="welcome"
           label="Next"
         />
       </v-router>
