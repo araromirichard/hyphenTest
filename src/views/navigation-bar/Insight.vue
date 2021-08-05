@@ -1,18 +1,19 @@
 <template>
   <div>
     <v-row>
-      <v-col cols="2" class="d-flex flex-row">
+      <v-col cols="2">
         <v-row class="d-flex flex-column">
-          <v-col class="">
-            <v-avatar>
+          <v-col>
+            <div class="justify-start d-flex">
               <img
                 :src="require('@/assets/insights-icon.svg')"
-                style="padding-top: 169px; padding-left: 22px"
+                style="padding-top: 250px; padding-left: 22px"
               />
-            </v-avatar>
-            <h6 class="text-h5 header-title pl-4" style="padding-top: 167px">
-              First Steps
-            </h6>
+
+              <h6 class="text-h5 header-title pl-4" style="padding-top: 250px">
+                First Steps
+              </h6>
+            </div>
           </v-col>
           <v-col class="pt-0 mt-0">
             <p
@@ -59,7 +60,7 @@
                 </p>
               </div>
             </div>
-
+            <!-- side-card component -->
             <div>
               <SideCard />
             </div>
@@ -123,14 +124,19 @@
         <v-row>
           <v-col cols="9" class="d-flex flex-row py-4 pl-6">
             <v-row>
-              <v-col><account-summary /> </v-col>
               <v-col>
+                <!-- account-summary component -->
+                <account-summary />
+              </v-col>
+              <v-col>
+                <!-- info-summary component -->
                 <div class="d-flex flex-column">
                   <info-summary-card />
                 </div>
               </v-col>
             </v-row>
           </v-col>
+          <!-- recent-process-table component -->
           <v-col cols="9">
             <div>
               <recent-process-table />

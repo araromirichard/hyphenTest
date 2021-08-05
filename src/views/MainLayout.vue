@@ -43,19 +43,17 @@
       </v-list>
       <div class="pt-8">
         <v-list class="pl-10" dense>
-          <v-list-item
-            nav
-            link
-            v-for="link in links"
-            :key="link.title"
-            :to="link.path"
-          >
+          <v-list-item nav link v-for="link in links" :key="link.title">
             <v-list-item-icon>
               <v-icon>{{ link.icon }}</v-icon>
             </v-list-item-icon>
 
             <v-list-item-content>
-              <v-list-item-title>{{ link.title }}</v-list-item-title>
+              <v-list-item-title
+                ><router-link :to="link.path">{{
+                  link.title
+                }}</router-link></v-list-item-title
+              >
             </v-list-item-content>
           </v-list-item>
         </v-list>
@@ -82,7 +80,7 @@ export default {
       items: [
         { title: "Insights", icon: "mdi-trending-up", path: "/insight" },
         { title: "Workflows", icon: "mdi-vector-link", path: "/workflow" },
-        { title: "Inbox", icon: "mdi-inbox-arrow-down", path: "/message" },
+        { title: "Inbox", icon: "mdi-inbox-arrow-down", path: "/inbox" },
         { title: "Payables", icon: "mdi-cash-multiple", path: "/payable" },
         {
           title: "Integrations",
