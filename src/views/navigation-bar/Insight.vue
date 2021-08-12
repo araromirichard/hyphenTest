@@ -87,16 +87,37 @@
             >
               <v-row>
                 <v-col>
-                  <v-card-title class="text-subtitle-2 py-8 px-2">{{
+                  <v-card-title class="text-subtitle-2 py-8 px-3">{{
                     card.title
                   }}</v-card-title>
                   <v-card-text
                     class="card-text pl-4"
+                    style="
+                      font-family: Inter;
+                      font-style: normal;
+                      font-weight: 900;
+                      font-size: 24px;
+                      line-height: 29px;
+                      text-transform: uppercase;
+                      color: #311b92;
+                    "
                     v-if="card.title === 'Total Payments'"
                   >
                     N{{ card.text }}K
                   </v-card-text>
-                  <v-card-text class="card-text pl-4" v-else>
+                  <v-card-text
+                    class="card-text pl-4"
+                    style="
+                      font-family: Inter;
+                      font-style: normal;
+                      font-weight: 900;
+                      font-size: 24px;
+                      line-height: 29px;
+                      text-transform: uppercase;
+                      color: #311b92;
+                    "
+                    v-else
+                  >
                     {{ card.text }}
                   </v-card-text>
                 </v-col>
@@ -113,8 +134,14 @@
                 <v-divider></v-divider>
                 <v-btn large right plain color="#7F919B"
                   >view
-                  <v-icon right size="26" color="#311B92">
-                    mdi-arrow-right
+                  <v-icon
+                    right
+                    class="text-black ml-0"
+                    x-small
+                    size="26"
+                    color="#311B92"
+                  >
+                    mdi-arrow-right-thick
                   </v-icon></v-btn
                 >
               </div>
@@ -237,18 +264,15 @@ export default {
   color: #7f919b;
 }
 
-.card-text {
+/* .card-text {
   font-family: Inter;
   font-style: normal;
   font-weight: bolder;
   font-size: 24px;
   line-height: 29px;
-  /* identical to box height */
-
-  text-transform: uppercase;
 
   color: #311b92;
-}
+} */
 .v-divider {
   display: block;
   flex: 1 1 0px;

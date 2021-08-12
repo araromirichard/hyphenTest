@@ -3,9 +3,7 @@ import VueRouter from "vue-router";
 import Formlayout from "../views/Form-layout.vue";
 import OnBoarding from "../views/OnboardingPage.vue";
 import MainLayout from "../views/MainLayout.vue";
-import Email from "../views/Inbox/Email.vue";
-import Forms from "../views/Inbox/Forms.vue";
-import Review from "../views/Inbox/Review.vue";
+import Index from "../views/Inbox/Index.vue";
 
 Vue.use(VueRouter);
 
@@ -58,24 +56,43 @@ const routes = [
     path: "/inbox",
     name: "Inbox",
     components: {
-      default: () => import("@/views/Inbox/Index.vue"),
+      default: Index,
       MainLayout,
     },
-
-    //Child routes
-    children: [
-      { path: "email", name: "Email", component: Email },
-      { path: "forms", name: "Forms", component: Forms },
-      { path: "forms/:id", name: "", component: Forms },
-      { path: "forms/:id/build", name: "", component: Forms },
-      { path: "review", name: "Review", component: Review },
-    ],
   },
+  // { path: "forms", name: "Forms", component: Forms },
+  // { path: ":id", name: "", component: Forms },
+  // { path: ":id/build", name: "", component: Forms },
+  // { path: "review", name: "Review", component: Review },
   {
     path: "/payable",
     name: "Payables",
     components: {
       default: () => import("@/views/navigation-bar/Payables.vue"),
+      MainLayout,
+    },
+  },
+  // {
+  //   path: "/invoice",
+  //   name: "Invoice",
+  //   components: {
+  //     default: () => import("@/views/navigation-bar/Invoice.vue"),
+  //     MainLayout,
+  //   },
+  // },
+  {
+    path: "/inbox/email",
+    name: "Email",
+    components: {
+      default: () => import("@/views/Inbox/Email.vue"),
+      MainLayout,
+    },
+  },
+  {
+    path: "/inbox/:id",
+    name: "Invoice",
+    components: {
+      default: () => import("@/views/navigation-bar/Invoice.vue"),
       MainLayout,
     },
   },
@@ -85,6 +102,7 @@ const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
   routes,
+  linkActiveClass: "active",
 });
 
 export default router;

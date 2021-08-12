@@ -3,6 +3,15 @@
     <v-card class="ma-auto elevation-0.5" width="514" v-if="pageTwo">
       <v-card-title
         class="card-items text--secondary font-weight-bold pt-lg-16"
+        style="
+          font-family: Inter;
+          font-style: normal;
+          font-weight: bold;
+          font-size: 24px;
+          line-height: 29px;
+          letter-spacing: 0.484848px;
+          color: #596a73;
+        "
       >
         Sign up
       </v-card-title>
@@ -53,15 +62,20 @@
             :rules="phoneNumberRules"
           ></v-text-field>
           <div class="message-details d-flex justify-end">
-            <router-link to="#" style="text-decoration: none; color: inherit">
+            <router-link
+              to="#"
+              style="text-decoration: none; color: inherit; padding: none"
+            >
               <p>Forgot Password?</p>
             </router-link>
           </div>
         </v-card-text>
 
-        <v-card-actions class="card-items">
+        <v-card-actions class="card-items pt-5">
           <v-btn
             block
+            width="346"
+            height="54"
             color="primary"
             elevation="20"
             large
@@ -71,7 +85,20 @@
               pageTwo = !pageTwo;
             "
           >
-            Next</v-btn
+            <span
+              style="
+                font-family: Inter;
+                font-style: normal;
+                font-weight: 900;
+                font-size: 16px;
+                line-height: 19px;
+                text-align: center;
+                letter-spacing: 0.727273px;
+                color: #ffffff;
+              "
+            >
+              Next</span
+            ></v-btn
           >
         </v-card-actions>
       </v-form>

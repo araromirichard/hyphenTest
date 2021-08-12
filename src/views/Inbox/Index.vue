@@ -1,39 +1,8 @@
 <template>
-  <div class="container">
+  <v-container>
     <div v-if="isNotEmpty">
       <v-row align="center" justify="end">
-        <v-btn
-          class="mr-16"
-          color="primary"
-          style="
-            margin-top: 25px;
-            width: 121px;
-            height: 54px;
-            background: #311b92;
-            box-shadow: 0px 12px 22px rgba(0, 0, 0, 0.24);
-            border-radius: 4px;
-          "
-        >
-          <img
-            :src="require('@/assets/file.svg')"
-            alt="A file svg icon"
-            style="padding-right: 8px"
-          />
-          <span
-            style="
-              font-family: Inter;
-              font-style: normal;
-              font-weight: 500;
-              font-size: 14px;
-              line-height: 17px;
-              text-align: center;
-              letter-spacing: 0.636364px;
-            "
-            class="text-capitalize"
-          >
-            New
-          </span>
-        </v-btn>
+        <drop-down-menu />
       </v-row>
       <v-row class="justify-center" style="padding-top: 105px">
         <img :src="require('@/assets/folder.svg')" alt="folder svg" />
@@ -103,10 +72,10 @@
       </v-row>
     </div>
     <div v-else>
-      <v-row align="center">
+      <v-row align="center" class="mx-14">
         <div>
           <h3
-            class="text-bold pl-12"
+            class="text-bold"
             style="
               font-style: normal;
               font-weight: bold;
@@ -119,63 +88,69 @@
           </h3>
         </div>
         <v-spacer></v-spacer>
-        <v-btn
-          dense
-          class="mr-6"
-          color="primary"
-          style="
-            margin-top: 25px;
-            width: 121px;
-            height: 54px;
-            background: #311b92;
-            box-shadow: 0px 12px 22px rgba(0, 0, 0, 0.24);
-            border-radius: 4px;
-          "
-        >
-          <img
-            :src="require('@/assets/file.svg')"
-            alt="A file svg icon"
-            style="padding-right: 10px"
-          />
-          <span
-            style="
-              font-family: Inter;
-              font-style: normal;
-              font-weight: 500;
-              font-size: 14px;
-              line-height: 17px;
-              text-align: center;
-              letter-spacing: 0.636364px;
-            "
-          >
-            New
-          </span>
-        </v-btn>
+
+        <drop-down-menu />
       </v-row>
 
-      <v-card width="1350" height="700" class="ml-14">
+      <v-card flat elevation="6" width="1340" height="674" class="ml-14">
         <div class="d-flex mt-12 text-center" justify="center">
-          <v-card flat width="1300" class="ml-10">
+          <v-card
+            flat
+            width="1340"
+            style="border-bottom: 1px solid rgba(127, 145, 155, 0.3)"
+          >
             <v-tabs v-model="tab">
-              <v-tab v-for="item in items" :key="item.tab">{{
-                item.tab
-              }}</v-tab>
+              <v-tab
+                v-for="item in items"
+                :key="item.tab"
+                style="
+                  font-family: Inter;
+                  font-style: normal;
+                  font-weight: 700;
+                  font-size: 12px;
+                  line-height: 15px;
+                  text-transform: uppercase;
+                "
+                >{{ item.tab }}</v-tab
+              >
 
               <v-tab style="color: #ff6a6a"
-                ><v-icon left color="#FF6A6A" small class="pr-1"
+                ><v-icon left color="#FF6A6A" small class="pr-1 mr-0"
                   >mdi-stop-circle-outline
                 </v-icon>
                 EXCEPTION
               </v-tab>
               <v-spacer></v-spacer>
-              <v-btn plain
-                ><v-icon small left class="pr-1">
-                  mdi-account-supervisor-outline
-                </v-icon>
+              <v-btn class="pt-4" plain>
+                <simple-line-icons left class="pr-1 m-0" icon="people" no-svg />
 
-                invite</v-btn
+                <b
+                  style="
+                    font-family: Inter;
+                    font-style: normal;
+                    font-weight: 700;
+                    font-size: 12px;
+                    line-height: 20px;
+                    letter-spacing: 0.55px;
+                    text-transform: uppercase;
+                  "
+                  >invite</b
+                ></v-btn
               >
-              <v-btn plain class="text--disabled">
+              <v-btn
+                plain
+                class="text-black pt-4"
+                style="
+                  font-family: Inter;
+                  font-style: normal;
+                  font-weight: 500;
+                  font-size: 12px;
+                  line-height: 20px;
+                  letter-spacing: 0.55px;
+                  text-transform: uppercase;
+                  color: #7f919b;
+                "
+              >
                 search
                 <v-icon small right class="pr-1"> mdi-magnify </v-icon>
               </v-btn>
@@ -183,14 +158,16 @@
           </v-card>
         </div>
         <div>
-          <v-card flat class="switch-card ml-10 d-flex">
+          <v-card flat class="switch-card d-flex">
             <v-switch
-              class="pl-1"
+              dense
+              class="pl-4"
               color="#16be98"
               v-model="autoProcess"
               label="Auto process"
             ></v-switch>
             <v-switch
+              dense
               class="px-4"
               color="#16be98"
               v-model="sendToWorkflow"
@@ -198,15 +175,29 @@
             ></v-switch>
             <v-chip class="mt-6" x-small> workflow name… </v-chip>
             <v-spacer></v-spacer>
-            <v-btn color="#2BD5AE" class="mt-2 export-btn mr-16" elevation="4"
-              ><span class="material-icons"> import_export </span>Export</v-btn
-            >
+            <v-btn color="#2BD5AE" class="my-2 export-btn mr-9" elevation="3"
+              ><span class="material-icons pr-1"> import_export </span
+              ><span
+                style="
+                  font-family: Inter;
+                  font-style: normal;
+                  font-weight: 500;
+                  font-size: 11px;
+                  line-height: 12px;
+                  text-align: center;
+                  letter-spacing: 0.636364px;
+                  color: #301f78;
+                "
+                >Export</span
+              >
+            </v-btn>
           </v-card>
         </div>
-        <component v-bind:is="items[tab].content"></component>
+        <component v-bind:is="items[tab].content" class="ml-0"></component>
       </v-card>
     </div>
-  </div>
+    <router-view></router-view>
+  </v-container>
 </template>
 
 <script>
@@ -214,6 +205,8 @@ import TabDataTableAll from "../../components/TabDataTableAll.vue";
 import TabDataTableEmail from "../../components/TabDataTableEmail.vue";
 import TabDataTableForms from "../../components/TabDataTableForms.vue";
 import TabDataTableReviews from "../../components/TabDataTableReviews.vue";
+import DropDownMenu from "../../includes/DropDownMenu.vue";
+import SimpleLineIcons from "vue-simple-line";
 
 export default {
   components: {
@@ -221,8 +214,10 @@ export default {
     TabDataTableEmail,
     TabDataTableReviews,
     TabDataTableForms,
+    DropDownMenu,
+    SimpleLineIcons,
   },
-  name: "",
+  name: "Inbox",
   data() {
     return {
       autoProcess: true,
@@ -234,6 +229,28 @@ export default {
         { tab: "Email", content: "TabDataTableEmail" },
         { tab: "Forms", content: "TabDataTableForms" },
         { tab: "Reviews", content: "TabDataTableReviews" },
+      ],
+      inboxMenus: [
+        {
+          title: "Upload",
+          subtitle: "pdf or jpg invoice",
+          icon: "mdi-tray-arrowDown",
+        },
+        {
+          title: "Form",
+          subtitle: "create form",
+          icon: "mdi-tray-arrow-down ",
+        },
+        {
+          title: "Bank Account",
+          subtitle: "connect your bank account",
+          icon: "mdi-tray-arrowDown",
+        },
+        {
+          title: "EMAIL TO:",
+          subtitle: "brandname0923@process.finance",
+          icon: "",
+        },
       ],
     };
   },
@@ -250,7 +267,6 @@ export default {
   color: #7f919b;
 }
 .switch-card {
-  width: 1300px;
   height: 53px;
   background: rgba(127, 145, 155, 0.052607);
 }
@@ -271,24 +287,33 @@ export default {
 
   color: #301f78;
 }
-.v-data-table > .v-data-table__wrapper > table {
-  width: 1300px;
-  border-spacing: 0;
+.v-menu__content {
+  box-shadow: none;
 }
 
-.v-data-table {
-  line-height: 3;
-  max-width: 1300px;
+i.sli-font {
+  font-size: 12px;
+  display: inline-block;
 }
-.v-data-table-header {
-  height: 45px;
+.material-icons {
+  font-family: "Material Icons";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 14px;
+  color: #301f78;
+}
+th {
+  font-family: Inter;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 12px;
+  line-height: 15px;
+  color: #311b92;
 }
 
-.v-table tbody td {
-  height: 40px;
-  border: none;
-}
-.theme--light.v-table tbody tr:not(:last-child) {
-  border-bottom: none;
+.v-application .elevation-6 {
+  box-shadow: 0px 3px 5px -1px rgb(0 0 0 / 3%), 0px 6px 10px 0px rgb(0 0 0 / 3%),
+    0px 1px 18px 0px rgb(0 0 0 / 3%) !important;
 }
 </style>

@@ -4,31 +4,40 @@
       <div class="main-title font-weight-black mx-auto">
         Choose your account type
       </div>
-      <v-card class="card1 ma-auto" elevation="0" width="400">
+      <v-card
+        class="card1 ma-auto"
+        elevation="0"
+        width="400"
+        to="#"
+        :class="[isActive ? active : '']"
+        @click="isActive = !isActive"
+      >
         <v-card-text>
           <v-row class="d-flex">
-            <v-col class="ma-auto justify-center pl-6" cols="3"
-              ><v-avatar size="80" color="#FDF9EF"
-                ><v-icon> mdi-account-outline</v-icon></v-avatar
-              ></v-col
-            >
-            <v-col cols="9"
-              ><v-card-titile class="card-title pl-4 py-auto"
-                >Advisor</v-card-titile
-              >
-              <v-card-text class="card-text py-auto"
-                >You provide funding/finance advise services to 5 or more
-                businesses</v-card-text
-              ></v-col
-            >
+            <v-col class="ma-auto justify-center pl-6" cols="3">
+              <v-avatar size="80" color="#FDF9EF">
+                <v-icon> mdi-account-outline</v-icon>
+              </v-avatar>
+            </v-col>
+            <v-col cols="9">
+              <v-card-titile class="card-title pl-4 py-auto">
+                Advisor
+              </v-card-titile>
+              <v-card-text class="card-text py-auto">
+                You provide funding/finance advise services to 5 or more
+                businesses
+              </v-card-text>
+            </v-col>
           </v-row>
         </v-card-text>
       </v-card>
       <v-card
+        to="#"
         elevation="0"
         class="card2 ma-auto flat"
         width="400"
-        style="border: 1px solid rgba(49, 27, 146, 0.2)"
+        :class="[isActive ? active : '']"
+        @click="isActive = !isActive"
       >
         <v-card-text>
           <v-row class="d-flex">
@@ -72,13 +81,16 @@ export default {
 
   data() {
     return {
-      //
+      isActive: false,
     };
   },
 };
 </script>
 
 <style scoped>
+.active {
+  /* border: 1px solid rgba(49, 27, 146, 0.2); */
+}
 .main-title {
   position: absolute;
   height: 39px;

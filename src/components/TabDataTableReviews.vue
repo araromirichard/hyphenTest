@@ -8,9 +8,14 @@
         hide-default-footer
         disable-pagination
         item-key="iD"
-        width="1300"
-        class="elevation-0 table-text ml-10"
+        width="1340"
+        class="elevation-0 table-text"
       >
+        <template v-slot:[`item.transactionType`]="{ item }">
+          <v-chip x-small>
+            {{ item.transactionType }}
+          </v-chip>
+        </template>
       </v-data-table>
     </div>
   </div>
@@ -23,6 +28,7 @@ export default {
       inbox: [
         {
           id: 1,
+          transactionType: "expense",
           amount: 300000.0,
           ref: 300000.0,
           requester: "John Bello",
@@ -31,6 +37,7 @@ export default {
         },
         {
           id: 2,
+          transactionType: "invoice",
           amount: 400000.0,
           ref: 400000.0,
           requester: "Emma Thomas",
@@ -39,6 +46,7 @@ export default {
         },
         {
           id: 3,
+          transactionType: "expense",
           amount: 100000.0,
           ref: 100000.0,
           requester: "Sussan Boma",
@@ -47,6 +55,7 @@ export default {
         },
         {
           id: 4,
+          transactionType: "invoice",
           amount: 250000.0,
           ref: 250000.0,
           requester: "John Bello",
@@ -55,6 +64,7 @@ export default {
         },
         {
           id: 5,
+          transactionType: "expense",
           amount: 150000.0,
           ref: 150000.0,
           requester: "Pat Ede",
@@ -63,6 +73,7 @@ export default {
         },
         {
           id: 6,
+          transactionType: "invoice",
           amount: 3000.0,
           ref: 3000.0,
           requester: "Obinna Nwafor",
@@ -81,7 +92,7 @@ export default {
         {
           text: "Type",
           class: "primary--text",
-          value: "type",
+          value: "transactionType",
         },
         {
           text: "Amount",

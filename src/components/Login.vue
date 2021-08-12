@@ -1,6 +1,17 @@
 <template>
   <v-card class="ma-auto elevation-0.5" width="514">
-    <v-card-title class="card-items text--secondary font-weight-bold pt-lg-16">
+    <v-card-title
+      class="card-items text--secondary font-weight-bold pt-lg-16"
+      style="
+        font-family: Inter;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 24px;
+        line-height: 29px;
+        letter-spacing: 0.484848px;
+        color: #596a73;
+      "
+    >
       Sign in
     </v-card-title>
     <v-form class="ma-auto" ref="form">
@@ -28,7 +39,20 @@
         ></v-text-field>
         <div class="message-details d-flex justify-end">
           <router-link to="#" style="text-decoration: none; color: inherit">
-            <p>Forgot Password?</p>
+            <p
+              class="pt-1"
+              style="
+                font-family: Lato;
+                font-style: normal;
+                font-weight: normal;
+                font-size: 14px;
+                line-height: 17px;
+                letter-spacing: 0.278409px;
+                color: #301f78;
+              "
+            >
+              Forgot Password?
+            </p>
           </router-link>
         </div>
       </v-card-text>
@@ -39,14 +63,28 @@
           color="primary"
           elevation="20"
           large
+          height="54px"
+          width="346px"
           class="text-capitalize"
           @click="submit"
         >
-          Sign in</v-btn
-        >
+          <span
+            style="
+              font-family: Inter;
+              font-style: normal;
+              font-weight: 900;
+              font-size: 16px;
+              line-height: 19px;
+              text-align: center;
+              letter-spacing: 0.727273px;
+              color: #ffffff;
+            "
+            >Sign in</span
+          >
+        </v-btn>
       </v-card-actions>
     </v-form>
-    <div class="d-flex mx-auto justify-center pt-8 pb-16 card-items">
+    <div class="d-flex mx-auto justify-center pt-7 pb-16 card-items">
       <div class="hint">
         <div class="py-auto d-flex align-content-center">
           <span class="span-text pl-6 py-auto">Don’t have an account yet?</span>

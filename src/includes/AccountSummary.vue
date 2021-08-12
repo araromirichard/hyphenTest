@@ -8,6 +8,9 @@
           <v-spacer></v-spacer>
           <span class="payment-total">450,000.00</span>
         </v-card-title>
+        <v-card-text
+          style="height: 40px; background: rgba(127, 145, 155, 0.052607)"
+        ></v-card-text>
         <v-data-table
           dense
           :headers="headers"

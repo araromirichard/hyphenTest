@@ -1,21 +1,23 @@
 <template>
   <div>
     <v-navigation-drawer
+      v-if="!noNavRoutes.includes($route.name)"
       app
       fixed
+      stateless
       height="100%"
       permanent
       v-model="drawer"
       class="px-0"
     >
       <template v-slot:prepend>
-        <v-list-item two-line class="pl-10">
-          <v-list-item-avatar color="primary" size="60">
+        <v-list-item two-line class="pl-10 justify-center">
+          <v-list-item-avatar color="primary" size="46">
             <img :src="require('@/assets/Shape.svg')" class="logo" />
           </v-list-item-avatar>
 
           <v-list-item-content>
-            <v-list-item-title
+            <v-list-item-title style="padding-top: 6px"
               ><img :src="require('@/assets/pBot.svg')"
             /></v-list-item-title>
             <v-list-item-subtitle class="ml-6">on pBot</v-list-item-subtitle>
@@ -29,15 +31,20 @@
           v-for="item in items"
           :key="item.title"
           :to="item.path"
+          class="mx-auto"
         >
           <v-list-item-icon>
-            <v-icon color="#7F919B">{{ item.icon }}</v-icon>
+            <v-icon>
+              {{ item.icon }}
+            </v-icon>
           </v-list-item-icon>
 
           <v-list-item-content>
-            <v-list-item-title class="link-text font-weight-black text-left">{{
-              item.title
-            }}</v-list-item-title>
+            <v-list-item-title
+              class="link-text text-left"
+              style="color: #7f919b"
+              >{{ item.title }}</v-list-item-title
+            >
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -50,6 +57,8 @@
 
             <v-list-item-content>
               <v-list-item-title
+                class="link-text text-left"
+                style="color: #7f919b"
                 ><router-link :to="link.path">{{
                   link.title
                 }}</router-link></v-list-item-title
@@ -77,6 +86,7 @@ export default {
   data() {
     return {
       drawer: null,
+      noNavRoutes: ["Login", "SignUp"],
       items: [
         { title: "Insights", icon: "mdi-trending-up", path: "/insight" },
         { title: "Workflows", icon: "mdi-vector-link", path: "/workflow" },
@@ -102,20 +112,13 @@ export default {
 </script>
 
 <style scoped>
-.logo {
-  height: 75px;
-  width: 150px;
-
-  border-radius: 0px;
+.v-application--is-ltr .v-list-item__avatar:first-child {
+  margin-right: 10px;
+  justify-content: center;
 }
-.link-text {
-  font-family: Inter;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 12px;
-  line-height: 15px;
-  /* identical to box height */
-
-  color: #7f919b;
+.logo {
+  height: 60px;
+  width: 140px;
+  border-radius: 0px;
 }
 </style>

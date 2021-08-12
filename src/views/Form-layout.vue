@@ -3,7 +3,7 @@
     <v-col cols="12" sm="8" height="100%" class="d-flex justify-center">
       <v-scroll-y-transition leave-absolute mode="out-in">
         <SignUp v-if="isSignup" />
-        <Login v-else />
+        <Login v-else-if="isLogin" />
       </v-scroll-y-transition>
     </v-col>
     <v-col cols="12" sm="4" height="100%" class="white full-height"></v-col>
@@ -26,6 +26,9 @@ export default {
     isSignup() {
       return this.$route.name === "SignUp";
     },
+    isLogin() {
+      return this.$route.name === "Login";
+    }
   },
 };
 </script>

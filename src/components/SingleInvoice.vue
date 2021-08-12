@@ -1,5 +1,5 @@
 <template>
-  <div>Hello from Forms</div>
+  <div>This is the single Invoice page</div>
 </template>
 
 <script>

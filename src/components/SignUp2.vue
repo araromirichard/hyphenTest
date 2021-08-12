@@ -1,8 +1,17 @@
 <template>
   <div>
-    <v-card>
+    <v-card height="620" width="514">
       <v-card-title
         class="card-items text--secondary font-weight-bold pt-lg-16"
+        style="
+          font-family: Inter;
+          font-style: normal;
+          font-weight: bold;
+          font-size: 24px;
+          line-height: 29px;
+          letter-spacing: 0.484848px;
+          color: #596a73;
+        "
       >
         Sign up
         <v-spacer></v-spacer>
@@ -11,12 +20,13 @@
       <v-form class="ma-auto" ref="form">
         <v-card-text class="card-items">
           <v-text-field
+            height="48"
             label="Company Name"
             single-line
             outlined
             type="text"
             required
-            class="font-weight-regular text-subtitle-2 label--text"
+            class="font-weight-regular text-subtitle-2 label--text pb-0"
             v-model="companyName"
             :rules="companyName"
           ></v-text-field>
@@ -54,21 +64,36 @@
         </v-card-text>
 
         <router-link to="onboarding">
-          <v-card-actions class="card-items">
+          <v-card-actions class="card-items pt-0">
             <v-btn
               block
+              width="346"
+              height="54"
               color="primary"
               elevation="20"
               large
               class="text-capitalize"
               @click="submit"
             >
-              Submit</v-btn
-            >
+              <span
+                style="
+                  font-family: Inter;
+                  font-style: normal;
+                  font-weight: 900;
+                  font-size: 16px;
+                  line-height: 19px;
+                  text-align: center;
+                  letter-spacing: 0.727273px;
+                  color: #ffffff;
+                "
+              >
+                Submit
+              </span>
+            </v-btn>
           </v-card-actions>
         </router-link>
       </v-form>
-      <div class="d-flex mx-auto justify-center pt-8 pb-16 card-items">
+      <div class="d-flex mx-auto justify-center pt-8 pb- card-items">
         <div class="hint">
           <div class="py-auto d-flex align-content-center">
             <span class="span-text pl-6 py-auto">Already have an account?</span>
@@ -101,6 +126,7 @@ export default {
 
 <style scoped>
 .card-items {
+  padding-bottom: 0px;
   padding-left: 84px;
   padding-right: 84px;
 }
@@ -147,14 +173,14 @@ export default {
   font-size: 0.8em;
 }
 
-.form-link {
+/* .form-link {
   height: 32px;
   width: 325px;
   left: 0px;
   top: 0px;
   border-radius: 16px;
   background: rgba(127, 145, 155, 0.08);
-}
+} */
 
 .hint {
   height: 32px;
@@ -196,5 +222,8 @@ export default {
   letter-spacing: 0.278409px;
 
   color: #311b92;
+}
+.v-card__title {
+  padding-bottom: 16px;
 }
 </style>
