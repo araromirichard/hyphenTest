@@ -160,19 +160,33 @@
         <div>
           <v-card flat class="switch-card d-flex">
             <v-switch
+              flat
               dense
               class="pl-4"
               color="#16be98"
               v-model="autoProcess"
               label="Auto process"
             ></v-switch>
-            <v-switch
-              dense
-              class="px-4"
-              color="#16be98"
-              v-model="sendToWorkflow"
-              label="Send to workflow"
-            ></v-switch>
+            <template>
+              <v-switch
+                flat
+                dense
+                value="true"
+                class="px-4"
+                :color="`${(hasColor = true ? '#16BE98' : '')}`"
+                v-model="dialog"
+                label="Send to workflow"
+              ></v-switch>
+            </template>
+            <v-dialog
+              elevation="0"
+              v-model="dialog"
+              max-width="360"
+              overlay-color="#301F78"
+              overlay-opacity="0.282397"
+            >
+              <send-to-workflow />
+            </v-dialog>
             <v-chip class="mt-6" x-small> workflow name… </v-chip>
             <v-spacer></v-spacer>
             <v-btn color="#2BD5AE" class="my-2 export-btn mr-9" elevation="3"
@@ -207,6 +221,7 @@ import TabDataTableForms from "../../components/TabDataTableForms.vue";
 import TabDataTableReviews from "../../components/TabDataTableReviews.vue";
 import DropDownMenu from "../../includes/DropDownMenu.vue";
 import SimpleLineIcons from "vue-simple-line";
+import SendToWorkflow from "../../includes/overlays/SendToWorkflow.vue";
 
 export default {
   components: {
@@ -216,10 +231,12 @@ export default {
     TabDataTableForms,
     DropDownMenu,
     SimpleLineIcons,
+    SendToWorkflow,
   },
   name: "Inbox",
   data() {
     return {
+      dialog: false,
       autoProcess: true,
       sendToWorkflow: true,
       isNotEmpty: false,

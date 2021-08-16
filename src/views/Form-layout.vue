@@ -28,7 +28,7 @@ export default {
     },
     isLogin() {
       return this.$route.name === "Login";
-    }
+    },
   },
 };
 </script>

@@ -1,14 +1,15 @@
 <template>
-  <v-list dense max-height="24px">
+  <v-list justify-center dense max-height="24px">
     <v-subheader
-      class="py-10 pl-16"
+      class="py-10"
       style="
+        margin-left: 48px;
         font-family: Inter;
         font-style: normal;
         font-weight: bold;
         font-size: 16px;
         line-height: 19px;
-        color: rgb(86 95 101);
+        color: #7f919b;
       "
     >
       Basic Data
@@ -16,8 +17,8 @@
 
     <v-list-item>
       <v-list-item-title
-        class="pl-16"
         style="
+          margin-left: 84px;
           font-family: Inter;
           font-style: normal;
           font-weight: 500;
@@ -31,8 +32,7 @@
       <v-spacer></v-spacer>
       <v-text-field
         hide-details="auto"
-        full-width
-        disabled
+        :disabled="changeState"
         solo
         flat
         dense
@@ -46,7 +46,7 @@
           line-height: 15px;
           color: #7f919b;
         "
-        placeholder="Enter Invoice no"
+        placeholder="Enter Invoice"
       ></v-text-field>
     </v-list-item>
     <v-divider
@@ -58,8 +58,8 @@
     ></v-divider>
     <v-list-item>
       <v-list-item-title
-        class="pl-16"
         style="
+          padding-left: 84px;
           font-family: Inter;
           font-style: normal;
           font-weight: 500;
@@ -73,7 +73,6 @@
       <v-spacer></v-spacer>
       <v-text-field
         hide-details="auto"
-        full-width
         disabled
         solo
         flat
@@ -100,8 +99,8 @@
     ></v-divider>
     <v-list-item>
       <v-list-item-title
-        class="pl-16"
         style="
+          padding-left: 84px;
           font-family: Inter;
           font-style: normal;
           font-weight: 500;
@@ -115,7 +114,6 @@
       <v-spacer></v-spacer>
       <v-text-field
         hide-details="auto"
-        full-width
         disabled
         solo
         flat
@@ -142,8 +140,8 @@
     ></v-divider>
     <v-list-item>
       <v-list-item-title
-        class="pl-16"
         style="
+          padding-left: 84px;
           font-family: Inter;
           font-style: normal;
           font-weight: 500;
@@ -157,7 +155,6 @@
       <v-spacer></v-spacer>
       <v-text-field
         hide-details="auto"
-        full-width
         disabled
         solo
         flat
@@ -183,16 +180,23 @@
         transform: rotate(-0.65deg);
       "
     ></v-divider>
-
-    <v-subheader
-      class="pt-16 pb-10 pl-16"
+    <v-divider
+      class="mt-8"
       style="
+        border: 1px solid rgba(127, 145, 155, 0.107845);
+        transform: rotate(-0.65deg);
+      "
+    ></v-divider>
+    <v-subheader
+      class="mt-8 pb-10"
+      style="
+        margin-left: 48px;
         font-family: Inter;
         font-style: normal;
         font-weight: bold;
         font-size: 16px;
         line-height: 19px;
-        color: rgb(86 95 101);
+        color: #7f919b;
       "
     >
       Vendor
@@ -200,8 +204,8 @@
 
     <v-list-item>
       <v-list-item-title
-        class="pl-16"
         style="
+          padding-left: 84px;
           font-family: Inter;
           font-style: normal;
           font-weight: 500;
@@ -215,7 +219,6 @@
       <v-spacer></v-spacer>
       <v-text-field
         hide-details="auto"
-        full-width
         disabled
         solo
         flat
@@ -242,8 +245,8 @@
     ></v-divider>
     <v-list-item>
       <v-list-item-title
-        class="pl-16"
         style="
+          padding-left: 84px;
           font-family: Inter;
           font-style: normal;
           font-weight: 500;
@@ -257,7 +260,6 @@
       <v-spacer></v-spacer>
       <v-text-field
         hide-details="auto"
-        full-width
         disabled
         solo
         flat
@@ -284,8 +286,8 @@
     ></v-divider>
     <v-list-item>
       <v-list-item-title
-        class="pl-16"
         style="
+          padding-left: 84px;
           font-family: Inter;
           font-style: normal;
           font-weight: 500;
@@ -299,7 +301,6 @@
       <v-spacer></v-spacer>
       <v-text-field
         hide-details="auto"
-        full-width
         disabled
         solo
         flat
@@ -326,8 +327,8 @@
     ></v-divider>
     <v-list-item>
       <v-list-item-title
-        class="pl-16"
         style="
+          padding-left: 84px;
           font-family: Inter;
           font-style: normal;
           font-weight: 500;
@@ -341,7 +342,6 @@
       <v-spacer></v-spacer>
       <v-text-field
         hide-details="auto"
-        full-width
         disabled
         solo
         flat
@@ -369,8 +369,8 @@
     ></v-divider>
     <v-list-item>
       <v-list-item-title
-        class="pl-16"
         style="
+          padding-left: 84px;
           font-family: Inter;
           font-style: normal;
           font-weight: 500;
@@ -384,7 +384,6 @@
       <v-spacer></v-spacer>
       <v-text-field
         hide-details="auto"
-        full-width
         disabled
         solo
         flat
@@ -410,25 +409,87 @@
         transform: rotate(-0.65deg);
       "
     ></v-divider>
+    <v-btn
+      width="300"
+      dark
+      block
+      color="#311B92"
+      class="mt-16"
+      style="
+        margin-left: 76px;
+        width: 350px;
+        height: 54px;
+        box-shadow: 0px 12px 22px rgba(0, 0, 0, 0.24);
+        border-radius: 4px;
+      "
+    >
+      <simple-line-icons
+        style="width: 15.98px; height: 15.97px"
+        class="m-0 text--white"
+        icon="cursor"
+        no-svg
+      />
+      <span
+        class="pl-3 text-capitalize"
+        style="
+          font-family: Inter;
+          font-style: normal;
+          font-weight: 500;
+          font-size: 14px;
+          line-height: 17px;
+          text-align: center;
+          letter-spacing: 0.636364px;
+        "
+        >Send to Payables</span
+      >
+    </v-btn>
+
+    <div class="d-flex justify-left mt-12 ml-14">
+      <invoice-btn @activate="activateField" />
+    </div>
   </v-list>
 </template>
 
 <script>
+import SimpleLineIcons from "vue-simple-line";
+import InvoiceBtn from "./InvoiceBtn.vue";
+
 export default {
   name: "BasicData",
   data() {
     return {
-      //
+      changeState: true,
     };
+  },
+  components: {
+    SimpleLineIcons,
+    InvoiceBtn,
+  },
+
+  methods: {
+    activateField() {
+      return (this.changeState = !this.changeState);
+    },
   },
 };
 </script>
 
 <style scoped>
 .v-text-field {
-  width: 280px;
+  width: 260px;
 }
 .centered-input input {
   text-align: right;
+}
+i.sli-font {
+  font-size: 16px;
+  display: inline-block;
+}
+
+.v-btn--block {
+  display: flex;
+  flex: 1 0 auto;
+  min-width: 380px !important;
+  max-width: auto;
 }
 </style>
