@@ -4,7 +4,7 @@
       {{ chip }}
     </v-chip>
     <div
-    class="mt-3"
+      class="mt-3"
       style="
         width: 163px;
         height: 40px;

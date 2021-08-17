@@ -12,9 +12,33 @@
         class="elevation-0 table-text"
       >
         <template v-slot:[`item.transactionType`]="{ item }">
-          <v-chip x-small>
+          <v-chip
+            :color="`${
+              item.transactionType === 'expense' ? '#F9EED2' : '#D5F7EF'
+            }`"
+            :text-color="`${
+              item.transactionType === 'expense' ? '#E3AA1C' : '#2BD5AE'
+            }`"
+            x-small
+          >
             {{ item.transactionType }}
           </v-chip>
+        </template>
+        <template v-slot:[`item.status`]="{ item }">
+          <v-icon
+            small
+            :color="`${item.status === 'processed' ? '#2BD5AE' : '#E3AA1C'}`"
+          >
+            mdi-circle-medium
+          </v-icon>
+          <span>
+            {{ item.status }}
+          </span>
+        </template>
+        <template v-slot:[`item.date`]="{ item }">
+          <span>
+            {{ item.date | date }}
+          </span>
         </template>
       </v-data-table>
     </div>
@@ -32,7 +56,7 @@ export default {
           amount: 300000.0,
           ref: 300000.0,
           requester: "John Bello",
-          date: 45,
+          date: new Date(),
           status: "processing",
         },
         {
@@ -41,7 +65,7 @@ export default {
           amount: 400000.0,
           ref: 400000.0,
           requester: "Emma Thomas",
-          date: 45,
+          date: new Date(),
           status: "processed",
         },
         {
@@ -50,7 +74,7 @@ export default {
           amount: 100000.0,
           ref: 100000.0,
           requester: "Sussan Boma",
-          date: 45,
+          date: new Date(),
           status: "processed",
         },
         {
@@ -59,7 +83,7 @@ export default {
           amount: 250000.0,
           ref: 250000.0,
           requester: "John Bello",
-          date: 45,
+          date: new Date(),
           status: "pending",
         },
         {
@@ -68,7 +92,7 @@ export default {
           amount: 150000.0,
           ref: 150000.0,
           requester: "Pat Ede",
-          date: 45,
+          date: new Date(),
           status: "processing",
         },
         {
@@ -77,7 +101,7 @@ export default {
           amount: 3000.0,
           ref: 3000.0,
           requester: "Obinna Nwafor",
-          date: 45,
+          date: new Date(),
           status: "pending",
         },
       ],

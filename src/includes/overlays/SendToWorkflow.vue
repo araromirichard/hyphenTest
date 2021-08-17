@@ -27,6 +27,8 @@
       </v-card-title>
       <template class="d-flex">
         <v-select
+          :menu-props="{ bottom: true, offsetY: true }"
+          :items="dropDownItems"
           style="
             background: #ffffff;
             border: 1px solid rgba(212, 216, 223, 0.377431);
@@ -101,7 +103,12 @@
 export default {
   data() {
     return {
-      //
+      dropDownItems: [
+        "Approval by MD & Snr. Managers",
+        "Dynamic discount by location and...",
+        "Online sales bank account recon…",
+        "Match Invoice PO to records…",
+      ],
     };
   },
 };

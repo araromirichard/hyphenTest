@@ -43,6 +43,11 @@
             {{ item.id }}
           </router-link>
         </template>
+        <template v-slot:[`item.date`]="{ item }">
+          <span>
+            {{ item.date | date }}
+          </span>
+        </template>
       </v-data-table>
     </div>
   </div>
@@ -59,7 +64,7 @@ export default {
           amount: 300000.0,
           ref: 300000.0,
           requester: "John Bello",
-          date: 45,
+          date: new Date(),
           status: "processing",
         },
         {
@@ -68,7 +73,7 @@ export default {
           amount: 400000.0,
           ref: 400000.0,
           requester: "Emma Thomas",
-          date: 45,
+          date: new Date(),
           status: "processed",
         },
         {
@@ -77,7 +82,7 @@ export default {
           amount: 100000.0,
           ref: 100000.0,
           requester: "Sussan Boma",
-          date: 45,
+          date: new Date(),
           status: "processed",
         },
         {
@@ -86,7 +91,7 @@ export default {
           amount: 250000.0,
           ref: 250000.0,
           requester: "John Bello",
-          date: 45,
+          date: new Date(),
           status: "pending",
         },
         {
@@ -95,7 +100,7 @@ export default {
           amount: 150000.0,
           ref: 150000.0,
           requester: "Pat Ede",
-          date: 45,
+          date: new Date(),
           status: "processing",
         },
         {
@@ -104,7 +109,7 @@ export default {
           amount: 3000.0,
           ref: 3000.0,
           requester: "Obinna Nwafor",
-          date: 45,
+          date: new Date(),
           status: "pending",
         },
       ],

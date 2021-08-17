@@ -37,6 +37,43 @@
             {{ item.status }}
           </span>
         </template>
+        <template v-slot:[`item.date`]="{ item }">
+          <span>
+            {{ item.date | date }}
+          </span>
+        </template>
+        <template v-slot:[`item.action`]="{}" class="d-flex justify-center">
+          <v-btn
+            @click="loadRoute"
+            exact-path
+            rounded
+            depressed
+            dark
+            small
+            color="#2BD5AE"
+            class="text-lowercase px-2 mr-2"
+            style="color: #311b92"
+          >
+            view
+          </v-btn>
+          <v-btn
+            rounded
+            depressed
+            dark
+            small
+            color="#311B92"
+            class="text-lowercase px-2"
+            >review</v-btn
+          >
+        </template>
+        <template v-slot:[`item.id`]="{ item }">
+          <router-link
+            :to="{ name: 'Invoice', params: { id: item.id } }"
+            tag="tr"
+          >
+            {{ item.id }}
+          </router-link>
+        </template>
       </v-data-table>
     </div>
   </div>
@@ -54,9 +91,9 @@ export default {
           amount: 300000.0,
           ref: "#EXP084492",
           requester: "John Bello",
-          date: 45,
+          date: new Date(),
           status: "processing",
-          action: "view",
+          action: "",
         },
         {
           id: 2,
@@ -64,9 +101,9 @@ export default {
           amount: 400000.0,
           ref: "#EXP084492",
           requester: "Emma Thomas",
-          date: 45,
+          date: new Date(),
           status: "processed",
-          action: "view",
+          action: "",
         },
         {
           id: 3,
@@ -74,9 +111,9 @@ export default {
           amount: 100000.0,
           ref: "#EXP084492",
           requester: "Sussan Boma",
-          date: 45,
+          date: new Date(),
           status: "processed",
-          action: "view",
+          action: "",
         },
         {
           id: 4,
@@ -84,9 +121,9 @@ export default {
           amount: 250000.0,
           ref: "#EXP084492",
           requester: "John Bello",
-          date: 45,
+          date: new Date(),
           status: "In review",
-          action: "view",
+          action: "",
         },
         {
           id: 5,
@@ -94,9 +131,9 @@ export default {
           amount: 150000.0,
           ref: "#EXP084492",
           requester: "Pat Ede",
-          date: 45,
+          date: new Date(),
           status: "review needed",
-          action: "view",
+          action: "",
         },
         {
           id: 6,
@@ -104,9 +141,9 @@ export default {
           amount: 3000.0,
           ref: "#EXP084492",
           requester: "Obinna Nwafor",
-          date: 45,
+          date: new Date(),
           status: "pending",
-          action: "view",
+          action: "",
         },
       ],
       headers: [
@@ -152,7 +189,13 @@ export default {
           value: "requester",
         },
         { text: "Date", class: "primary--text", value: "date" },
-        { text: "Action", class: "primary--text", value: "action" },
+        {
+          text: "Action",
+          class: "primary--text",
+          value: "action",
+          sortable: false,
+          align: "center",
+        },
       ],
     };
   },
