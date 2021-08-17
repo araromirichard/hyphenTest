@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <v-card flat height="275px">
+      <v-card flat height="285px">
         <v-card-title>
           <img :src="require('@/assets/cashBundle.svg')" style="padding: 6px" />
           <span class="card-title">Scheduled Payments</span>
@@ -9,7 +9,7 @@
           <span class="payment-total">450,000.00</span>
         </v-card-title>
         <v-card-text
-          style="height: 40px; background: rgba(127, 145, 155, 0.052607)"
+          style="height: 36px; background: rgba(127, 145, 155, 0.052607)"
         ></v-card-text>
         <v-data-table
           dense

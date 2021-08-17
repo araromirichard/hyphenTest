@@ -37,16 +37,6 @@
             {{ item.status }}
           </span>
         </template>
-        <template v-slot:[`item.id`]="{ item }">
-          <router-link
-            :to="{ name: 'Invoice', params: { id: item.id } }"
-            tag="tr"
-          >
-            <tr>
-              <td>{{ item.id }}</td>
-            </tr>
-          </router-link>
-        </template>
       </v-data-table>
     </div>
   </div>
@@ -66,6 +56,7 @@ export default {
           requester: "John Bello",
           date: 45,
           status: "processing",
+          action: "view",
         },
         {
           id: 2,
@@ -75,6 +66,7 @@ export default {
           requester: "Emma Thomas",
           date: 45,
           status: "processed",
+          action: "view",
         },
         {
           id: 3,
@@ -84,6 +76,7 @@ export default {
           requester: "Sussan Boma",
           date: 45,
           status: "processed",
+          action: "view",
         },
         {
           id: 4,
@@ -93,6 +86,7 @@ export default {
           requester: "John Bello",
           date: 45,
           status: "In review",
+          action: "view",
         },
         {
           id: 5,
@@ -102,6 +96,7 @@ export default {
           requester: "Pat Ede",
           date: 45,
           status: "review needed",
+          action: "view",
         },
         {
           id: 6,
@@ -111,6 +106,7 @@ export default {
           requester: "Obinna Nwafor",
           date: 45,
           status: "pending",
+          action: "view",
         },
       ],
       headers: [

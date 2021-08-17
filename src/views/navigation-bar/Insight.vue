@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="pl-4">
     <v-row>
       <v-col cols="2">
         <v-row class="d-flex flex-column">
@@ -7,10 +7,21 @@
             <div class="justify-start d-flex">
               <img
                 :src="require('@/assets/insights-icon.svg')"
-                style="padding-top: 250px; padding-left: 22px"
+                style="margin-top: 162px; margin-left: 22px"
               />
 
-              <h6 class="text-h5 header-title pl-4" style="padding-top: 250px">
+              <h6
+                class="text-h5 header-title ml-4"
+                style="
+                  margin-top: 162px;
+                  font-family: Inter;
+                  font-style: normal;
+                  font-weight: normal;
+                  font-size: 18px;
+                  line-height: 22px;
+                  color: #596a73;
+                "
+              >
                 First Steps
               </h6>
             </div>
@@ -18,7 +29,14 @@
           <v-col class="pt-0 mt-0">
             <p
               class="hint pt-1 mt-0 pl-5 mx-0"
-              style="text-align: justify; text-justify: none"
+              style="
+                font-family: Inter;
+                font-style: normal;
+                font-weight: normal;
+                font-size: 12px;
+                line-height: 20px;
+                color: #7f919b;
+              "
             >
               Follow these steps to complete setting up your account
             </p>
@@ -26,15 +44,41 @@
           <v-col class="pt-0 mt-0">
             <div>
               <template>
-                <h6 class="progress-bar-title">Account status</h6>
+                <span
+                  class="pl-6"
+                  style="
+                    font-family: Inter;
+                    font-style: normal;
+                    font-weight: 600;
+                    font-size: 10px;
+                    line-height: 12px;
+                    text-align: center;
+                    color: #16be98;
+                  "
+                  >Account status</span
+                >
                 <v-progress-linear
                   color="#16BE98"
                   value="40"
-                  height="20"
+                  height="16"
+                  width="30"
                   rounded
-                  style="background-color: #f9eed2"
+                  background-color="#F9EED2"
                 ></v-progress-linear>
-                <h6 class="sub-text-info">40% completed</h6>
+                <span
+                  class="pl-6"
+                  style="
+                    font-family: Inter;
+                    font-style: normal;
+                    font-weight: 600;
+                    font-size: 10px;
+                    line-height: 12px;
+                    text-align: center;
+                    letter-spacing: 0.530303px;
+                    color: #7f919b;
+                  "
+                  >40% completed</span
+                >
               </template>
               <div class="pl-6 pt-8">
                 <v-chip
@@ -60,19 +104,89 @@
                 </p>
               </div>
             </div>
+
             <!-- side-card component -->
-            <div>
-              <SideCard />
+            <div class="pl-4">
+              <v-divider
+                class="mb-6 mt-3"
+                style="
+                  width: 194px;
+                  height: 1px;
+                  border: 1px dashed #f9eed2;
+                  margin-left: 5px;
+                "
+              ></v-divider>
+              <SideCard
+                Text="Complete your pBot AI powered email address name"
+                chip="step 2"
+              />
+              <v-divider
+                class="mb-6 mt-3"
+                style="
+                  width: 194px;
+                  height: 1px;
+                  border: 1px dashed #f9eed2;
+                  margin-left: 5px;
+                "
+              ></v-divider>
+              <SideCard
+                Text="Create your first workflow, choose a template"
+                chip="step 3"
+              />
+              <v-divider
+                class="mb-6 mt-3"
+                style="
+                  width: 194px;
+                  height: 1px;
+                  border: 1px dashed #f9eed2;
+                  margin-left: 5px;
+                "
+              ></v-divider>
+              <SideCard
+                Text="Invite relevant colleagues and partners to your pbot account "
+                chip="step 4"
+              />
+              <v-divider
+                class="mb-6 mt-3"
+                style="
+                  width: 194px;
+                  height: 1px;
+                  border: 1px dashed #f9eed2;
+                  margin-left: 5px;
+                "
+              ></v-divider>
             </div>
           </v-col>
         </v-row>
       </v-col>
       <v-col cols="10">
         <div>
-          <h1 class="text-h4 pl-4" style="padding-top: 124px; color: #311b92">
+          <h1
+            class="pl-4"
+            style="
+              font-family: Inter;
+              font-style: normal;
+              font-weight: normal;
+              font-size: 24px;
+              line-height: 29px;
+              color: #311b92;
+              padding-top: 88px;
+            "
+          >
             Welcome Bunmi
           </h1>
-          <p class="text-h5 pl-4" style="padding-bottom: 49px; color: #7f919b">
+          <p
+            class="mt-2 pl-4"
+            style="
+              padding-bottom: 49px;
+              font-family: Inter;
+              font-style: normal;
+              font-weight: normal;
+              font-size: 18px;
+              line-height: 22px;
+              color: #7f919b;
+            "
+          >
             Here are a few things to do today
           </p>
         </div>
@@ -87,7 +201,7 @@
             >
               <v-row>
                 <v-col>
-                  <v-card-title class="text-subtitle-2 py-8 px-3">{{
+                  <v-card-title class="text-subtitle-2 py-8 px-2">{{
                     card.title
                   }}</v-card-title>
                   <v-card-text
@@ -153,7 +267,7 @@
             <v-row>
               <v-col>
                 <!-- account-summary component -->
-                <account-summary />
+                <account-summary class="mb-16" />
               </v-col>
               <v-col>
                 <!-- info-summary component -->
@@ -166,7 +280,7 @@
           <!-- recent-process-table component -->
           <v-col cols="9">
             <div>
-              <recent-process-table />
+              <recent-process-table class="mb-6" />
             </div>
           </v-col>
         </v-row>
@@ -208,19 +322,6 @@ export default {
 </script>
 
 <style scoped>
-.header-title {
-  height: 22px;
-  left: 13px;
-  top: 167px;
-  font-family: Inter;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 14px;
-  line-height: 22px;
-  /* identical to box height */
-
-  color: #596a73;
-}
 .progress-bar-title {
   font-family: Inter;
   font-style: normal;
@@ -238,17 +339,6 @@ export default {
 
 .progress-determinant {
   border-radius: 14px;
-}
-.sub-text-info {
-  font-family: Inter;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 10px;
-  line-height: 12px;
-  text-align: center;
-  letter-spacing: 0.530303px;
-
-  color: #7f919b;
 }
 
 .v-card__title {
@@ -282,5 +372,8 @@ export default {
   border: 1px solid #f9eed2;
   border-width: thin 0 0 0;
   transition: inherit;
+}
+determinate {
+  border-radius: 14px !important;
 }
 </style>

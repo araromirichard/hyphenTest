@@ -3,11 +3,16 @@
     <div>
       <v-card flat>
         <v-card-title>
-          <img :src="require('@/assets/Opp-arrows.svg')" style="padding: 6px" />
+          <img :src="require('@/assets/Opp-arrows.svg')" style="padding: 8px" />
           <span class="card-title">Recent Processes</span>
           <v-spacer></v-spacer>
-          <span class="payment-total">view all</span>
+          <v-btn plain class="pr-8 text-capitalize"
+            ><span class="payment-total">view all</span></v-btn
+          >
         </v-card-title>
+        <v-card-text
+          style="height: 36px; background: rgba(127, 145, 155, 0.052607)"
+        ></v-card-text>
         <v-data-table
           dense
           :headers="headers"
@@ -17,6 +22,28 @@
           item-key="referenceID"
           class="elevation-0 table-text"
         >
+          <template v-slot:[`item.budget`]="{ item }">
+            <v-chip
+              :color="`${item.budget === 'marketing' ? '#F9EED2' : '#D5F7EF'}`"
+              :text-color="`${
+                item.budget === 'marketing' ? '#E3AA1C' : '#2BD5AE'
+              }`"
+              x-small
+            >
+              {{ item.budget }}
+            </v-chip>
+          </template>
+          <template v-slot:[`item.status`]="{ item }">
+            <v-icon
+              small
+              :color="`${item.status === 'processed' ? '#E3AA1C' : '#2BD5AE'}`"
+            >
+              mdi-circle-medium
+            </v-icon>
+            <span>
+              {{ item.status }}
+            </span>
+          </template>
         </v-data-table>
       </v-card>
     </div>
@@ -33,7 +60,7 @@ export default {
           referenceId: "a151-e52924f7d2a4",
           description: "Payment for cloud Services",
           amount: 23000.0,
-          status: "Proceed",
+          status: "Processed",
           type: "Invoice",
           budget: "marketing",
         },
@@ -41,7 +68,7 @@ export default {
           referenceId: "a151-e52924f7d2a4",
           description: "Payment for cloud Services",
           amount: 23000.0,
-          status: "Proceed",
+          status: "Processing",
           type: "Invoice",
           budget: "marketing",
         },
@@ -49,7 +76,7 @@ export default {
           referenceId: "a151-e52924f7d2a4",
           description: "Payment for cloud Services",
           amount: 23000.0,
-          status: "Proceed",
+          status: "Processed",
           type: "Invoice",
           budget: "marketing",
         },
@@ -57,7 +84,7 @@ export default {
           referenceId: "a151-e52924f7d2a4",
           description: "Payment for cloud Services",
           amount: 23000.0,
-          status: "Proceed",
+          status: "In review",
           type: "Invoice",
           budget: "marketing",
         },
@@ -65,15 +92,7 @@ export default {
           referenceId: "a151-e52924f7d2a4",
           description: "Payment for cloud Services",
           amount: 23000.0,
-          status: "Proceed",
-          type: "Invoice",
-          budget: "marketing",
-        },
-        {
-          referenceId: "a151-e52924f7d2a4",
-          description: "Payment for cloud Services",
-          amount: 23000.0,
-          status: "Proceed",
+          status: "Processed",
           type: "Invoice",
           budget: "marketing",
         },

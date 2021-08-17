@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="22px" height="22px" viewBox="0 0 22 22" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 54.1 (76490) - https://sketchapp.com -->
+    <title>Group</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+        <g id="outline/payments" transform="translate(-1.000000, -1.000000)" stroke="#000000">
+            <g id="Group" transform="translate(2.000000, 2.000000)">
+                <path d="M20,10 C20,15.5226316 15.5863158,20 10.0636842,20 C4.54105263,20 2.29631579,16.4357895 0,13.6842105 L0,13.6842105 M0,10 C0,4.47736842 4.45473684,0 9.96842105,0 C15.003135,0 17.2723301,2.8918824 19.3951885,5.56171292 L19.6977413,5.94127048 C19.7984489,6.06706198 19.8991076,6.19201373 20,6.31578947 L20,6.31578947 M1.95399252e-14,18.9473684 L1.95399252e-14,13.6842105 L5.26315789,13.6842105 M20,1.05263158 L20,6.31578947 L14.7368421,6.31578947" id="Path"></path>
+                <path d="M9.9824,6 L9.9824,14 L9.9824,6 Z M11.8336,7.4 L9.0844,7.4 C8.3752,7.4 7.8,7.9828 7.8,8.7 C7.8,9.418 8.3752,9.9992 9.0844,9.9992 L10.918,9.9992 C11.6264,9.9992 12.2,10.5816 12.2,11.2992 C12.2,12.0172 11.6264,12.6 10.918,12.6 L7.8,12.6" id="Shape"></path>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -162,7 +162,7 @@
             <v-switch
               flat
               dense
-              class="pl-4"
+              class="pl-4 mb-1"
               color="#16be98"
               v-model="autoProcess"
               label="Auto process"
@@ -172,7 +172,7 @@
                 flat
                 dense
                 value="true"
-                class="px-4"
+                class="px-4 mb-1"
                 :color="`${(hasColor = true ? '#16BE98' : '')}`"
                 v-model="dialog"
                 label="Send to workflow"
@@ -187,7 +187,7 @@
             >
               <send-to-workflow />
             </v-dialog>
-            <v-chip class="mt-6" x-small> workflow name… </v-chip>
+            <v-chip class="my-auto" small> workflow name… </v-chip>
             <v-spacer></v-spacer>
             <v-btn color="#2BD5AE" class="my-2 export-btn mr-9" elevation="3"
               ><span class="material-icons pr-1"> import_export </span

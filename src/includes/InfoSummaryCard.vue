@@ -1,23 +1,25 @@
 <template>
   <div>
     <div class="pb-3">
-      <v-card flat>
+      <v-card flat height="152">
         <v-card-title>
           <img :src="require('@/assets/Persons.svg')" style="padding: 6px" />
           <span class="card-title">Stateholder</span>
           <v-spacer></v-spacer>
-          <span class="add">+add</span>
+          <v-btn plain class="text-lowercase">
+            <span class="add pr-5">+add</span>
+          </v-btn>
         </v-card-title>
         <div two-line>
           <div>
             <v-row
-              class="text-h5 pl-6 pb-0 card-text text-bold"
+              class="text-h5 pl-6 pb-0 pt-6 card-text text-bold"
               v-model="payees"
             >
               <v-col>{{ payees }}</v-col>
               <v-col>{{ coWorkers }}</v-col>
               <v-spacer></v-spacer>
-              <v-col class="text-right"
+              <v-col class="text-right pr-14"
                 ><v-icon color="#7F919B">mdi-chevron-right</v-icon></v-col
               >
             </v-row>
@@ -30,17 +32,17 @@
       </v-card>
     </div>
     <div class="pt-3">
-      <v-card flat>
+      <v-card flat height="166">
         <v-card-title>
           <img :src="require('@/assets/Naira.svg')" style="padding: 6px" />
           <span class="card-title">Account Balance</span>
         </v-card-title>
         <div two-line>
           <div>
-            <v-row class="text-h5 pl-6 pb-0 card-text" v-model="payees">
+            <v-row class="text-h5 pl-6 pb-0 pt-6 card-text" v-model="payees">
               <v-col>{{ bankBalance }}</v-col>
               <v-spacer></v-spacer>
-              <v-col class="text-right"
+              <v-col class="text-right pr-14"
                 ><v-icon color="#7F919B">mdi-chevron-right</v-icon></v-col
               >
             </v-row>
