@@ -179,6 +179,7 @@
               ></v-switch>
             </template>
             <v-dialog
+              @close="closeDialog"
               elevation="0"
               v-model="dialog"
               max-width="360"
@@ -289,6 +290,11 @@ export default {
         },
       ],
     };
+  },
+  methods: {
+    closeDialog() {
+      this.dialog = !this.dialog;
+    },
   },
 };
 </script>

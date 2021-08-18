@@ -23,7 +23,9 @@
           >Add to workflow</span
         >
         <v-spacer></v-spacer>
-        <v-icon class="text-bolder" color="#596A73"> mdi-close </v-icon>
+        <v-icon tag="button" @click="close" class="text-bolder" color="#596A73">
+          mdi-close
+        </v-icon>
       </v-card-title>
       <template class="d-flex">
         <v-select
@@ -110,6 +112,11 @@ export default {
         "Match Invoice PO to records…",
       ],
     };
+  },
+  methods: {
+    close() {
+      this.$emit("clicked");
+    },
   },
 };
 </script>

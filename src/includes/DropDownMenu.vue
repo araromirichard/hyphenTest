@@ -48,15 +48,16 @@
         "
       >
         <v-list>
+          <ListMenu />
           <v-list-item
-            active-class="active"
             v-for="inboxMenu in inboxMenus"
             :key="inboxMenu.title"
+            v-bind="attrs"
+            v-on="on"
+            active-class="active"
             link
-            v-model="dialog"
           >
             <v-list-item-content>
-              <!-- <router-link :to="inboxMenu.path"> -->
               <v-list-item-title
                 style="
                   font-family: Inter;
@@ -82,46 +83,33 @@
               >
                 {{ inboxMenu.subtitle }}
               </v-list-item-subtitle>
-              <!-- </router-link> -->
             </v-list-item-content>
             <v-icon small style="mix-blend-mode: normal; opacity: 0.5">
               {{ inboxMenu.icon }}</v-icon
             >
           </v-list-item>
         </v-list>
-
       </v-card>
-      <v-dialog
-              elevation="0"
-              v-model="dialog"
-              max-width="360"
-              overlay-color="#301F78"
-              overlay-opacity="0.282397"
-            >
-             Over Lay here
-            </v-dialog>
     </v-menu>
   </div>
 </template>
 
 <script>
+import ListMenu from "@/includes/overlays/ListMenu.vue";
+
 export default {
+  name: "DropDown",
+  components: {
+    ListMenu,
+  },
   data() {
     return {
-      dialog: false,
       inboxMenus: [
-        {
-          title: "Upload",
-          subtitle: "pdf or jpg invoice",
-          icon: "mdi-file-upload-outline ",
-          path: "#",
-        },
-
         {
           title: "Form",
           subtitle: "create form",
           icon: "mdi-text-box-outline ",
-          path: "forms",
+          path: "#",
         },
 
         {
