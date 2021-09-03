@@ -31,7 +31,7 @@
             style="
               width: 209px;
               height: 54px;
-              margin-right: 57px;
+              margin-right: 300px;
               margin-top: 30px;
               background: #311b92;
               box-shadow: 0px 12px 22px rgba(0, 0, 0, 0.24);
@@ -122,6 +122,8 @@
           <template class="mt-6">
             <v-card-action class="d-flex justify-end mt-2 mr-9">
               <v-btn
+                link
+                to="/workflow/rules-edit"
                 dark
                 width="121"
                 height="45"
@@ -142,6 +144,7 @@
     </v-row>
     <v-row>
       <v-card
+        class="mb-16"
         width="1407"
         min-height="990"
         elevation="4"
@@ -201,7 +204,7 @@
         <!-- -----------------------expansion-panel begins ------------------------------->
         <expansion-panel style="margin-bottom: 35px" />
         <!-- -----------------------expansion-panel ends ------------------------------->
-        <span class="noWorkFlowTitle">
+        <span class="noWorkFlowTitle" style="font-weight: 900; font-size: 19px">
           {{ Rules ? `Your rules` : `Your workflow(s)` }}
         </span>
         <span class="noWorkFlowText">
@@ -322,27 +325,6 @@
             textTwo="23"
             textThree="0"
           />
-          <single-rule
-            style="margin-left: 43px; margin-top: 28px"
-            title="Dynamic discount by location & MOQ"
-            :textOne="dateValue() | date"
-            textTwo="151"
-            textThree="0"
-          />
-          <single-rule
-            style="margin-left: 43px; margin-top: 28px"
-            title="Loan Pre-Qualification, low income"
-            :textOne="dateValue() | date"
-            textTwo="203"
-            textThree="0"
-          />
-          <single-rule
-            style="margin-left: 43px; margin-top: 28px"
-            title="Loan Pre-Qualification, low income"
-            :textOne="dateValue() | date"
-            textTwo="203"
-            textThree="0"
-          />
         </template>
       </v-card>
     </v-row>
@@ -359,7 +341,14 @@ export default {
     return {
       dialog: false,
       Rules: true,
-      ruleCardItems: [],
+      // cards: [
+      //   {
+      //     icons: ["mdi-pencil-outline", "mdi-content-copy", "mdi-delete"],
+      //     paths: ["/workflow/rules-edit", "#", "#"
+
+      //     ],
+      //   },
+      // ]
     };
   },
   methods: {
@@ -369,6 +358,9 @@ export default {
     dateValue() {
       return new Date();
     },
+    // pushRoute() {
+    //   $router.push("/workflow/rules-edit");
+    // },
   },
 };
 </script>

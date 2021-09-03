@@ -54,6 +54,14 @@ const routes = [
     },
   },
   {
+    path: "/workflow/rules-edit",
+    name: "WorkflowRulesEdit",
+    components: {
+      default: () => import("@/views/workflow/RulesEdit.vue"),
+      MainLayout,
+    },
+  },
+  {
     path: "/inbox",
     name: "Inbox",
     components: {
