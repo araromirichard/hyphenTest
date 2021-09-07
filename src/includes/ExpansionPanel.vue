@@ -1,15 +1,12 @@
 <template>
-  <div style="width: 1407px">
-    <v-expansion-panels>
-      <v-expansion-panel>
-        <v-expansion-panel-header style="width: 1407px">
-          Item
-        </v-expansion-panel-header>
-        <v-expansion-panel-content :value="visible">
+  <div style="background: #f0f0fa; width: 1407px">
+    <v-card elevation="0" style="background: #f9fafa; mix-blend-mode: normal">
+      <v-expand-transition mode="out-in">
+        <div v-show="show">
           <h6
             style="
               margin-left: 42px;
-              margin-top: 25px;
+              padding-top: 25px;
               font-family: Inter;
               font-style: normal;
               font-weight: bold;
@@ -36,67 +33,148 @@
             Start with any of our pre-composed workflows below or create your
             own in minutes
           </p>
-          <div>
+          <div class="d-flex mb-10">
             <v-card
               width="120"
               height="120"
               style="
+                margin-left: 42px;
+                margin-top: 22px;
                 background: #7aebe7;
                 mix-blend-mode: normal;
-                opacity: 0.5;
+                opacity: 0.8;
                 border-radius: 8px;
               "
             >
-              <div>
-                <img
-                  style="
-                    margin-left: 48px;
-                    margin-right: 47px;
-                    margin-top: 44px;
-                  "
-                  :src="require('@/assets/pbot_icons/cardFile.svg')"
-                  alt=""
-                />
-              </div>
-              <v-card-text> </v-card-text>
+              <img
+                style="margin-left: 48px; margin-right: 47px; margin-top: 44px"
+                :src="require('@/assets/pbot_icons/cardFile.svg')"
+                alt=""
+              />
+
+              <v-card-text
+                style="
+                  margin-top: 30px;
+                  font-family: Inter;
+                  font-style: normal;
+                  font-weight: normal;
+                  font-size: 12px;
+                  line-height: 15px;
+                  text-align: center;
+                  color: #7f919b;
+                "
+                >Transaction approval
+              </v-card-text>
+            </v-card>
+            <v-card
+              width="120"
+              height="120"
+              style="
+                margin-left: 30px;
+                margin-top: 22px;
+                background: #66d5ff;
+                mix-blend-mode: normal;
+                opacity: 0.8;
+                border-radius: 8px;
+              "
+            >
+              <img
+                style="margin-left: 48px; margin-right: 47px; margin-top: 44px"
+                :src="require('@/assets/pbot_icons/cardEnvelop.svg')"
+                alt=""
+              />
+
+              <v-card-text
+                style="
+                  margin-top: 30px;
+                  font-family: Inter;
+                  font-style: normal;
+                  font-weight: normal;
+                  font-size: 12px;
+                  line-height: 15px;
+                  text-align: center;
+                  color: #7f919b;
+                "
+              >
+                Transaction reporting</v-card-text
+              >
+            </v-card>
+            <v-card
+              width="120"
+              height="120"
+              style="
+                margin-left: 30px;
+                margin-top: 22px;
+                background: #9f66ff;
+                mix-blend-mode: normal;
+                opacity: 0.8;
+                border-radius: 8px;
+              "
+            >
+              <img
+                style="margin-left: 48px; margin-right: 47px; margin-top: 44px"
+                :src="require('@/assets/pbot_icons/cardPerson.svg')"
+                alt=""
+              />
+
+              <v-card-text
+                style="
+                  margin-top: 30px;
+                  font-family: Inter;
+                  font-style: normal;
+                  font-weight: normal;
+                  font-size: 12px;
+                  line-height: 15px;
+                  text-align: center;
+                  color: #7f919b;
+                "
+                >AML/KYC monitoring rule
+              </v-card-text>
+            </v-card>
+            <v-card
+              width="120"
+              height="120"
+              style="
+                margin-left: 30px;
+                margin-top: 22px;
+                background: #ff9766;
+                mix-blend-mode: normal;
+                opacity: 0.8;
+                border-radius: 8px;
+              "
+            >
+              <img
+                style="margin-left: 48px; margin-right: 47px; margin-top: 44px"
+                :src="require('@/assets/pbot_icons/cardBank.svg')"
+                alt=""
+              />
+
+              <v-card-text
+                style="
+                  margin-top: 30px;
+                  font-family: Inter;
+                  font-style: normal;
+                  font-weight: normal;
+                  font-size: 12px;
+                  line-height: 15px;
+                  text-align: center;
+                  color: #7f919b;
+                "
+                >Bank account reconciliation
+              </v-card-text>
             </v-card>
           </div>
-        </v-expansion-panel-content>
-      </v-expansion-panel>
-    </v-expansion-panels>
-    <!-- <v-card
-      slot="header"
-      flat
-      class="d-flex"
-      style="
-        background: #f9fafa;
-        width: 1407px;
-        height: 28px;
-        justify-content: center;
-      "
-      @click="visible = !visible"
-    >
-      <simple-line-icons
-        :icon="visible ? 'arrow-down' : 'arrow-up'"
-        color="#7F919B"
-        style="font-size: 12px"
-        class="pt-3 pr-3"
-        no-svg
-      />
-
-      <span
-        style="
-          font-family: Inter;
-          font-style: normal;
-          font-weight: 500;
-          font-size: 12px;
-          color: #7f919b;
-        "
-        class="pt-2"
-      >
-        collapse</span
-      >
-    </v-card> -->
+        </div>
+      </v-expand-transition>
+      <div class="d-flex justify-center mx-auto">
+        <v-btn block plain @click="show = !show" class="text-lowercase">
+          <v-icon class="pr-4">{{
+            show ? "mdi-chevron-up" : "mdi-chevron-down"
+          }}</v-icon>
+          collapse
+        </v-btn>
+      </div>
+    </v-card>
   </div>
 </template>
 
@@ -107,7 +185,7 @@ export default {
   name: "Expansion",
   data() {
     return {
-      visible: true,
+      show: false,
     };
   },
   components: {

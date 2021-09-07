@@ -49,13 +49,14 @@
         <v-stepper
           style="top: 92px; left: 44px"
           elevation="0"
+          width="1250"
           min-height="806"
           color="#301F78"
           v-model="e6"
           vertical
         >
-          <v-stepper-step color="#311B92" :complete="e6 > 1" step="1">
-            <v-span
+          <v-stepper-step editable color="#311B92" :complete="e6 > 1" step="1">
+            <span
               style="
                 margin-top: 40px;
                 font-family: Inter;
@@ -67,7 +68,7 @@
               "
             >
               Choose workflow trigger
-            </v-span>
+            </span>
             <span
               class="mt-6"
               style="
@@ -85,52 +86,84 @@
           </v-stepper-step>
 
           <v-stepper-content step="1">
-            <v-card flat color="#ffffff" class="mb-12 d-flex" height="200px">
-              <v-row class="mt-6">
+            <v-card flat color="#ffffff" class="d-flex" height="200px">
+              <div
+                class="mt-6 flex-column pr-5"
+                v-for="(card, Index) in cards"
+                :key="Index"
+                @click="selectItem(Index)"
+              >
                 <v-card
-                  class="ml-5"
+                  :class="{ active: Index === activeItem }"
+                  class="justify-center notActive"
                   flat
-                  width="100"
-                  height="72"
-                  style="border: 1px solid rgba(48, 31, 120, 0.07)"
+                  width="110"
+                  height="80"
+                  style="border-radius: 8px"
                 >
-                  <img
-                    style="#301f78"
-                    :src="require('@/assets/pbot_icons/cardIcons.png')"
-                    alt="card-icon"
-                /></v-card>
-                <v-card
-                  class="ml-5"
-                  flat
-                  width="100"
-                  height="72"
-                  style="border: 1px solid rgba(48, 31, 120, 0.07)"
-                ></v-card>
-                <v-card
-                  class="ml-5"
-                  flat
-                  width="100"
-                  height="72"
-                  style="border: 1px solid rgba(48, 31, 120, 0.07)"
-                ></v-card>
-                <v-card
-                  class="ml-5"
-                  flat
-                  width="100"
-                  height="72"
-                  style="
-                    border: 1px solid rgba(48, 31, 120, 0.07);
-                    border-radius: 8px;
-                  "
-                ></v-card>
-              </v-row>
+                  <icon-base width="22" height="22" icon-name="WorkflowCard"
+                    ><icon-workflow-card
+                      style="margin-left: 40px; margin-top: 28px"
+                    />
+                  </icon-base>
+                </v-card>
+                <div class="mt-2">
+                  <h5 class="cardTitle">
+                    {{ card }}
+                  </h5>
+                  <h6 v-if="card === 'Form'" class="spanText mt-1">
+                    Process form <br />
+                    submissions
+                  </h6>
+                  <h6 v-else-if="card === 'Email'" class="spanText mt-1">
+                    Process emailed <br />
+                    invoice
+                  </h6>
+                  <h6 v-else class="spanText mt-1">
+                    Process bank <br />
+                    transactions
+                  </h6>
+                </div>
+              </div>
             </v-card>
+            <template class="my-7">
+              <v-select
+                :menu-props="{ bottom: true, offsetY: true }"
+                :items="dropDownItems"
+                style="
+                  background: #ffffff;
+                  border: 1px solid rgba(212, 216, 223, 0.377431);
+                  box-sizing: border-box;
+                  border-radius: 3px;
+                  width: 223px;
+                  height: 50px;
+                "
+                class="justify-center flex-column custom-placeholer-color"
+                flat
+                outlined
+                hide-details="auto"
+                placeholder="Select a form"
+              >
+                <template slot="prepend-inner">
+                  <icon-base width="22" height="22" icon-name="WorkflowCard"
+                    ><icon-workflow-card style="margin-right: 17px" />
+                  </icon-base>
+                </template>
+                <template slot="append">
+                  <v-icon class="pl-2">mdi-menu-down</v-icon>
+                </template>
+              </v-select>
+            </template>
             <v-btn
               @click="e6 = 2"
               dark
-              width="121"
-              height="45"
+              flat
+              elevation="0"
+              width="125"
+              height="55"
               style="
+                margin-top: 26px;
+                margin-bottom: 73px;
                 background: #311b92;
                 box-shadow: 0px 12px 22px rgba(0, 0, 0, 0.24);
                 border-radius: 4px;
@@ -149,7 +182,7 @@
                 no-svg
               />
               <span
-                class="text-capitalize pl-3"
+                class="text-capitalize pl-3 py-4"
                 style="
                   font-family: Inter;
                   font-style: normal;
@@ -166,14 +199,40 @@
           </v-stepper-content>
 
           <v-stepper-step :complete="e6 > 2" step="2">
-            Configure analytics for this app
+            <span
+              style="
+                margin-top: 40px;
+                font-family: Inter;
+                font-style: normal;
+                font-weight: 500;
+                font-size: 18px;
+                line-height: 19px;
+                color: #311b92;
+              "
+            >
+              Compose workflow
+            </span>
+            <span
+              class="mt-6"
+              style="
+                font-family: Inter;
+                font-style: normal;
+                font-weight: 200;
+                font-size: 14px;
+                line-height: 15px;
+                letter-spacing: 0.45px;
+                color: #596a73;
+              "
+              >Select items from your data source and compose how it should be
+              handled by pbot</span
+            >
           </v-stepper-step>
 
           <v-stepper-content step="2">
             <v-card
               color="grey lighten-1"
-              class="mb-12"
-              height="200px"
+              class="mb-12 mt-11"
+              height="132px"
             ></v-card>
             <v-btn color="primary" @click="e6 = 3"> Continue </v-btn>
             <v-btn text> Cancel </v-btn>
@@ -211,14 +270,28 @@
 
 <script>
 import SimpleLineIcons from "vue-simple-line";
+import IconWorkflowCard from "../components/icons/IconWorkflowCard.vue";
 
 export default {
   data() {
     return {
       e6: 1,
+      cards: ["Form", "Bank", "Email", "Bank"],
+      activeItem: null,
+      dropDownItems: [
+        "Expense reinbursement ",
+        "Vendor onboarding",
+        "Payment request",
+        "Petty cash request",
+      ],
     };
   },
-  components: { SimpleLineIcons },
+  components: { SimpleLineIcons, IconWorkflowCard },
+  methods: {
+    selectItem(Index) {
+      this.activeItem = Index;
+    },
+  },
 };
 </script>
 
@@ -232,11 +305,34 @@ export default {
     0px 1px 10px 0px rgb(0 0 0 / 3%) !important;
 }
 
-/* .step-title {
+.cardTitle {
   font-family: "Inter";
   font-style: normal;
   font-weight: 500;
-  font-size: 16px;
-  line-height: 19px;
-} */
+  font-size: 14px;
+  line-height: 15px;
+  color: rgb(89, 106, 115);
+  text-align: center;
+}
+.spanText {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 10px;
+  line-height: 14px;
+  text-align: center;
+  letter-spacing: 0.45px;
+  color: #7f919b;
+}
+.notActive {
+  border: 1px solid rgba(48, 31, 120, 0.07);
+}
+.active {
+  border: 1px solid #301f78;
+}
+.v-text-field fieldset,
+.v-text-field .v-input__control {
+  color: inherit;
+  min-height: 50px !important;
+}
 </style>

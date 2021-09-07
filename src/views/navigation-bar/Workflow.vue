@@ -178,7 +178,6 @@
                 </v-btn>
               </v-tabs>
             </template>
-            <template> </template>
           </v-card>
         </template>
         <div
@@ -188,8 +187,12 @@
             background: rgba(127, 145, 155, 0.052607);
           "
         >
-          <!-- <span
+          <h5
+            v-if="Rules"
+            class="mr-5"
             style="
+              padding-left: 40px;
+              padding-top: 21px;
               font-family: Inter;
               font-style: normal;
               font-weight: normal;
@@ -199,7 +202,7 @@
             "
           >
             Start with a template or Make your own rules below
-          </span> -->
+          </h5>
         </div>
         <!-- -----------------------expansion-panel begins ------------------------------->
         <expansion-panel style="margin-bottom: 35px" />
