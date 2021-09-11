@@ -3,7 +3,7 @@
     class="icon"
     width="22"
     height="22"
-    viewBox="0 0 22 22"
+    viewBox="0 0 23 23"
     fill="#7F919B"
     xmlns="http://www.w3.org/2000/svg"
   >
@@ -14,7 +14,9 @@
 </template>
 
 <script>
-export default {};
+export default {
+  name: "workflowCard",
+};
 </script>
 <style scoped>
 .icon:current {

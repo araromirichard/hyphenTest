@@ -7,6 +7,7 @@ import DateFilter from "./filters/date";
 
 Vue.config.productionTip = false;
 
+//register date filter
 Vue.filter("date", DateFilter);
 
 new Vue({

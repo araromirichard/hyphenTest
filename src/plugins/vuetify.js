@@ -12,6 +12,7 @@ export default new Vuetify({
         error: "#FF5252",
         info: "#2196F3",
         success: "#4CAF50",
+        highlight: "#e8f9f6",
         warning: "#FFC107",
         primer: "#FEFCF8",
         heading: "#596A73",

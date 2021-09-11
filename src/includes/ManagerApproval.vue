@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-card flat elevation="4" min-height="904" width="1300">
+    <v-card flat elevation="4" min-height="1200" width="1300">
       <v-card
         flat
         elevation="2"
@@ -101,11 +101,10 @@
                   height="80"
                   style="border-radius: 8px"
                 >
-                  <icon-base width="22" height="22" icon-name="WorkflowCard"
+                  <icon-base icon-name="workflowCard"
                     ><icon-workflow-card
                       style="margin-left: 40px; margin-top: 28px"
-                    />
-                  </icon-base>
+                  /></icon-base>
                 </v-card>
                 <div class="mt-2">
                   <h5 class="cardTitle">
@@ -145,9 +144,9 @@
                 placeholder="Select a form"
               >
                 <template slot="prepend-inner">
-                  <icon-base width="22" height="22" icon-name="WorkflowCard"
-                    ><icon-workflow-card style="margin-right: 17px" />
-                  </icon-base>
+                  <icon-base icon-name="workflowCard"
+                    ><icon-workflow-card style="margin-left: 17px"
+                  /></icon-base>
                 </template>
                 <template slot="append">
                   <v-icon class="pl-2">mdi-menu-down</v-icon>
@@ -157,7 +156,7 @@
             <v-btn
               @click="e6 = 2"
               dark
-              flat
+              text
               elevation="0"
               width="125"
               height="55"
@@ -198,7 +197,7 @@
             </v-btn>
           </v-stepper-content>
 
-          <v-stepper-step :complete="e6 > 2" step="2">
+          <v-stepper-step editable :complete="e6 > 2" step="2">
             <span
               style="
                 margin-top: 40px;
@@ -229,38 +228,117 @@
           </v-stepper-step>
 
           <v-stepper-content step="2">
-            <v-card
-              color="grey lighten-1"
-              class="mb-12 mt-11"
-              height="132px"
-            ></v-card>
-            <v-btn color="primary" @click="e6 = 3"> Continue </v-btn>
-            <v-btn text> Cancel </v-btn>
+            <div v-for="(card, i) in selectedCompareGroup" :key="i">
+              <ApprovalCard ref="ApprovalCard" />
+
+              <v-timeline style="margin-left: 30px">
+                <div class="d-flex">
+                  <v-menu bottom offset-y>
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-btn
+                        width="130"
+                        rounded
+                        depressed
+                        v-bind="attrs"
+                        v-on="on"
+                        class="mx-auto justify-center"
+                      >
+                        <v-icon class="pl-2" x-small>mdi-plus</v-icon>
+                        <span class="pr-2"> WITH </span>
+                      </v-btn>
+                    </template>
+                    <v-list>
+                      <v-list-item-group>
+                        <v-list-item
+                          v-for="(item, i) in comparisonType"
+                          :key="i"
+                        >
+                          <v-list-item-title @click="addApprovalCard">{{
+                            item
+                          }}</v-list-item-title>
+                        </v-list-item>
+                      </v-list-item-group>
+                    </v-list>
+                  </v-menu>
+                </div>
+              </v-timeline>
+            </div>
+            <v-btn
+              @click="e6 = 3"
+              dark
+              text
+              elevation="0"
+              width="125"
+              height="55"
+              style="
+                margin-top: 26px;
+                margin-bottom: 73px;
+                background: #311b92;
+                box-shadow: 0px 12px 22px rgba(0, 0, 0, 0.24);
+                border-radius: 4px;
+              "
+            >
+              <simple-line-icons
+                icon="arrow-right"
+                color="#FFFFFF"
+                style="
+                  font-family: simple-line-icons;
+                  font-style: normal;
+                  font-weight: normal;
+                  font-size: 16px;
+                  line-height: 16px;
+                "
+                no-svg
+              />
+              <span
+                class="text-capitalize pl-3 py-4"
+                style="
+                  font-family: Inter;
+                  font-style: normal;
+                  font-weight: 500;
+                  font-size: 14px;
+                  line-height: 17px;
+                  text-align: center;
+                  letter-spacing: 0.636364px;
+                  color: #ffffff;
+                "
+                >next</span
+              >
+            </v-btn>
           </v-stepper-content>
 
           <v-stepper-step :complete="e6 > 3" step="3">
-            Select an ad format and name ad unit
+            <span
+              style="
+                margin-top: 40px;
+                font-family: Inter;
+                font-style: normal;
+                font-weight: 500;
+                font-size: 18px;
+                line-height: 19px;
+                color: #311b92;
+              "
+            >
+              Execute action
+            </span>
+            <span
+              class="mt-6"
+              style="
+                font-family: Inter;
+                font-style: normal;
+                font-weight: 200;
+                font-size: 14px;
+                line-height: 15px;
+                letter-spacing: 0.45px;
+                color: #596a73;
+              "
+              >Choose an action to be performed by the above rule or create a
+              new action.</span
+            >
           </v-stepper-step>
 
           <v-stepper-content step="3">
-            <v-card
-              color="grey lighten-1"
-              class="mb-12"
-              height="200px"
-            ></v-card>
-            <v-btn color="primary" @click="e6 = 4"> Continue </v-btn>
-            <v-btn text> Cancel </v-btn>
-          </v-stepper-content>
-
-          <v-stepper-step step="4"> View setup instructions </v-stepper-step>
-          <v-stepper-content step="4">
-            <v-card
-              color="grey lighten-1"
-              class="mb-12"
-              height="200px"
-            ></v-card>
-            <v-btn color="primary" @click="e6 = 1"> Continue </v-btn>
-            <v-btn text> Cancel </v-btn>
+            <ExecuteActions style="margin-top: 42px" />
           </v-stepper-content>
         </v-stepper>
       </template>
@@ -269,8 +347,11 @@
 </template>
 
 <script>
+import { comparisonType } from "@/utils/ManagerApprovalOptions.js";
 import SimpleLineIcons from "vue-simple-line";
 import IconWorkflowCard from "../components/icons/IconWorkflowCard.vue";
+import ApprovalCard from "./ApprovalCard.vue";
+import ExecuteActions from "./ExecuteActions.vue";
 
 export default {
   data() {
@@ -284,12 +365,27 @@ export default {
         "Payment request",
         "Petty cash request",
       ],
+      selectedCompareGroup: [
+        {
+          ApprovalCard: 0,
+        },
+      ],
+      comparisonType,
     };
   },
-  components: { SimpleLineIcons, IconWorkflowCard },
+  components: {
+    SimpleLineIcons,
+    IconWorkflowCard,
+    ApprovalCard,
+    ExecuteActions,
+  },
   methods: {
     selectItem(Index) {
       this.activeItem = Index;
+    },
+    addApprovalCard() {
+      console.log(this.$refs.ApprovalCard);
+      this.selectedCompareGroup.push(this.$refs.ApprovalCard);
     },
   },
 };
@@ -330,9 +426,17 @@ export default {
 .active {
   border: 1px solid #301f78;
 }
-.v-text-field fieldset,
-.v-text-field .v-input__control {
-  color: inherit;
-  min-height: 50px !important;
+
+#chip {
+  padding: 10px;
+  font-size: 1rem !important;
+  font-weight: 700;
+  line-height: 1.5rem;
+  letter-spacing: 0.03125em !important;
+  font-family: "Inter", sans-serif !important;
+}
+.v-application .elevation-8 {
+  box-shadow: 0px 3px 5px -1px rgb(0 0 0 / 3%), 0px 6px 10px 0px rgb(0 0 0 / 3%),
+    0px 1px 18px 0px rgb(0 0 0 / 3%) !important;
 }
 </style>
