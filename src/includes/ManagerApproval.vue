@@ -55,7 +55,12 @@
           v-model="e6"
           vertical
         >
-          <v-stepper-step editable color="#311B92" :complete="e6 > 1" step="1">
+          <v-stepper-step
+            non-linear
+            color="#311B92"
+            :complete="e6 > 1"
+            step="1"
+          >
             <span
               style="
                 margin-top: 40px;
@@ -197,7 +202,7 @@
             </v-btn>
           </v-stepper-content>
 
-          <v-stepper-step editable :complete="e6 > 2" step="2">
+          <v-stepper-step non-linear :complete="e6 > 2" step="2">
             <span
               style="
                 margin-top: 40px;
