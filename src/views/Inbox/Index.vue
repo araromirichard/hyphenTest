@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <div v-if="isNotEmpty">
+    <div v-if="noInvoice">
       <v-row align="center" justify="end">
         <drop-down-menu />
       </v-row>
@@ -92,15 +92,22 @@
         <drop-down-menu />
       </v-row>
 
-      <v-card flat elevation="6" width="1340" height="674" class="ml-14">
-        <div class="d-flex mt-12 text-center" justify="center">
+      <v-card
+        flat
+        elevation="6"
+        max-width="1340"
+        min-height="674"
+        class="ml-14"
+      >
+        <div class="mt-12" justify="center">
           <v-card
             flat
-            width="1340"
+            max-width="100%"
             style="border-bottom: 1px solid rgba(127, 145, 155, 0.3)"
           >
             <v-tabs v-model="tab">
               <v-tab
+                class="mt-2"
                 v-for="item in items"
                 :key="item.tab"
                 style="
@@ -115,20 +122,20 @@
               >
 
               <v-tab style="color: #ff6a6a"
-                ><v-icon left color="#FF6A6A" small class="pr-1 mr-0"
+                ><v-icon left color="#FF6A6A" small class="pr-1 mt-2 mr-0"
                   >mdi-stop-circle-outline
                 </v-icon>
-                EXCEPTION
+                <span class="mt-2">EXCEPTION</span>
               </v-tab>
               <v-spacer></v-spacer>
-              <v-btn class="pt-4" plain>
-                <simple-line-icons left class="pr-1 m-0" icon="people" no-svg />
+              <v-btn class="pt-4 mt-1" plain>
+                <simple-line-icons left class="pr-1" icon="people" no-svg />
 
                 <b
                   style="
                     font-family: Inter;
                     font-style: normal;
-                    font-weight: 700;
+                    font-weight: 900;
                     font-size: 12px;
                     line-height: 20px;
                     letter-spacing: 0.55px;
@@ -138,8 +145,10 @@
                 ></v-btn
               >
               <v-btn
+                v-if="isClicked"
+                @click="toggleSearch"
                 plain
-                class="text-black pt-4"
+                class="text-black mt-1 pt-4"
                 style="
                   font-family: Inter;
                   font-style: normal;
@@ -154,11 +163,27 @@
                 search
                 <v-icon small right class="pr-1"> mdi-magnify </v-icon>
               </v-btn>
+              <v-expand-x-transition v-else>
+                <v-text-field
+                  v-model="search"
+                  @blur="isClicked = true && !search"
+                  class="seacrh-field mt-2 mr-2"
+                  dense
+                  clearable
+                  autofocus
+                  hide-details="true"
+                  persistent-placeholder
+                  placeholder="Search"
+                  append-icon="mdi-magnify"
+                  filled
+                >
+                </v-text-field>
+              </v-expand-x-transition>
             </v-tabs>
           </v-card>
         </div>
         <div>
-          <v-card flat class="switch-card d-flex">
+          <v-card width="100%" flat class="d-flex">
             <v-switch
               flat
               dense
@@ -167,27 +192,7 @@
               v-model="autoProcess"
               label="Auto process"
             ></v-switch>
-            <template>
-              <v-switch
-                flat
-                dense
-                value="true"
-                class="px-4 mb-1"
-                :color="`${(hasColor = true ? '#16BE98' : '')}`"
-                v-model="dialog"
-                label="Send to workflow"
-              ></v-switch>
-            </template>
-            <v-dialog
-              @close="closeDialog"
-              elevation="0"
-              v-model="dialog"
-              max-width="360"
-              overlay-color="#301F78"
-              overlay-opacity="0.282397"
-            >
-              <send-to-workflow />
-            </v-dialog>
+            <SendToWorkflowDialog @closeDialog="closeModal" />
             <v-chip class="mt-5" small
               ><span
                 class="
@@ -205,11 +210,11 @@
                   #7F919B;
                 "
               >
-                workflow name…
+                {{ workflowName }}
               </span>
             </v-chip>
             <v-spacer></v-spacer>
-            <v-btn color="#2BD5AE" class="my-2 export-btn mr-9" elevation="3"
+            <v-btn color="#2BD5AE" class="my-4 export-btn mr-9" elevation="3"
               ><span class="material-icons pr-1"> import_export </span
               ><span
                 style="
@@ -241,26 +246,20 @@ import TabDataTableForms from "../../components/TabDataTableForms.vue";
 import TabDataTableReviews from "../../components/TabDataTableReviews.vue";
 import DropDownMenu from "../../includes/DropDownMenu.vue";
 import SimpleLineIcons from "vue-simple-line";
-import SendToWorkflow from "../../includes/overlays/SendToWorkflow.vue";
+import SendToWorkflowDialog from "../../includes/overlays/SendToWorkflowDialog.vue";
 
 export default {
-  components: {
-    TabDataTableAll,
-    TabDataTableEmail,
-    TabDataTableReviews,
-    TabDataTableForms,
-    DropDownMenu,
-    SimpleLineIcons,
-    SendToWorkflow,
-  },
   name: "Inbox",
   data() {
     return {
       dialog: false,
       autoProcess: true,
       sendToWorkflow: true,
-      isNotEmpty: false,
+      workflowName: "workflow name…",
+      noInvoice: false,
+      isClicked: true,
       tab: 0,
+      search: "",
       items: [
         { tab: "All", content: "TabDataTableAll" },
         { tab: "Email", content: "TabDataTableEmail" },
@@ -291,17 +290,36 @@ export default {
       ],
     };
   },
+  components: {
+    TabDataTableAll,
+    TabDataTableEmail,
+    TabDataTableReviews,
+    TabDataTableForms,
+    DropDownMenu,
+    SimpleLineIcons,
+    SendToWorkflowDialog,
+  },
   methods: {
-    closeDialog() {
-      this.dialog = !this.dialog;
+    toggleSearch() {
+      this.isClicked = false;
+    },
+    closeModal(e) {
+      this.dialog = false;
+      this.workflowName = e;
+      console.log(e);
     },
   },
 };
 </script>
 
 <style scoped>
+.v-input .search-field .v-input__slot:before,
+.v-input .search-field .v-input__slot:after {
+  border: none !important;
+  border-color: transparent !important;
+}
 .transTotal {
-  font-family: Inter;
+  font-family: "Inter" sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 16px;
@@ -319,7 +337,7 @@ export default {
 }
 
 .export-btn {
-  font-family: Inter;
+  font-family: "Inter" sans-serif;
   font-style: normal;
   font-weight: 500;
   font-size: 10px;
@@ -346,7 +364,7 @@ i.sli-font {
   color: #301f78;
 }
 th {
-  font-family: Inter;
+  font-family: "Inter" sans-serif;
   font-style: normal;
   font-weight: bold;
   font-size: 12px;

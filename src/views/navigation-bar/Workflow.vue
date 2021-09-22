@@ -160,6 +160,8 @@
                 <v-tab>LOG</v-tab>
                 <v-spacer></v-spacer>
                 <v-btn
+                  v-if="isClicked"
+                  @click="toggleSearch"
                   plain
                   class="text-black pt-4"
                   style="
@@ -176,6 +178,23 @@
                   search
                   <v-icon small right class="pr-1"> mdi-magnify </v-icon>
                 </v-btn>
+
+                <v-expand-x-transition v-else>
+                  <v-text-field
+                    v-model="search"
+                    @blur="isClicked = true && !search"
+                    class="seacrh-field mt-2 mr-2"
+                    dense
+                    clearable
+                    autofocus
+                    hide-details="true"
+                    persistent-placeholder
+                    placeholder="Search"
+                    append-icon="mdi-magnify"
+                    filled
+                  >
+                  </v-text-field>
+                </v-expand-x-transition>
               </v-tabs>
             </template>
           </v-card>
@@ -344,14 +363,8 @@ export default {
     return {
       dialog: false,
       Rules: true,
-      // cards: [
-      //   {
-      //     icons: ["mdi-pencil-outline", "mdi-content-copy", "mdi-delete"],
-      //     paths: ["/workflow/rules-edit", "#", "#"
-
-      //     ],
-      //   },
-      // ]
+      isClicked: true,
+      search: "",
     };
   },
   methods: {
@@ -360,6 +373,9 @@ export default {
     },
     dateValue() {
       return new Date();
+    },
+    toggleSearch() {
+      this.isClicked = false;
     },
     // pushRoute() {
     //   $router.push("/workflow/rules-edit");

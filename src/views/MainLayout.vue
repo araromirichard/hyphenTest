@@ -103,7 +103,7 @@
               />
             </v-list-item-icon>
             <v-list-item-content>
-              <v-list-item-title class="navTxt">Payables</v-list-item-title>
+              <v-list-item-title class="navTxt">Settings</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
           <v-list-item nav link to="#" class="mx-auto">
@@ -114,7 +114,7 @@
               />
             </v-list-item-icon>
             <v-list-item-content>
-              <v-list-item-title class="navTxt">Payables</v-list-item-title>
+              <v-list-item-title class="navTxt">Help</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </v-list>
@@ -135,7 +135,7 @@ export default {
   data() {
     return {
       drawer: null,
-      noNavRoutes: ["Login", "SignUp"],
+      noNavRoutes: ["Login", "SignUp", "OnBoarding"],
     };
   },
 

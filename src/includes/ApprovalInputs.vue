@@ -7,7 +7,6 @@
       :value="rule.parameter"
       style="
         background: #ffffff;
-        border: 1px solid rgba(212, 216, 223, 0.377431);
         box-sizing: border-box;
         border-radius: 3px;
         width: 203px;

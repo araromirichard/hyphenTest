@@ -110,7 +110,7 @@
               <v-divider
                 class="mb-6 mt-3"
                 style="
-                  width: 194px;
+                  max-width: 194px;
                   height: 1px;
                   border: 1px dashed #f9eed2;
                   margin-left: 5px;
@@ -123,7 +123,7 @@
               <v-divider
                 class="mb-6 mt-3"
                 style="
-                  width: 194px;
+                  max-width: 194px;
                   height: 1px;
                   border: 1px dashed #f9eed2;
                   margin-left: 5px;
@@ -136,7 +136,7 @@
               <v-divider
                 class="mb-6 mt-3"
                 style="
-                  width: 194px;
+                  max-width: 194px;
                   height: 1px;
                   border: 1px dashed #f9eed2;
                   margin-left: 5px;
@@ -149,7 +149,7 @@
               <v-divider
                 class="mb-6 mt-3"
                 style="
-                  width: 194px;
+                  max-width: 194px;
                   height: 1px;
                   border: 1px dashed #f9eed2;
                   margin-left: 5px;
@@ -159,7 +159,7 @@
           </v-col>
         </v-row>
       </v-col>
-      <v-col cols="10">
+      <v-col class="pl-8">
         <div>
           <h1
             class="pl-4"
@@ -190,63 +190,58 @@
             Here are a few things to do today
           </p>
         </div>
-        <v-row style="margin-right: 50px">
-          <v-col v-for="card in cards" :key="card.title" cols="3" class="ml-4">
+        <div class="row d-flex mx-auto">
+          <div v-for="card in cards" :key="card.title" class="mb-4 mr-4">
             <v-card
-              max-width="300px"
-              min-height="150"
-              class="d-flex flex-column"
+              style="min-width: 350px"
+              class="d-flex flex-column px-2 mx-2"
               color="#FBF4E4"
               flat
             >
-              <v-row>
-                <v-col>
-                  <v-card-title class="text-subtitle-2 py-8 px-2">{{
-                    card.title
-                  }}</v-card-title>
-                  <v-card-text
-                    class="card-text pl-4"
-                    style="
-                      font-family: Inter;
-                      font-style: normal;
-                      font-weight: 900;
-                      font-size: 24px;
-                      line-height: 29px;
-                      text-transform: uppercase;
-                      color: #311b92;
-                    "
-                    v-if="card.title === 'Total Payments'"
-                  >
-                    N{{ card.text }}K
-                  </v-card-text>
-                  <v-card-text
-                    class="card-text pl-4"
-                    style="
-                      font-family: Inter;
-                      font-style: normal;
-                      font-weight: 900;
-                      font-size: 24px;
-                      line-height: 29px;
-                      text-transform: uppercase;
-                      color: #311b92;
-                    "
-                    v-else
-                  >
-                    {{ card.text }}
-                  </v-card-text>
-                </v-col>
-                <v-col class="d-flex flex-row justify-end pt-8 pr-8">
-                  <v-avatar size="56" color="white">
-                    <img
-                      style="height: 20px"
-                      :src="card.src"
-                      alt=""
-                    /> </v-avatar
-                ></v-col>
-              </v-row>
+              <div class="d-flex justify-space-between">
+                <v-card-title class="text-subtitle-1 py-5 pl-5">{{
+                  card.title
+                }}</v-card-title>
+
+                <v-avatar size="56" color="white mt-5 mr-5">
+                  <img style="height: 20px" :src="card.src" alt="" />
+                </v-avatar>
+              </div>
+              <div class="px-0 mx-0 pb-4 my-0">
+                <v-card-text
+                  class="py-0"
+                  style="
+                    font-family: Inter;
+                    font-style: normal;
+                    font-weight: 900;
+                    font-size: 24px;
+                    line-height: 29px;
+                    text-transform: uppercase;
+                    color: #311b92;
+                  "
+                  v-if="card.title === 'Total Payments'"
+                >
+                  N{{ card.text }}K
+                </v-card-text>
+                <v-card-text
+                  class="py-0"
+                  style="
+                    font-family: Inter;
+                    font-style: normal;
+                    font-weight: 900;
+                    font-size: 24px;
+                    line-height: 29px;
+                    text-transform: uppercase;
+                    color: #311b92;
+                  "
+                  v-else
+                >
+                  {{ card.text }}
+                </v-card-text>
+              </div>
               <div>
-                <v-divider></v-divider>
-                <v-btn large right plain color="#7F919B"
+                <v-divider class="pt-3 pb-2"></v-divider>
+                <v-btn class="pb-4" large right plain color="#7F919B"
                   >view
                   <v-icon
                     right
@@ -260,10 +255,10 @@
                 >
               </div>
             </v-card>
-          </v-col>
-        </v-row>
+          </div>
+        </div>
         <v-row>
-          <v-col cols="9" class="d-flex flex-row py-4 pl-6">
+          <v-col class="d-flex flex-row py-3 pl-6">
             <v-row>
               <v-col>
                 <!-- account-summary component -->
@@ -277,8 +272,10 @@
               </v-col>
             </v-row>
           </v-col>
+        </v-row>
+        <v-row>
           <!-- recent-process-table component -->
-          <v-col cols="9">
+          <v-col class="d-flex">
             <div>
               <recent-process-table class="mb-6" />
             </div>

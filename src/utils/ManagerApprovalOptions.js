@@ -12,6 +12,6 @@ const operators = [
   "Greater than",
   "Greater than or Equal to",
 ];
-const comparisonType = ["ALL Group", "ANY Group", "Service"];
+const comparisonType = ["ALL Group", "ANY Group"];
 
 module.exports = { formItems, operators, comparisonType };

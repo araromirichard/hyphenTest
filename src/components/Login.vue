@@ -1,8 +1,10 @@
 <template>
-  <v-card class="ma-auto elevation-0.5" width="514">
+  <v-card class="ma-auto my-auto elevation-2" max-width="514">
     <v-card-title
-      class="card-items text--secondary font-weight-bold pt-lg-16"
+      class="text--secondary font-weight-bold"
       style="
+        margin-left: 86px;
+        margin-top: 70px;
         font-family: Inter;
         font-style: normal;
         font-weight: bold;
@@ -12,11 +14,12 @@
         color: #596a73;
       "
     >
-      Sign in
+      <span class="mt-10 text--secondary">Sign in</span>
     </v-card-title>
     <v-form class="ma-auto" ref="form">
       <v-card-text class="card-items">
         <v-text-field
+          hide-details="auto"
           label="Your Name"
           single-line
           outlined
@@ -28,10 +31,11 @@
         ></v-text-field>
 
         <v-text-field
+          hide-details="auto"
           label="Password"
           single-line
           outlined
-          class="font-weight-regular text-subtitle-2 label--text pb-0 mb-0"
+          class="mt-8 font-weight-regular text-subtitle-2 label--text pb-0 mb-0"
           v-model="password"
           type="password"
           required
@@ -236,5 +240,9 @@ export default {
   letter-spacing: 0.278409px;
 
   color: #311b92;
+}
+.v-application .elevation-2 {
+  box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 3%), 0px 2px 2px 0px rgb(0 0 0 / 3%),
+    0px 1px 5px 0px rgb(0 0 0 / 9%);
 }
 </style>

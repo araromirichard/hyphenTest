@@ -2,7 +2,7 @@
   <v-row no-gutters>
     <v-col cols="12" sm="8" height="100%" class="d-flex justify-center">
       <v-scroll-y-transition leave-absolute mode="out-in">
-        <SignUp v-if="isSignup" />
+        <SignUp v-if="isSignup" class="ma-auto" />
         <Login v-else-if="isLogin" />
       </v-scroll-y-transition>
     </v-col>

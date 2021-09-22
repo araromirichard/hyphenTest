@@ -1,9 +1,11 @@
 <template>
   <div>
-    <v-card height="620" width="514">
+    <v-card class="mb-16 ma-auto elevation-2" max-width="514">
       <v-card-title
-        class="card-items text--secondary font-weight-bold pt-lg-16"
+        class="px-0 absolute"
         style="
+          margin-left: 86px;
+          margin-top: 58px;
           font-family: Inter;
           font-style: normal;
           font-weight: bold;
@@ -13,9 +15,9 @@
           color: #596a73;
         "
       >
-        Sign up
+        <span class="mt-10 text--secondary"> Sign up </span>
         <v-spacer></v-spacer>
-        /2
+        <span class="mt-10 text--disabled mr-16 pr-5">/2</span>
       </v-card-title>
       <v-form class="ma-auto" ref="form">
         <v-card-text class="card-items">
@@ -28,7 +30,7 @@
             required
             class="font-weight-regular text-subtitle-2 label--text pb-0"
             v-model="companyName"
-            :rules="companyName"
+            rules="companyName"
           ></v-text-field>
 
           <v-text-field
@@ -39,7 +41,7 @@
             v-model="country"
             type="text"
             required
-            :rules="countryRules"
+            rules="countryRules"
           ></v-text-field>
           <v-text-field
             label="Your accounting system"
@@ -59,7 +61,7 @@
             v-model="role"
             type="text"
             required
-            :rules="roleRules"
+            rules="roleRules"
           ></v-text-field>
         </v-card-text>
 
@@ -93,9 +95,9 @@
           </v-card-actions>
         </router-link>
       </v-form>
-      <div class="d-flex mx-auto justify-center pt-8 pb- card-items">
+      <div class="d-flex mx-auto justify-center pt-8 pb-16 card-items">
         <div class="hint">
-          <div class="py-auto d-flex align-content-center">
+          <div class="d-flex align-content-center" style="margin-bottom: 92px">
             <span class="span-text pl-6 py-auto">Already have an account?</span>
             <router-link
               to="login"
@@ -160,17 +162,16 @@ export default {
   font-weight: normal;
   font-size: 14px;
   line-height: 17px;
-  /* identical to box height */
   text-decoration: none;
   letter-spacing: 0.278409px;
-  /*float: right;*/
+  float: right;
   color: #301f78;
 
   mix-blend-mode: normal;
   opacity: 0.5;
 }
 .v-text-field >>> button {
-  font-size: 0.8em;
+  font-size: 1em;
 }
 
 /* .form-link {
@@ -225,5 +226,9 @@ export default {
 }
 .v-card__title {
   padding-bottom: 16px;
+}
+.v-application .elevation-2 {
+  box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 3%), 0px 2px 2px 0px rgb(0 0 0 / 3%),
+    0px 1px 5px 0px rgb(0 0 0 / 9%);
 }
 </style>

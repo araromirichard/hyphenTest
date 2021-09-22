@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div>
+    <div class="container--fluid">
       <v-card flat>
         <v-card-title>
           <img :src="require('@/assets/Opp-arrows.svg')" style="padding: 8px" />
@@ -23,13 +23,7 @@
           class="elevation-0 table-text"
         >
           <template v-slot:[`item.budget`]="{ item }">
-            <v-chip
-              :color="`${item.budget === 'marketing' ? '#F9EED2' : '#D5F7EF'}`"
-              :text-color="`${
-                item.budget === 'marketing' ? '#E3AA1C' : '#2BD5AE'
-              }`"
-              x-small
-            >
+            <v-chip class="px-4" color="#F9EED2" text-color="#E3AA1C" x-small>
               {{ item.budget }}
             </v-chip>
           </template>
@@ -66,35 +60,35 @@ export default {
         },
         {
           referenceId: "a151-e52924f7d2a4",
-          description: "Payment for cloud Services",
+          description: "Payroll for may",
           amount: 23000.0,
           status: "Processing",
           type: "Invoice",
-          budget: "marketing",
+          budget: "payroll",
         },
         {
           referenceId: "a151-e52924f7d2a4",
-          description: "Payment for cloud Services",
+          description: "Bootcamp for HR department",
           amount: 23000.0,
           status: "Processed",
           type: "Invoice",
-          budget: "marketing",
+          budget: "office",
         },
         {
           referenceId: "a151-e52924f7d2a4",
-          description: "Payment for cloud Services",
+          description: "New work desk supply",
           amount: 23000.0,
           status: "In review",
           type: "Invoice",
-          budget: "marketing",
+          budget: "material",
         },
         {
           referenceId: "a151-e52924f7d2a4",
-          description: "Payment for cloud Services",
+          description: "Training for sales team",
           amount: 23000.0,
           status: "Processed",
           type: "Invoice",
-          budget: "marketing",
+          budget: "material",
         },
       ],
       headers: [

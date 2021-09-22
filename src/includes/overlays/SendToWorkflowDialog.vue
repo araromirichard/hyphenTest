@@ -1,12 +1,24 @@
 <template>
-  <div>
-    <v-card
-      max-width="360"
-      height="300"
-      flat
-      class="m-0"
-      style="background: #fefcf8; border-radius: 8px"
-    >
+  <v-dialog v-model="dialog" persistent max-width="400">
+    <template v-slot:activator="{ on, attrs }">
+      <v-switch
+        v-bind="attrs"
+        v-on="on"
+        flat
+        dense
+        hide-details="true"
+        :value="dialog"
+        class="px-4 mb-1"
+        :color="`${(hasColor = true ? '#16BE98' : '')}`"
+        label="Send to workflow"
+      >
+      </v-switch>
+
+      <!-- <v-btn color="red lighten-2" dark v-bind="attrs" v-on="on">
+        Click Me
+      </v-btn> -->
+    </template>
+    <v-card flat class="m-0" style="background: #fefcf8; border-radius: 8px">
       <v-card-title
         class="mb-8"
         style="background: #ffffff; border-radius: 8px 8px 0px 0px"
@@ -23,24 +35,28 @@
           >Add to workflow</span
         >
         <v-spacer></v-spacer>
-        <v-icon tag="button" @click="close" class="text-bolder" color="#596A73">
+        <v-icon
+          tag="button"
+          @click="closeDialog"
+          class="text-bolder"
+          color="#596A73"
+        >
           mdi-close
         </v-icon>
       </v-card-title>
-      <template class="d-flex">
+      <template>
         <v-select
+          v-model="selectedWorkflow"
           :menu-props="{ bottom: true, offsetY: true }"
-          :items="dropDownItems"
+          :items="workflowSelected"
           style="
             background: #ffffff;
-            border: 1px solid rgba(212, 216, 223, 0.377431);
             box-sizing: border-box;
             border-radius: 3px;
-            width: 294px;
-            height: 40px;
+            width: 330px;
+            height: 54px;
           "
-          class="justify-center mx-8 custom-placeholer-color"
-          dense
+          class="justify-center mt-8 mx-8 custom-placeholer-color"
           flat
           outlined
           placeholder="Select Workflow"
@@ -63,7 +79,7 @@
       </template>
       <template>
         <v-card-text
-          class="px-8"
+          class="px-8 mt-4 text-justify"
           style="
             font-family: Inter;
             font-style: normal;
@@ -80,13 +96,15 @@
           action
         </v-card-text>
       </template>
-      <template class="mt-6">
-        <v-card-action class="d-flex justify-end mt-2 mr-9">
+      <template>
+        <v-card-actions class="d-flex justify-end mt-6 mr-9">
           <v-btn
+            @click="closeDialog"
             dark
             width="121"
             height="45"
             style="
+              margin-bottom: 36px;
               background: #311b92;
               box-shadow: 0px 12px 22px rgba(0, 0, 0, 0.24);
               border-radius: 4px;
@@ -95,17 +113,19 @@
             <v-icon>mdi-chevron-right</v-icon>
             <span>Next</span>
           </v-btn>
-        </v-card-action>
+        </v-card-actions>
       </template>
     </v-card>
-  </div>
+  </v-dialog>
 </template>
 
 <script>
 export default {
   data() {
     return {
-      dropDownItems: [
+      dialog: false,
+      selectedWorkflow: null,
+      workflowSelected: [
         "Approval by MD & Snr. Managers",
         "Dynamic discount by location and...",
         "Online sales bank account recon…",
@@ -114,35 +134,16 @@ export default {
     };
   },
   methods: {
-    close() {
-      this.$emit("clicked");
+    closeDialog() {
+      this.$emit("closeDialog", this.selectedWorkflow);
+      this.dialog = false;
     },
   },
 };
 </script>
 
-<style scoped>
-.custom-placeholer-color select::placeholder {
-  font-family: Inter !important;
-  font-style: normal !important;
-  font-weight: 600 !important;
-  font-size: 12px !important;
-  line-height: 24px !important;
-  /* identical to box height, or 200% */
-
-  color: #7f919b !important;
-}
-.v-menu__content {
-  box-shadow: none !important;
-}
-
-.innerSpan {
-  font-family: Inter;
-  font-style: normal;
-  font-weight: 800;
-  font-size: 12px;
-  line-height: 18px;
-  letter-spacing: 0.45px;
-  color: #7f919b;
+<style>
+input[type="checkbox" i] {
+  display: none !important;
 }
 </style>

@@ -111,7 +111,7 @@
         class="mt-4 mb-4"
         style="border: 1px solid rgba(48, 31, 120, 0.07)"
       ></v-divider>
-      <v-row class="ml-8 mb-4">
+      <!-- <v-row class="ml-8 mb-4">
         <v-card-text v-if="card.title === 'Approval by MD & Snr. Managers'">
           If <span v-html="amount" style="color: #16be98"></span> is greater
           than
@@ -157,7 +157,7 @@
           <span v-html="frequency" style="color: #16be98"></span>
           <span v-html="count" style="color: #16be98"></span>
         </v-card-text>
-      </v-row>
+      </v-row> -->
     </v-card>
   </div>
 </template>
@@ -178,26 +178,26 @@ export default {
   },
   data() {
     return {
-      order: "{{order_quanity}}",
-      figure2: "{{250}}",
-      figure3: "{{N20,000}}",
-      count: "{{+1}}",
-      paymentMtd: "{{cash_on_delivery}}",
-      location: "{{east}}",
-      discount: "{{discount}}",
-      frequency: "{{frequency}}",
-      percent: "{{2%}}",
-      KYC: "{{KYC}}",
-      transaction_source: "{{transaction_source}}",
-      ATM: "{{ATM}}",
-      salary: "{{salary}}",
-      spendCategorization: "{{spend categorization}}",
-      conservative: "{{conservative}}",
-      amount: "{{ amount }}",
-      approval: "{{ Bunmi A }}",
-      figure: "{{ N2,000,000 }}",
-      managers: "{{ Kayode A, Uche B, Ahmed M }}",
-      paymentDate: "{{ 23/05/2021 }}",
+      //order: "{{order_quanity}}",
+      //figure2: "{{250}}",
+      //figure3: "{{N20,000}}",
+      //count: "{{+1}}",
+      //paymentMtd: "{{cash_on_delivery}}",
+      //location: "{{east}}",
+      //discount: "{{discount}}",
+      //frequency: "{{frequency}}",
+      //percent: "{{2%}}",
+      //KYC: "{{KYC}}",
+      //transaction_source: "{{transaction_source}}",
+      //ATM: "{{ATM}}",
+      //salary: "{{salary}}",
+      //spendCategorization: "{{spend categorization}}",
+      //conservative: "{{conservative}}",
+      //amount: "{{ amount }}",
+      //approval: "{{ Bunmi A }}",
+      //figure: "{{ N2,000,000 }}",
+      //managers: "{{ Kayode A, Uche B, Ahmed M }}",
+      //paymentDate: "{{ 23/05/2021 }}",
       switch1: false,
       icons: [
         { title: "mdi-pencil-outline", path: "/workflow/rules-edit" },

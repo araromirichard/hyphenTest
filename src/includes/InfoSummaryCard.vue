@@ -1,38 +1,40 @@
 <template>
-  <div>
+  <div style="max-width: 390px">
     <div class="pb-3">
-      <v-card flat height="152">
-        <v-card-title>
-          <img :src="require('@/assets/Persons.svg')" style="padding: 6px" />
-          <span class="card-title">Stateholder</span>
-          <v-spacer></v-spacer>
-          <v-btn plain class="text-lowercase">
-            <span class="add pr-5">+add</span>
-          </v-btn>
-        </v-card-title>
-        <div two-line>
-          <div>
-            <v-row
-              class="text-h5 pl-6 pb-0 pt-6 card-text text-bold"
-              v-model="payees"
-            >
-              <v-col>{{ payees }}</v-col>
-              <v-col>{{ coWorkers }}</v-col>
-              <v-spacer></v-spacer>
-              <v-col class="text-right pr-14"
-                ><v-icon color="#7F919B">mdi-chevron-right</v-icon></v-col
+      <template>
+        <v-card flat>
+          <v-card-title>
+            <img :src="require('@/assets/Persons.svg')" style="padding: 6px" />
+            <span class="card-title">Stateholder</span>
+            <v-spacer></v-spacer>
+            <v-btn plain class="text-lowercase">
+              <span class="add pr-5">+add</span>
+            </v-btn>
+          </v-card-title>
+          <div two-line>
+            <div>
+              <v-row
+                class="text-h4 pl-6 pb-0 pt-6 card-text text-bold"
+                v-model="payees"
               >
-            </v-row>
-            <v-row class="text-subtitle-1 px-8 my-0">
-              <p class="pr-8">Payees</p>
-              <p class="pl-8">Co-workers</p>
-            </v-row>
+                <v-col class="px-2">{{ payees }}</v-col>
+                <v-col class="px-2">{{ coWorkers }}</v-col>
+                <v-spacer></v-spacer>
+                <v-col class="text-right pr-14"
+                  ><v-icon color="#7F919B">mdi-chevron-right</v-icon></v-col
+                >
+              </v-row>
+              <v-row class="text-subtitle-1 px-8 py-2 my-0">
+                <p class="pr-6">Payees</p>
+                <p class="pl-6">Co-workers</p>
+              </v-row>
+            </div>
           </div>
-        </div>
-      </v-card>
+        </v-card>
+      </template>
     </div>
     <div class="pt-3">
-      <v-card flat height="166">
+      <v-card flat max-height="166">
         <v-card-title>
           <img :src="require('@/assets/Naira.svg')" style="padding: 6px" />
           <span class="card-title">Account Balance</span>
@@ -46,7 +48,7 @@
                 ><v-icon color="#7F919B">mdi-chevron-right</v-icon></v-col
               >
             </v-row>
-            <v-row class="text-subtitle-1 px-8 my-0">
+            <v-row class="text-subtitle-1 px-8 py-2 my-0">
               <p class="pr-6">Kuda MFB Banks</p>
               <v-chip
                 color="#D5F7EF"
@@ -79,7 +81,7 @@ export default {
 
 <style scoped>
 p {
-  font-family: Inter;
+  font-family: "Inter" sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 12px;
@@ -89,10 +91,10 @@ p {
   color: #7e69d8;
 }
 .card-title {
-  font-family: Inter;
+  font-family: "Inter" sans-serif;
   font-style: normal;
   font-weight: bold;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 15px;
   /* identical to box height */
 
@@ -100,7 +102,7 @@ p {
 }
 
 .add {
-  font-family: Inter;
+  font-family: "Inter" sans-serif;
   font-style: normal;
   font-weight: bold;
   font-size: 12px;
@@ -111,7 +113,7 @@ p {
 }
 
 .card-text {
-  font-family: Inter;
+  font-family: "Inter" sans-serif;
   font-style: normal;
   font-weight: 900;
   font-size: 24px;

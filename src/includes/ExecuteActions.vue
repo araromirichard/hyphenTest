@@ -24,12 +24,23 @@
                 border-radius: 8px;
               "
             >
-              <!-- <img
-            src="@/assets/pbot_icons/rocket-pbot.png"
-            alt="Manager-approval-icon"
-          />
-            src="require('@/assets/pbot_icons/rocket-pbot.png')" -->
               <v-img
+                v-if="item.text == 'Add Custom'"
+                contain
+                src="@/assets/pbot_icons/cross.png"
+                width="24.06px"
+                height="24.1px"
+                style="
+                  position: absolute;
+                  width: 34.06px;
+                  height: 34.1px;
+                  left: 115px;
+                  top: 40px;
+                "
+              >
+              </v-img>
+              <v-img
+                v-else
                 contain
                 src="@/assets/pbot_icons/rocket-pbot.png"
                 width="24.06px"
@@ -95,33 +106,22 @@ export default {
     return {
       actions: [
         {
-          text: `Send
-                Payment`,
-          icon: "@/assets/pbot_icons/rocket-pbot.png",
+          text: "Send Payment",
         },
         {
-          text: `Add to
-                Payables`,
-          icon: "@/assets/pbot_icons/rocket-pbot.png",
+          text: "Add to Payables",
         },
         {
-          text: `Send
-            Notification`,
-          icon: "@/assets/pbot_icons/rocket-pbot.png",
+          text: "Send Notification",
         },
         {
-          text: `Update
-            ERP/Accounting`,
-          icon: "@/assets/pbot_icons/rocket-pbot.png",
+          text: "Update ERP/Accounting",
         },
         {
-          text: `Create
-                Document`,
-          icon: "@/assets/pbot_icons/rocket-pbot.png",
+          text: "Create Document",
         },
         {
-          text: `Add Custom`,
-          icon: "",
+          text: "Add Custom",
         },
       ],
       selectedAction: null,

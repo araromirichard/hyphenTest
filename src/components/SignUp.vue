@@ -1,9 +1,11 @@
 <template>
-  <div class="ma-auto">
-    <v-card class="ma-auto elevation-0.5" width="514" v-if="pageTwo">
+  <div>
+    <v-card class="mb-16 ma-auto elevation-2" max-width="514" v-if="pageTwo">
       <v-card-title
-        class="card-items text--secondary font-weight-bold pt-lg-16"
+        class="px-0"
         style="
+          margin-left: 86px;
+          margin-top: 58px;
           font-family: Inter;
           font-style: normal;
           font-weight: bold;
@@ -13,7 +15,7 @@
           color: #596a73;
         "
       >
-        Sign up
+        <span class="mt-10 text--secondary">Sign up</span>
       </v-card-title>
       <v-form class="ma-auto" ref="form">
         <v-card-text class="card-items">
@@ -52,10 +54,18 @@
           ></v-text-field>
 
           <v-text-field
-            label="Phone number"
+            hide-details="auto"
+            placeholder="Phone number"
             single-line
             outlined
-            class="font-weight-regular text-subtitle-2 label--text pb-0 mb-0"
+            class="
+              mb-2
+              font-weight-regular
+              text-subtitle-2
+              label--text
+              pb-0
+              mb-0
+            "
             v-model="phoneNumber"
             type="number"
             required
@@ -77,7 +87,7 @@
             width="346"
             height="54"
             color="primary"
-            elevation="20"
+            elevation="14"
             large
             class="text-capitalize"
             @click="
@@ -271,5 +281,9 @@ export default {
   letter-spacing: 0.278409px;
 
   color: #311b92;
+}
+.v-application .elevation-2 {
+  box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 3%), 0px 2px 2px 0px rgb(0 0 0 / 3%),
+    0px 1px 5px 0px rgb(0 0 0 / 9%);
 }
 </style>

@@ -64,8 +64,7 @@
         </template>
 
         <v-card
-          max-width="362"
-          height="508"
+          max-width="362px"
           flat
           class="m-0"
           style="background: #fefcf8; border-radius: 8px"
@@ -98,7 +97,6 @@
           <template class="d-flex">
             <v-text-field
               style="margin-left: 37px; margin-right: 31px"
-              label="File title"
               placeholder="File title"
               outlined
               >File title</v-text-field
@@ -106,20 +104,16 @@
             <template class="d-flex">
               <v-select
                 :menu-props="{ bottom: true, offsetY: true }"
-                :items="fileDownItems"
+                :items="fileUploadCategory"
                 style="
                   margin-left: 37px;
                   margin-right: 31px;
-                  background: #ffffff;
-                  border: 1px solid rgba(212, 216, 223, 0.377431);
-                  box-sizing: border-box;
                   border-radius: 3px;
                   width: 294px;
                   height: 40px;
                 "
                 class="justify-center mx-8 custom-placeholer-color"
                 flat
-                dense
                 outlined
                 placeholder="Select Workflow"
               >
@@ -171,12 +165,13 @@
           </template>
 
           <template class="mt-6">
-            <v-card-action class="d-flex justify-end mt-2 mr-9">
+            <v-card-actions class="d-flex justify-end mt-2 mr-9">
               <v-btn
                 dark
                 width="121"
                 height="45"
                 style="
+                  margin-bottom: 49px;
                   background: #311b92;
                   box-shadow: 0px 12px 22px rgba(0, 0, 0, 0.24);
                   border-radius: 4px;
@@ -203,7 +198,7 @@
                   >Upload</span
                 >
               </v-btn>
-            </v-card-action>
+            </v-card-actions>
           </template>
         </v-card>
       </v-dialog>
@@ -220,7 +215,12 @@ export default {
     return {
       dialog: false,
       showReview: true,
-      fileDownItems: ["Purchase order", "Reciept", "Good recieved", "Proforma"],
+      fileUploadCategory: [
+        "Purchase order",
+        "Reciept",
+        "Good recieved",
+        "Proforma",
+      ],
     };
   },
   components: {

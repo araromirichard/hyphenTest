@@ -89,14 +89,14 @@ const routes = [
   //     MainLayout,
   //   },
   // },
-  {
-    path: "/inbox/email",
-    name: "Email",
-    components: {
-      default: () => import("@/views/Inbox/Email.vue"),
-      MainLayout,
-    },
-  },
+  // {
+  //   path: "/inbox/email",
+  //   name: "Email",
+  //   components: {
+  //     default: () => import("@/views/Inbox/Email.vue"),
+  //     MainLayout,
+  //   },
+  // },
   {
     path: "/inbox/:id",
     name: "Invoice",

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div>
+    <v-layout>
       <v-data-table
         dense
         :headers="headers"
@@ -9,7 +9,7 @@
         disable-pagination
         @click="loadRoute"
         item-key="id"
-        width="1340"
+        width="1340px"
         class="elevation-0 table-text"
       >
         <!-- <template v-slot:[`item.id`]="{ item }"> </template> -->
@@ -27,55 +27,51 @@
           </v-chip>
         </template>
         <template v-slot:[`item.status`]="{ item }">
-          <v-icon
-            small
-            :color="`${item.status === 'processed' ? '#2BD5AE' : '#E3AA1C'}`"
-          >
-            mdi-circle-medium
-          </v-icon>
-          <span>
-            {{ item.status }}
-          </span>
+          <div class="d-flex">
+            <v-icon
+              small
+              :color="`${item.status === 'processed' ? '#2BD5AE' : '#E3AA1C'}`"
+            >
+              mdi-circle-medium
+            </v-icon>
+            <span>
+              {{ item.status }}
+            </span>
+          </div>
         </template>
         <template v-slot:[`item.date`]="{ item }">
           <span>
             {{ item.date | date }}
           </span>
         </template>
-        <template v-slot:[`item.action`]="{}" class="d-flex justify-center">
-          <v-btn
-            @click="loadRoute"
-            exact-path
-            rounded
-            depressed
-            dark
-            small
-            color="#2BD5AE"
-            class="text-lowercase px-2 mr-2"
-            style="color: #311b92"
-          >
-            view
-          </v-btn>
-          <v-btn
-            rounded
-            depressed
-            dark
-            small
-            color="#311B92"
-            class="text-lowercase px-2"
-            >review</v-btn
-          >
-        </template>
-        <template v-slot:[`item.id`]="{ item }">
-          <router-link
-            :to="{ name: 'Invoice', params: { id: item.id } }"
-            tag="tr"
-          >
-            {{ item.id }}
-          </router-link>
+        <template v-slot:[`item.action`]="{}">
+          <div class="d-flex">
+            <v-btn
+              @click="loadRoute"
+              exact-path
+              rounded
+              depressed
+              dark
+              small
+              color="#2BD5AE"
+              class="text-lowercase px-2 my-1 mr-2"
+              style="color: #311b92"
+            >
+              view
+            </v-btn>
+            <v-btn
+              rounded
+              depressed
+              dark
+              small
+              color="#311B92"
+              class="text-lowercase px-2 my-1"
+              >review</v-btn
+            >
+          </div>
         </template>
       </v-data-table>
-    </div>
+    </v-layout>
   </div>
 </template>
 
@@ -203,6 +199,18 @@ export default {
     loadRoute: function (id) {
       this.$router.push({ name: "Invoice", params: { id } });
     },
+    // computed: {
+    //   width() {
+    //     switch (this.$vuetify.breakpoint.name) {
+    //       case "sm":
+    //         return 500;
+    //       case "md":
+    //         return 800;
+    //       case "lg":
+    //         return 1340;
+    //     }
+    //   },
+    // },
   },
 
   // filters: {

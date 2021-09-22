@@ -46,49 +46,43 @@
 
           background: #ffffff;
         "
-      >
-        <v-list>
-          <ListMenu />
-          <v-list-item
-            v-for="inboxMenu in inboxMenus"
-            :key="inboxMenu.title"
-            v-bind="attrs"
-            v-on="on"
-            active-class="active"
-            link
-          >
-            <v-list-item-content>
-              <v-list-item-title
-                style="
-                  font-family: Inter;
-                  font-style: normal;
-                  font-weight: 600;
-                  font-size: 12px;
-                  line-height: 15px;
-                  color: #7f919b;
-                "
-                >{{ inboxMenu.title }}</v-list-item-title
+        ><v-list-item-group>
+          <v-list>
+            <ListMenu />
+            <v-list-item v-for="(item, index) in inboxMenus" :key="index">
+              <v-list-item-content>
+                <v-list-item-title
+                  style="
+                    font-family: Inter;
+                    font-style: normal;
+                    font-weight: 600;
+                    font-size: 12px;
+                    line-height: 15px;
+                    color: #7f919b;
+                  "
+                  >{{ item.title }}</v-list-item-title
+                >
+                <v-list-item-subtitle
+                  style="
+                    font-family: Inter;
+                    font-style: normal;
+                    font-weight: normal;
+                    font-size: 10px;
+                    line-height: 12px;
+                    color: #7f919b;
+                    mix-blend-mode: normal;
+                    opacity: 0.5;
+                  "
+                >
+                  {{ item.subtitle }}
+                </v-list-item-subtitle>
+              </v-list-item-content>
+              <v-icon small style="mix-blend-mode: normal; opacity: 0.5">
+                {{ item.icon }}</v-icon
               >
-              <v-list-item-subtitle
-                style="
-                  font-family: Inter;
-                  font-style: normal;
-                  font-weight: normal;
-                  font-size: 10px;
-                  line-height: 12px;
-                  color: #7f919b;
-                  mix-blend-mode: normal;
-                  opacity: 0.5;
-                "
-              >
-                {{ inboxMenu.subtitle }}
-              </v-list-item-subtitle>
-            </v-list-item-content>
-            <v-icon small style="mix-blend-mode: normal; opacity: 0.5">
-              {{ inboxMenu.icon }}</v-icon
-            >
-          </v-list-item>
-        </v-list>
+            </v-list-item>
+          </v-list>
+        </v-list-item-group>
       </v-card>
     </v-menu>
   </div>

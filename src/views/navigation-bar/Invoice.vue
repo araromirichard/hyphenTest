@@ -1,9 +1,9 @@
 <template>
   <v-row>
     <v-col
-      class="#faf2df full-height"
       cols="3"
-      style="width: 450px; background-color: #fffbf1"
+      class="#faf2df full-height"
+      style="max-width: 500px; background-color: #fffbf1"
     >
       <h6
         class="pt-13 pl-10"
@@ -24,44 +24,51 @@
         <BasicData />
       </v-row>
     </v-col>
-    <v-col class="full-height" cols="9">
-      <v-row>
-        <v-breadcrumbs :items="breadcrumbs">
-          <template v-slot:divider>
-            <v-icon class="px-0">mdi-chevron-right</v-icon>
-          </template>
-        </v-breadcrumbs>
-        <v-spacer></v-spacer>
-        <v-btn plain to="/inbox" class="mt-14">
-          <v-icon large color="#311b92">mdi-chevron-left</v-icon>
-          <span
-            style="
-              font-family: Inter;
-              font-style: normal;
-              font-weight: 700;
-              font-size: 16px;
-              line-height: 19px;
-              color: #311b92;
-            "
-            >Back</span
+    <v-col cols="9" class="full-height">
+      <v-layout class="d-flex flex-column">
+        <v-row>
+          <v-breadcrumbs :items="breadcrumbs" style="margin-left: 70px">
+            <template v-slot:divider>
+              <v-icon class="px-0">mdi-chevron-right</v-icon>
+            </template>
+          </v-breadcrumbs>
+          <v-spacer></v-spacer>
+          <v-btn plain to="/inbox" class="mt-14 mr-15">
+            <v-icon large color="#311b92">mdi-chevron-left</v-icon>
+            <span
+              style="
+                font-family: Inter;
+                font-style: normal;
+                font-weight: 700;
+                font-size: 16px;
+                line-height: 19px;
+                color: #311b92;
+              "
+              >Back</span
+            >
+          </v-btn>
+        </v-row>
+        <v-row class="mx-auto mt-10">
+          <v-card
+            elevation="3"
+            max-height="870px"
+            min-width="870px"
+            style="background-color: #ffffff"
           >
-        </v-btn>
-      </v-row>
-      <v-row>
-        <v-sheet
-          width="1000"
-          height="802"
-          color="white"
-          class="ml-16 d-flex flex-column justify-space-between align-center"
-        >
-          <v-img
-            width="650"
-            height="730"
-            src="@/assets/Simple-Invoice-Template-with-Shipping.png"
-          >
-          </v-img>
-        </v-sheet>
-      </v-row>
+            <v-sheet
+              color="white"
+              max-width="683px"
+              class="mx-auto my-14 align-center"
+            >
+              <v-img
+                cover
+                src="@/assets/Simple-Invoice-Template-with-Shipping.png"
+              >
+              </v-img>
+            </v-sheet>
+          </v-card>
+        </v-row>
+      </v-layout>
     </v-col>
   </v-row>
 </template>
@@ -106,12 +113,12 @@ export default {
 
 <style scoped>
 .col-3 {
-  flex: 0 0 30%;
-  max-width: 33%;
+  flex: 0 0 35%;
+  max-width: 40%;
 }
 .col-9 {
-  flex: 0 0 70%;
-  max-width: 67%;
+  flex: 0 0 65%;
+  max-width: 60%;
 }
 .v-divider--inset:not(.v-divider--vertical) {
   margin-left: -20px !important;
@@ -152,5 +159,10 @@ export default {
   list-style-type: none;
   margin-top: 42px;
   padding: 18px 70px;
+  font-size: large !important;
+}
+.v-application .elevation-3 {
+  box-shadow: 0px 3px 5px -1px rgb(0 0 0 / 3%), 0px 6px 10px 0px rgb(0 0 0 / 3%),
+    0px 1px 18px 0px rgb(0 0 0 / 3%) !important;
 }
 </style>
