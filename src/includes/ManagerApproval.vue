@@ -88,50 +88,6 @@
           <v-stepper-content step="1">
             <!-- select Data source for the workflow process -->
             <WorkflowDataSource />
-            <!-- <v-card flat color="#ffffff" class="d-flex" height="200px">
-              <div
-                class="mt-6 flex-column pr-5"
-                v-for="(dataItem, i) in dataSource"
-                :key="i"
-                @click="selectItem(i)"
-              >
-                <v-card
-                  :class="{ active: i === activeItem }"
-                  class="justify-center notActive"
-                  flat
-                  width="110"
-                  height="80"
-                  style="border-radius: 8px; cursor: pointer"
-                >
-                  <v-img
-                    class="mx-auto mt-7"
-                    contain
-                    width="22px"
-                    height="22px"
-                    src="@/assets/pbot_icons/wFlowTrigger1.png"
-                  >
-                  </v-img>
-                 
-                </v-card>
-                <div class="mt-2">
-                  <h5 class="cardTitle">
-                    {{ dataItem }}
-                  </h5>
-                  <h6 v-if="dataItem === 'Form'" class="spanText mt-1">
-                    Process form <br />
-                    submissions
-                  </h6>
-                  <h6 v-else-if="dataItem === 'Email'" class="spanText mt-1">
-                    Process emailed <br />
-                    invoice
-                  </h6>
-                  <h6 v-else class="spanText mt-1">
-                    Process bank <br />
-                    transactions
-                  </h6>
-                </div>
-              </div>
-            </v-card> -->
             <v-btn
               @click="e6 = 2"
               dark
@@ -208,7 +164,11 @@
 
           <v-stepper-content step="2">
             <div v-for="(card, i) in selectedCompareGroup" :key="i">
-              <ApprovalCard ref="ApprovalCard" />
+              <ApprovalCard
+                :comparisonType="card.comparisonType"
+                ref="ApprovalCard"
+                @checkApprovalCard="checkApprovalCard($event, i)"
+              />
 
               <v-timeline style="margin-left: 30px">
                 <div class="d-flex">
@@ -229,12 +189,13 @@
                     <v-list>
                       <v-list-item-group>
                         <v-list-item
-                          v-for="(item, i) in comparisonType"
-                          :key="i"
+                          v-for="(item, j) in comparisonType"
+                          :key="j"
                         >
-                          <v-list-item-title @click="addApprovalCard">{{
-                            item
-                          }}</v-list-item-title>
+                          <v-list-item-title
+                            @click="addApprovalCard(item, i)"
+                            >{{ item }}</v-list-item-title
+                          >
                         </v-list-item>
                       </v-list-item-group>
                     </v-list>
@@ -341,7 +302,8 @@ export default {
 
       selectedCompareGroup: [
         {
-          ApprovalCard: 0,
+          //ApprovalCard: 0,
+          comparisonType: "",
         },
       ],
       comparisonType,
@@ -354,9 +316,24 @@ export default {
     SimpleLineIcons,
   },
   methods: {
-    addApprovalCard() {
-      console.log(this.$refs.ApprovalCard);
-      this.selectedCompareGroup.push(this.$refs.ApprovalCard);
+    addApprovalCard(item, i) {
+      // console.log(this.$refs.ApprovalCard);
+      // this.selectedCompareGroup.push(this.$refs.ApprovalCard);
+      console.log({ item, i });
+      if (this.selectedCompareGroup.length - 1 === i) {
+        this.selectedCompareGroup.push({ comparisonType: item });
+      } else {
+        this.selectedCompareGroup[i + 1].comparisonType = item;
+      }
+    },
+    checkApprovalCard(e, i) {
+      console.log({ e, i });
+      if (!e) {
+        if (this.selectedCompareGroup.length === 1) {
+          return;
+        }
+        this.selectedCompareGroup.splice(i, 1);
+      }
     },
   },
 };
