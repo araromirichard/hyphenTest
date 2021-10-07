@@ -340,12 +340,9 @@
           </v-row>
         </v-card>
         <template>
-          <single-rule
+          <SingleRule
             style="margin-left: 43px; margin-top: 28px"
-            title="Approval by MD & Snr. Managers"
-            :textOne="dateValue() | date"
-            textTwo="23"
-            textThree="0"
+            :createdAt="dateValue() | date"
           />
         </template>
       </v-card>

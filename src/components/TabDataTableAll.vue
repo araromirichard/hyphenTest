@@ -1,5 +1,55 @@
 <template>
   <div>
+    <div>
+      <v-card width="100%" flat class="d-flex">
+        <v-switch
+          flat
+          dense
+          class="pl-4 mb-2"
+          color="#16be98"
+          v-model="autoProcess"
+          label="Auto process"
+        ></v-switch>
+        <SendToWorkflowDialog @closeDialog="closeModal" />
+        <v-chip class="mt-5" small
+          ><span
+            class="
+              font-family:
+              Inter;
+              font-style:
+              normal;
+              font-weight:
+              normal;
+              font-size:
+              10px;
+              line-height:
+              10px;
+              color:
+              #7F919B;
+            "
+          >
+            {{ workflowName }}
+          </span>
+        </v-chip>
+        <v-spacer></v-spacer>
+        <v-btn color="#2BD5AE" class="my-4 export-btn mr-9" elevation="3"
+          ><span class="material-icons pr-1"> import_export </span
+          ><span
+            style="
+              font-family: Inter;
+              font-style: normal;
+              font-weight: 500;
+              font-size: 11px;
+              line-height: 12px;
+              text-align: center;
+              letter-spacing: 0.636364px;
+              color: #301f78;
+            "
+            >Export</span
+          >
+        </v-btn>
+      </v-card>
+    </div>
     <v-layout>
       <v-data-table
         dense
@@ -76,9 +126,13 @@
 </template>
 
 <script>
+import SendToWorkflowDialog from "../includes/overlays/SendToWorkflowDialog.vue";
 export default {
   data() {
     return {
+      autoProcess: true,
+      sendToWorkflow: true,
+      workflowName: "workflow name…",
       id: this.$route.params.id,
       inbox: [
         {
@@ -199,26 +253,50 @@ export default {
     loadRoute: function (id) {
       this.$router.push({ name: "Invoice", params: { id } });
     },
-    // computed: {
-    //   width() {
-    //     switch (this.$vuetify.breakpoint.name) {
-    //       case "sm":
-    //         return 500;
-    //       case "md":
-    //         return 800;
-    //       case "lg":
-    //         return 1340;
-    //     }
-    //   },
-    // },
+    closeModal(e) {
+      this.dialog = false;
+      this.workflowName = e;
+      console.log(e);
+    },
   },
-
-  // filters: {
-  //   byTransType: function () {
-  //     return console.log(this.item.transactionType);
-  //   },
-  // },
+  components: {
+    SendToWorkflowDialog,
+  },
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.switch-card {
+  height: 53px;
+  background: rgba(127, 145, 155, 0.052607);
+}
+
+.switch {
+  width: 15.28px;
+  height: 15.28px;
+}
+
+.export-btn {
+  font-family: "Inter" sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 10px;
+  line-height: 12px;
+  text-align: center;
+  letter-spacing: 0.636364px;
+
+  color: #301f78;
+}
+i.sli-font {
+  font-size: 12px;
+  display: inline-block;
+}
+.material-icons {
+  font-family: "Material Icons";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 14px;
+  color: #301f78;
+}
+</style>

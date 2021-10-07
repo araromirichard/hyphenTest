@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-card class="mb-16 ma-auto elevation-2" max-width="514" v-if="pageTwo">
+    <v-card class="mb-16 ma-auto elevation-4" max-width="514" v-if="pageTwo">
       <v-card-title
         class="px-0"
         style="
@@ -198,7 +198,7 @@ export default {
 }
 
 .card-text {
-  font-family: Inter;
+  font-family: "Inter";
   font-style: normal;
   font-weight: bold;
   line-height: 29px;
@@ -214,7 +214,7 @@ export default {
   padding-left: 4px;
 }
 .message-details {
-  font-family: Lato;
+  font-family: "Lato";
   font-style: normal;
   font-weight: normal;
   font-size: 14px;
@@ -255,7 +255,7 @@ export default {
   right: 41.23%;
   top: calc(50% - 17px / 2 - 0.5px);
   padding-top: 6px;
-  font-family: Lato;
+  font-family: "Lato";
   font-style: normal;
   font-weight: normal;
   font-size: 14px;
@@ -282,8 +282,8 @@ export default {
 
   color: #311b92;
 }
-.v-application .elevation-2 {
-  box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 3%), 0px 2px 2px 0px rgb(0 0 0 / 3%),
-    0px 1px 5px 0px rgb(0 0 0 / 9%);
+.v-application .elevation-4 {
+  box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 3%), 0px 2px 2px 0px rgb(0 0 0 / 4%),
+    0px 1px 5px 0px rgb(0 0 0 / 4%) !important;
 }
 </style>

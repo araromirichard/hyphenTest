@@ -24,74 +24,74 @@
           </v-list-item-content>
         </v-list-item>
       </template>
-      <v-list class="py-4 pl-10">
-        <v-list-item
-          active-class="isActive"
-          nav
-          link
-          to="/insight"
-          class="mx-auto"
+      <v-list flat class="py-4 pl-10">
+        <v-list-item-group
+          v-model="model"
+          color="primary"
+          active-class="navlink"
         >
-          <v-list-item-icon class="mr-4">
-            <img
-              :src="require('@/assets/pbot_icons/insights.svg')"
-              class="navIcon"
-            />
-          </v-list-item-icon>
-          <v-list-item-content>
-            <v-list-item-title class="navTxt">Insights</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item nav link to="/inbox" class="mx-auto">
-          <v-list-item-icon class="mr-4">
-            <img
-              :src="require('@/assets/pbot_icons/download_import.svg')"
-              class="navIcon"
-            />
-          </v-list-item-icon>
-          <v-list-item-content>
-            <v-list-item-title class="navTxt">Inbox</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item nav link to="/workflow" class="mx-auto">
-          <v-list-item-icon class="mr-4">
-            <img
-              :src="require('@/assets/pbot_icons/workflow_recycle.svg')"
-              class="navIcon #7F919B"
-            />
-          </v-list-item-icon>
-          <v-list-item-content>
-            <v-list-item-title class="navTxt">Workflows</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item nav link to="/payable" class="mx-auto">
-          <v-list-item-icon class="mr-4">
-            <img
-              :src="require('@/assets/pbot_icons/cash.svg')"
-              class="navIcon"
-            />
-          </v-list-item-icon>
-          <v-list-item-content>
-            <v-list-item-title class="navTxt">Payables</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item
-          nav
-          link
-          key="Integration"
-          to="/integration"
-          class="mx-auto"
-        >
-          <v-list-item-icon class="mr-4">
-            <img
-              :src="require('@/assets/pbot_icons/puzzle_integration.svg')"
-              class="navIcon"
-            />
-          </v-list-item-icon>
-          <v-list-item-content>
-            <v-list-item-title class="navTxt">Integrations</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
+          <v-list-item nav link to="/insight" class="mx-auto">
+            <v-list-item-icon class="mr-4">
+              <img
+                :src="require('@/assets/pbot_icons/insights.svg')"
+                class="navIcon"
+              />
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title class="navTxt">Insights</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item nav link to="/inbox" class="mx-auto">
+            <v-list-item-icon class="mr-4">
+              <img
+                :src="require('@/assets/pbot_icons/download_import.svg')"
+                class="navIcon"
+              />
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title class="navTxt">Inbox</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item nav link to="/workflow" class="mx-auto">
+            <v-list-item-icon class="mr-4">
+              <img
+                :src="require('@/assets/pbot_icons/workflow_recycle.svg')"
+                class="navIcon #7F919B"
+              />
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title class="navTxt">Workflows</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item nav link to="/payable" class="mx-auto">
+            <v-list-item-icon class="mr-4">
+              <img
+                :src="require('@/assets/pbot_icons/cash.svg')"
+                class="navIcon"
+              />
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title class="navTxt">Payables</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item
+            nav
+            link
+            key="Integration"
+            to="/integration"
+            class="mx-auto"
+          >
+            <v-list-item-icon class="mr-4">
+              <img
+                :src="require('@/assets/pbot_icons/puzzle_integration.svg')"
+                class="navIcon"
+              />
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title class="navTxt">Integrations</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list-item-group>
       </v-list>
       <div class="pt-8">
         <v-list class="pl-10" dense>
@@ -134,6 +134,7 @@
 export default {
   data() {
     return {
+      model: 1,
       drawer: null,
       noNavRoutes: ["Login", "SignUp", "OnBoarding"],
     };
@@ -171,7 +172,7 @@ export default {
   color: #7f919b;
 }
 
-.isActive {
+.navlink {
   color: #311b92;
 }
 </style>

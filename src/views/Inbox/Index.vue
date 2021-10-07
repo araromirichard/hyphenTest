@@ -182,56 +182,6 @@
             </v-tabs>
           </v-card>
         </div>
-        <div>
-          <v-card width="100%" flat class="d-flex">
-            <v-switch
-              flat
-              dense
-              class="pl-4 mb-2"
-              color="#16be98"
-              v-model="autoProcess"
-              label="Auto process"
-            ></v-switch>
-            <SendToWorkflowDialog @closeDialog="closeModal" />
-            <v-chip class="mt-5" small
-              ><span
-                class="
-                  font-family:
-                  Inter;
-                  font-style:
-                  normal;
-                  font-weight:
-                  normal;
-                  font-size:
-                  10px;
-                  line-height:
-                  10px;
-                  color:
-                  #7F919B;
-                "
-              >
-                {{ workflowName }}
-              </span>
-            </v-chip>
-            <v-spacer></v-spacer>
-            <v-btn color="#2BD5AE" class="my-4 export-btn mr-9" elevation="3"
-              ><span class="material-icons pr-1"> import_export </span
-              ><span
-                style="
-                  font-family: Inter;
-                  font-style: normal;
-                  font-weight: 500;
-                  font-size: 11px;
-                  line-height: 12px;
-                  text-align: center;
-                  letter-spacing: 0.636364px;
-                  color: #301f78;
-                "
-                >Export</span
-              >
-            </v-btn>
-          </v-card>
-        </div>
         <component v-bind:is="items[tab].content" class="ml-0"></component>
       </v-card>
     </div>
@@ -246,16 +196,12 @@ import TabDataTableForms from "../../components/TabDataTableForms.vue";
 import TabDataTableReviews from "../../components/TabDataTableReviews.vue";
 import DropDownMenu from "../../includes/DropDownMenu.vue";
 import SimpleLineIcons from "vue-simple-line";
-import SendToWorkflowDialog from "../../includes/overlays/SendToWorkflowDialog.vue";
 
 export default {
   name: "Inbox",
   data() {
     return {
       dialog: false,
-      autoProcess: true,
-      sendToWorkflow: true,
-      workflowName: "workflow name…",
       noInvoice: false,
       isClicked: true,
       tab: 0,
@@ -297,16 +243,10 @@ export default {
     TabDataTableForms,
     DropDownMenu,
     SimpleLineIcons,
-    SendToWorkflowDialog,
   },
   methods: {
     toggleSearch() {
       this.isClicked = false;
-    },
-    closeModal(e) {
-      this.dialog = false;
-      this.workflowName = e;
-      console.log(e);
     },
   },
 };
@@ -326,27 +266,7 @@ export default {
   line-height: 19px;
   color: #7f919b;
 }
-.switch-card {
-  height: 53px;
-  background: rgba(127, 145, 155, 0.052607);
-}
 
-.switch {
-  width: 15.28px;
-  height: 15.28px;
-}
-
-.export-btn {
-  font-family: "Inter" sans-serif;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 10px;
-  line-height: 12px;
-  text-align: center;
-  letter-spacing: 0.636364px;
-
-  color: #301f78;
-}
 .v-menu__content {
   box-shadow: none;
 }

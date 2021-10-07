@@ -124,13 +124,13 @@ export default {
       this.$emit("checkApprovalCard", this.approvalRules.length);
     },
   },
-  mounted(){
-    if (this.comparisonType){
+  mounted() {
+    if (this.comparisonType) {
       let value = this.comparisonType.split(" ")[0];
       const items = this.BasicCompareType.map((x) => x.text);
       this.selectedBasicCompareType = items.indexOf(value);
     }
-  }
+  },
 };
 </script>
 

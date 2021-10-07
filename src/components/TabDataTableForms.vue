@@ -1,7 +1,105 @@
 <template>
   <div class="ml-0">
     <div>
+      <v-card width="100%" flat class="d-flex" color="#f4f4f4">
+        <v-btn
+          plain
+          to="/inbox"
+          class="ml-4 my-2 text-capitalize"
+          style="
+            font-family: Inter;
+            font-style: normal;
+            font-weight: 300;
+            font-size: 14px;
+            line-height: 19px;
+            color: #7f919b;
+          "
+        >
+          <v-icon class="pt-1">mdi-chevron-left</v-icon>
+          <span>Back</span>
+        </v-btn>
+        <span
+          class="
+            d-inline-block
+            text-truncate
+            font-weight-bold
+            text-capitalize
+            my-auto
+          "
+          style="max-width: 416px; color: #311b92"
+        >
+          {{ formName }}
+        </span>
+        <v-spacer></v-spacer>
+        <v-btn
+          @click="showForm"
+          elevation="0"
+          active-class="active"
+          class="ml-4 my-2"
+          style="
+            font-family: Inter;
+            font-style: normal;
+            font-weight: 300;
+            font-size: 14px;
+            line-height: 19px;
+            background-color: white;
+          "
+        >
+          <v-icon small>mdi-format-indent-increase</v-icon>
+          <span class="pl-2 text-caption" style="font-weight: 700"
+            >Entries</span
+          >
+        </v-btn>
+        <v-btn
+          elevation="0"
+          class="mx-4 my-2"
+          style="
+            font-family: Inter;
+            font-style: normal;
+            font-weight: 300;
+            font-size: 14px;
+            line-height: 19px;
+            color: #7f919b;
+            background-color: white;
+          "
+        >
+          <v-icon small>mdi-square-edit-outline</v-icon>
+          <span class="pa-2 text-caption" style="font-weight: 700">Edit</span>
+        </v-btn>
+      </v-card>
+    </div>
+    <div>
+      <v-layout v-if="!noForm">
+        <v-row no-gutters>
+          <v-col
+            cols="12"
+            sm="3"
+            style="border-right: 1px solid lavender; height: 60vh"
+          >
+            <div
+              style="
+                margin-top: 12px;
+                margin-left: 18px;
+                border-bottom: 1px solid lavender;
+              "
+            >
+              <v-text-field
+                dense
+                hide-details="auto"
+                class="ml-6 mt-8 mr-10 mb-6"
+                placeholder="Enter a name for your Form"
+                outlined
+              ></v-text-field>
+            </div>
+            <div style="margin-top: 12px; margin-left: 18px">
+              <h3 class="pl-3" style="color: #311b92">Form Components</h3>
+            </div>
+          </v-col>
+          <v-col cols="12" sm="9"> </v-col>
+        </v-row>
+      </v-layout>
       <v-data-table
+        v-else
         dense
         :headers="headers"
         :items="inbox"
@@ -13,11 +111,9 @@
       >
         <template v-slot:[`item.transactionType`]="{ item }">
           <v-chip
-            :color="`${
-              item.transactionType === 'expense' ? '#F9EED2' : '#D5F7EF'
-            }`"
+            :color="`${item.transactionType === 'expense' ? '#F9EED2' : ''}`"
             :text-color="`${
-              item.transactionType === 'expense' ? '#E3AA1C' : '#2BD5AE'
+              item.transactionType === 'expense' ? '#E3AA1C' : ''
             }`"
             x-small
           >
@@ -49,6 +145,8 @@
 export default {
   data() {
     return {
+      formName: "New Form 1",
+      noForm: false,
       inbox: [
         {
           id: 1,
@@ -61,7 +159,7 @@ export default {
         },
         {
           id: 2,
-          transactionType: "invoice",
+          transactionType: "expense",
           amount: 400000.0,
           ref: 400000.0,
           requester: "Emma Thomas",
@@ -79,7 +177,7 @@ export default {
         },
         {
           id: 4,
-          transactionType: "invoice",
+          transactionType: "expense",
           amount: 250000.0,
           ref: 250000.0,
           requester: "John Bello",
@@ -97,7 +195,7 @@ export default {
         },
         {
           id: 6,
-          transactionType: "invoice",
+          transactionType: "expense",
           amount: 3000.0,
           ref: 3000.0,
           requester: "Obinna Nwafor",
@@ -152,10 +250,18 @@ export default {
       ],
     };
   },
+  methods: {
+    showForm() {
+      return (this.noForm = !this.noForm);
+    },
+  },
 };
 </script>
 
 <style>
+.active {
+  color: #311b92;
+}
 tbody tr:nth-of-type(odd) {
   background-color: #f8f9fc;
 }
