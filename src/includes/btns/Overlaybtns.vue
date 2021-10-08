@@ -1,10 +1,9 @@
 <template>
   <v-btn
     dark
-    width="121"
-    height="45"
+    :width="width"
+    :height="height"
     style="
-      margin-right: 57px;
       background: #311b92;
       box-shadow: 0px 12px 22px rgba(0, 0, 0, 0.24);
       border-radius: 4px;
@@ -41,7 +40,7 @@
 
 <script>
 export default {
-  props: ["btnTitle", "icon"],
+  props: ["btnTitle", "icon", "width", "height"],
 };
 </script>
 
