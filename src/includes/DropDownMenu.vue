@@ -8,17 +8,12 @@
           v-on="on"
           class="mr-16"
           color="primary"
-          style="
-            margin-top: 25px;
-            width: 121px;
-            height: 54px;
-            background: #311b92;
-
-            border-radius: 4px;
-          "
+          :width="width"
+          :height="height"
+          style="margin-top: 25px; background: #311b92; border-radius: 4px"
         >
           <img
-            :src="require('@/assets/file.svg')"
+            :src="btnIcon"
             alt="A file svg icon"
             style="padding-right: 8px"
           />
@@ -34,7 +29,7 @@
             "
             class="text-capitalize"
           >
-            New
+            {{ btnText }}
           </span>
         </v-btn>
       </template>
@@ -96,6 +91,12 @@ export default {
   components: {
     ListMenu,
   },
+  props: {
+    icon: String,
+    btnText: String,
+    width: String,
+    height: String,
+  },
   data() {
     return {
       inboxMenus: [
@@ -121,6 +122,11 @@ export default {
         },
       ],
     };
+  },
+  computed: {
+    btnIcon() {
+      return require(`@/assets/pbot_icons/${this.icon}.svg`);
+    },
   },
 };
 </script>

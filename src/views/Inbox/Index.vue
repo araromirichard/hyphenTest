@@ -2,7 +2,13 @@
   <v-container>
     <div v-if="noInvoice">
       <v-row align="center" justify="end">
-        <DropDownMenu style="margin-right: 88px" />
+        <DropDownMenu
+          btnText="New"
+          icon="file"
+          width="121px"
+          height="54px"
+          style="margin-right: 88px"
+        />
       </v-row>
       <v-row class="justify-center" style="padding-top: 105px">
         <img :src="require('@/assets/folder.svg')" alt="folder svg" />
@@ -89,7 +95,13 @@
         </div>
         <v-spacer></v-spacer>
 
-        <DropDownMenu style="margin-right: 88px" />
+        <DropDownMenu
+          btnText="New"
+          icon="file"
+          width="121px"
+          height="54px"
+          style="margin-right: 88px"
+        />
       </v-row>
 
       <v-card

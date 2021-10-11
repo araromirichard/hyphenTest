@@ -262,12 +262,12 @@
             <v-row>
               <v-col>
                 <!-- account-summary component -->
-                <account-summary class="mb-16" />
+                <AccountSummary class="mb-16" />
               </v-col>
               <v-col>
                 <!-- info-summary component -->
                 <div class="d-flex flex-column">
-                  <info-summary-card />
+                  <InfoSummaryCard />
                 </div>
               </v-col>
             </v-row>
@@ -277,7 +277,7 @@
           <!-- recent-process-table component -->
           <v-col class="d-flex">
             <div>
-              <recent-process-table class="mb-6" />
+              <RecentProcessTable class="mb-6" />
             </div>
           </v-col>
         </v-row>

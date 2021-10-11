@@ -12,6 +12,7 @@
     "date-fns": "^2.25.0",
     "install": "^0.13.0",
     "moment": "^2.29.1",
+    "pure-vue-chart": "^0.4.0",
     "simple-line-icons": "^2.5.5",
     "vue": "^2.6.11",
     "vue-ico": "^1.0.15",

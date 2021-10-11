@@ -14,14 +14,132 @@
             "
           >
             Payables
-            <span class="transTotal align-center">{{ payableRecord }}</span>
+            <span
+              class="transTotal pl-5"
+              style="
+                font-family: Inter;
+                font-style: normal;
+                font-weight: normal;
+                font-size: 16px;
+                line-height: 19px;
+                color: #7f919b;
+                mix-blend-mode: normal;
+                opacity: 0.5;
+              "
+              >{{ payableRecord }}</span
+            >
           </h3>
         </div>
         <v-spacer></v-spacer>
 
-        <DropDownMenu style="margin-right: 88px" />
+        <DropDownMenu
+          btnText="Add New"
+          icon="uploadIcon"
+          width="148"
+          height="54px"
+          style="margin-right: 88px"
+        />
       </v-row>
-
+      <v-row>
+        <v-card
+          flat
+          height="180px"
+          width="630px"
+          class="d-flex flex-row"
+          style="margin-left: 65px; margin-top: 35px"
+        >
+          <v-row>
+            <v-col cols="3">
+              <v-avatar
+                color="#FDF9EF"
+                size="90"
+                style="margin-left: 30px; margin-top: 44px"
+              >
+                <v-icon dark color="primary"> mdi-check </v-icon>
+              </v-avatar>
+            </v-col>
+            <v-col cols="8">
+              <h5 class="cardTitle pa-0">Total Payables</h5>
+              <h6 class="cardSubTitle pa-0">
+                <span>Total unpaid bills </span> {{ totalUnpaidBills }}
+              </h6>
+              <v-progress-linear
+                rounded
+                style="margin-left: 15px; margin-top: 8px"
+                v-model="currentBillPercentage"
+                color="#96EAD7"
+                height="12"
+                background-color="#E3AA1C"
+              ></v-progress-linear>
+              <p
+                class="text-break mt-2 d-inline float-start"
+                style="
+                  margin-left: 15px;
+                  max-width: 5rem;
+                  font-family: Inter;
+                  font-style: normal;
+                  font-weight: normal;
+                  font-size: 12px;
+                  line-height: 16px;
+                  letter-spacing: 0.545455px;
+                  color: rgba(0, 35, 56, 0.5);
+                "
+              >
+                current <span class="font-weight-bold">{{ currentBill }}</span>
+              </p>
+              <p
+                class="text-break mt-2 d-inline float-end text-md-right"
+                style="
+                  margin-left: 15px;
+                  max-width: 5rem;
+                  font-family: Inter;
+                  font-style: normal;
+                  font-weight: normal;
+                  font-size: 12px;
+                  line-height: 16px;
+                  letter-spacing: 0.545455px;
+                  color: rgba(0, 35, 56, 0.5);
+                "
+              >
+                overdue
+                <span class="font-weight-bold">{{ overDueBill }}</span>
+              </p>
+            </v-col>
+          </v-row>
+        </v-card>
+        <v-card
+          flat
+          height="180px"
+          width="630px"
+          class="d-flex flex-row"
+          style="margin-left: 65px; margin-top: 35px"
+        >
+          <v-row>
+            <v-col cols="3">
+              <v-avatar
+                color="#FDF9EF"
+                size="90"
+                style="margin-left: 30px; margin-top: 44px"
+              >
+                <v-icon dark color="primary"> mdi-check </v-icon>
+              </v-avatar>
+            </v-col>
+            <v-col cols="8">
+              <h5 class="cardTitle pa-0">Histogram</h5>
+              <h6 class="cardSubTitle pa-0">
+                <span>Bills of the last </span> {{ billPeriod }} months
+              </h6>
+              <pure-vue-chart
+                :points="[1, 3, 2, 3, 4, 2, 0]"
+                :width="250"
+                :height="60"
+                bar-color="#96ead7"
+                style="margin-left: 15px; margin-top: 5px"
+              />
+            </v-col>
+          </v-row>
+        </v-card>
+      </v-row>
       <v-card
         flat
         elevation="6"
@@ -43,7 +161,7 @@
                 style="
                   font-family: Inter;
                   font-style: normal;
-                  font-weight: 700;
+                  font-weight: 800;
                   font-size: 12px;
                   line-height: 15px;
                   text-transform: uppercase;
@@ -51,29 +169,8 @@
                 >{{ item.tab }}</v-tab
               >
 
-              <v-tab style="color: #ff6a6a"
-                ><v-icon left color="#FF6A6A" small class="pr-1 mt-2 mr-0"
-                  >mdi-stop-circle-outline
-                </v-icon>
-                <span class="mt-2">EXCEPTION</span>
-              </v-tab>
               <v-spacer></v-spacer>
-              <v-btn class="pt-4 mt-1" plain>
-                <simple-line-icons left class="pr-1" icon="people" no-svg />
 
-                <b
-                  style="
-                    font-family: Inter;
-                    font-style: normal;
-                    font-weight: 900;
-                    font-size: 12px;
-                    line-height: 20px;
-                    letter-spacing: 0.55px;
-                    text-transform: uppercase;
-                  "
-                  >invite</b
-                ></v-btn
-              >
               <v-btn
                 v-if="isClicked"
                 @click="toggleSearch"
@@ -115,33 +212,38 @@
         <component v-bind:is="items[tab].content" class="ml-0"></component>
       </v-card>
     </div>
-    <router-view></router-view>
   </v-container>
 </template>
 
 <script>
-import TabDataTableAll from "../../components/TabDataTableAll.vue";
-import TabDataTableEmail from "../../components/TabDataTableEmail.vue";
-import TabDataTableForms from "../../components/TabDataTableForms.vue";
-import TabDataTableReviews from "../../components/TabDataTableReviews.vue";
+import PureVueChart from "pure-vue-chart";
+
+import Allpayables from "@/components/payablesTabs/AllPayables.vue";
+import SchedulledPayables from "@/components/payablesTabs/SchedulledPayables.vue";
+import PendingPayables from "../../components/payablesTabs/PendingPaybles.vue";
+import PaidPayables from "../../components/payablesTabs/PaidPayables.vue";
+import BudgetPayables from "../../components/payablesTabs/BudgetPayables.vue";
 import DropDownMenu from "../../includes/DropDownMenu.vue";
-import SimpleLineIcons from "vue-simple-line";
 
 export default {
   name: "payables",
   data() {
     return {
       payableRecord: "234 Records",
-      dialog: false,
-      noInvoice: false,
+      currentBill: "N234,560",
+      overDueBill: "N234,560",
+      billPeriod: "6",
+      currentBillPercentage: 65,
+      totalUnpaidBills: "N1,234,560",
       isClicked: true,
       tab: 0,
       search: "",
       items: [
-        { tab: "All", content: "TabDataTableAll" },
-        { tab: "Email", content: "TabDataTableEmail" },
-        { tab: "Forms", content: "TabDataTableForms" },
-        { tab: "Reviews", content: "TabDataTableReviews" },
+        { tab: "All", content: "Allpayables" },
+        { tab: "Scheduled", content: "SchedulledPayables" },
+        { tab: "Pending", content: "PendingPayables" },
+        { tab: "Paid", content: "PaidPayables" },
+        { tab: "Budgets", content: "BudgetPayables" },
       ],
       inboxMenus: [
         {
@@ -168,12 +270,13 @@ export default {
     };
   },
   components: {
-    TabDataTableAll,
-    TabDataTableEmail,
-    TabDataTableReviews,
-    TabDataTableForms,
+    Allpayables,
+    SchedulledPayables,
+    PendingPayables,
+    PaidPayables,
+    BudgetPayables,
+    PureVueChart,
     DropDownMenu,
-    SimpleLineIcons,
   },
   methods: {
     toggleSearch() {
@@ -226,5 +329,29 @@ th {
 .v-application .elevation-6 {
   box-shadow: 0px 3px 5px -1px rgb(0 0 0 / 3%), 0px 6px 10px 0px rgb(0 0 0 / 3%),
     0px 1px 18px 0px rgb(0 0 0 / 3%) !important;
+}
+.cardTitle {
+  margin-top: 32px;
+  margin-left: 15px;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: bold;
+  font-size: 22px;
+  line-height: 22px;
+  color: rgba(0, 35, 56, 0.5);
+}
+.cardSubTitle {
+  margin-top: 5px;
+  margin-left: 15px;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 16px;
+  letter-spacing: 0.545455px;
+  color: rgba(0, 35, 56, 0.5);
+}
+#histogram {
+  fill: #96ead7 !important;
 }
 </style>

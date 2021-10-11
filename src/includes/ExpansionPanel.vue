@@ -1,5 +1,5 @@
 <template>
-  <div style="background: #f0f0fa; width: 1407px">
+  <div style="background: #f0f0fa; max-width: 1407px">
     <v-card elevation="0" style="background: #f9fafa; mix-blend-mode: normal">
       <v-expand-transition mode="out-in">
         <div v-show="show">
@@ -33,7 +33,7 @@
             Start with any of our pre-composed workflows below or create your
             own in minutes
           </p>
-          <div class="d-flex mb-10">
+          <v-row class="d-flex mb-10" cols="12" md="3">
             <div class="d-flex flex-column">
               <v-card
                 class="rounded-lg"
@@ -186,10 +186,10 @@
                 >Transaction approval
               </span>
             </div>
-          </div>
+          </v-row>
         </div>
       </v-expand-transition>
-      <div class="d-flex justify-center mx-auto">
+      <div class="d-flex justify-center mx-auto" style="width: 100%">
         <v-btn block plain @click="show = !show" class="text-lowercase">
           <v-icon class="pr-4">{{
             show ? "mdi-chevron-up" : "mdi-chevron-down"
