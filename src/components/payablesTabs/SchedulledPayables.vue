@@ -3,18 +3,11 @@
     <div>
       <v-card
         width="100%"
+        height="60px"
         flat
         class="d-flex"
         style="background: rgba(127, 145, 155, 0.052607)"
       >
-        <v-switch
-          flat
-          dense
-          class="pl-4 mb-2"
-          color="#16be98"
-          v-model="autoProcess"
-          label="Auto process"
-        ></v-switch>
       </v-card>
     </div>
     <v-layout>
@@ -24,7 +17,6 @@
         :items="inbox"
         hide-default-footer
         disable-pagination
-        @click="loadRoute"
         item-key="id"
         width="1340px"
         class="elevation-0 table-text"
@@ -64,7 +56,6 @@
         <template v-slot:[`item.action`]="{}">
           <div class="d-flex">
             <v-btn
-              @click="loadRoute"
               exact-path
               rounded
               depressed
@@ -101,62 +92,62 @@ export default {
       inbox: [
         {
           id: 1,
-          transactionType: "expense",
-          amount: 300000.0,
+          approvedBy: "John Bull",
+          amount: "200,000,000",
           ref: "#EXP084492",
-          requester: "John Bello",
+          payee: "John Bello",
           date: new Date(),
-          status: "processing",
+          status: "scheduled",
           action: "",
         },
         {
           id: 2,
-          transactionType: "invoice",
-          amount: 400000.0,
+          approvedBy: "Ken Chibuzor",
+          amount: "2,300,000",
           ref: "#EXP084492",
-          requester: "Emma Thomas",
+          payee: "Emmanuel John",
           date: new Date(),
-          status: "processed",
+          status: "scheduled",
           action: "",
         },
         {
           id: 3,
-          transactionType: "expense",
-          amount: 100000.0,
+          approvedBy: "Durosimi Paul",
+          amount: "20,000,000",
           ref: "#EXP084492",
-          requester: "Sussan Boma",
+          payee: "Samuel Olawale",
           date: new Date(),
-          status: "processed",
+          status: "scheduled",
           action: "",
         },
         {
           id: 4,
-          transactionType: "invoice",
-          amount: 250000.0,
+          approvedBy: "Chioma Williams",
+          amount: "1,200,500",
           ref: "#EXP084492",
-          requester: "John Bello",
+          payee: "FIRS",
           date: new Date(),
-          status: "In review",
+          status: "scheduled",
           action: "",
         },
         {
           id: 5,
-          transactionType: "expense",
-          amount: 150000.0,
+          approvedBy: "Bisi Oguntade",
+          amount: "200,000,000",
           ref: "#EXP084492",
-          requester: "Pat Ede",
+          payee: "Brain&Hammer Ltd",
           date: new Date(),
-          status: "review needed",
+          status: "scheduled",
           action: "",
         },
         {
           id: 6,
-          transactionType: "invoice",
-          amount: 3000.0,
+          approvedBy: "Julius Obe",
+          amount: "11,000,000",
           ref: "#EXP084492",
-          requester: "Obinna Nwafor",
+          payee: "Julius Berger",
           date: new Date(),
-          status: "pending",
+          status: "scheduled",
           action: "",
         },
       ],

@@ -31,7 +31,7 @@
             providing a few documentation</v-card-text
           >
           <div class="px-2 pt-4 mx-6">
-            <Button class="text-md-h6" height="48" width="150" label="Start" />
+            <Button class="text-md-h6" height="50" width="207" label="Start" />
           </div>
         </v-card>
         <v-card
@@ -60,8 +60,8 @@
           <div class="px-2 mx-6">
             <Button
               class="text-md-h6"
-              height="48"
-              width="150"
+              height="50"
+              width="207"
               label="Connect Bank"
             />
           </div>
@@ -95,8 +95,8 @@
           <div class="px-2 pt-4 mx-6">
             <Button
               class="text-md-h6"
-              height="48"
-              width="150"
+              height="50"
+              width="207"
               label="Use Workflow"
             />
           </div>

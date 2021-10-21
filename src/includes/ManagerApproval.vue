@@ -302,7 +302,6 @@ export default {
 
       selectedCompareGroup: [
         {
-          //ApprovalCard: 0,
           comparisonType: "",
         },
       ],

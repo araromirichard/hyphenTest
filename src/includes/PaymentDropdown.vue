@@ -43,8 +43,11 @@
         "
         ><v-list-item-group>
           <v-list>
-            <ListMenu />
-            <v-list-item v-for="(item, index) in inboxMenus" :key="index">
+            <v-list-item
+              @click="showDialog(item.modalKey)"
+              v-for="(item, index) in paymentMenus"
+              :key="index"
+            >
               <v-list-item-content>
                 <v-list-item-title
                   style="
@@ -80,16 +83,20 @@
         </v-list-item-group>
       </v-card>
     </v-menu>
+    <CSVfile ref="CSVfile" />
+    <UploadModal ref="upload" />
   </div>
 </template>
 
 <script>
-import ListMenu from "@/includes/overlays/ListMenu.vue";
-
+import CSVfile from "./overlays/PayablesMenuModals/CSVfile.vue";
+import UploadModal from "./overlays/PayablesMenuModals/UploadModal.vue";
 export default {
   name: "DropDown",
   components: {
-    ListMenu,
+    CSVfile,
+    UploadModal,
+    //
   },
   props: {
     icon: String,
@@ -99,26 +106,32 @@ export default {
   },
   data() {
     return {
-      inboxMenus: [
+      selectedAction: null,
+      dialog: false,
+
+      paymentMenus: [
         {
-          title: "Form",
-          subtitle: "create form",
-          icon: "mdi-text-box-outline ",
+          title: "Upload",
+          subtitle: "pdf or jpg invoice",
+          icon: "mdi-upload",
           path: "#",
+          modalKey: "upload",
         },
 
         {
-          title: "Bank Account",
-          subtitle: "connect your bank account",
-          icon: "mdi-text-box-outline ",
+          title: "CSV",
+          subtitle: "list of payables",
+          icon: "mdi-file-document-outline ",
           path: "#",
+          modalKey: "CSVfile",
         },
 
         {
-          title: "EMAIL TO:",
-          subtitle: "brandname0923@process.finance",
-          icon: "",
+          title: "Sync Bank",
+          subtitle: "pull expense from bank",
+          icon: "mdi-file-document-outline ",
           path: "#",
+          modalKey: "",
         },
       ],
     };
@@ -126,6 +139,20 @@ export default {
   computed: {
     btnIcon() {
       return require(`@/assets/pbot_icons/${this.icon}.svg`);
+    },
+  },
+
+  methods: {
+    closeDialog() {
+      this.dialog = false;
+    },
+
+    triggerDialog(item) {
+      this.selectedAction = item;
+      this.dialog = true;
+    },
+    showDialog(ref) {
+      this.$refs[ref].show(true);
     },
   },
 };

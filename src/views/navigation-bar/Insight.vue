@@ -190,11 +190,11 @@
             Here are a few things to do today
           </p>
         </div>
-        <div class="row d-flex mx-auto">
+        <div class="row d-flex mx-0">
           <div v-for="card in cards" :key="card.title" class="mb-4 mr-4">
             <v-card
               style="min-width: 350px"
-              class="d-flex flex-column px-2 mx-2"
+              class="d-flex flex-column px-2"
               color="#FBF4E4"
               flat
             >
@@ -258,7 +258,7 @@
           </div>
         </div>
         <v-row>
-          <v-col class="d-flex flex-row py-3 pl-6">
+          <v-col class="d-flex flex-row py-3 pl-3">
             <v-row>
               <v-col>
                 <!-- account-summary component -->
@@ -275,10 +275,8 @@
         </v-row>
         <v-row>
           <!-- recent-process-table component -->
-          <v-col class="d-flex">
-            <div>
-              <RecentProcessTable class="mb-6" />
-            </div>
+          <v-col cols="12" class="d-flex">
+            <RecentProcessTable class="mb-6" />
           </v-col>
         </v-row>
       </v-col>

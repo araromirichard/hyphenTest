@@ -1,5 +1,5 @@
 <template>
-  <div style="max-width: 390px">
+  <div style="max-width: 400px">
     <div class="pb-3">
       <template>
         <v-card flat>
@@ -7,7 +7,7 @@
             <img :src="require('@/assets/Persons.svg')" style="padding: 6px" />
             <span class="card-title">Stateholder</span>
             <v-spacer></v-spacer>
-            <v-btn plain class="text-lowercase">
+            <v-btn @click.prevent="dialog = true" plain class="text-lowercase">
               <span class="add pr-5">+add</span>
             </v-btn>
           </v-card-title>
@@ -63,6 +63,106 @@
         </div>
       </v-card>
     </div>
+    <template>
+      <div>
+        <v-dialog v-model="dialog" max-width="516">
+          <v-card color="#FEFCF8" class="rounded-lg">
+            <v-card-title
+              style="background: #ffffff; border-radius: 8px 8px 0px 0px"
+            >
+              <span
+                style="
+                  font-family: Inter;
+                  font-style: normal;
+                  font-weight: 600;
+                  font-size: 16px;
+                  line-height: 19px;
+                  color: #301f78;
+                "
+                >Add a Stateholder</span
+              >
+              <v-spacer></v-spacer>
+              <v-icon
+                tag="button"
+                @click="dialog = false"
+                class="text-bolder"
+                color="#596A73"
+              >
+                mdi-close
+              </v-icon>
+            </v-card-title>
+            <form>
+              <div class="px-8 d-flex" style="background: #fdfaf2">
+                <p
+                  style="
+                    padding-top: 34px;
+                    font-family: Inter;
+                    font-style: normal;
+                    font-weight: normal;
+                    font-size: 12px;
+                    line-height: 18px;
+                    letter-spacing: 0.45px;
+                    color: #7f919b;
+                  "
+                >
+                  Add details of <strong> Stakeholder</strong>
+                </p>
+              </div>
+              <div>
+                <v-text-field
+                  type="text"
+                  background-color="#ffffff"
+                  style="margin-left: 52px; margin-right: 45px"
+                  outlined
+                  label="Full Names"
+                ></v-text-field>
+                <v-text-field
+                  type="email"
+                  background-color="#ffffff"
+                  style="margin-left: 52px; margin-right: 45px"
+                  outlined
+                  label="Email Address"
+                ></v-text-field>
+              </div>
+              <template>
+                <v-card-actions class="d-flex justify-end align-center mr-9">
+                  <v-btn
+                    type="submit"
+                    dark
+                    width="121"
+                    height="45"
+                    style="
+                      margin-top: 24px;
+                      margin-bottom: 41px;
+                      background: #16be98;
+                      box-shadow: 0px 12px 22px rgba(0, 0, 0, 0.24);
+                      border-radius: 4px;
+                    "
+                  >
+                    <simple-line-icons icon="plus" size="small" no-svg />
+                    <span
+                      class="pl-4 m-0 text-capitalize"
+                      style="
+                        font-family: Inter;
+                        font-style: normal;
+                        font-weight: 500;
+                        font-size: 14px;
+                        line-height: 17px;
+                        text-align: center;
+                        letter-spacing: 0.636364px;
+
+                        color: #ffffff;
+                      "
+                      >Add</span
+                    >
+                  </v-btn>
+                </v-card-actions>
+              </template>
+            </form>
+          </v-card>
+        </v-dialog>
+      </div>
+    </template>
   </div>
 </template>
 
@@ -71,9 +171,14 @@ export default {
   name: "InfoSummary",
   data() {
     return {
+      dialog: false,
       payees: "23",
       coWorkers: "5",
       bankBalance: "592,000",
+      stakeholder: {
+        fullNames: "",
+        email: "",
+      },
     };
   },
 };

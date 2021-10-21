@@ -2,19 +2,12 @@
   <div>
     <div>
       <v-card
+        height="60px"
         width="100%"
         flat
         class="d-flex"
         style="background: rgba(127, 145, 155, 0.052607)"
       >
-        <v-switch
-          flat
-          dense
-          class="pl-4 mb-2"
-          color="#16be98"
-          v-model="autoProcess"
-          label="Auto process"
-        ></v-switch>
       </v-card>
     </div>
     <v-layout>
@@ -24,7 +17,6 @@
         :items="inbox"
         hide-default-footer
         disable-pagination
-        @click="loadRoute"
         item-key="id"
         width="1340px"
         class="elevation-0 table-text"
@@ -64,7 +56,6 @@
         <template v-slot:[`item.action`]="{}">
           <div class="d-flex">
             <v-btn
-              @click="loadRoute"
               exact-path
               rounded
               depressed
@@ -97,7 +88,6 @@ export default {
   data() {
     return {
       autoProcess: true,
-      id: this.$route.params.id,
       inbox: [
         {
           id: 1,
@@ -214,13 +204,8 @@ export default {
     };
   },
   methods: {
-    loadRoute: function (id) {
-      this.$router.push({ name: "Invoice", params: { id } });
-    },
-    closeModal(e) {
+    closeModal() {
       this.dialog = false;
-      this.workflowName = e;
-      console.log(e);
     },
   },
 };

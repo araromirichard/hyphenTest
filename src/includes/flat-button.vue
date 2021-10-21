@@ -3,12 +3,10 @@
     :to="to"
     :height="height"
     :width="width"
-    block
     color="primary"
     elevation="20"
     large
     class="text-capitalize mx-auto"
-    @click="submit"
   >
     {{ label }}</v-btn
   >
@@ -16,6 +14,7 @@
 
 <script>
 export default {
+  name: "FlatButton",
   props: {
     to: {
       type: String,

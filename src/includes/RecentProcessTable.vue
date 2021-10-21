@@ -1,47 +1,43 @@
 <template>
-  <div>
-    <div class="container--fluid">
-      <v-card flat>
-        <v-card-title>
-          <img :src="require('@/assets/Opp-arrows.svg')" style="padding: 8px" />
-          <span class="card-title">Recent Processes</span>
-          <v-spacer></v-spacer>
-          <v-btn plain class="pr-8 text-capitalize"
-            ><span class="payment-total">view all</span></v-btn
-          >
-        </v-card-title>
-        <v-card-text
-          style="height: 36px; background: rgba(127, 145, 155, 0.052607)"
-        ></v-card-text>
-        <v-data-table
-          dense
-          :headers="headers"
-          :items="recentProcess"
-          hide-default-footer
-          disable-pagination
-          item-key="referenceID"
-          class="elevation-0 table-text"
+  <v-card flat width="81%">
+    <v-card-title>
+      <img :src="require('@/assets/Opp-arrows.svg')" style="padding: 8px" />
+      <span class="card-title">Recent Processes</span>
+      <v-spacer></v-spacer>
+      <v-btn plain class="pr-8 text-capitalize"
+        ><span class="payment-total">view all</span></v-btn
+      >
+    </v-card-title>
+    <v-card-text
+      style="height: 36px; background: rgba(127, 145, 155, 0.052607)"
+    ></v-card-text>
+    <v-data-table
+      dense
+      :headers="headers"
+      :items="recentProcess"
+      hide-default-footer
+      disable-pagination
+      item-key="referenceID"
+      class="elevation-0 table-text"
+    >
+      <template v-slot:[`item.budget`]="{ item }">
+        <v-chip class="px-4" color="#F9EED2" text-color="#E3AA1C" x-small>
+          {{ item.budget }}
+        </v-chip>
+      </template>
+      <template v-slot:[`item.status`]="{ item }">
+        <v-icon
+          small
+          :color="`${item.status === 'processed' ? '#E3AA1C' : '#2BD5AE'}`"
         >
-          <template v-slot:[`item.budget`]="{ item }">
-            <v-chip class="px-4" color="#F9EED2" text-color="#E3AA1C" x-small>
-              {{ item.budget }}
-            </v-chip>
-          </template>
-          <template v-slot:[`item.status`]="{ item }">
-            <v-icon
-              small
-              :color="`${item.status === 'processed' ? '#E3AA1C' : '#2BD5AE'}`"
-            >
-              mdi-circle-medium
-            </v-icon>
-            <span>
-              {{ item.status }}
-            </span>
-          </template>
-        </v-data-table>
-      </v-card>
-    </div>
-  </div>
+          mdi-circle-medium
+        </v-icon>
+        <span>
+          {{ item.status }}
+        </span>
+      </template>
+    </v-data-table>
+  </v-card>
 </template>
 
 <script>
@@ -111,7 +107,7 @@ export default {
 
 <style scoped>
 .card-title {
-  font-family: Inter;
+  font-family: "Inter";
   font-style: normal;
   font-weight: bold;
   font-size: 12px;
@@ -122,7 +118,7 @@ export default {
 }
 
 .payment-total {
-  font-family: Inter;
+  font-family: "Inter";
   font-style: normal;
   font-weight: bold;
   font-size: 12px;
@@ -133,7 +129,7 @@ export default {
 }
 
 .table-text {
-  font-family: Lato;
+  font-family: "Lato";
   font-style: normal;
   font-weight: normal;
   font-size: 12px;

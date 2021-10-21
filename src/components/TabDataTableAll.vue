@@ -1,7 +1,12 @@
 <template>
   <div>
     <div>
-      <v-card width="100%" flat class="d-flex">
+      <v-card
+        width="100%"
+        flat
+        class="d-flex"
+        style="background: rgba(127, 145, 155, 0.052607)"
+      >
         <v-switch
           flat
           dense
@@ -57,12 +62,9 @@
         :items="inbox"
         hide-default-footer
         disable-pagination
-        @click="loadRoute"
         item-key="id"
-        width="1340px"
-        class="elevation-0 table-text"
+        width="100%"
       >
-        <!-- <template v-slot:[`item.id`]="{ item }"> </template> -->
         <template v-slot:[`item.transactionType`]="{ item }">
           <v-chip
             :color="`${
@@ -131,9 +133,10 @@ export default {
   data() {
     return {
       autoProcess: true,
+      selectedRows: [],
       sendToWorkflow: true,
       workflowName: "workflow name…",
-      id: this.$route.params.id,
+      invoiceId: this.$route.params.id,
       inbox: [
         {
           id: 1,
@@ -250,13 +253,17 @@ export default {
     };
   },
   methods: {
-    loadRoute: function (id) {
+    loadRoute(id) {
       this.$router.push({ name: "Invoice", params: { id } });
     },
     closeModal(e) {
       this.dialog = false;
       this.workflowName = e;
       console.log(e);
+    },
+
+    alert(item) {
+      alert("Hello " + item.name);
     },
   },
   components: {
@@ -265,7 +272,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 .switch-card {
   height: 53px;
   background: rgba(127, 145, 155, 0.052607);
@@ -298,5 +305,43 @@ i.sli-font {
   font-size: 14px;
   line-height: 14px;
   color: #301f78;
+}
+tbody tr:nth-of-type(odd) {
+  background-color: #f8f9fc;
+}
+.theme--light.v-data-table
+  > .v-data-table__wrapper
+  > table
+  > tbody
+  > tr:not(:last-child)
+  > td:not(.v-data-table__mobile-row),
+.theme--light.v-data-table
+  > .v-data-table__wrapper
+  > table
+  > tbody
+  > tr:not(:last-child)
+  > th:not(.v-data-table__mobile-row) {
+  border-bottom: none;
+}
+table td,
+table th {
+  height: 40px;
+}
+.theme--light.v-data-table
+  > .v-data-table__wrapper
+  > table
+  > thead
+  > tr:last-child
+  > th {
+  border-bottom: none;
+}
+.v-data-table > .v-data-table__wrapper > table > tbody > tr > td,
+.v-data-table > .v-data-table__wrapper > table > tbody > tr > th,
+.v-data-table > .v-data-table__wrapper > table > thead > tr > td,
+.v-data-table > .v-data-table__wrapper > table > thead > tr > th,
+.v-data-table > .v-data-table__wrapper > table > tfoot > tr > td,
+.v-data-table > .v-data-table__wrapper > table > tfoot > tr > th {
+  padding: 0 36px;
+  transition: height 0.2s cubic-bezier(0.4, 0, 0.6, 1);
 }
 </style>

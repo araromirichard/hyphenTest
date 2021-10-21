@@ -120,7 +120,7 @@
             ></v-text-field>
           </template>
           <template class="mt-6">
-            <v-card-action class="d-flex justify-end mt-2 mr-9">
+            <v-card-actions class="d-flex justify-end mt-2 mr-9">
               <v-btn
                 link
                 to="/workflow/rules-edit"
@@ -137,7 +137,7 @@
                 <v-icon>mdi-chevron-right</v-icon>
                 <span>Next</span>
               </v-btn>
-            </v-card-action>
+            </v-card-actions>
           </template>
         </v-card>
       </v-dialog>

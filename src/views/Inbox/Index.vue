@@ -2,13 +2,7 @@
   <v-container>
     <div v-if="noInvoice">
       <v-row align="center" justify="end">
-        <DropDownMenu
-          btnText="New"
-          icon="file"
-          width="121px"
-          height="54px"
-          style="margin-right: 88px"
-        />
+        <DropDownMenu btnText="New" icon="file" width="121" height="54" />
       </v-row>
       <v-row class="justify-center" style="padding-top: 105px">
         <img :src="require('@/assets/folder.svg')" alt="folder svg" />
@@ -78,7 +72,7 @@
       </v-row>
     </div>
     <div v-else>
-      <v-row align="center" class="mx-14">
+      <v-row align="center" class="d-flex justify-md-space-between mx-14">
         <div>
           <h3
             class="text-bold"
@@ -93,24 +87,17 @@
             Inbox <span class="transTotal align-center">234 Transactions</span>
           </h3>
         </div>
-        <v-spacer></v-spacer>
 
         <DropDownMenu
           btnText="New"
           icon="file"
           width="121px"
           height="54px"
-          style="margin-right: 88px"
+          justify="end"
         />
       </v-row>
 
-      <v-card
-        flat
-        elevation="6"
-        max-width="1340"
-        min-height="674"
-        class="ml-14"
-      >
+      <v-card flat elevation="6" width="80%" min-height="674" class="ml-14">
         <div class="mt-12" justify="center">
           <v-card
             flat
@@ -204,7 +191,7 @@
 <script>
 import TabDataTableAll from "../../components/TabDataTableAll.vue";
 import TabDataTableEmail from "../../components/TabDataTableEmail.vue";
-import TabDataTableForms from "../../components/TabDataTableForms.vue";
+//import TabDataTableForms from "../../components/TabDataTableForms.vue";
 import TabDataTableReviews from "../../components/TabDataTableReviews.vue";
 import DropDownMenu from "../../includes/DropDownMenu.vue";
 import SimpleLineIcons from "vue-simple-line";
@@ -221,7 +208,7 @@ export default {
       items: [
         { tab: "All", content: "TabDataTableAll" },
         { tab: "Email", content: "TabDataTableEmail" },
-        { tab: "Forms", content: "TabDataTableForms" },
+        //{ tab: "Forms", content: "TabDataTableForms" },
         { tab: "Reviews", content: "TabDataTableReviews" },
       ],
       inboxMenus: [
@@ -252,7 +239,7 @@ export default {
     TabDataTableAll,
     TabDataTableEmail,
     TabDataTableReviews,
-    TabDataTableForms,
+    //TabDataTableForms,
     DropDownMenu,
     SimpleLineIcons,
   },

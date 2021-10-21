@@ -28,40 +28,35 @@
             outlined
             type="text"
             required
-            class="font-weight-regular text-subtitle-2 label--text pb-0"
+            class="font-weight-regular text-subtitle-2 t pb-0"
             v-model="companyName"
-            rules="companyName"
           ></v-text-field>
 
           <v-text-field
             label="Country where company is based"
             single-line
             outlined
-            class="font-weight-regular text-subtitle-2 label--text pb-0 mb-0"
+            class="font-weight-regular text-subtitle-2 pb-0 mb-0"
             v-model="country"
             type="text"
             required
-            rules="countryRules"
           ></v-text-field>
           <v-text-field
             label="Your accounting system"
             single-line
             outlined
-            class="font-weight-regular text-subtitle-2 label--text pb-0 mb-0"
+            class="font-weight-regular text-subtitle-2 pb-0 mb-0"
             v-model="accountSystem"
             type="text"
             required
-            :rules="accountSystemRules"
           ></v-text-field>
           <v-text-field
             label="Your role"
             single-line
             outlined
-            class="font-weight-regular text-subtitle-2 label--text pb-0 mb-0"
+            class="font-weight-regular text-subtitle-2 pb-0 mb-0"
             v-model="role"
             type="text"
-            required
-            rules="roleRules"
           ></v-text-field>
         </v-card-text>
 
@@ -74,8 +69,6 @@
               color="primary"
               elevation="20"
               large
-              class="text-capitalize"
-              @click="submit"
             >
               <span
                 style="

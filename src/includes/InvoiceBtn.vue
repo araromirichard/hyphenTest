@@ -82,7 +82,7 @@
                 line-height: 19px;
                 color: #301f78;
               "
-              >Attach files to: #eroapapa</span
+              >Attach files to: {{ invoiceId }}</span
             >
             <v-spacer></v-spacer>
             <v-icon
@@ -96,23 +96,28 @@
           </v-card-title>
           <template class="d-flex">
             <v-text-field
-              style="margin-left: 37px; margin-right: 31px"
+              background-color="#ffffff"
+              style="margin-left: 35px; margin-right: 31px; margin-top: 32px"
               placeholder="File title"
               outlined
+              hide-details="auto"
               >File title</v-text-field
             >
             <template class="d-flex">
               <v-select
+                hide-details="auto"
+                background-color="#ffffff"
                 :menu-props="{ bottom: true, offsetY: true }"
                 :items="fileUploadCategory"
                 style="
-                  margin-left: 37px;
+                  margin-left: 35px;
                   margin-right: 31px;
+                  margin-top: 42px;
                   border-radius: 3px;
-                  width: 294px;
+
                   height: 40px;
                 "
-                class="justify-center mx-8 custom-placeholer-color"
+                class="justify-center custom-placeholer-color"
                 flat
                 outlined
                 placeholder="Select Workflow"
@@ -134,6 +139,10 @@
               </v-select>
             </template>
             <v-card
+              @click.native="uploadFile"
+              @drop.prevent="onDroppedFiles"
+              @dragover.prevent="dragging = true"
+              @dragleave.prevent="dragging = false"
               width="294"
               height="126"
               class="mx-auto justify-center d-flex"
@@ -146,6 +155,11 @@
                 border-radius: 8px;
               "
               flat
+              :style="{
+                border: dragging
+                  ? '1px dashed #424f95'
+                  : '1px dashed rgba(127, 145, 155, 0.551929)',
+              }"
             >
               <span
                 class="d-flex mx-auto my-auto"
@@ -214,6 +228,9 @@ export default {
   data() {
     return {
       dialog: false,
+      dragging: false,
+      attachedfile: "",
+      invoiceId: "",
       showReview: true,
       fileUploadCategory: [
         "Purchase order",
@@ -233,6 +250,32 @@ export default {
     closeDialog() {
       return (this.dialog = false);
     },
+    onDroppedFiles($event) {
+      this.dragging = false;
+      let files = [...$event.dataTransfer.items]
+        .filter((item) => item.kind === "file")
+        .map((item) => item.getAsFile());
+
+      console.table(files);
+    },
+    // uploadFile(e) {
+    //   let files = e.target.files || e.dataTransfer.files;
+    //   if (!files.length) return;
+    //   this.createfile(files[0]);
+    // },
+    // createfile(file) {
+    //   var attachedfile = new attachedfile();
+    //   var reader = new FileReader();
+    //   var vm = this;
+
+    //   reader.onload = (e) => {
+    //     vm.attachedfile = e.target.result;
+    //   };
+    //   reader.readAsDataURL(file);
+    // },
+    // removeattachedfile: function (e) {
+    //   this.attachedfile = "";
+    // },
   },
 };
 </script>

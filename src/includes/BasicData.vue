@@ -429,6 +429,7 @@
         "
       ></v-divider>
       <v-btn
+        type="submit"
         width="300"
         dark
         block
@@ -505,8 +506,8 @@ export default {
     },
     submitInput(e) {
       e.preventDefault();
-      console.log("Basic Data", this.basicDataInput);
-      console.log("Vendor Data", this.vendorData);
+      console.log("Basic Data", JSON.stringify(this.basicDataInput));
+      console.log("Vendor Data", JSON.stringify(this.vendorData));
     },
   },
 

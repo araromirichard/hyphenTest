@@ -32,7 +32,7 @@
         </div>
         <v-spacer></v-spacer>
 
-        <DropDownMenu
+        <PaymentDropDown
           btnText="Add New"
           icon="uploadIcon"
           width="148"
@@ -223,7 +223,7 @@ import SchedulledPayables from "@/components/payablesTabs/SchedulledPayables.vue
 import PendingPayables from "../../components/payablesTabs/PendingPaybles.vue";
 import PaidPayables from "../../components/payablesTabs/PaidPayables.vue";
 import BudgetPayables from "../../components/payablesTabs/BudgetPayables.vue";
-import DropDownMenu from "../../includes/DropDownMenu.vue";
+import PaymentDropDown from "@/includes/PaymentDropdown.vue";
 
 export default {
   name: "payables",
@@ -276,7 +276,7 @@ export default {
     PaidPayables,
     BudgetPayables,
     PureVueChart,
-    DropDownMenu,
+    PaymentDropDown,
   },
   methods: {
     toggleSearch() {

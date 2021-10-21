@@ -52,6 +52,17 @@
               <v-list-item-title class="navTxt">Inbox</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
+          <v-list-item nav link to="/form" class="mx-auto">
+            <v-list-item-icon class="mr-4">
+              <img
+                :src="require('@/assets/pbot_icons/form.svg')"
+                class="navIcon"
+              />
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title class="navTxt">Forms</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
           <v-list-item nav link to="/workflow" class="mx-auto">
             <v-list-item-icon class="mr-4">
               <img
@@ -136,7 +147,13 @@ export default {
     return {
       model: 1,
       drawer: null,
-      noNavRoutes: ["Login", "SignUp", "OnBoarding"],
+      noNavRoutes: [
+        "Login",
+        "SignUp",
+        "OnBoarding",
+        "Create-form",
+        "Render-form",
+      ],
     };
   },
 
@@ -164,7 +181,7 @@ export default {
 }
 
 .navTxt {
-  font-family: Inter;
+  font-family: "Inter";
   font-style: normal;
   font-weight: bold;
   font-size: 12px;

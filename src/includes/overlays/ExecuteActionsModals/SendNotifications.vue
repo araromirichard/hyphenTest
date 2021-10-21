@@ -115,9 +115,15 @@
                   <span class="font-weight-bold ml-13">Note:</span>Approval OTP
                   will be sent along with your custom message above.
                 </v-card-text>
-                <v-row class="mx-auto justify-end pt-6 pb-10">
-                  <Overlaybtns btn-title="save" icon="arrow-right" />
-                </v-row>
+                <v-card-actions class="justify-end pa-8">
+                  <Overlaybtns
+                    btn-title="save"
+                    style="margin-right: 44px"
+                    icon="arrow-right"
+                    width="121px"
+                    height="45px"
+                  />
+                </v-card-actions>
               </v-form>
             </v-card>
           </v-tab-item>
@@ -194,9 +200,16 @@
                     <span v-else>Save message</span>
                   </v-btn>
                 </div>
-                <v-row class="mx-auto justify-end pt-6 pb-10">
-                  <Overlaybtns btn-title="save" icon="arrow-right" />
-                </v-row>
+
+                <v-card-actions class="justify-end pa-8">
+                  <Overlaybtns
+                    btn-title="save"
+                    style="margin-right: 44px"
+                    icon="arrow-right"
+                    width="121px"
+                    height="45px"
+                  />
+                </v-card-actions>
               </v-form>
             </v-card>
           </v-tab-item>

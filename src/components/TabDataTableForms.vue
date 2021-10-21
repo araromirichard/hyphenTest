@@ -4,7 +4,7 @@
       <v-card width="100%" flat class="d-flex" color="#f4f4f4">
         <v-btn
           plain
-          to="/inbox"
+          @click="goBack"
           class="ml-4 my-2 text-capitalize"
           style="
             font-family: Inter;
@@ -25,6 +25,7 @@
             font-weight-bold
             text-capitalize
             my-auto
+            px-6
           "
           style="max-width: 416px; color: #311b92"
         >
@@ -32,7 +33,7 @@
         </span>
         <v-spacer></v-spacer>
         <v-btn
-          @click="showForm"
+          @click="openEntries"
           elevation="0"
           active-class="active"
           class="ml-4 my-2"
@@ -68,85 +69,83 @@
         </v-btn>
       </v-card>
     </div>
-    <div>
-      <v-layout v-if="!noForm">
-        <v-row no-gutters>
-          <v-col
-            cols="12"
-            sm="3"
-            style="border-right: 1px solid lavender; height: 60vh"
-          >
-            <div
-              style="
-                margin-top: 12px;
-                margin-left: 18px;
-                border-bottom: 1px solid lavender;
-              "
+
+    <div v-if="!formDisplay">
+      <div v-if="showEntries">
+        <v-data-table
+          dense
+          :headers="headers"
+          :items="inbox"
+          hide-default-footer
+          disable-pagination
+          item-key="iD"
+          width="1340"
+          class="elevation-0 table-text"
+        >
+          <template v-slot:[`item.transactionType`]="{ item }">
+            <v-chip
+              :color="`${item.transactionType === 'expense' ? '#F9EED2' : ''}`"
+              :text-color="`${
+                item.transactionType === 'expense' ? '#E3AA1C' : ''
+              }`"
+              x-small
             >
-              <v-text-field
-                dense
-                hide-details="auto"
-                class="ml-6 mt-8 mr-10 mb-6"
-                placeholder="Enter a name for your Form"
-                outlined
-              ></v-text-field>
-            </div>
-            <div style="margin-top: 12px; margin-left: 18px">
-              <h3 class="pl-3" style="color: #311b92">Form Components</h3>
-            </div>
-          </v-col>
-          <v-col cols="12" sm="9"> </v-col>
-        </v-row>
-      </v-layout>
-      <v-data-table
-        v-else
-        dense
-        :headers="headers"
-        :items="inbox"
-        hide-default-footer
-        disable-pagination
-        item-key="iD"
-        width="1340"
-        class="elevation-0 table-text"
-      >
-        <template v-slot:[`item.transactionType`]="{ item }">
-          <v-chip
-            :color="`${item.transactionType === 'expense' ? '#F9EED2' : ''}`"
-            :text-color="`${
-              item.transactionType === 'expense' ? '#E3AA1C' : ''
-            }`"
-            x-small
-          >
-            {{ item.transactionType }}
-          </v-chip>
+              {{ item.transactionType }}
+            </v-chip>
+          </template>
+
+          <template v-slot:[`item.status`]="{ item }">
+            <v-icon
+              small
+              :color="`${item.status === 'processed' ? '#2BD5AE' : '#E3AA1C'}`"
+            >
+              mdi-circle-medium
+            </v-icon>
+            <span>
+              {{ item.status }}
+            </span>
+          </template>
+          <template v-slot:[`item.date`]="{ item }">
+            <span>
+              {{ item.date | date }}
+            </span>
+          </template>
+        </v-data-table>
+      </div>
+      <div v-else>
+        <div class="mx-0 px-0">
+          <h4 class="pageTitle">Your form(s)</h4>
+          <p class="pageDespt">
+            Build custom forms that trigger process workflows
+          </p>
+        </div>
+
+        <template>
+          <SingleFormCard
+            @create-form="buildForm"
+            @edit-form="displayForm"
+            style="margin-left: 42px"
+            :createdAt="dateValue() | date"
+          />
         </template>
-        <template v-slot:[`item.status`]="{ item }">
-          <v-icon
-            small
-            :color="`${item.status === 'processed' ? '#2BD5AE' : '#E3AA1C'}`"
-          >
-            mdi-circle-medium
-          </v-icon>
-          <span>
-            {{ item.status }}
-          </span>
-        </template>
-        <template v-slot:[`item.date`]="{ item }">
-          <span>
-            {{ item.date | date }}
-          </span>
-        </template>
-      </v-data-table>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import SingleFormCard from "./SingleFormCard.vue";
+
 export default {
+  components: { SingleFormCard },
+  name: "InboxForm",
+
   data() {
     return {
+      newForm: false,
+      formDisplay: false,
+      showEntries: false,
       formName: "New Form 1",
-      noForm: false,
       inbox: [
         {
           id: 1,
@@ -251,8 +250,24 @@ export default {
     };
   },
   methods: {
-    showForm() {
-      return (this.noForm = !this.noForm);
+    buildForm() {
+      this.newForm = true;
+    },
+    openEntries() {
+      this.showEntries = true;
+    },
+    goBack() {
+      this.showEntries = false;
+      this.newForm = !this.newForm;
+      //this.formDisplay = !this.formDisplay;
+    },
+
+    dateValue() {
+      return new Date();
+    },
+    displayForm() {
+      this.formDisplay = !this.formDisplay;
+      console.log(this.formDisplay);
     },
   },
 };
@@ -299,5 +314,31 @@ table th {
 .v-data-table > .v-data-table__wrapper > table > tfoot > tr > th {
   padding: 0 36px;
   transition: height 0.2s cubic-bezier(0.4, 0, 0.6, 1);
+}
+
+.pageTitle {
+  margin-top: 25px;
+  margin-bottom: 7px;
+  margin-left: 42px;
+  padding-left: 10px;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 19px;
+  letter-spacing: 0.45px;
+  color: #311b92;
+}
+
+.pageDespt {
+  margin-bottom: 27px;
+  margin-left: 42px;
+  padding-left: 10px;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 15px;
+  color: #7f919b;
 }
 </style>

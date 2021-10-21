@@ -21,7 +21,6 @@
         <v-card
           outlined
           class="mt-16 mb-5 ma-auto"
-          :class="active ? 'border-color: primary' : ''"
           elevation="0"
           max-width="400"
           to="#"
@@ -49,7 +48,6 @@
           elevation="0"
           class="mb-12 ma-auto flat"
           max-width="400"
-          :class="active ? 'border-color: primary' : ''"
         >
           <v-card-text>
             <v-row class="d-flex">
@@ -92,9 +90,7 @@ export default {
   },
 
   data() {
-    return {
-      isActive: false,
-    };
+    return {};
   },
 };
 </script>

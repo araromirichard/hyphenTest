@@ -4,6 +4,7 @@
     :width="width"
     :height="height"
     style="
+      padding: 14px;
       background: #311b92;
       box-shadow: 0px 12px 22px rgba(0, 0, 0, 0.24);
       border-radius: 4px;
@@ -22,7 +23,7 @@
       no-svg
     />
     <span
-      class="text-capitalize pl-3"
+      class="text-capitalize py-4 pl-3"
       style="
         font-family: Inter;
         font-style: normal;

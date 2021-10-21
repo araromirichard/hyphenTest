@@ -17,39 +17,47 @@
       >
         <span class="mt-10 text--secondary">Sign up</span>
       </v-card-title>
-      <v-form class="ma-auto" ref="form">
+      <v-form @submit.prevent="signUp" class="ma-auto" ref="form">
         <v-card-text class="card-items">
-          <v-row class="px-3 py-2">
-            <v-text-field
-              label="First Name"
-              single-line
-              outlined
-              type="text"
-              required
-              class="font-weight-regular text-subtitle-2 label--text"
-              v-model="firstName"
-              :rules="nameRules"
-            ></v-text-field>
-            <v-spacer></v-spacer>
-            <v-text-field
-              label="Last Name"
-              single-line
-              outlined
-              type="text"
-              required
-              class="font-weight-regular text-subtitle-2 label--text"
-              v-model="lastName"
-              :rules="nameRules"
-            ></v-text-field>
+          <v-row class="pt-2">
+            <v-col cols="12" md="6">
+              <v-text-field
+                hide-details="auto"
+                label="First Name"
+                single-line
+                outlined
+                type="text"
+                required
+                class="font-weight-regular"
+                v-model="signUpDetails.firstName"
+                :rules="nameRules"
+              >
+              </v-text-field>
+            </v-col>
+            <v-col cols="12" md="6">
+              <v-text-field
+                hide-details="auto"
+                label="Last Name"
+                single-line
+                outlined
+                type="text"
+                required
+                class="font-weight-regular"
+                v-model="signUpDetails.lastName"
+                :rules="nameRules"
+              >
+              </v-text-field>
+            </v-col>
           </v-row>
           <v-text-field
+            hide-details="auto"
             label="Email"
             single-line
             outlined
             type="email"
             required
-            class="font-weight-regular text-subtitle-2 label--text"
-            v-model="email"
+            class="py-6 font-weight-regular text-lowercase"
+            v-model="signUpDetails.email"
             :rules="emailRules"
           ></v-text-field>
 
@@ -58,15 +66,8 @@
             placeholder="Phone number"
             single-line
             outlined
-            class="
-              mb-2
-              font-weight-regular
-              text-subtitle-2
-              label--text
-              pb-0
-              mb-0
-            "
-            v-model="phoneNumber"
+            class="font-weight-regular pb-0 mb-0"
+            v-model="signUpDetails.phoneNumber"
             type="number"
             required
             :rules="phoneNumberRules"
@@ -76,13 +77,14 @@
               to="#"
               style="text-decoration: none; color: inherit; padding: none"
             >
-              <p>Forgot Password?</p>
+              <p class="pt-3">Forgot Password?</p>
             </router-link>
           </div>
         </v-card-text>
 
         <v-card-actions class="card-items pt-5">
           <v-btn
+            type="submit"
             block
             width="346"
             height="54"
@@ -90,10 +92,7 @@
             elevation="14"
             large
             class="text-capitalize"
-            @click="
-              submit;
-              pageTwo = !pageTwo;
-            "
+            @click="pageTwo = !pageTwo"
           >
             <span
               style="
@@ -140,10 +139,12 @@ export default {
 
   data() {
     return {
-      firstName: "",
-      lastName: "",
-      email: "",
-      phoneNumber: "",
+      signUpDetails: {
+        firstName: "",
+        lastName: "",
+        email: "",
+        phoneNumber: "",
+      },
       pageTwo: true,
       nameRules: [
         (value) => !!value || "Name is required",
@@ -175,9 +176,10 @@ export default {
     SignUp2,
   },
   methods: {
-    submit() {
+    signUp() {
       if (this.$refs.form.validate()) {
-        console.log(this.fullName, this.password);
+        console.log(this.signUpDetails);
+        console.log("User Details", JSON.stringify(this.signUpDetails));
       }
     },
   },
@@ -186,8 +188,8 @@ export default {
 
 <style scoped>
 .card-items {
-  padding-left: 84px;
-  padding-right: 84px;
+  padding-left: 86px;
+  padding-right: 78px;
 }
 
 .card-input-field {
@@ -206,8 +208,7 @@ export default {
 
 .v-text-field >>> input {
   font-size: 0.8em;
-  font-weight: 100;
-  text-transform: capitalize;
+  font-weight: 300;
 }
 .v-text-field >>> label {
   font-size: 12px;

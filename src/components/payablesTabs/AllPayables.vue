@@ -2,6 +2,7 @@
   <div>
     <div>
       <v-card
+        height="60px"
         width="100%"
         flat
         class="d-flex"
@@ -24,7 +25,6 @@
         :items="inbox"
         hide-default-footer
         disable-pagination
-        @click="loadRoute"
         item-key="id"
         width="1340px"
         class="elevation-0 table-text"
@@ -64,7 +64,7 @@
         <template v-slot:[`item.action`]="{}">
           <div class="d-flex">
             <v-btn
-              @click="loadRoute"
+              @click.stop="dialog = true"
               exact-path
               rounded
               depressed
@@ -88,6 +88,288 @@
           </div>
         </template>
       </v-data-table>
+      <template>
+        <div>
+          <v-dialog v-model="dialog" max-width="516">
+            <v-card color="#FEFCF8" class="rounded-lg">
+              <v-card-title
+                style="background: #ffffff; border-radius: 8px 8px 0px 0px"
+              >
+                <span
+                  style="
+                    font-family: Inter;
+                    font-style: normal;
+                    font-weight: 600;
+                    font-size: 16px;
+                    line-height: 19px;
+                    color: #301f78;
+                  "
+                  >PAYABLE: Details</span
+                >
+                <v-spacer></v-spacer>
+                <v-icon
+                  tag="button"
+                  @click="dialog = false"
+                  class="text-bolder"
+                  color="#596A73"
+                >
+                  mdi-close
+                </v-icon>
+              </v-card-title>
+              <div class="px-8 d-flex" style="background: #fdfaf2">
+                <div class="pt-5">
+                  <h5
+                    style="
+                      font-family: Inter;
+                      font-style: normal;
+                      font-weight: normal;
+                      font-size: 12px;
+                      line-height: 15px;
+                      color: #301f78;
+                    "
+                  >
+                    Amount
+                  </h5>
+                  <p
+                    style="
+                      font-family: Inter;
+                      font-style: normal;
+                      font-weight: bold;
+                      font-size: 18px;
+                      line-height: 22px;
+                      color: #301f78;
+                    "
+                  >
+                    {{ amount }}
+                  </p>
+                </div>
+                <v-spacer></v-spacer>
+                <div class="pt-5">
+                  <h5
+                    style="
+                      font-family: Inter;
+                      font-style: normal;
+                      font-weight: normal;
+                      font-size: 12px;
+                      line-height: 15px;
+                      color: #301f78;
+                    "
+                  >
+                    Due
+                  </h5>
+                  <p
+                    style="
+                      font-family: Inter;
+                      font-style: normal;
+                      font-weight: bold;
+                      font-size: 12px;
+                      line-height: 18px;
+                      color: #596a73;
+                    "
+                  >
+                    {{ new Date() | date }}
+                  </p>
+                </div>
+              </div>
+              <div>
+                <div class="mx-auto px-13 pt-5">
+                  <h5
+                    style="
+                      font-family: Inter;
+                      font-style: normal;
+                      font-weight: normal;
+                      font-size: 12px;
+                      line-height: 18px;
+                      color: #7f919b;
+                    "
+                  >
+                    Ref
+                  </h5>
+                  <p
+                    style="
+                      font-family: Inter;
+                      font-style: normal;
+                      font-weight: bold;
+                      font-size: 12px;
+                      line-height: 18px;
+                      color: #7f919b;
+                    "
+                  >
+                    {{ Ref }}
+                  </p>
+                </div>
+                <v-divider
+                  class="mx-13"
+                  style="
+                    padding-top: 10px;
+                    padding-bottom: 10px;
+                    color: rgba(127, 145, 155, 0.22588);
+                  "
+                ></v-divider>
+                <div class="mx-auto px-13">
+                  <h5
+                    style="
+                      font-family: Inter;
+                      font-style: normal;
+                      font-weight: normal;
+                      font-size: 12px;
+                      line-height: 18px;
+                      color: #7f919b;
+                    "
+                  >
+                    Payee
+                  </h5>
+                  <p
+                    style="
+                      font-family: Inter;
+                      font-style: normal;
+                      font-weight: bold;
+                      font-size: 12px;
+                      line-height: 18px;
+                      color: #7f919b;
+                    "
+                  >
+                    {{ Payee }}
+                  </p>
+                </div>
+                <v-divider
+                  class="mx-13"
+                  style="
+                    padding-top: 10px;
+                    padding-bottom: 10px;
+                    color: rgba(127, 145, 155, 0.22588);
+                  "
+                ></v-divider>
+                <div class="mx-auto px-13">
+                  <h5
+                    style="
+                      font-family: Inter;
+                      font-style: normal;
+                      font-weight: normal;
+                      font-size: 12px;
+                      line-height: 18px;
+                      color: #7f919b;
+                    "
+                  >
+                    Subtotal
+                  </h5>
+                  <p
+                    style="
+                      font-family: Inter;
+                      font-style: normal;
+                      font-weight: bold;
+                      font-size: 12px;
+                      line-height: 18px;
+                      color: #7f919b;
+                    "
+                  >
+                    {{ Subtotal }}
+                  </p>
+                </div>
+              </div>
+              <v-card
+                @click.native="uploadFile"
+                @drop.prevent="onDroppedFiles"
+                @dragover.prevent="dragging = true"
+                @dragleave.prevent="dragging = false"
+                width="412"
+                height="126"
+                class="mx-13 my-0 justify-center d-flex"
+                style="
+                  background: #ffffff;
+                  border: 1px dashed rgba(127, 145, 155, 0.551929);
+                  box-sizing: border-box;
+                  border-radius: 8px;
+                "
+                flat
+                :style="{
+                  border: dragging
+                    ? '1px dashed #424f95'
+                    : '1px dashed rgba(127, 145, 155, 0.551929)',
+                }"
+              >
+                <span
+                  class="d-flex mx-auto my-auto"
+                  style="
+                    font-family: Inter;
+                    font-style: normal;
+                    font-weight: normal;
+                    font-size: 12px;
+                    line-height: 18px;
+                    text-align: center;
+                    color: #7f919b;
+                  "
+                  >Drag and drop or click to upload <br />
+                  png/jpg invoice</span
+                >
+              </v-card>
+              <template>
+                <v-card-actions class="d-flex justify-end align-center mr-9">
+                  <v-btn
+                    dark
+                    width="121"
+                    height="45"
+                    style="
+                      margin-right: 12px;
+                      margin-top: 24px;
+                      margin-bottom: 41px;
+                      background: #311b92;
+                      box-shadow: 0px 12px 22px rgba(0, 0, 0, 0.24);
+                      border-radius: 4px;
+                    "
+                  >
+                    <simple-line-icons icon="pencil" size="small" no-svg />
+                    <span
+                      class="pl-2 m-0 text-capitalize"
+                      style="
+                        font-family: Inter;
+                        font-style: normal;
+                        font-weight: normal;
+                        font-size: 14px;
+                        line-height: 17px;
+                        text-align: center;
+                        letter-spacing: 0.636364px;
+
+                        color: #ffffff;
+                      "
+                      >Update</span
+                    >
+                  </v-btn>
+                  <v-btn
+                    dark
+                    width="121"
+                    height="45"
+                    style="
+                      margin-top: 24px;
+                      margin-bottom: 41px;
+                      background: #16be98;
+                      box-shadow: 0px 12px 22px rgba(0, 0, 0, 0.24);
+                      border-radius: 4px;
+                    "
+                  >
+                    <simple-line-icons icon="arrow-right" size="small" no-svg />
+                    <span
+                      class="pl-4 m-0 text-capitalize"
+                      style="
+                        font-family: Inter;
+                        font-style: normal;
+                        font-weight: 500;
+                        font-size: 14px;
+                        line-height: 17px;
+                        text-align: center;
+                        letter-spacing: 0.636364px;
+
+                        color: #ffffff;
+                      "
+                      >Pay</span
+                    >
+                  </v-btn>
+                </v-card-actions>
+              </template>
+            </v-card>
+          </v-dialog>
+        </div>
+      </template>
     </v-layout>
   </div>
 </template>
@@ -97,7 +379,12 @@ export default {
   data() {
     return {
       autoPlay: false,
-      id: this.$route.params.id,
+      amount: "N2,300,000",
+      Ref: "#EXP084492",
+      Payee: "Emmanuel John",
+      Subtotal: "172500",
+      dragging: false,
+      dialog: false,
       inbox: [
         {
           id: 1,
@@ -172,6 +459,7 @@ export default {
           text: "Approved by",
           class: "primary--text",
           value: "approvedBy",
+          // width: "50px",
         },
         {
           text: "Amount",
@@ -214,13 +502,18 @@ export default {
     };
   },
   methods: {
-    loadRoute: function (id) {
-      this.$router.push({ name: "Invoice", params: { id } });
-    },
-    closeModal(e) {
+    closeModal() {
       this.dialog = false;
-      this.workflowName = e;
-      console.log(e);
+      // this.workflowName = e;
+      // console.log(e);
+    },
+    onDroppedFiles($event) {
+      this.dragging = false;
+      let files = [...$event.dataTransfer.items]
+        .filter((item) => item.kind === "file")
+        .map((item) => item.getAsFile());
+
+      console.table(files);
     },
   },
 };

@@ -155,4 +155,72 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style>
+.active {
+  color: #311b92;
+}
+tbody tr:nth-of-type(odd) {
+  background-color: #f8f9fc;
+}
+.theme--light.v-data-table
+  > .v-data-table__wrapper
+  > table
+  > tbody
+  > tr:not(:last-child)
+  > td:not(.v-data-table__mobile-row),
+.theme--light.v-data-table
+  > .v-data-table__wrapper
+  > table
+  > tbody
+  > tr:not(:last-child)
+  > th:not(.v-data-table__mobile-row) {
+  border-bottom: none;
+}
+table td,
+table th {
+  height: 40px;
+}
+.theme--light.v-data-table
+  > .v-data-table__wrapper
+  > table
+  > thead
+  > tr:last-child
+  > th {
+  border-bottom: none;
+}
+.v-data-table > .v-data-table__wrapper > table > tbody > tr > td,
+.v-data-table > .v-data-table__wrapper > table > tbody > tr > th,
+.v-data-table > .v-data-table__wrapper > table > thead > tr > td,
+.v-data-table > .v-data-table__wrapper > table > thead > tr > th,
+.v-data-table > .v-data-table__wrapper > table > tfoot > tr > td,
+.v-data-table > .v-data-table__wrapper > table > tfoot > tr > th {
+  padding: 0 36px;
+  transition: height 0.2s cubic-bezier(0.4, 0, 0.6, 1);
+}
+
+.pageTitle {
+  margin-top: 25px;
+  margin-bottom: 7px;
+  margin-left: 42px;
+  padding-left: 10px;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 19px;
+  letter-spacing: 0.45px;
+  color: #311b92;
+}
+
+.pageDespt {
+  margin-bottom: 27px;
+  margin-left: 42px;
+  padding-left: 10px;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 15px;
+  color: #7f919b;
+}
+</style>

@@ -62,6 +62,22 @@ const routes = [
     },
   },
   {
+    path: "/form/create-new-form",
+    name: "Create-form",
+    components: {
+      default: () => import("@/views/Create-new-form"),
+      MainLayout,
+    },
+  },
+  {
+    path: "/form/:id",
+    name: "Render-form",
+    components: {
+      default: () => import("@/views/Render-new-form"),
+      MainLayout,
+    },
+  },
+  {
     path: "/inbox",
     name: "Inbox",
     components: {
@@ -81,30 +97,32 @@ const routes = [
       MainLayout,
     },
   },
-  // {
-  //   path: "/invoice",
-  //   name: "Invoice",
-  //   components: {
-  //     default: () => import("@/views/navigation-bar/Invoice.vue"),
-  //     MainLayout,
-  //   },
-  // },
-  // {
-  //   path: "/inbox/email",
-  //   name: "Email",
-  //   components: {
-  //     default: () => import("@/views/Inbox/Email.vue"),
-  //     MainLayout,
-  //   },
-  // },
+  {
+    path: "/form",
+    name: "Form",
+    components: {
+      default: () => import("@/views/navigation-bar/Form.vue"),
+      MainLayout,
+    },
+  },
   {
     path: "/inbox/:id",
     name: "Invoice",
+    props: true,
     components: {
       default: () => import("@/views/navigation-bar/Invoice.vue"),
       MainLayout,
     },
   },
+  // {
+  //   path: "/payable/:id",
+  //   name: "payableDetails",
+  //   props: true,
+  //   components: {
+  //     default: () => import("@/views/includes/overlays/PayableDetails.vue"),
+  //     MainLayout,
+  //   },
+  // },
 ];
 
 const router = new VueRouter({

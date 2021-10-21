@@ -2,19 +2,12 @@
   <div>
     <div>
       <v-card
+        height="60px"
         width="100%"
         flat
         class="d-flex"
         style="background: rgba(127, 145, 155, 0.052607)"
       >
-        <v-switch
-          flat
-          dense
-          class="pl-4 mb-2"
-          color="#16be98"
-          v-model="autoProcess"
-          label="Auto process"
-        ></v-switch>
       </v-card>
     </div>
     <v-layout>
@@ -61,10 +54,10 @@
             {{ item.date | date }}
           </span>
         </template>
-        <template v-slot:[`item.action`]="{}">
+        <template v-slot:[`item.action`]="{ item }">
           <div class="d-flex">
             <v-btn
-              @click="loadRoute"
+              @click="loadRoute(item)"
               exact-path
               rounded
               depressed
@@ -107,7 +100,7 @@ export default {
           requester: "John Bello",
           date: new Date(),
           status: "processing",
-          action: "",
+          action: "/inbox/:id",
         },
         {
           id: 2,

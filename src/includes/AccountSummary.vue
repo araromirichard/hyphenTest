@@ -99,7 +99,7 @@ export default {
 }
 
 .table-text {
-  font-family: Lato;
+  font-family: "Lato";
   font-style: normal;
   font-weight: normal;
   font-size: 12px;
