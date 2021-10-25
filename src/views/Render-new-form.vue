@@ -78,7 +78,7 @@
             style="background-color: transparent"
           >
             <v-card elevation="20" max-width="550" min-height="866">
-              <v-layout style="padding-top: 51px; margin-left: 66px">
+              <v-layout class="mx-16" style="padding-top: 51px">
                 <template>
                   <FormRenderer
                     :form-configuration="formData"
@@ -116,7 +116,7 @@ export default {
       formTitle: "Form Name",
       formData: null,
       formInputData: null,
-      demoData: `{"formConfig":{"headline":"","subHeadline":"","isShowHeadline":false,"renderFormTag":false,"formActionURL":"","formMethod":"POST","enableServerSideValidation":false,"serverSideValidationEndpoint":""},"sections":{"section-5df50de8-19d8-4611-8b04-8e54a6925289":{"uniqueId":"section-5df50de8-19d8-4611-8b04-8e54a6925289","headline":"New Section","headlineAdditionalClass":"","subHeadline":"This is the sub-headline of the new section","subHeadlineAdditionalClass":"","isShowHeadline":true,"sortOrder":1,"type":"normal","rows":[],"controls":["control-5e1b2c1d-5600-4299-ac12-6926dc48413e","control-d67c4dbb-43b4-418c-b36d-6dbfbcc5e277","control-75cafce9-2efa-47bf-a22e-eac930ab0e29"]}},"rows":{},"controls":{"control-5e1b2c1d-5600-4299-ac12-6926dc48413e":{"uniqueId":"control-5e1b2c1d-5600-4299-ac12-6926dc48413e","type":"input","name":"first","label":"Input Field","subLabel":"","isShowLabel":true,"placeholderText":"","containerClass":"col-md-12","additionalContainerClass":"","additionalFieldClass":"","additionalLabelClass":"","defaultValue":"","validations":[],"typeAttribute":"text"},"control-d67c4dbb-43b4-418c-b36d-6dbfbcc5e277":{"uniqueId":"control-d67c4dbb-43b4-418c-b36d-6dbfbcc5e277","type":"input","name":"second","label":"Input Field","subLabel":"","isShowLabel":true,"placeholderText":"","containerClass":"col-md-12","additionalContainerClass":"","additionalFieldClass":"","additionalLabelClass":"","defaultValue":"","validations":[],"typeAttribute":"text"},"control-75cafce9-2efa-47bf-a22e-eac930ab0e29":{"uniqueId":"control-75cafce9-2efa-47bf-a22e-eac930ab0e29","type":"button","name":"","label":"Send","subLabel":"","isShowLabel":false,"placeholderText":"","containerClass":"col-md-12","additionalContainerClass":"","additionalFieldClass":"","additionalLabelClass":"","defaultValue":"","validations":[],"buttonClass":"success large dark depressed","buttonType":"button","emitEventCode":"","emitEventData":"","isRunValidation":false}}}`,
+      demoData: `{"formConfig":{"headline":"","subHeadline":"","isShowHeadline":false,"renderFormTag":false,"formActionURL":"","formMethod":"POST","enableServerSideValidation":false,"serverSideValidationEndpoint":""},"sections":{"section-ecf524fd-2017-4966-9e80-19858eb79cb5":{"uniqueId":"section-ecf524fd-2017-4966-9e80-19858eb79cb5","headline":"","headlineAdditionalClass":"","subHeadline":"","subHeadlineAdditionalClass":"","isShowHeadline":true,"sortOrder":1,"type":"normal","rows":[],"controls":["control-462f41a9-f800-4dff-80ac-fa8d5a759f96","control-0c2c194d-6f48-40c3-bec6-d69ea7b6589e","control-b53d73c5-34fe-469f-91ae-8b4df3e99a09","control-357b3272-ffe8-4766-832b-ceff493006ba","control-8eb53859-04da-4722-9bdd-8d0eac8a0627","control-0491a556-97fb-40cb-b537-4646cf4fb9f5","control-40ab76ff-7286-4846-8873-b63dc0086fb8","control-92cf89f9-7256-44fd-a615-2c0119a9cd15"]}},"rows":{},"controls":{"control-462f41a9-f800-4dff-80ac-fa8d5a759f96":{"uniqueId":"control-462f41a9-f800-4dff-80ac-fa8d5a759f96","type":"input","name":"bankName","label":"Bank Name","subLabel":"","isShowLabel":true,"placeholderText":"Bank Name","containerClass":"col-md-12 md-layout-item md-size-100","additionalContainerClass":"","additionalFieldClass":"","additionalLabelClass":"","defaultValue":"","validations":[],"typeAttribute":"text"},"control-0c2c194d-6f48-40c3-bec6-d69ea7b6589e":{"uniqueId":"control-0c2c194d-6f48-40c3-bec6-d69ea7b6589e","type":"input","name":"bankAccountNumber","label":"Bank Account Number","subLabel":"","isShowLabel":true,"placeholderText":"Bank Account Number","containerClass":"col-md-12 md-layout-item md-size-100","additionalContainerClass":"","additionalFieldClass":"","additionalLabelClass":"","defaultValue":"","validations":[],"typeAttribute":"text"},"control-b53d73c5-34fe-469f-91ae-8b4df3e99a09":{"uniqueId":"control-b53d73c5-34fe-469f-91ae-8b4df3e99a09","type":"input","name":"bankRoutingNumber","label":"Bank Routing Number","subLabel":"","isShowLabel":true,"placeholderText":"Bank Routing Number","containerClass":"col-md-12 md-layout-item md-size-100","additionalContainerClass":"","additionalFieldClass":"","additionalLabelClass":"","defaultValue":"","validations":[],"typeAttribute":"text"},"control-357b3272-ffe8-4766-832b-ceff493006ba":{"uniqueId":"control-357b3272-ffe8-4766-832b-ceff493006ba","type":"input","name":"address","label":"Input Field","subLabel":"","isShowLabel":true,"placeholderText":"Street Address","containerClass":"col-md-12 md-layout-item md-size-100","additionalContainerClass":"","additionalFieldClass":"","additionalLabelClass":"","defaultValue":"","validations":[],"typeAttribute":"text"},"control-8eb53859-04da-4722-9bdd-8d0eac8a0627":{"uniqueId":"control-8eb53859-04da-4722-9bdd-8d0eac8a0627","type":"input","name":"city","label":"City","subLabel":"","isShowLabel":true,"placeholderText":"City","containerClass":"col-md-12 md-layout-item md-size-100","additionalContainerClass":"","additionalFieldClass":"","additionalLabelClass":"","defaultValue":"","validations":[],"typeAttribute":"text"},"control-0491a556-97fb-40cb-b537-4646cf4fb9f5":{"uniqueId":"control-0491a556-97fb-40cb-b537-4646cf4fb9f5","type":"input","name":"state","label":"State","subLabel":"","isShowLabel":true,"placeholderText":"State","containerClass":"col-md-12 md-layout-item md-size-100","additionalContainerClass":"","additionalFieldClass":"","additionalLabelClass":"","defaultValue":"","validations":[],"typeAttribute":"text"},"control-40ab76ff-7286-4846-8873-b63dc0086fb8":{"uniqueId":"control-40ab76ff-7286-4846-8873-b63dc0086fb8","type":"input","name":"country","label":"Country","subLabel":"","isShowLabel":true,"placeholderText":"Country","containerClass":"col-md-12 md-layout-item md-size-100","additionalContainerClass":"","additionalFieldClass":"","additionalLabelClass":"","defaultValue":"","validations":[],"typeAttribute":"text"},"control-92cf89f9-7256-44fd-a615-2c0119a9cd15":{"uniqueId":"control-92cf89f9-7256-44fd-a615-2c0119a9cd15","type":"button","name":"","label":"Submit","subLabel":"","isShowLabel":false,"placeholderText":"","containerClass":"col-md-12 md-layout-item md-size-100","additionalContainerClass":"","additionalFieldClass":"","additionalLabelClass":"","defaultValue":"","validations":[],"buttonClass":"btn btn-success md-button md-raised md-success md-theme-default","buttonType":"button","emitEventCode":"saveData","emitEventData":"formInputData","isRunValidation":false}}}`,
     };
   },
 
@@ -125,17 +125,22 @@ export default {
       this.$set(this, "formData", JSON.parse(this.demoData));
     },
 
-    viewData() {
-      console.log(this.formInputData);
-    },
+    // showData() {
+    //   console.log(this.formInputData);
+    // },
   },
   created() {
     this.loadForm();
+    this.$formEvent.$on("showData", (value) => {
+      console.log(value);
+      console.log(JSON.stringify(this.formInputData));
+    });
   },
 };
 </script>
 
 <style scoped>
+@import "../assets/styles/bootstrap.min.css";
 .v-application .elevation-20 {
   box-shadow: 0px 5px 3px -2px rgb(0 0 0 / 3%), 0px -4px 7px 2px rgb(0 0 0 / 3%),
     0px -4px 41px 8px rgb(0 0 0 / 2%) !important;
@@ -143,5 +148,12 @@ export default {
 .v-application .elevation-10 {
   box-shadow: 0px 5px 3px -2px rgb(0 0 0 / 3%), 0px -4px 7px 2px rgb(0 0 0 / 3%),
     0px -4px 41px 8px rgb(0 0 0 / 2%) !important;
+}
+.theme--light.v-card {
+  background-color: #ffffff;
+  color: #7f919b !important;
+}
+.form-control ::placeholder {
+  color: #7f919b !important;
 }
 </style>

@@ -5,6 +5,7 @@ import store from "./store";
 import vuetify from "./plugins/vuetify";
 import DateFilter from "./filters/date";
 import { VueFormBuilderPlugin } from "v-form-builder";
+import "../src/assets/styles/formbuilder.css";
 import "v-form-builder/dist/v-form-builder.css";
 
 import SimpleLineIcons from "vue-simple-line";
