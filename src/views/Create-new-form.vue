@@ -39,7 +39,7 @@
             no-svg
           />
           <span
-            class="text-capitalize py-4 pl-3"
+            class="btnSucces text-capitalize py-4 pl-3"
             style="
               font-family: Inter;
               font-style: normal;
@@ -89,10 +89,16 @@ export default {
   background-color: #16be98 !important;
   border-color: #16be98 !important;
 }
-.btn {
+.btn-success {
   width: 136px !important;
   height: 45px !important;
   box-shadow: 0px 12px 22px rgba(0, 0, 0, 0.24) !important;
   border-radius: 4px !important;
+}
+.headline-block {
+  display: none !important;
+}
+.section-config {
+  display: none !important;
 }
 </style>
