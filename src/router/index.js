@@ -107,7 +107,7 @@ const routes = [
   },
   {
     path: "/inbox/:id",
-    name: "Invoice",
+    name: "inbox.invoice",
     props: true,
     components: {
       default: () => import("@/views/navigation-bar/Invoice.vue"),

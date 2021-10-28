@@ -1,36 +1,41 @@
 <template>
-  <div>
-    <div>
-      <v-card flat max-height="285px" min-width="390px">
-        <v-card-title>
-          <img :src="require('@/assets/cashBundle.svg')" style="padding: 6px" />
-          <span class="card-title">Scheduled Payments</span>
-          <v-spacer></v-spacer>
-          <span class="payment-total">450,000.00</span>
-        </v-card-title>
-        <v-card-text
-          style="min-height: 36px; background: rgba(127, 145, 155, 0.052607)"
-        ></v-card-text>
-        <template>
-          <v-data-table
-            dense
-            :headers="headers"
-            :items="payments"
-            hide-default-footer
-            disable-pagination
-            item-key="referenceID"
-            class="elevation-0 table-text"
-          >
-            <template v-slot:[`item.date`]="{ item }">
-              <span>
-                {{ item.date | date }}
-              </span>
-            </template>
-          </v-data-table>
-        </template>
-      </v-card>
-    </div>
-  </div>
+  <v-container class="pa-0">
+    <v-row>
+      <v-col>
+        <v-card flat max-height="285px" min-width="100%">
+          <v-card-title>
+            <img
+              :src="require('@/assets/cashBundle.svg')"
+              style="padding: 6px"
+            />
+            <span class="card-title">Scheduled Payments</span>
+            <v-spacer></v-spacer>
+            <span class="payment-total">450,000.00</span>
+          </v-card-title>
+          <v-card-text
+            style="min-height: 36px; background: rgba(127, 145, 155, 0.052607)"
+          ></v-card-text>
+          <template>
+            <v-data-table
+              dense
+              :headers="headers"
+              :items="payments"
+              hide-default-footer
+              disable-pagination
+              item-key="referenceID"
+              class="elevation-0 table-text"
+            >
+              <template v-slot:[`item.date`]="{ item }">
+                <span>
+                  {{ item.date | date }}
+                </span>
+              </template>
+            </v-data-table>
+          </template>
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>

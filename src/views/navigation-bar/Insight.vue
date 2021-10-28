@@ -1,5 +1,5 @@
 <template>
-  <div class="pl-4">
+  <v-container>
     <v-row>
       <v-col cols="2">
         <v-row class="d-flex flex-column">
@@ -80,7 +80,7 @@
                   >40% completed</span
                 >
               </template>
-              <div class="pl-6 pt-8">
+              <div class="pl-6 pt-5">
                 <v-chip
                   color="#D5F7EF"
                   text-color="#2BD4AE"
@@ -90,6 +90,7 @@
                   Done
                 </v-chip>
                 <p
+                  v-if="showSteps"
                   style="
                     font-family: Inter;
                     font-style: normal;
@@ -106,7 +107,7 @@
             </div>
 
             <!-- side-card component -->
-            <div class="pl-4">
+            <div class="pl-4" v-if="showSteps">
               <v-divider
                 class="mb-6 mt-3"
                 style="
@@ -159,129 +160,132 @@
           </v-col>
         </v-row>
       </v-col>
-      <v-col class="pl-8">
-        <div>
-          <h1
-            class="pl-4"
-            style="
-              font-family: Inter;
-              font-style: normal;
-              font-weight: normal;
-              font-size: 24px;
-              line-height: 29px;
-              color: #311b92;
-              padding-top: 88px;
-            "
-          >
-            Welcome Bunmi
-          </h1>
-          <p
-            class="mt-2 pl-4"
-            style="
-              padding-bottom: 49px;
-              font-family: Inter;
-              font-style: normal;
-              font-weight: normal;
-              font-size: 18px;
-              line-height: 22px;
-              color: #7f919b;
-            "
-          >
-            Here are a few things to do today
-          </p>
-        </div>
-        <div class="row d-flex mx-0">
-          <div v-for="card in cards" :key="card.title" class="mb-4 mr-4">
-            <v-card
-              style="min-width: 350px"
-              class="d-flex flex-column px-2"
-              color="#FBF4E4"
-              flat
+      <v-col cols="10" class="pl-8">
+        <v-container class="pa-0">
+          <div>
+            <h1
+              class="pl-4"
+              style="
+                font-family: Inter;
+                font-style: normal;
+                font-weight: normal;
+                font-size: 24px;
+                line-height: 29px;
+                color: #311b92;
+                padding-top: 88px;
+              "
             >
-              <div class="d-flex justify-space-between">
-                <v-card-title class="text-subtitle-1 py-5 pl-5">{{
-                  card.title
-                }}</v-card-title>
-
-                <v-avatar size="56" color="white mt-5 mr-5">
-                  <img style="height: 20px" :src="card.src" alt="" />
-                </v-avatar>
-              </div>
-              <div class="px-0 mx-0 pb-4 my-0">
-                <v-card-text
-                  class="py-0"
-                  style="
-                    font-family: Inter;
-                    font-style: normal;
-                    font-weight: 900;
-                    font-size: 24px;
-                    line-height: 29px;
-                    text-transform: uppercase;
-                    color: #311b92;
-                  "
-                  v-if="card.title === 'Total Payments'"
-                >
-                  N{{ card.text }}K
-                </v-card-text>
-                <v-card-text
-                  class="py-0"
-                  style="
-                    font-family: Inter;
-                    font-style: normal;
-                    font-weight: 900;
-                    font-size: 24px;
-                    line-height: 29px;
-                    text-transform: uppercase;
-                    color: #311b92;
-                  "
-                  v-else
-                >
-                  {{ card.text }}
-                </v-card-text>
-              </div>
-              <div>
-                <v-divider class="pt-3 pb-2"></v-divider>
-                <v-btn class="pb-4" large right plain color="#7F919B"
-                  >view
-                  <v-icon
-                    right
-                    class="text-black ml-0"
-                    x-small
-                    size="26"
-                    color="#311B92"
-                  >
-                    mdi-arrow-right-thick
-                  </v-icon></v-btn
-                >
-              </div>
-            </v-card>
+              Welcome Bunmi
+            </h1>
+            <p
+              class="mt-2 pl-4"
+              style="
+                padding-bottom: 49px;
+                font-family: Inter;
+                font-style: normal;
+                font-weight: normal;
+                font-size: 18px;
+                line-height: 22px;
+                color: #7f919b;
+              "
+            >
+              Here are a few things to do today
+            </p>
           </div>
-        </div>
-        <v-row>
-          <v-col class="d-flex flex-row py-3 pl-3">
-            <v-row>
-              <v-col>
-                <!-- account-summary component -->
-                <AccountSummary class="mb-16" />
-              </v-col>
-              <v-col>
-                <!-- info-summary component -->
-                <div class="d-flex flex-column">
-                  <InfoSummaryCard />
+        </v-container>
+        <v-container class="pa-0">
+          <v-row class="d-flex mx-0">
+            <v-col v-for="card in cards" :key="card.title" cols="12" md="4">
+              <v-card class="d-flex flex-column px-2" color="#FBF4E4" flat>
+                <div class="d-flex justify-space-between">
+                  <v-card-title class="text-subtitle-1 py-5 pl-5">{{
+                    card.title
+                  }}</v-card-title>
+
+                  <v-avatar size="56" color="white mt-5 mr-5">
+                    <img style="height: 20px" :src="card.src" alt="" />
+                  </v-avatar>
                 </div>
-              </v-col>
-            </v-row>
-          </v-col>
-        </v-row>
-        <v-row>
-          <!-- recent-process-table component -->
-          <v-col cols="12" class="d-flex">
-            <RecentProcessTable class="mb-6" />
-          </v-col>
-        </v-row>
+                <div class="px-0 mx-0 pb-4 my-0">
+                  <v-card-text
+                    class="py-0"
+                    style="
+                      font-family: Inter;
+                      font-style: normal;
+                      font-weight: 900;
+                      font-size: 24px;
+                      line-height: 29px;
+                      text-transform: uppercase;
+                      color: #311b92;
+                    "
+                    v-if="card.title === 'Total Payments'"
+                  >
+                    N{{ card.text }}K
+                  </v-card-text>
+                  <v-card-text
+                    class="py-0"
+                    style="
+                      font-family: Inter;
+                      font-style: normal;
+                      font-weight: 900;
+                      font-size: 24px;
+                      line-height: 29px;
+                      text-transform: uppercase;
+                      color: #311b92;
+                    "
+                    v-else
+                  >
+                    {{ card.text }}
+                  </v-card-text>
+                </div>
+                <div>
+                  <v-divider class="pt-3 pb-2"></v-divider>
+                  <v-btn class="pb-4" large right plain color="#7F919B"
+                    >view
+                    <v-icon
+                      right
+                      class="text-black ml-0"
+                      x-small
+                      size="26"
+                      color="#311B92"
+                    >
+                      mdi-arrow-right-thick
+                    </v-icon></v-btn
+                  >
+                </div>
+              </v-card>
+            </v-col>
+          </v-row>
+        </v-container>
+        <v-container class="pa-0">
+          <v-row>
+            <v-col class="d-flex flex-row py-3 pl-3">
+              <v-container class="pa-0">
+                <v-row class="py-3 px-3">
+                  <v-col cols="12" md="7" class="mb-10 mb-md-0">
+                    <!-- account-summary component -->
+                    <AccountSummary />
+                  </v-col>
+                  <v-col cols="12" md="5">
+                    <!-- info-summary component -->
+                    <div class="d-flex flex-column">
+                      <InfoSummaryCard />
+                    </div>
+                  </v-col>
+                </v-row>
+              </v-container>
+            </v-col>
+          </v-row>
+          <v-row>
+            <!-- recent-process-table component -->
+            <v-col cols="12" class="d-flex px-6">
+              <RecentProcessTable class="mb-6" />
+            </v-col>
+          </v-row>
+        </v-container>
       </v-col>
     </v-row>
-  </div>
+  </v-container>
 </template>
 
 <script>
@@ -294,6 +298,7 @@ export default {
   components: { AccountSummary, InfoSummaryCard, RecentProcessTable, SideCard },
   data() {
     return {
+      showSteps: false,
       cards: [
         {
           title: "Total Processes",

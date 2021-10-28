@@ -127,7 +127,7 @@
                 <span class="mt-2">EXCEPTION</span>
               </v-tab>
               <v-spacer></v-spacer>
-              <v-btn class="pt-4 mt-1" plain>
+              <v-btn class="pt-4 mt-1" plain @click.prevent="dialog2 = true">
                 <simple-line-icons left class="pr-1" icon="people" no-svg />
 
                 <b
@@ -164,6 +164,7 @@
               </v-btn>
               <v-expand-x-transition v-else>
                 <v-text-field
+                  @input="searchDataTable"
                   v-model="search"
                   @blur="isClicked = true && !search"
                   class="seacrh-field mt-2 mr-2"
@@ -181,17 +182,158 @@
             </v-tabs>
           </v-card>
         </div>
-        <component v-bind:is="items[tab].content" class="ml-0"></component>
+        <component
+          v-bind:is="items[tab].content"
+          class="ml-0"
+          ref="dataTable"
+        ></component>
       </v-card>
     </div>
-    <router-view></router-view>
+    <template>
+      <div>
+        <v-dialog v-model="dialog2" max-width="516">
+          <v-card color="#FEFCF8" class="rounded-lg">
+            <v-card-title
+              style="background: #ffffff; border-radius: 8px 8px 0px 0px"
+            >
+              <span
+                style="
+                  font-family: Inter;
+                  font-style: normal;
+                  font-weight: 600;
+                  font-size: 16px;
+                  line-height: 19px;
+                  color: #301f78;
+                "
+                >Invite a Stateholder</span
+              >
+              <v-spacer></v-spacer>
+              <v-icon
+                tag="button"
+                @click="dialog2 = false"
+                class="text-bolder"
+                color="#596A73"
+              >
+                mdi-close
+              </v-icon>
+            </v-card-title>
+            <validation-observer ref="observer" v-slot="{ invalid }">
+              <form>
+                <div class="px-8 d-flex" style="background: #fdfaf2">
+                  <p
+                    style="
+                      padding-top: 34px;
+                      font-family: Inter;
+                      font-style: normal;
+                      font-weight: normal;
+                      font-size: 12px;
+                      line-height: 18px;
+                      letter-spacing: 0.45px;
+                      color: #7f919b;
+                    "
+                  >
+                    Add details of <strong> Stakeholder</strong>
+                  </p>
+                </div>
+                <div>
+                  <validation-provider
+                    v-slot="{ errors }"
+                    name="Full Names"
+                    rules="required"
+                  >
+                    <v-text-field
+                      hide-details="auto"
+                      :error-messages="errors"
+                      v-model="stakeHolderDetails.fullNames"
+                      type="text"
+                      background-color="#ffffff"
+                      style="margin-left: 52px; margin-right: 45px"
+                      outlined
+                      label="Full Names"
+                    ></v-text-field>
+                  </validation-provider>
+                  <validation-provider
+                    v-slot="{ errors }"
+                    name="Email Address"
+                    rules="required"
+                  >
+                    <v-text-field
+                      hide-details="auto"
+                      :error-messages="errors"
+                      v-model="stakeHolderDetails.email"
+                      type="email"
+                      background-color="#ffffff"
+                      style="margin-left: 52px; margin-right: 45px"
+                      outlined
+                      label="Email Address"
+                    ></v-text-field>
+                  </validation-provider>
+                </div>
+                <template>
+                  <v-card-actions class="d-flex justify-end align-center mr-9">
+                    <v-btn
+                      :disabled="invalid"
+                      type="submit"
+                      dark
+                      width="121"
+                      height="45"
+                      style="
+                        margin-top: 24px;
+                        margin-bottom: 41px;
+                        background: #16be98;
+                        box-shadow: 0px 12px 22px rgba(0, 0, 0, 0.24);
+                        border-radius: 4px;
+                      "
+                    >
+                      <simple-line-icons icon="plus" size="small" no-svg />
+                      <span
+                        class="pl-4 m-0 text-capitalize"
+                        style="
+                          font-family: Inter;
+                          font-style: normal;
+                          font-weight: 500;
+                          font-size: 14px;
+                          line-height: 17px;
+                          text-align: center;
+                          letter-spacing: 0.636364px;
+
+                          color: #ffffff;
+                        "
+                        >Add</span
+                      >
+                    </v-btn>
+                  </v-card-actions>
+                </template>
+              </form>
+            </validation-observer>
+          </v-card>
+        </v-dialog>
+      </div>
+    </template>
   </v-container>
 </template>
 
 <script>
+import { required, email } from "vee-validate/dist/rules";
+import {
+  extend,
+  ValidationObserver,
+  ValidationProvider,
+  setInteractionMode,
+} from "vee-validate";
+setInteractionMode("eager");
+
+extend("required", {
+  ...required,
+  message: "{_field_} can not be empty",
+});
+
+extend("email", {
+  ...email,
+  message: "Email must be valid",
+});
 import TabDataTableAll from "../../components/TabDataTableAll.vue";
 import TabDataTableEmail from "../../components/TabDataTableEmail.vue";
-//import TabDataTableForms from "../../components/TabDataTableForms.vue";
 import TabDataTableReviews from "../../components/TabDataTableReviews.vue";
 import DropDownMenu from "../../includes/DropDownMenu.vue";
 import SimpleLineIcons from "vue-simple-line";
@@ -201,10 +343,15 @@ export default {
   data() {
     return {
       dialog: false,
+      dialog2: false,
       noInvoice: false,
       isClicked: true,
       tab: 0,
       search: "",
+      stakeHolderDetails: {
+        fullNames: "",
+        email: "",
+      },
       items: [
         { tab: "All", content: "TabDataTableAll" },
         { tab: "Email", content: "TabDataTableEmail" },
@@ -242,10 +389,15 @@ export default {
     //TabDataTableForms,
     DropDownMenu,
     SimpleLineIcons,
+    ValidationProvider,
+    ValidationObserver,
   },
   methods: {
     toggleSearch() {
       this.isClicked = false;
+    },
+    searchDataTable(e) {
+      this.$refs.dataTable.setSearchText(e);
     },
   },
 };
