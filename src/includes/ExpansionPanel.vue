@@ -1,5 +1,5 @@
 <template>
-  <div style="background: #f0f0fa; width: 1407px">
+  <div style="background: #f0f0fa; max-width: 1407px">
     <v-card elevation="0" style="background: #f9fafa; mix-blend-mode: normal">
       <v-expand-transition mode="out-in">
         <div v-show="show">
@@ -33,28 +33,34 @@
             Start with any of our pre-composed workflows below or create your
             own in minutes
           </p>
-          <div class="d-flex mb-10">
-            <v-card
-              width="120"
-              height="120"
-              style="
-                margin-left: 42px;
-                margin-top: 22px;
-                background: #7aebe7;
-                mix-blend-mode: normal;
-                opacity: 0.8;
-                border-radius: 8px;
-              "
-            >
-              <img
-                style="margin-left: 48px; margin-right: 47px; margin-top: 44px"
-                :src="require('@/assets/pbot_icons/cardFile.svg')"
-                alt=""
-              />
-
-              <v-card-text
+          <v-row class="d-flex mb-10" cols="12" md="3">
+            <div class="d-flex flex-column">
+              <v-card
+                class="rounded-lg"
+                elevation="0"
+                width="120"
+                height="120"
                 style="
-                  margin-top: 30px;
+                  margin-left: 42px;
+                  margin-top: 22px;
+                  background: #7aebe7;
+                  mix-blend-mode: normal;
+                  opacity: 1;
+                "
+              >
+                <v-img
+                  contain
+                  class="mx-auto mt-10 pa-1"
+                  width="25px"
+                  height="32px"
+                  src="@/assets/pbot_icons/file.png"
+                  alt="file image"
+                ></v-img>
+              </v-card>
+              <span
+                class="ml-15 pl-1 mt-3 text-break"
+                style="
+                  max-width: 6rem;
                   font-family: Inter;
                   font-style: normal;
                   font-weight: normal;
@@ -64,29 +70,35 @@
                   color: #7f919b;
                 "
                 >Transaction approval
-              </v-card-text>
-            </v-card>
-            <v-card
-              width="120"
-              height="120"
-              style="
-                margin-left: 30px;
-                margin-top: 22px;
-                background: #66d5ff;
-                mix-blend-mode: normal;
-                opacity: 0.8;
-                border-radius: 8px;
-              "
-            >
-              <img
-                style="margin-left: 48px; margin-right: 47px; margin-top: 44px"
-                :src="require('@/assets/pbot_icons/cardEnvelop.svg')"
-                alt=""
-              />
-
-              <v-card-text
+              </span>
+            </div>
+            <div class="d-flex flex-column">
+              <v-card
+                class="rounded-lg"
+                elevation="0"
+                width="120"
+                height="120"
                 style="
-                  margin-top: 30px;
+                  margin-left: 42px;
+                  margin-top: 22px;
+                  background: #66d5ff;
+                  mix-blend-mode: normal;
+                  opacity: 1;
+                "
+              >
+                <v-img
+                  contain
+                  class="mx-auto mt-10 pa-1"
+                  width="30px"
+                  height="24px"
+                  src="@/assets/pbot_icons/envelop.png"
+                  alt="envelop image"
+                ></v-img>
+              </v-card>
+              <span
+                class="ml-15 pl-1 mt-3 text-break"
+                style="
+                  max-width: 6rem;
                   font-family: Inter;
                   font-style: normal;
                   font-weight: normal;
@@ -95,31 +107,36 @@
                   text-align: center;
                   color: #7f919b;
                 "
-              >
-                Transaction reporting</v-card-text
-              >
-            </v-card>
-            <v-card
-              width="120"
-              height="120"
-              style="
-                margin-left: 30px;
-                margin-top: 22px;
-                background: #9f66ff;
-                mix-blend-mode: normal;
-                opacity: 0.8;
-                border-radius: 8px;
-              "
-            >
-              <img
-                style="margin-left: 48px; margin-right: 47px; margin-top: 44px"
-                :src="require('@/assets/pbot_icons/cardPerson.svg')"
-                alt=""
-              />
-
-              <v-card-text
+                >Transaction reporting
+              </span>
+            </div>
+            <div class="d-flex flex-column">
+              <v-card
+                class="rounded-lg"
+                elevation="0"
+                width="120"
+                height="120"
                 style="
-                  margin-top: 30px;
+                  margin-left: 42px;
+                  margin-top: 22px;
+                  background: #9f66ff;
+                  mix-blend-mode: normal;
+                  opacity: 1;
+                "
+              >
+                <v-img
+                  contain
+                  class="mx-auto mt-10 pa-1"
+                  width="30px"
+                  height="30px"
+                  src="@/assets/pbot_icons/person.png"
+                  alt="file image"
+                ></v-img>
+              </v-card>
+              <span
+                class="ml-14 mt-3 text-break"
+                style="
+                  max-width: 6rem;
                   font-family: Inter;
                   font-style: normal;
                   font-weight: normal;
@@ -129,29 +146,35 @@
                   color: #7f919b;
                 "
                 >AML/KYC monitoring rule
-              </v-card-text>
-            </v-card>
-            <v-card
-              width="120"
-              height="120"
-              style="
-                margin-left: 30px;
-                margin-top: 22px;
-                background: #ff9766;
-                mix-blend-mode: normal;
-                opacity: 0.8;
-                border-radius: 8px;
-              "
-            >
-              <img
-                style="margin-left: 48px; margin-right: 47px; margin-top: 44px"
-                :src="require('@/assets/pbot_icons/cardBank.svg')"
-                alt=""
-              />
-
-              <v-card-text
+              </span>
+            </div>
+            <div class="d-flex flex-column">
+              <v-card
+                class="rounded-lg"
+                elevation="0"
+                width="120"
+                height="120"
                 style="
-                  margin-top: 30px;
+                  margin-left: 42px;
+                  margin-top: 22px;
+                  background: #ff9766;
+                  mix-blend-mode: normal;
+                  opacity: 1;
+                "
+              >
+                <v-img
+                  contain
+                  class="mx-auto mt-10 pa-1"
+                  width="30px"
+                  height="30px"
+                  src="@/assets/pbot_icons/house.png"
+                  alt="file image"
+                ></v-img>
+              </v-card>
+              <span
+                class="ml-15 pl-1 mt-3 text-break"
+                style="
+                  max-width: 6rem;
                   font-family: Inter;
                   font-style: normal;
                   font-weight: normal;
@@ -160,13 +183,13 @@
                   text-align: center;
                   color: #7f919b;
                 "
-                >Bank account reconciliation
-              </v-card-text>
-            </v-card>
-          </div>
+                >Transaction approval
+              </span>
+            </div>
+          </v-row>
         </div>
       </v-expand-transition>
-      <div class="d-flex justify-center mx-auto">
+      <div class="d-flex justify-center mx-auto" style="width: 100%">
         <v-btn block plain @click="show = !show" class="text-lowercase">
           <v-icon class="pr-4">{{
             show ? "mdi-chevron-up" : "mdi-chevron-down"
@@ -185,7 +208,7 @@ export default {
   name: "Expansion",
   data() {
     return {
-      show: false,
+      show: true,
     };
   },
   components: {
@@ -194,4 +217,12 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.v-card > *:first-child:not(.v-btn):not(.v-chip):not(.v-avatar),
+.v-card > .v-card__progress + *:not(.v-btn):not(.v-chip):not(.v-avatar) {
+  border-top-left-radius: 0 !important;
+  border-top-right-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+}
+</style>

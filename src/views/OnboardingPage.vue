@@ -1,73 +1,83 @@
 <template>
   <div class="d-flex">
     <div class="justify-center ma-auto">
-      <div class="main-title font-weight-black mx-auto">
+      <h3
+        class="mb-10 mx-auto"
+        style="
+          margin-top: 224px;
+          font-family: Inter;
+          font-style: normal;
+          font-weight: 700;
+          font-size: 38px;
+          line-height: 39px;
+          letter-spacing: 0.646465px;
+          color: #596a73;
+        "
+      >
         Choose your account type
-      </div>
-      <v-card
-        class="card1 ma-auto"
-        elevation="0"
-        width="400"
-        to="#"
-        :class="[isActive ? active : '']"
-        @click="isActive = !isActive"
-      >
-        <v-card-text>
-          <v-row class="d-flex">
-            <v-col class="ma-auto justify-center pl-6" cols="3">
-              <v-avatar size="80" color="#FDF9EF">
-                <v-icon> mdi-account-outline</v-icon>
-              </v-avatar>
-            </v-col>
-            <v-col cols="9">
-              <v-card-titile class="card-title pl-4 py-auto">
-                Advisor
-              </v-card-titile>
-              <v-card-text class="card-text py-auto">
-                You provide funding/finance advise services to 5 or more
-                businesses
-              </v-card-text>
-            </v-col>
-          </v-row>
-        </v-card-text>
-      </v-card>
-      <v-card
-        to="#"
-        elevation="0"
-        class="card2 ma-auto flat"
-        width="400"
-        :class="[isActive ? active : '']"
-        @click="isActive = !isActive"
-      >
-        <v-card-text>
-          <v-row class="d-flex">
-            <v-col class="ma-auto justify-center pl-6" cols="3"
-              ><v-avatar size="80" color="#FDF9EF"
-                ><v-icon> mdi-account-outline</v-icon></v-avatar
-              ></v-col
-            >
-            <v-col cols="9"
-              ><v-card-titile class="card-title pl-4 py-auto"
-                >Business</v-card-titile
-              >
-              <v-card-text class="card-text py-auto"
-                >You work at a business, in a finance or senior executive
-                role</v-card-text
-              ></v-col
-            >
-          </v-row>
-        </v-card-text>
-      </v-card>
+      </h3>
 
-      <v-router>
+      <v-row class="d-flex flex-column">
+        <v-card
+          outlined
+          class="mt-16 mb-5 ma-auto"
+          elevation="0"
+          max-width="400"
+          to="#"
+        >
+          <v-card-text>
+            <v-row class="d-flex">
+              <v-col class="ma-auto justify-center pl-6" cols="3">
+                <v-avatar size="80" color="#FDF9EF">
+                  <v-icon> mdi-account-outline</v-icon>
+                </v-avatar>
+              </v-col>
+              <v-col cols="9">
+                <v-card-title class="pl-4 py-auto"> Advisor </v-card-title>
+                <v-card-text class="py-auto">
+                  You provide funding/finance advise services to 5 or more
+                  businesses
+                </v-card-text>
+              </v-col>
+            </v-row>
+          </v-card-text>
+        </v-card>
+        <v-card
+          outlined
+          to="#"
+          elevation="0"
+          class="mb-12 ma-auto flat"
+          max-width="400"
+        >
+          <v-card-text>
+            <v-row class="d-flex">
+              <v-col class="ma-auto justify-center pl-6" cols="3"
+                ><v-avatar size="80" color="#FDF9EF"
+                  ><v-icon> mdi-account-outline</v-icon></v-avatar
+                ></v-col
+              >
+              <v-col cols="9"
+                ><v-card-title class="card-title pl-4 py-auto"
+                  >Business</v-card-title
+                >
+                <v-card-text class="card-text py-auto"
+                  >You work at a business, in a finance or senior executive
+                  role</v-card-text
+                ></v-col
+              >
+            </v-row>
+          </v-card-text>
+        </v-card>
         <Button
-          class="btn text-md-h5"
+          absolute
+          id="btn"
+          class="mx-10 text-md-h5"
           height="54"
-          width="400"
+          width="330"
           to="welcome"
           label="Next"
         />
-      </v-router>
+      </v-row>
     </div>
   </div>
 </template>
@@ -80,75 +90,13 @@ export default {
   },
 
   data() {
-    return {
-      isActive: false,
-    };
+    return {};
   },
 };
 </script>
 
 <style scoped>
-.active {
-  /* border: 1px solid rgba(49, 27, 146, 0.2); */
-}
-.main-title {
-  position: absolute;
-  height: 39px;
-  top: 224px;
-
-  font-family: Inter;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 32px;
-  line-height: 39px;
-  /* identical to box height */
-
-  letter-spacing: 1px;
-
-  color: #596a73;
-}
-.card1 {
-  position: absolute;
-  height: 130px;
-  top: 329px;
-  background: #ffffff;
-  border-radius: 7px;
-}
-.card2 {
-  position: absolute;
-  height: 130px;
-  top: 479px;
-
-  background: #ffffff;
-  box-sizing: border-box;
-  border-radius: 7px;
-}
-.card-title {
-  font-family: Inter;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 18px;
-  line-height: 22px;
-  letter-spacing: 0.818182px;
-
-  color: rgba(0, 35, 56, 0.5);
-}
-.card-text {
-  font-family: Inter;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 14px;
-  line-height: 16px;
-  /* or 160% */
-
-  color: rgba(0, 35, 56, 0.5);
-}
-
-.card-items {
-  padding-left: 84px;
-  padding-right: 84px;
-}
-.btn {
-  top: 658px;
+#btn {
+  min-width: 400px !important;
 }
 </style>

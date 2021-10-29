@@ -64,8 +64,7 @@
         </template>
 
         <v-card
-          max-width="362"
-          height="508"
+          max-width="362px"
           flat
           class="m-0"
           style="background: #fefcf8; border-radius: 8px"
@@ -83,7 +82,7 @@
                 line-height: 19px;
                 color: #301f78;
               "
-              >Attach files to: #eroapapa</span
+              >Attach files to: {{ invoiceId }}</span
             >
             <v-spacer></v-spacer>
             <v-icon
@@ -97,29 +96,29 @@
           </v-card-title>
           <template class="d-flex">
             <v-text-field
-              style="margin-left: 37px; margin-right: 31px"
-              label="File title"
+              background-color="#ffffff"
+              style="margin-left: 35px; margin-right: 31px; margin-top: 32px"
               placeholder="File title"
               outlined
+              hide-details="auto"
               >File title</v-text-field
             >
             <template class="d-flex">
               <v-select
+                hide-details="auto"
+                background-color="#ffffff"
                 :menu-props="{ bottom: true, offsetY: true }"
-                :items="fileDownItems"
+                :items="fileUploadCategory"
                 style="
-                  margin-left: 37px;
+                  margin-left: 35px;
                   margin-right: 31px;
-                  background: #ffffff;
-                  border: 1px solid rgba(212, 216, 223, 0.377431);
-                  box-sizing: border-box;
+                  margin-top: 42px;
                   border-radius: 3px;
-                  width: 294px;
+
                   height: 40px;
                 "
-                class="justify-center mx-8 custom-placeholer-color"
+                class="justify-center custom-placeholer-color"
                 flat
-                dense
                 outlined
                 placeholder="Select Workflow"
               >
@@ -140,6 +139,10 @@
               </v-select>
             </template>
             <v-card
+              @click.native="uploadFile"
+              @drop.prevent="onDroppedFiles"
+              @dragover.prevent="dragging = true"
+              @dragleave.prevent="dragging = false"
               width="294"
               height="126"
               class="mx-auto justify-center d-flex"
@@ -152,6 +155,11 @@
                 border-radius: 8px;
               "
               flat
+              :style="{
+                border: dragging
+                  ? '1px dashed #424f95'
+                  : '1px dashed rgba(127, 145, 155, 0.551929)',
+              }"
             >
               <span
                 class="d-flex mx-auto my-auto"
@@ -171,12 +179,13 @@
           </template>
 
           <template class="mt-6">
-            <v-card-action class="d-flex justify-end mt-2 mr-9">
+            <v-card-actions class="d-flex justify-end mt-2 mr-9">
               <v-btn
                 dark
                 width="121"
                 height="45"
                 style="
+                  margin-bottom: 49px;
                   background: #311b92;
                   box-shadow: 0px 12px 22px rgba(0, 0, 0, 0.24);
                   border-radius: 4px;
@@ -203,7 +212,7 @@
                   >Upload</span
                 >
               </v-btn>
-            </v-card-action>
+            </v-card-actions>
           </template>
         </v-card>
       </v-dialog>
@@ -219,8 +228,16 @@ export default {
   data() {
     return {
       dialog: false,
+      dragging: false,
+      attachedfile: "",
+      invoiceId: "",
       showReview: true,
-      fileDownItems: ["Purchase order", "Reciept", "Good recieved", "Proforma"],
+      fileUploadCategory: [
+        "Purchase order",
+        "Reciept",
+        "Good recieved",
+        "Proforma",
+      ],
     };
   },
   components: {
@@ -233,6 +250,32 @@ export default {
     closeDialog() {
       return (this.dialog = false);
     },
+    onDroppedFiles($event) {
+      this.dragging = false;
+      let files = [...$event.dataTransfer.items]
+        .filter((item) => item.kind === "file")
+        .map((item) => item.getAsFile());
+
+      console.table(files);
+    },
+    // uploadFile(e) {
+    //   let files = e.target.files || e.dataTransfer.files;
+    //   if (!files.length) return;
+    //   this.createfile(files[0]);
+    // },
+    // createfile(file) {
+    //   var attachedfile = new attachedfile();
+    //   var reader = new FileReader();
+    //   var vm = this;
+
+    //   reader.onload = (e) => {
+    //     vm.attachedfile = e.target.result;
+    //   };
+    //   reader.readAsDataURL(file);
+    // },
+    // removeattachedfile: function (e) {
+    //   this.attachedfile = "";
+    // },
   },
 };
 </script>

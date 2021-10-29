@@ -1,216 +1,302 @@
 <template>
   <div>
     <div>
-      <v-data-table
-        dense
-        :headers="headers"
-        :items="inbox"
-        hide-default-footer
-        disable-pagination
-        @click="loadRoute"
-        item-key="id"
-        width="1340"
-        class="elevation-0 table-text"
+      <v-card
+        width="100%"
+        flat
+        class="d-flex"
+        style="background: rgba(127, 145, 155, 0.052607)"
       >
-        <!-- <template v-slot:[`item.id`]="{ item }"> </template> -->
-        <template v-slot:[`item.transactionType`]="{ item }">
-          <v-chip
-            :color="`${
-              item.transactionType === 'expense' ? '#F9EED2' : '#D5F7EF'
-            }`"
-            :text-color="`${
-              item.transactionType === 'expense' ? '#E3AA1C' : '#2BD5AE'
-            }`"
-            x-small
+        <v-switch
+          flat
+          dense
+          class="pl-4 mb-2"
+          color="#16be98"
+          v-model="autoProcess"
+          label="Auto process"
+        ></v-switch>
+        <SendToWorkflowDialog @closeDialog="closeModal" />
+        <v-chip class="mt-5" small
+          ><span
+            class="
+              font-family:
+              Inter;
+              font-style:
+              normal;
+              font-weight:
+              normal;
+              font-size:
+              10px;
+              line-height:
+              10px;
+              color:
+              #7F919B;
+            "
           >
-            {{ item.transactionType }}
-          </v-chip>
-        </template>
-        <template v-slot:[`item.status`]="{ item }">
-          <v-icon
-            small
-            :color="`${item.status === 'processed' ? '#2BD5AE' : '#E3AA1C'}`"
-          >
-            mdi-circle-medium
-          </v-icon>
-          <span>
-            {{ item.status }}
+            {{ workflowName }}
           </span>
-        </template>
-        <template v-slot:[`item.date`]="{ item }">
-          <span>
-            {{ item.date | date }}
-          </span>
-        </template>
-        <template v-slot:[`item.action`]="{}" class="d-flex justify-center">
-          <v-btn
-            @click="loadRoute"
-            exact-path
-            rounded
-            depressed
-            dark
-            small
-            color="#2BD5AE"
-            class="text-lowercase px-2 mr-2"
-            style="color: #311b92"
+        </v-chip>
+        <v-spacer></v-spacer>
+        <v-btn color="#2BD5AE" class="my-4 export-btn mr-9" elevation="3"
+          ><span class="material-icons pr-1"> import_export </span
+          ><span
+            style="
+              font-family: Inter;
+              font-style: normal;
+              font-weight: 500;
+              font-size: 11px;
+              line-height: 12px;
+              text-align: center;
+              letter-spacing: 0.636364px;
+              color: #301f78;
+            "
+            >Export</span
           >
-            view
-          </v-btn>
-          <v-btn
-            rounded
-            depressed
-            dark
-            small
-            color="#311B92"
-            class="text-lowercase px-2"
-            >review</v-btn
-          >
-        </template>
-        <template v-slot:[`item.id`]="{ item }">
-          <router-link
-            :to="{ name: 'Invoice', params: { id: item.id } }"
-            tag="tr"
-          >
-            {{ item.id }}
-          </router-link>
-        </template>
-      </v-data-table>
+        </v-btn>
+      </v-card>
     </div>
+    <v-layout row wrap class="align-center my-2 px-8">
+      <v-flex md2>
+        <div class="d-flex align-center">
+          <p class="mb-0 ml-2 mr-4 primary--text font-weight-bold">ID</p>
+          <p class="mb-0 mx-4 primary--text font-weight-bold">Type</p>
+        </div>
+      </v-flex>
+
+      <v-flex md2>
+        <div class="d-flex align-center">
+          <p class="mb-0 pl-4 primary--text font-weight-bold">Amount</p>
+          <v-btn class="ml-1" color="grey lighten-1" icon>
+            <v-icon>mdi-chevron-down</v-icon>
+          </v-btn>
+        </div>
+      </v-flex>
+      <v-flex md1>
+        <div class="d-flex align-center">
+          <p class="mb-0 primary--text font-weight-bold">Ref No.</p>
+        </div>
+      </v-flex>
+      <v-flex md2>
+        <div class="d-flex align-center">
+          <p class="mb-0 primary--text font-weight-bold">Staus</p>
+          <v-btn class="ml-1" color="grey lighten-1" icon>
+            <v-icon>mdi-chevron-down</v-icon>
+          </v-btn>
+        </div>
+      </v-flex>
+      <v-flex md2>
+        <div class="d-flex align-center">
+          <p class="mb-0 primary--text font-weight-bold">Requester</p>
+          <v-btn class="ml-1" color="grey lighten-1" icon>
+            <v-icon>mdi-chevron-down</v-icon>
+          </v-btn>
+        </div>
+      </v-flex>
+      <v-flex md1>
+        <div>
+          <p class="mb-0 pl-md-4 primary--text font-weight-bold">Date</p>
+        </div>
+      </v-flex>
+      <v-flex md2>
+        <div class="d-flex align-center">
+          <p class="mb-0 pl-md-8 primary--text font-weight-bold">Actions</p>
+        </div>
+      </v-flex>
+    </v-layout>
+    <v-row>
+      <v-col
+        cols="12"
+        v-for="invoice in filteredInvoices"
+        :key="invoice.id"
+        class="py-0 ma-0"
+      >
+        <DataTable
+          :index="invoice"
+          :id="invoice.id"
+          :invoiceRef="invoice.ref"
+          :type="invoice.type"
+          :requester="invoice.requester"
+          :date="invoice.date | date"
+          :amount="invoice.amount"
+          :status="invoice.status"
+          :iconColor="invoice.status === 'processed' ? '#2BD5AE' : '#E3AA1C'"
+          :chipColor="invoice.type === 'expense' ? '#F9EED2' : '#D5F7EF'"
+          :textColor="invoice.type === 'expense' ? '#E3AA1C' : '#2BD5AE'"
+        />
+      </v-col>
+    </v-row>
   </div>
 </template>
 
 <script>
+import SendToWorkflowDialog from "../includes/overlays/SendToWorkflowDialog.vue";
+import DataTable from "./DataTable.vue";
 export default {
+  components: {
+    SendToWorkflowDialog,
+    DataTable,
+  },
   data() {
     return {
-      id: this.$route.params.id,
-      inbox: [
+      autoProcess: true,
+      search: "",
+      selectedRows: [],
+      sendToWorkflow: true,
+      workflowName: "workflow name…",
+      invoices: [
         {
           id: 1,
-          transactionType: "expense",
+          type: "expense",
           amount: 300000.0,
           ref: "#EXP084492",
           requester: "John Bello",
           date: new Date(),
           status: "processing",
-          action: "",
         },
         {
           id: 2,
-          transactionType: "invoice",
+          type: "invoice",
           amount: 400000.0,
           ref: "#EXP084492",
           requester: "Emma Thomas",
           date: new Date(),
           status: "processed",
-          action: "",
         },
         {
           id: 3,
-          transactionType: "expense",
+          type: "expense",
           amount: 100000.0,
           ref: "#EXP084492",
           requester: "Sussan Boma",
           date: new Date(),
           status: "processed",
-          action: "",
         },
         {
           id: 4,
-          transactionType: "invoice",
+          type: "invoice",
           amount: 250000.0,
           ref: "#EXP084492",
           requester: "John Bello",
           date: new Date(),
           status: "In review",
-          action: "",
         },
         {
           id: 5,
-          transactionType: "expense",
+          type: "expense",
           amount: 150000.0,
           ref: "#EXP084492",
           requester: "Pat Ede",
           date: new Date(),
           status: "review needed",
-          action: "",
         },
         {
           id: 6,
-          transactionType: "invoice",
+          type: "invoice",
           amount: 3000.0,
           ref: "#EXP084492",
           requester: "Obinna Nwafor",
           date: new Date(),
           status: "pending",
-          action: "",
-        },
-      ],
-      headers: [
-        {
-          text: "ID",
-          align: "start",
-          sortable: false,
-          class: "primary--text",
-          value: "id",
-        },
-        {
-          text: "Type",
-          class: "primary--text",
-          value: "transactionType",
-        },
-        {
-          text: "Amount",
-          align: "end",
-          sortable: false,
-          class: "primary--text",
-          value: "amount",
-        },
-        {
-          text: "Currency",
-          class: "primary--text",
-          value: "currency",
-        },
-        {
-          text: "Ref no.",
-          class: "primary--text",
-          value: "ref",
-        },
-        {
-          text: "Status",
-          class: "primary--text",
-          value: "status",
-        },
-        {
-          text: "Requester",
-          align: "end",
-          sortable: false,
-          class: "primary--text",
-          value: "requester",
-        },
-        { text: "Date", class: "primary--text", value: "date" },
-        {
-          text: "Action",
-          class: "primary--text",
-          value: "action",
-          sortable: false,
-          align: "center",
         },
       ],
     };
   },
   methods: {
-    loadRoute: function (id) {
-      this.$router.push({ name: "Invoice", params: { id } });
+    closeModal(e) {
+      this.dialog = false;
+      this.workflowName = e;
+      console.log(e);
+    },
+
+    alert(item) {
+      alert("Hello " + item.name);
+    },
+    setSearchText(value) {
+      this.search = value;
     },
   },
-
-  // filters: {
-  //   byTransType: function () {
-  //     return console.log(this.item.transactionType);
-  //   },
-  // },
+  computed: {
+    filteredInvoices() {
+      if (this.search) {
+        return this.invoices.filter((invoice) => {
+          return invoice.requester.match(this.search);
+        });
+      } else return this.invoices;
+    },
+  },
 };
 </script>
 
-<style scoped></style>
+<style>
+.switch-card {
+  height: 53px;
+  background: rgba(127, 145, 155, 0.052607);
+}
+
+.switch {
+  width: 15.28px;
+  height: 15.28px;
+}
+
+.export-btn {
+  font-family: "Inter" sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 10px;
+  line-height: 12px;
+  text-align: center;
+  letter-spacing: 0.636364px;
+
+  color: #301f78;
+}
+i.sli-font {
+  font-size: 12px;
+  display: inline-block;
+}
+.material-icons {
+  font-family: "Material Icons";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 14px;
+  color: #301f78;
+}
+tbody tr:nth-of-type(odd) {
+  background-color: #f8f9fc;
+}
+.theme--light.v-data-table
+  > .v-data-table__wrapper
+  > table
+  > tbody
+  > tr:not(:last-child)
+  > td:not(.v-data-table__mobile-row),
+.theme--light.v-data-table
+  > .v-data-table__wrapper
+  > table
+  > tbody
+  > tr:not(:last-child)
+  > th:not(.v-data-table__mobile-row) {
+  border-bottom: none;
+}
+table td,
+table th {
+  height: 40px;
+}
+.theme--light.v-data-table
+  > .v-data-table__wrapper
+  > table
+  > thead
+  > tr:last-child
+  > th {
+  border-bottom: none;
+}
+.v-data-table > .v-data-table__wrapper > table > tbody > tr > td,
+.v-data-table > .v-data-table__wrapper > table > tbody > tr > th,
+.v-data-table > .v-data-table__wrapper > table > thead > tr > td,
+.v-data-table > .v-data-table__wrapper > table > thead > tr > th,
+.v-data-table > .v-data-table__wrapper > table > tfoot > tr > td,
+.v-data-table > .v-data-table__wrapper > table > tfoot > tr > th {
+  padding: 0 36px;
+  transition: height 0.2s cubic-bezier(0.4, 0, 0.6, 1);
+}
+</style>

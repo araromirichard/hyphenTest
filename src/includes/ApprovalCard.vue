@@ -57,7 +57,7 @@
           :rule="rule"
           :index="i"
           @updateField="updateField($event, i)"
-          @delete="deleteApprovalRule"
+          @delete="deleteApprovalRule($event)"
         />
       </div>
     </div>
@@ -71,6 +71,7 @@
 import { formItems, operators } from "@/utils/ManagerApprovalOptions.js";
 import ApprovalInputs from "./ApprovalInputs.vue";
 export default {
+  props: ["comparisonType"],
   data() {
     return {
       selectedBasicCompareType: 0,
@@ -87,6 +88,19 @@ export default {
 
       BasicCompareType: [{ text: "ALL" }, { text: "ANY" }],
     };
+  },
+  watch: {
+    comparisonType: function (newValue) {
+      let value = newValue.split(" ")[0];
+      const items = this.BasicCompareType.map((x) => x.text);
+      this.selectedBasicCompareType = items.indexOf(value);
+      console.log({
+        newValue,
+        value,
+        items,
+        selectedBasicCompareType: this.selectedBasicCompareType,
+      });
+    },
   },
   components: { ApprovalInputs },
   methods: {
@@ -107,7 +121,15 @@ export default {
     },
     deleteApprovalRule(i) {
       this.approvalRules.splice(i, 1);
+      this.$emit("checkApprovalCard", this.approvalRules.length);
     },
+  },
+  mounted() {
+    if (this.comparisonType) {
+      let value = this.comparisonType.split(" ")[0];
+      const items = this.BasicCompareType.map((x) => x.text);
+      this.selectedBasicCompareType = items.indexOf(value);
+    }
   },
 };
 </script>

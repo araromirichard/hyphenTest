@@ -1,0 +1,201 @@
+<template>
+  <div>
+    <v-hover v-slot:default="{ hover }">
+      <v-card
+        @click="
+          $router.push({
+            name: 'inbox.invoice',
+            params: { id: id },
+          })
+        "
+        class="px-6 py-4 my-1"
+        style="cursor: pointer; transition: all 0.3s ease"
+        :elevation="hover ? 1 : 0"
+        :color="id % 2 ? '#f6f6f6' : ''"
+      >
+        <v-layout row wrap class="align-center">
+          <v-flex md2>
+            <div class="d-flex align-center">
+              <span
+                class="mb-0 mx-4"
+                style="
+                  font-family: Lato;
+                  font-style: normal;
+                  font-weight: normal;
+                  font-size: 12px;
+                  line-height: 14px;
+                  color: #596a73;
+                "
+                >{{ id }}</span
+              >
+              <v-chip
+                class="mx-4"
+                :color="chipColor"
+                :text-color="textColor"
+                x-small
+                >{{ type }}</v-chip
+              >
+            </div>
+          </v-flex>
+
+          <v-flex md2>
+            <div class="d-flex align-center">
+              <span
+                class="mb-0 pl-6 pr-4"
+                style="
+                  font-family: Lato;
+                  font-style: normal;
+                  font-weight: normal;
+                  font-size: 12px;
+                  line-height: 14px;
+                  color: #596a73;
+                "
+                >{{ amount }}</span
+              >
+            </div>
+          </v-flex>
+          <v-flex md1>
+            <div class="d-flex align-center">
+              <span
+                class="mb-0"
+                style="
+                  font-family: Lato;
+                  font-style: normal;
+                  font-weight: normal;
+                  font-size: 12px;
+                  line-height: 14px;
+                  color: #596a73;
+                "
+                >{{ invoiceRef }}</span
+              >
+            </div>
+          </v-flex>
+          <v-flex md2>
+            <div class="d-flex align-center">
+              <v-icon small :color="iconColor"> mdi-circle-medium </v-icon>
+              <span
+                style="
+                  font-family: Lato;
+                  font-style: normal;
+                  font-weight: normal;
+                  font-size: 12px;
+                  line-height: 14px;
+                  color: #596a73;
+                "
+                >{{ status }}</span
+              >
+            </div>
+          </v-flex>
+          <v-flex md2>
+            <div class="d-flex align-center">
+              <span
+                class="mb-0"
+                style="
+                  font-family: Lato;
+                  font-style: normal;
+                  font-weight: normal;
+                  font-size: 12px;
+                  line-height: 14px;
+                  color: #596a73;
+                "
+                >{{ requester }}</span
+              >
+            </div>
+          </v-flex>
+          <v-flex md1>
+            <div>
+              <span
+                class="mb-0"
+                style="
+                  font-family: Lato;
+                  font-style: normal;
+                  font-weight: normal;
+                  font-size: 12px;
+                  line-height: 14px;
+                  color: #596a73;
+                "
+                >{{ date }}</span
+              >
+            </div>
+          </v-flex>
+          <v-flex md2>
+            <div class="d-flex align-center">
+              <v-btn
+                @click="
+                  $router.push({
+                    name: 'inbox.invoice',
+                    params: { id: '123' },
+                  })
+                "
+                exact-path
+                rounded
+                depressed
+                dark
+                small
+                color="#2BD5AE"
+                class="text-lowercase px-2 my-1 mr-2"
+                style="color: #311b92"
+              >
+                view
+              </v-btn>
+              <v-btn
+                rounded
+                depressed
+                dark
+                small
+                color="#311B92"
+                class="text-lowercase px-2 my-1"
+                >review</v-btn
+              >
+            </div>
+          </v-flex>
+        </v-layout>
+      </v-card>
+    </v-hover>
+  </div>
+</template>
+
+<script>
+export default {
+  props: {
+    index: {
+      type: Object,
+    },
+    id: {
+      type: Number,
+    },
+    type: {
+      type: String,
+    },
+    amount: {
+      type: Number,
+    },
+    invoiceRef: {
+      type: String,
+    },
+    requester: {
+      type: String,
+    },
+    date: {
+      type: String,
+    },
+    status: {
+      type: String,
+    },
+    iconColor: {
+      type: String,
+    },
+    chipColor: {
+      type: String,
+    },
+    textColor: {
+      type: String,
+    },
+  },
+  data() {
+    return {};
+  },
+};
+</script>
+
+<style scoped></style>

@@ -1,53 +1,54 @@
 <template>
-  <div>
-    <div>
-      <v-card flat>
-        <v-card-title>
-          <img :src="require('@/assets/Opp-arrows.svg')" style="padding: 8px" />
-          <span class="card-title">Recent Processes</span>
-          <v-spacer></v-spacer>
-          <v-btn plain class="pr-8 text-capitalize"
-            ><span class="payment-total">view all</span></v-btn
+  <v-container class="pa-0">
+    <v-row>
+      <v-col>
+        <v-card flat>
+          <v-card-title>
+            <img
+              :src="require('@/assets/Opp-arrows.svg')"
+              style="padding: 8px"
+            />
+            <span class="card-title">Recent Processes</span>
+            <v-spacer></v-spacer>
+            <v-btn plain class="pr-8 text-capitalize"
+              ><span class="payment-total">view all</span></v-btn
+            >
+          </v-card-title>
+          <v-card-text
+            style="height: 36px; background: rgba(127, 145, 155, 0.052607)"
+          ></v-card-text>
+          <v-data-table
+            dense
+            :headers="headers"
+            :items="recentProcess"
+            hide-default-footer
+            disable-pagination
+            item-key="referenceID"
+            class="elevation-0 table-text"
           >
-        </v-card-title>
-        <v-card-text
-          style="height: 36px; background: rgba(127, 145, 155, 0.052607)"
-        ></v-card-text>
-        <v-data-table
-          dense
-          :headers="headers"
-          :items="recentProcess"
-          hide-default-footer
-          disable-pagination
-          item-key="referenceID"
-          class="elevation-0 table-text"
-        >
-          <template v-slot:[`item.budget`]="{ item }">
-            <v-chip
-              :color="`${item.budget === 'marketing' ? '#F9EED2' : '#D5F7EF'}`"
-              :text-color="`${
-                item.budget === 'marketing' ? '#E3AA1C' : '#2BD5AE'
-              }`"
-              x-small
-            >
-              {{ item.budget }}
-            </v-chip>
-          </template>
-          <template v-slot:[`item.status`]="{ item }">
-            <v-icon
-              small
-              :color="`${item.status === 'processed' ? '#E3AA1C' : '#2BD5AE'}`"
-            >
-              mdi-circle-medium
-            </v-icon>
-            <span>
-              {{ item.status }}
-            </span>
-          </template>
-        </v-data-table>
-      </v-card>
-    </div>
-  </div>
+            <template v-slot:[`item.budget`]="{ item }">
+              <v-chip class="px-4" color="#F9EED2" text-color="#E3AA1C" x-small>
+                {{ item.budget }}
+              </v-chip>
+            </template>
+            <template v-slot:[`item.status`]="{ item }">
+              <v-icon
+                small
+                :color="`${
+                  item.status === 'processed' ? '#E3AA1C' : '#2BD5AE'
+                }`"
+              >
+                mdi-circle-medium
+              </v-icon>
+              <span>
+                {{ item.status }}
+              </span>
+            </template>
+          </v-data-table>
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
@@ -66,35 +67,35 @@ export default {
         },
         {
           referenceId: "a151-e52924f7d2a4",
-          description: "Payment for cloud Services",
+          description: "Payroll for may",
           amount: 23000.0,
           status: "Processing",
           type: "Invoice",
-          budget: "marketing",
+          budget: "payroll",
         },
         {
           referenceId: "a151-e52924f7d2a4",
-          description: "Payment for cloud Services",
+          description: "Bootcamp for HR department",
           amount: 23000.0,
           status: "Processed",
           type: "Invoice",
-          budget: "marketing",
+          budget: "office",
         },
         {
           referenceId: "a151-e52924f7d2a4",
-          description: "Payment for cloud Services",
+          description: "New work desk supply",
           amount: 23000.0,
           status: "In review",
           type: "Invoice",
-          budget: "marketing",
+          budget: "material",
         },
         {
           referenceId: "a151-e52924f7d2a4",
-          description: "Payment for cloud Services",
+          description: "Training for sales team",
           amount: 23000.0,
           status: "Processed",
           type: "Invoice",
-          budget: "marketing",
+          budget: "material",
         },
       ],
       headers: [
@@ -117,7 +118,7 @@ export default {
 
 <style scoped>
 .card-title {
-  font-family: Inter;
+  font-family: "Inter";
   font-style: normal;
   font-weight: bold;
   font-size: 12px;
@@ -128,7 +129,7 @@ export default {
 }
 
 .payment-total {
-  font-family: Inter;
+  font-family: "Inter";
   font-style: normal;
   font-weight: bold;
   font-size: 12px;
@@ -139,7 +140,7 @@ export default {
 }
 
 .table-text {
-  font-family: Lato;
+  font-family: "Lato";
   font-style: normal;
   font-weight: normal;
   font-size: 12px;

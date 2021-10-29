@@ -3,7 +3,7 @@
     <v-col
       class="#faf2df full-height"
       cols="3"
-      style="width: 450px; background-color: #fffbf1"
+      style="max-width: 450px; background-color: #fffbf1"
     >
       <v-tabs
         slider-color="#301F78"
@@ -44,7 +44,7 @@
         </v-btn>
       </v-row>
       <v-row>
-        <manager-approval style="margin-top: 59px; margin-left: 47px" />
+        <ManagerApproval style="margin-top: 59px; margin-left: 47px" />
       </v-row>
     </v-col>
   </v-row>

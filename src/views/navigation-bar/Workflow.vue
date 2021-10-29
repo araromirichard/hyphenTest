@@ -120,7 +120,7 @@
             ></v-text-field>
           </template>
           <template class="mt-6">
-            <v-card-action class="d-flex justify-end mt-2 mr-9">
+            <v-card-actions class="d-flex justify-end mt-2 mr-9">
               <v-btn
                 link
                 to="/workflow/rules-edit"
@@ -137,7 +137,7 @@
                 <v-icon>mdi-chevron-right</v-icon>
                 <span>Next</span>
               </v-btn>
-            </v-card-action>
+            </v-card-actions>
           </template>
         </v-card>
       </v-dialog>
@@ -160,6 +160,8 @@
                 <v-tab>LOG</v-tab>
                 <v-spacer></v-spacer>
                 <v-btn
+                  v-if="isClicked"
+                  @click="toggleSearch"
                   plain
                   class="text-black pt-4"
                   style="
@@ -176,6 +178,23 @@
                   search
                   <v-icon small right class="pr-1"> mdi-magnify </v-icon>
                 </v-btn>
+
+                <v-expand-x-transition v-else>
+                  <v-text-field
+                    v-model="search"
+                    @blur="isClicked = true && !search"
+                    class="seacrh-field mt-2 mr-2"
+                    dense
+                    clearable
+                    autofocus
+                    hide-details="true"
+                    persistent-placeholder
+                    placeholder="Search"
+                    append-icon="mdi-magnify"
+                    filled
+                  >
+                  </v-text-field>
+                </v-expand-x-transition>
               </v-tabs>
             </template>
           </v-card>
@@ -321,12 +340,9 @@
           </v-row>
         </v-card>
         <template>
-          <single-rule
+          <SingleRule
             style="margin-left: 43px; margin-top: 28px"
-            title="Approval by MD & Snr. Managers"
-            :textOne="dateValue() | date"
-            textTwo="23"
-            textThree="0"
+            :createdAt="dateValue() | date"
           />
         </template>
       </v-card>
@@ -344,14 +360,8 @@ export default {
     return {
       dialog: false,
       Rules: true,
-      // cards: [
-      //   {
-      //     icons: ["mdi-pencil-outline", "mdi-content-copy", "mdi-delete"],
-      //     paths: ["/workflow/rules-edit", "#", "#"
-
-      //     ],
-      //   },
-      // ]
+      isClicked: true,
+      search: "",
     };
   },
   methods: {
@@ -360,6 +370,9 @@ export default {
     },
     dateValue() {
       return new Date();
+    },
+    toggleSearch() {
+      this.isClicked = false;
     },
     // pushRoute() {
     //   $router.push("/workflow/rules-edit");

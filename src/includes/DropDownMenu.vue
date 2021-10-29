@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="pa-0 ma-0">
     <v-menu left offset-y :close-on-content-click="false">
       <template v-slot:activator="{ on, attrs }">
         <v-btn
@@ -8,17 +8,12 @@
           v-on="on"
           class="mr-16"
           color="primary"
-          style="
-            margin-top: 25px;
-            width: 121px;
-            height: 54px;
-            background: #311b92;
-
-            border-radius: 4px;
-          "
+          :width="width"
+          :height="height"
+          style="margin-top: 25px; background: #311b92; border-radius: 4px"
         >
           <img
-            :src="require('@/assets/file.svg')"
+            :src="btnIcon"
             alt="A file svg icon"
             style="padding-right: 8px"
           />
@@ -34,7 +29,7 @@
             "
             class="text-capitalize"
           >
-            New
+            {{ btnText }}
           </span>
         </v-btn>
       </template>
@@ -46,49 +41,43 @@
 
           background: #ffffff;
         "
-      >
-        <v-list>
-          <ListMenu />
-          <v-list-item
-            v-for="inboxMenu in inboxMenus"
-            :key="inboxMenu.title"
-            v-bind="attrs"
-            v-on="on"
-            active-class="active"
-            link
-          >
-            <v-list-item-content>
-              <v-list-item-title
-                style="
-                  font-family: Inter;
-                  font-style: normal;
-                  font-weight: 600;
-                  font-size: 12px;
-                  line-height: 15px;
-                  color: #7f919b;
-                "
-                >{{ inboxMenu.title }}</v-list-item-title
+        ><v-list-item-group>
+          <v-list>
+            <ListMenu />
+            <v-list-item v-for="(item, index) in inboxMenus" :key="index">
+              <v-list-item-content>
+                <v-list-item-title
+                  style="
+                    font-family: Inter;
+                    font-style: normal;
+                    font-weight: 600;
+                    font-size: 12px;
+                    line-height: 15px;
+                    color: #7f919b;
+                  "
+                  >{{ item.title }}</v-list-item-title
+                >
+                <v-list-item-subtitle
+                  style="
+                    font-family: Inter;
+                    font-style: normal;
+                    font-weight: normal;
+                    font-size: 10px;
+                    line-height: 12px;
+                    color: #7f919b;
+                    mix-blend-mode: normal;
+                    opacity: 0.5;
+                  "
+                >
+                  {{ item.subtitle }}
+                </v-list-item-subtitle>
+              </v-list-item-content>
+              <v-icon small style="mix-blend-mode: normal; opacity: 0.5">
+                {{ item.icon }}</v-icon
               >
-              <v-list-item-subtitle
-                style="
-                  font-family: Inter;
-                  font-style: normal;
-                  font-weight: normal;
-                  font-size: 10px;
-                  line-height: 12px;
-                  color: #7f919b;
-                  mix-blend-mode: normal;
-                  opacity: 0.5;
-                "
-              >
-                {{ inboxMenu.subtitle }}
-              </v-list-item-subtitle>
-            </v-list-item-content>
-            <v-icon small style="mix-blend-mode: normal; opacity: 0.5">
-              {{ inboxMenu.icon }}</v-icon
-            >
-          </v-list-item>
-        </v-list>
+            </v-list-item>
+          </v-list>
+        </v-list-item-group>
       </v-card>
     </v-menu>
   </div>
@@ -101,6 +90,12 @@ export default {
   name: "DropDown",
   components: {
     ListMenu,
+  },
+  props: {
+    icon: String,
+    btnText: String,
+    width: String,
+    height: String,
   },
   data() {
     return {
@@ -127,6 +122,11 @@ export default {
         },
       ],
     };
+  },
+  computed: {
+    btnIcon() {
+      return require(`@/assets/pbot_icons/${this.icon}.svg`);
+    },
   },
 };
 </script>

@@ -1,29 +1,41 @@
 <template>
-  <div>
-    <div>
-      <v-card flat height="285px">
-        <v-card-title>
-          <img :src="require('@/assets/cashBundle.svg')" style="padding: 6px" />
-          <span class="card-title">Scheduled Payments</span>
-          <v-spacer></v-spacer>
-          <span class="payment-total">450,000.00</span>
-        </v-card-title>
-        <v-card-text
-          style="height: 36px; background: rgba(127, 145, 155, 0.052607)"
-        ></v-card-text>
-        <v-data-table
-          dense
-          :headers="headers"
-          :items="payments"
-          hide-default-footer
-          disable-pagination
-          item-key="referenceID"
-          class="elevation-0 table-text"
-        >
-        </v-data-table>
-      </v-card>
-    </div>
-  </div>
+  <v-container class="pa-0">
+    <v-row>
+      <v-col>
+        <v-card flat max-height="285px" min-width="100%">
+          <v-card-title>
+            <img
+              :src="require('@/assets/cashBundle.svg')"
+              style="padding: 6px"
+            />
+            <span class="card-title">Scheduled Payments</span>
+            <v-spacer></v-spacer>
+            <span class="payment-total">450,000.00</span>
+          </v-card-title>
+          <v-card-text
+            style="min-height: 36px; background: rgba(127, 145, 155, 0.052607)"
+          ></v-card-text>
+          <template>
+            <v-data-table
+              dense
+              :headers="headers"
+              :items="payments"
+              hide-default-footer
+              disable-pagination
+              item-key="referenceID"
+              class="elevation-0 table-text"
+            >
+              <template v-slot:[`item.date`]="{ item }">
+                <span>
+                  {{ item.date | date }}
+                </span>
+              </template>
+            </v-data-table>
+          </template>
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
@@ -35,22 +47,22 @@ export default {
         {
           referenceId: "a151-e52924f7d2a4",
           amount: 3000.0,
-          date: 45,
+          date: new Date(),
         },
         {
           referenceId: "a151-e52924f7d2a4",
           amount: 3000.0,
-          date: 45,
+          date: new Date(),
         },
         {
           referenceId: "a151-e52924f7d2a4",
           amount: 3000.0,
-          date: 45,
+          date: new Date(),
         },
         {
           referenceId: "a151-e52924f7d2a4",
           amount: 3000.0,
-          date: 45,
+          date: new Date(),
         },
       ],
       headers: [
@@ -70,10 +82,10 @@ export default {
 
 <style scoped>
 .card-title {
-  font-family: Inter;
+  font-family: "Inter" sans-serif;
   font-style: normal;
   font-weight: bold;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 15px;
   /* identical to box height */
 
@@ -81,10 +93,10 @@ export default {
 }
 
 .payment-total {
-  font-family: Inter;
+  font-family: "Inter" sans-serif;
   font-style: normal;
   font-weight: bold;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 15px;
   /* identical to box height */
 
@@ -92,7 +104,7 @@ export default {
 }
 
 .table-text {
-  font-family: Lato;
+  font-family: "Lato";
   font-style: normal;
   font-weight: normal;
   font-size: 12px;

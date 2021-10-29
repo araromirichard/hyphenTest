@@ -1,9 +1,11 @@
 <template>
-  <div class="ma-auto">
-    <v-card class="ma-auto elevation-0.5" width="514" v-if="pageTwo">
+  <div>
+    <v-card class="mb-16 ma-auto elevation-4" max-width="514" v-if="pageTwo">
       <v-card-title
-        class="card-items text--secondary font-weight-bold pt-lg-16"
+        class="px-0"
         style="
+          margin-left: 86px;
+          margin-top: 58px;
           font-family: Inter;
           font-style: normal;
           font-weight: bold;
@@ -13,95 +15,132 @@
           color: #596a73;
         "
       >
-        Sign up
+        <span class="mt-10 text--secondary">Sign up</span>
       </v-card-title>
-      <v-form class="ma-auto" ref="form">
-        <v-card-text class="card-items">
-          <v-row class="px-3 py-2">
-            <v-text-field
-              label="First Name"
-              single-line
-              outlined
-              type="text"
-              required
-              class="font-weight-regular text-subtitle-2 label--text"
-              v-model="firstName"
-              :rules="nameRules"
-            ></v-text-field>
-            <v-spacer></v-spacer>
-            <v-text-field
-              label="Last Name"
-              single-line
-              outlined
-              type="text"
-              required
-              class="font-weight-regular text-subtitle-2 label--text"
-              v-model="lastName"
-              :rules="nameRules"
-            ></v-text-field>
-          </v-row>
-          <v-text-field
-            label="Email"
-            single-line
-            outlined
-            type="email"
-            required
-            class="font-weight-regular text-subtitle-2 label--text"
-            v-model="email"
-            :rules="emailRules"
-          ></v-text-field>
-
-          <v-text-field
-            label="Phone number"
-            single-line
-            outlined
-            class="font-weight-regular text-subtitle-2 label--text pb-0 mb-0"
-            v-model="phoneNumber"
-            type="number"
-            required
-            :rules="phoneNumberRules"
-          ></v-text-field>
-          <div class="message-details d-flex justify-end">
-            <router-link
-              to="#"
-              style="text-decoration: none; color: inherit; padding: none"
+      <validation-observer ref="observer" v-slot="{ invalid }">
+        <v-form class="ma-auto" ref="form">
+          <v-card-text class="card-items">
+            <v-row class="pt-2">
+              <v-col cols="12" md="6">
+                <validation-provider
+                  v-slot="{ errors }"
+                  name="First Name"
+                  rules="required"
+                >
+                  <v-text-field
+                    hide-details="auto"
+                    label="First Name"
+                    single-line
+                    outlined
+                    type="text"
+                    required
+                    :error-messages="errors"
+                    class="font-weight-regular"
+                    v-model="signUpDetails.firstName"
+                  >
+                  </v-text-field>
+                </validation-provider>
+              </v-col>
+              <v-col cols="12" md="6">
+                <validation-provider
+                  v-slot="{ errors }"
+                  name="Last Name"
+                  rules="required"
+                >
+                  <v-text-field
+                    hide-details="auto"
+                    label="Last Name"
+                    single-line
+                    outlined
+                    type="text"
+                    required
+                    :error-messages="errors"
+                    class="font-weight-regular"
+                    v-model="signUpDetails.lastName"
+                  >
+                  </v-text-field>
+                </validation-provider>
+              </v-col>
+            </v-row>
+            <validation-provider
+              v-slot="{ errors }"
+              name="email"
+              rules="required|email"
             >
-              <p>Forgot Password?</p>
-            </router-link>
-          </div>
-        </v-card-text>
-
-        <v-card-actions class="card-items pt-5">
-          <v-btn
-            block
-            width="346"
-            height="54"
-            color="primary"
-            elevation="20"
-            large
-            class="text-capitalize"
-            @click="
-              submit;
-              pageTwo = !pageTwo;
-            "
-          >
-            <span
-              style="
-                font-family: Inter;
-                font-style: normal;
-                font-weight: 900;
-                font-size: 16px;
-                line-height: 19px;
-                text-align: center;
-                letter-spacing: 0.727273px;
-                color: #ffffff;
-              "
+              <v-text-field
+                hide-details="auto"
+                label="Email"
+                single-line
+                outlined
+                type="email"
+                required
+                class="py-6 font-weight-regular text-lowercase"
+                v-model="signUpDetails.email"
+                :error-messages="errors"
+              ></v-text-field>
+            </validation-provider>
+            <validation-provider
+              v-slot="{ errors }"
+              name="phoneNumber"
+              :rules="{
+                required: true,
+                digits: 11,
+                regex: `/((^090)([23589]))|((^070)([1-9]))|((^080)([2-9]))|((^081)([0-9]))(\d{7})/`,
+              }"
             >
-              Next</span
-            ></v-btn
-          >
-        </v-card-actions>
-      </v-form>
+              <v-text-field
+                hide-details="auto"
+                placeholder="Phone number"
+                single-line
+                outlined
+                label="Phone Number"
+                class="font-weight-regular pb-0 mb-0"
+                v-model="signUpDetails.phoneNumber"
+                required
+                :counter="11"
+                :error-messages="errors"
+              ></v-text-field>
+            </validation-provider>
+            <div class="message-details d-flex justify-end">
+              <router-link
+                to="#"
+                style="text-decoration: none; color: inherit; padding: none"
+              >
+                <p class="pt-3">Forgot Password?</p>
+              </router-link>
+            </div>
+          </v-card-text>
+
+          <v-card-actions class="card-items pt-5">
+            <v-btn
+              :disabled="invalid"
+              block
+              width="346"
+              height="54"
+              color="primary"
+              elevation="14"
+              large
+              class="text-capitalize"
+              @click="goNext"
+            >
+              <span
+                style="
+                  font-family: Inter;
+                  font-style: normal;
+                  font-weight: 900;
+                  font-size: 16px;
+                  line-height: 19px;
+                  text-align: center;
+                  letter-spacing: 0.727273px;
+                  color: #ffffff;
+                "
+              >
+                Next</span
+              ></v-btn
+            >
+          </v-card-actions>
+        </v-form>
+      </validation-observer>
       <div class="d-flex mx-auto justify-center pt-8 pb-16 card-items">
         <div class="hint">
           <div class="py-auto d-flex align-content-center">
@@ -117,67 +156,92 @@
         </div>
       </div>
     </v-card>
-
+    <!-- second form for sign up starts -->
     <SignUp2 v-else />
+    <!-- second form for sign up endss -->
   </div>
 </template>
 
 <script>
+import { required, digits, email, max, regex } from "vee-validate/dist/rules";
+import {
+  extend,
+  ValidationObserver,
+  ValidationProvider,
+  setInteractionMode,
+} from "vee-validate";
+
 import SignUp2 from "./SignUp2";
+
+setInteractionMode("eager");
+
+extend("digits", {
+  ...digits,
+  message: "{_field_} needs to be {length} digits. ({_value_})",
+});
+
+extend("required", {
+  ...required,
+  message: "{_field_} can not be empty",
+});
+
+extend("max", {
+  ...max,
+  message: "{_field_} may not be greater than {length} characters",
+});
+
+extend("regex", {
+  ...regex,
+  message: "{_field_} {_value_} does not match {regex}",
+});
+
+extend("email", {
+  ...email,
+  message: "Email must be valid",
+});
 
 export default {
   name: "SignUp",
 
   data() {
     return {
-      firstName: "",
-      lastName: "",
-      email: "",
-      phoneNumber: "",
+      signUpDetails: {
+        firstName: "",
+        lastName: "",
+        email: "",
+        phoneNumber: "",
+      },
       pageTwo: true,
-      nameRules: [
-        (value) => !!value || "Name is required",
-        (value) =>
-          (value && value.length <= 10) ||
-          "First Name must be less than 10 characters",
-      ],
-      emailRules: [
-        (value) => !!value || "Email is required",
-        (value) => value.indexOf("@") !== 0 || "Email should have a Username",
-        (value) => value.includes("@") || "Email should include the @ symbol",
-        (value) =>
-          value.indexOf(".") - value.indexOf("@") > 1 ||
-          "Email should contain a valid domain",
-      ],
-      phoneNumberRules: [
-        (value) => !!value || "Phone Number is required",
-        (value) =>
-          (value && value.length == 11) ||
-          "First Name must be less than 10 characters",
-        (value) => {
-          const pattern = /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s/0-9]*/;
-          return pattern.test(value) || "Phone Number is invalid";
-        },
-      ],
     };
   },
   components: {
     SignUp2,
+    ValidationProvider,
+    ValidationObserver,
   },
   methods: {
-    submit() {
-      if (this.$refs.form.validate()) {
-        console.log(this.fullName, this.password);
+    goNext() {
+      if (this.$refs.observer.validate()) {
+        console.log(this.signUpDetails);
+        console.log("User Details", JSON.stringify(this.signUpDetails));
+        this.pageTwo = !this.pageTwo;
       }
     },
+    // clear() {
+    //   this.firstName = "";
+    //   this.lastName = "";
+    //   this.phoneNumber = "";
+    //   this.email = "";
+    //   this.$refs.observer.reset();
+    // },
   },
 };
 </script>
 
 <style scoped>
 .card-items {
-  padding-left: 84px;
-  padding-right: 84px;
+  padding-left: 86px;
+  padding-right: 78px;
 }
 
 .card-input-field {
@@ -188,23 +252,22 @@ export default {
 }
 
 .card-text {
-  font-family: Inter;
+  font-family: "Inter";
   font-style: normal;
   font-weight: bold;
   line-height: 29px;
 }
 
 .v-text-field >>> input {
-  font-size: 0.8em;
-  font-weight: 100;
-  text-transform: capitalize;
+  font-size: 1em;
+  font-weight: 300;
 }
 .v-text-field >>> label {
   font-size: 12px;
   padding-left: 4px;
 }
 .message-details {
-  font-family: Lato;
+  font-family: "Lato";
   font-style: normal;
   font-weight: normal;
   font-size: 14px;
@@ -245,7 +308,7 @@ export default {
   right: 41.23%;
   top: calc(50% - 17px / 2 - 0.5px);
   padding-top: 6px;
-  font-family: Lato;
+  font-family: "Lato";
   font-style: normal;
   font-weight: normal;
   font-size: 14px;
@@ -271,5 +334,9 @@ export default {
   letter-spacing: 0.278409px;
 
   color: #311b92;
+}
+.v-application .elevation-4 {
+  box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 3%), 0px 2px 2px 0px rgb(0 0 0 / 4%),
+    0px 1px 5px 0px rgb(0 0 0 / 4%) !important;
 }
 </style>

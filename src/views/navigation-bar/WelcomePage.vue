@@ -12,8 +12,8 @@
       </p>
       <div class="d-flex flex-row ma-auto justify-center">
         <v-card
-          width="300"
-          height="347"
+          max-width="300"
+          max-height="347"
           color="#FCF7ED"
           class="align-content-center mr-4 justify-center d-flex-column"
           style="top: 63px"
@@ -31,12 +31,12 @@
             providing a few documentation</v-card-text
           >
           <div class="px-2 pt-4 mx-6">
-            <Button class="text-md-h5" height="54" width="150" label="Start" />
+            <Button class="text-md-h6" height="50" width="207" label="Start" />
           </div>
         </v-card>
         <v-card
-          width="300"
-          height="422"
+          max-width="300"
+          max-height="422"
           color="#FCF7ED"
           class="align-content-center ml-4 mr-4 justify-center d-flex-column"
           style="top: 29px"
@@ -59,9 +59,9 @@
           >
           <div class="px-2 mx-6">
             <Button
-              class="text-md-h5"
-              height="54"
-              width="150"
+              class="text-md-h6"
+              height="50"
+              width="207"
               label="Connect Bank"
             />
           </div>
@@ -71,8 +71,8 @@
           >
         </v-card>
         <v-card
-          width="300"
-          height="347"
+          max-width="300"
+          max-height="347"
           color="#FCF7ED"
           class="ml-4 justify-center"
           style="top: 63px"
@@ -94,9 +94,9 @@
           >
           <div class="px-2 pt-4 mx-6">
             <Button
-              class="text-md-h5"
-              height="54"
-              width="150"
+              class="text-md-h6"
+              height="50"
+              width="207"
               label="Use Workflow"
             />
           </div>

@@ -76,6 +76,9 @@
         </v-card-title>
         <template class="d-flex">
           <v-card
+            @drop.prevent="onDroppedFiles"
+            @dragover.prevent="dragging = true"
+            @dragleave.prevent="dragging = false"
             width="515"
             height="126"
             class="mx-auto justify-center d-flex"
@@ -83,10 +86,15 @@
               margin-top: 30px;
               margin-bottom: 30px;
               background: #ffffff;
-              border: 1px dashed rgba(127, 145, 155, 0.551929);
+              border: ;
               box-sizing: border-box;
               border-radius: 8px;
             "
+            :style="{
+              border: dragging
+                ? '1px dashed #424f95'
+                : '1px dashed rgba(127, 145, 155, 0.551929)',
+            }"
             flat
           >
             <span
@@ -107,7 +115,7 @@
         >
 
         <template class="mt-6">
-          <v-card-action class="d-flex justify-end mt-2 mr-9">
+          <v-card-actions class="d-flex justify-end mt-2 mr-9">
             <v-btn
               dark
               width="121"
@@ -139,7 +147,7 @@
                 >Upload</span
               >
             </v-btn>
-          </v-card-action>
+          </v-card-actions>
         </template>
       </v-card>
     </v-dialog>
@@ -150,12 +158,21 @@ export default {
   props: ["ListMenu"],
   data() {
     return {
+      dragging: false,
       dialog: false,
     };
   },
   methods: {
     closeDialog() {
       this.dialog = false;
+    },
+    onDroppedFiles($event) {
+      this.dragging = false;
+      let files = [...$event.dataTransfer.items]
+        .filter((item) => item.kind === "file")
+        .map((item) => item.getAsFile());
+
+      console.table(files);
     },
   },
 };

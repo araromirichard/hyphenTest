@@ -15,21 +15,36 @@
                 elevation-0
               "
               tile
+              :style="{
+                border: active
+                  ? '1px solid #6f7dc9'
+                  : ' 1px solid rgba(49, 27, 146, 0.2)',
+              }"
               style="
                 width: auto;
                 height: 180px;
                 background: #ffffff;
-                border: 1px solid rgba(49, 27, 146, 0.2);
                 box-sizing: border-box;
                 border-radius: 8px;
               "
             >
-              <!-- <img
-            src="@/assets/pbot_icons/rocket-pbot.png"
-            alt="Manager-approval-icon"
-          />
-            src="require('@/assets/pbot_icons/rocket-pbot.png')" -->
               <v-img
+                v-if="item.text == 'Add Custom'"
+                contain
+                src="@/assets/pbot_icons/cross.png"
+                width="24.06px"
+                height="24.1px"
+                style="
+                  position: absolute;
+                  width: 34.06px;
+                  height: 34.1px;
+                  left: 115px;
+                  top: 40px;
+                "
+              >
+              </v-img>
+              <v-img
+                v-else
                 contain
                 src="@/assets/pbot_icons/rocket-pbot.png"
                 width="24.06px"
@@ -44,6 +59,7 @@
               >
               </v-img>
               <v-card
+                @click="showDialog(item.modalKey)"
                 dark
                 tile
                 class="rounded-b-lg elevation-0 text-center"
@@ -53,7 +69,7 @@
                   position: absolute;
                   bottom: 0;
                   background: #fcfcfc;
-                  border: 1px solid rgba(49, 27, 146, 0.2);
+                  border-top: 1px solid rgba(49, 27, 146, 0.2);
                   box-sizing: border-box;
                 "
               >
@@ -85,56 +101,81 @@
         </v-col>
       </v-row>
     </v-item-group>
+    <AddToPayables ref="addToPayables" />
+    <CreateDocument ref="CreateDocument" />
+    <SendNotifications ref="SendNotifications" />
+    <SendPayment ref="SendPayment" />
+    <UpdateERP ref="UpdateERP" />
   </div>
 </template>
 
 <script>
+import AddToPayables from "../includes/overlays/ExecuteActionsModals/AddToPayables.vue";
+import SendPayment from "../includes/overlays/ExecuteActionsModals/SendPayment.vue";
+import UpdateERP from "../includes/overlays/ExecuteActionsModals/UpdateERP.vue";
+import CreateDocument from "./overlays/ExecuteActionsModals/CreateDocument.vue";
+import SendNotifications from "./overlays/ExecuteActionsModals/SendNotifications.vue";
 export default {
   name: "ExecuteActions",
   data() {
     return {
+      dialog: false,
+      switch1: false,
       actions: [
         {
-          text: `Send
-                Payment`,
-          icon: "@/assets/pbot_icons/rocket-pbot.png",
+          text: "Send Payment",
+          modalKey: "SendPayment",
         },
         {
-          text: `Add to
-                Payables`,
-          icon: "@/assets/pbot_icons/rocket-pbot.png",
+          text: "Add to Payables",
+          modalKey: "addToPayables",
         },
         {
-          text: `Send
-            Notification`,
-          icon: "@/assets/pbot_icons/rocket-pbot.png",
+          text: "Send Notification",
+          modalKey: "SendNotifications",
         },
         {
-          text: `Update
-            ERP/Accounting`,
-          icon: "@/assets/pbot_icons/rocket-pbot.png",
+          text: "Update ERP/Accounting",
+          modalKey: "UpdateERP",
         },
         {
-          text: `Create
-                Document`,
-          icon: "@/assets/pbot_icons/rocket-pbot.png",
+          text: "Create Document",
+          modalKey: "CreateDocument",
         },
         {
-          text: `Add Custom`,
-          icon: "",
+          text: "Add Custom",
+          modalKey: "",
         },
       ],
       selectedAction: null,
     };
   },
+  components: {
+    AddToPayables,
+    SendPayment,
+    UpdateERP,
+    CreateDocument,
+    SendNotifications,
+  },
 
   methods: {
+    closeDialog() {
+      this.dialog = false;
+    },
+
     selectedActionChanged(e) {
       console.table({
         e,
         selectedAction: this.selectedAction,
         text: e ? e.text : null,
       });
+    },
+    triggerDialog(item) {
+      this.selectedAction = item;
+      this.dialog = true;
+    },
+    showDialog(ref) {
+      this.$refs[ref].show(true);
     },
   },
 };

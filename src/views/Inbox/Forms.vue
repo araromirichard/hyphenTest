@@ -1,9 +1,0 @@
-<template>
-  <div>Hello from Forms</div>
-</template>
-
-<script>
-export default {};
-</script>
-
-<style scoped></style>

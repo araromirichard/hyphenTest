@@ -6,7 +6,7 @@
     <div
       class="mt-3"
       style="
-        width: 163px;
+        max-width: 163px;
         height: 40px;
         font-family: Inter;
         font-style: normal;

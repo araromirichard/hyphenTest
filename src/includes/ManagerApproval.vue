@@ -1,11 +1,8 @@
 <template>
-  <div>
-    <v-card flat elevation="4" min-height="1200" width="1300">
+  <v-layout>
+    <v-card flat elevation="4" min-height="1200" style="width: 90%">
       <v-card
         flat
-        elevation="2"
-        height="98"
-        width="1300"
         class="rounded-t-lg"
         style="margin-right: 57; background: rgba(127, 145, 155, 0.052607)"
       >
@@ -16,9 +13,8 @@
             alt="Manager-approval-icon"
           />
           <v-card-title
-            class="ml-4 justify-center align-center"
+            class="ml-4 pa-6 justify-center align-center"
             style="
-              padding: 0px;
               margin-top: 34px;
               font-family: Inter;
               font-style: normal;
@@ -47,10 +43,9 @@
       </v-card>
       <template>
         <v-stepper
-          style="top: 92px; left: 44px"
+          class="mx-auto pl-8"
+          style="top: 92px"
           elevation="0"
-          width="1250"
-          min-height="806"
           color="#301F78"
           v-model="e6"
           vertical
@@ -91,73 +86,8 @@
           </v-stepper-step>
 
           <v-stepper-content step="1">
-            <v-card flat color="#ffffff" class="d-flex" height="200px">
-              <div
-                class="mt-6 flex-column pr-5"
-                v-for="(card, Index) in cards"
-                :key="Index"
-                @click="selectItem(Index)"
-              >
-                <v-card
-                  :class="{ active: Index === activeItem }"
-                  class="justify-center notActive"
-                  flat
-                  width="110"
-                  height="80"
-                  style="border-radius: 8px"
-                >
-                  <icon-base icon-name="workflowCard"
-                    ><icon-workflow-card
-                      style="margin-left: 40px; margin-top: 28px"
-                  /></icon-base>
-                </v-card>
-                <div class="mt-2">
-                  <h5 class="cardTitle">
-                    {{ card }}
-                  </h5>
-                  <h6 v-if="card === 'Form'" class="spanText mt-1">
-                    Process form <br />
-                    submissions
-                  </h6>
-                  <h6 v-else-if="card === 'Email'" class="spanText mt-1">
-                    Process emailed <br />
-                    invoice
-                  </h6>
-                  <h6 v-else class="spanText mt-1">
-                    Process bank <br />
-                    transactions
-                  </h6>
-                </div>
-              </div>
-            </v-card>
-            <template class="my-7">
-              <v-select
-                :menu-props="{ bottom: true, offsetY: true }"
-                :items="dropDownItems"
-                style="
-                  background: #ffffff;
-                  border: 1px solid rgba(212, 216, 223, 0.377431);
-                  box-sizing: border-box;
-                  border-radius: 3px;
-                  width: 223px;
-                  height: 50px;
-                "
-                class="justify-center flex-column custom-placeholer-color"
-                flat
-                outlined
-                hide-details="auto"
-                placeholder="Select a form"
-              >
-                <template slot="prepend-inner">
-                  <icon-base icon-name="workflowCard"
-                    ><icon-workflow-card style="margin-left: 17px"
-                  /></icon-base>
-                </template>
-                <template slot="append">
-                  <v-icon class="pl-2">mdi-menu-down</v-icon>
-                </template>
-              </v-select>
-            </template>
+            <!-- select Data source for the workflow process -->
+            <WorkflowDataSource />
             <v-btn
               @click="e6 = 2"
               dark
@@ -234,7 +164,11 @@
 
           <v-stepper-content step="2">
             <div v-for="(card, i) in selectedCompareGroup" :key="i">
-              <ApprovalCard ref="ApprovalCard" />
+              <ApprovalCard
+                :comparisonType="card.comparisonType"
+                ref="ApprovalCard"
+                @checkApprovalCard="checkApprovalCard($event, i)"
+              />
 
               <v-timeline style="margin-left: 30px">
                 <div class="d-flex">
@@ -255,12 +189,13 @@
                     <v-list>
                       <v-list-item-group>
                         <v-list-item
-                          v-for="(item, i) in comparisonType"
-                          :key="i"
+                          v-for="(item, j) in comparisonType"
+                          :key="j"
                         >
-                          <v-list-item-title @click="addApprovalCard">{{
-                            item
-                          }}</v-list-item-title>
+                          <v-list-item-title
+                            @click="addApprovalCard(item, i)"
+                            >{{ item }}</v-list-item-title
+                          >
                         </v-list-item>
                       </v-list-item-group>
                     </v-list>
@@ -348,49 +283,56 @@
         </v-stepper>
       </template>
     </v-card>
-  </div>
+  </v-layout>
 </template>
 
 <script>
 import { comparisonType } from "@/utils/ManagerApprovalOptions.js";
-import SimpleLineIcons from "vue-simple-line";
-import IconWorkflowCard from "../components/icons/IconWorkflowCard.vue";
 import ApprovalCard from "./ApprovalCard.vue";
 import ExecuteActions from "./ExecuteActions.vue";
+import WorkflowDataSource from "./WorkflowDataSource.vue";
+import SimpleLineIcons from "vue-simple-line";
 
 export default {
   data() {
     return {
       e6: 1,
-      cards: ["Form", "Bank", "Email", "Bank"],
+
       activeItem: null,
-      dropDownItems: [
-        "Expense reinbursement ",
-        "Vendor onboarding",
-        "Payment request",
-        "Petty cash request",
-      ],
+
       selectedCompareGroup: [
         {
-          ApprovalCard: 0,
+          comparisonType: "",
         },
       ],
       comparisonType,
     };
   },
   components: {
-    SimpleLineIcons,
-    IconWorkflowCard,
     ApprovalCard,
     ExecuteActions,
+    WorkflowDataSource,
+    SimpleLineIcons,
   },
   methods: {
-    selectItem(Index) {
-      this.activeItem = Index;
+    addApprovalCard(item, i) {
+      // console.log(this.$refs.ApprovalCard);
+      // this.selectedCompareGroup.push(this.$refs.ApprovalCard);
+      console.log({ item, i });
+      if (this.selectedCompareGroup.length - 1 === i) {
+        this.selectedCompareGroup.push({ comparisonType: item });
+      } else {
+        this.selectedCompareGroup[i + 1].comparisonType = item;
+      }
     },
-    addApprovalCard() {
-      console.log(this.$refs.ApprovalCard);
-      this.selectedCompareGroup.push(this.$refs.ApprovalCard);
+    checkApprovalCard(e, i) {
+      console.log({ e, i });
+      if (!e) {
+        if (this.selectedCompareGroup.length === 1) {
+          return;
+        }
+        this.selectedCompareGroup.splice(i, 1);
+      }
     },
   },
 };
@@ -443,5 +385,12 @@ export default {
 .v-application .elevation-8 {
   box-shadow: 0px 3px 5px -1px rgb(0 0 0 / 3%), 0px 6px 10px 0px rgb(0 0 0 / 3%),
     0px 1px 18px 0px rgb(0 0 0 / 3%) !important;
+}
+.v-card > *:first-child:not(.v-btn):not(.v-chip):not(.v-avatar),
+.v-card > .v-card__progress + *:not(.v-btn):not(.v-chip):not(.v-avatar) {
+  border-top-left-radius: 0 !important;
+  border-top-right-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
 }
 </style>

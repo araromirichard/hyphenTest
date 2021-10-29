@@ -1,8 +1,10 @@
 <template>
-  <v-card class="ma-auto elevation-0.5" width="514">
+  <v-card class="ma-auto my-auto elevation-4" max-width="514">
     <v-card-title
-      class="card-items text--secondary font-weight-bold pt-lg-16"
+      class="text--secondary font-weight-bold"
       style="
+        margin-left: 86px;
+        margin-top: 70px;
         font-family: Inter;
         font-style: normal;
         font-weight: bold;
@@ -12,27 +14,29 @@
         color: #596a73;
       "
     >
-      Sign in
+      <span class="mt-10 text--secondary">Sign in</span>
     </v-card-title>
-    <v-form class="ma-auto" ref="form">
+    <v-form @submit="submitForm" class="ma-auto" ref="form">
       <v-card-text class="card-items">
         <v-text-field
+          hide-details="auto"
           label="Your Name"
           single-line
           outlined
           type="text"
           required
-          class="font-weight-regular text-subtitle-2 label--text"
-          v-model="fullName"
+          class="font-weight-regular label--text"
+          v-model="loginData.fullName"
           :rules="fullNameRules"
         ></v-text-field>
 
         <v-text-field
+          hide-details="auto"
           label="Password"
           single-line
           outlined
-          class="font-weight-regular text-subtitle-2 label--text pb-0 mb-0"
-          v-model="password"
+          class="mt-8 font-weight-regular text-subtitle-2 label--text pb-0 mb-0"
+          v-model="loginData.password"
           type="password"
           required
           :rules="passwordRules"
@@ -59,6 +63,7 @@
 
       <v-card-actions class="card-items">
         <v-btn
+          type="submit"
           block
           color="primary"
           elevation="20"
@@ -66,7 +71,6 @@
           height="54px"
           width="346px"
           class="text-capitalize"
-          @click="submit"
         >
           <span
             style="
@@ -107,8 +111,12 @@ export default {
 
   data() {
     return {
-      fullName: "",
-      password: "",
+      loginData: {
+        fullName: "",
+        password: "",
+      },
+      forgotPassword: "",
+      errorMsg: "",
       fullNameRules: [
         (value) => !!value || "Name field is required",
         (value) =>
@@ -130,9 +138,11 @@ export default {
   },
 
   methods: {
-    submit() {
+    submitForm(event) {
       if (this.$refs.form.validate()) {
-        console.log(this.fullName, this.password);
+        event.preventDefault();
+        console.log("login Data", this.loginData);
+        console.log("Login Details", JSON.stringify(this.loginData));
       }
     },
   },
@@ -153,15 +163,15 @@ export default {
 }
 
 .card-text {
-  font-family: Inter;
+  font-family: "Inter";
   font-style: normal;
   font-weight: bold;
   line-height: 29px;
 }
 
 .v-text-field >>> input {
-  font-size: 0.8em;
-  font-weight: 100;
+  font-size: 1em;
+  font-weight: 300;
   text-transform: capitalize;
 }
 .v-text-field >>> label {
@@ -169,15 +179,13 @@ export default {
   padding-left: 4px;
 }
 .message-details {
-  font-family: Lato;
+  font-family: "Lato";
   font-style: normal;
   font-weight: normal;
   font-size: 14px;
   line-height: 17px;
-  /* identical to box height */
   text-decoration: none;
   letter-spacing: 0.278409px;
-  /*float: right;*/
   color: #301f78;
 
   mix-blend-mode: normal;
@@ -210,12 +218,11 @@ export default {
   right: 41.23%;
   top: calc(50% - 17px / 2 - 0.5px);
   padding-top: 6px;
-  font-family: Lato;
+  font-family: "Lato";
   font-style: normal;
   font-weight: normal;
   font-size: 14px;
   line-height: 18px;
-  /* identical to box height */
 
   letter-spacing: 0.278409px;
 
@@ -236,5 +243,9 @@ export default {
   letter-spacing: 0.278409px;
 
   color: #311b92;
+}
+.v-application .elevation-4 {
+  box-shadow: 0px 3px 3px -2px rgb(0 0 0 / 3%), 0px 3px 3px 0px rgb(0 0 0 / 4%),
+    0px 3px 5px 0px rgb(0 0 0 / 4%) !important;
 }
 </style>
