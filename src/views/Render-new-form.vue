@@ -1,7 +1,7 @@
 <template>
   <div style="background: #fefcf8">
     <v-container>
-      <v-row justify-md="center" style="margin-top: 158px">
+      <v-row justify-md="center" style="margin-top: 58px">
         <v-col cols="12" md="3">
           <v-card
             class="pa-2 d-flex justify-end"
@@ -77,7 +77,7 @@
             tile
             style="background-color: transparent"
           >
-            <v-card elevation="20" max-width="550" min-height="866">
+            <v-card elevation="20" max-width="550" min-height="866" class="formbase">
               <v-layout class="mx-16" style="padding-top: 51px">
                 <template>
                   <FormRenderer
@@ -96,6 +96,11 @@
               v-if="formData"
             />
           </template> -->
+          <p class="footerimg">
+            powered by 
+          <img :src="require('@/assets/pbot-svg.svg')" />
+          
+            </p>
         </v-col>
       </v-row>
     </v-container>
@@ -112,11 +117,11 @@ export default {
   data() {
     return {
       formDescription:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
-      formTitle: "Form Name",
+        "Some description for this form. Intended to inform the recipient about why this form should be completed.",
+      formTitle: "Form Name Here",
       formData: null,
       formInputData: null,
-      demoData: `{"formConfig":{"headline":"","subHeadline":"","isShowHeadline":false,"renderFormTag":false,"formActionURL":"","formMethod":"POST","enableServerSideValidation":false,"serverSideValidationEndpoint":""},"sections":{"section-ecf524fd-2017-4966-9e80-19858eb79cb5":{"uniqueId":"section-ecf524fd-2017-4966-9e80-19858eb79cb5","headline":"","headlineAdditionalClass":"","subHeadline":"","subHeadlineAdditionalClass":"","isShowHeadline":true,"sortOrder":1,"type":"normal","rows":[],"controls":["control-462f41a9-f800-4dff-80ac-fa8d5a759f96","control-0c2c194d-6f48-40c3-bec6-d69ea7b6589e","control-b53d73c5-34fe-469f-91ae-8b4df3e99a09","control-357b3272-ffe8-4766-832b-ceff493006ba","control-8eb53859-04da-4722-9bdd-8d0eac8a0627","control-0491a556-97fb-40cb-b537-4646cf4fb9f5","control-40ab76ff-7286-4846-8873-b63dc0086fb8","control-92cf89f9-7256-44fd-a615-2c0119a9cd15"]}},"rows":{},"controls":{"control-462f41a9-f800-4dff-80ac-fa8d5a759f96":{"uniqueId":"control-462f41a9-f800-4dff-80ac-fa8d5a759f96","type":"input","name":"bankName","label":"Bank Name","subLabel":"","isShowLabel":true,"placeholderText":"Bank Name","containerClass":"col-md-12 md-layout-item md-size-100","additionalContainerClass":"","additionalFieldClass":"","additionalLabelClass":"","defaultValue":"","validations":[],"typeAttribute":"text"},"control-0c2c194d-6f48-40c3-bec6-d69ea7b6589e":{"uniqueId":"control-0c2c194d-6f48-40c3-bec6-d69ea7b6589e","type":"input","name":"bankAccountNumber","label":"Bank Account Number","subLabel":"","isShowLabel":true,"placeholderText":"Bank Account Number","containerClass":"col-md-12 md-layout-item md-size-100","additionalContainerClass":"","additionalFieldClass":"","additionalLabelClass":"","defaultValue":"","validations":[],"typeAttribute":"text"},"control-b53d73c5-34fe-469f-91ae-8b4df3e99a09":{"uniqueId":"control-b53d73c5-34fe-469f-91ae-8b4df3e99a09","type":"input","name":"bankRoutingNumber","label":"Bank Routing Number","subLabel":"","isShowLabel":true,"placeholderText":"Bank Routing Number","containerClass":"col-md-12 md-layout-item md-size-100","additionalContainerClass":"","additionalFieldClass":"","additionalLabelClass":"","defaultValue":"","validations":[],"typeAttribute":"text"},"control-357b3272-ffe8-4766-832b-ceff493006ba":{"uniqueId":"control-357b3272-ffe8-4766-832b-ceff493006ba","type":"input","name":"address","label":"Input Field","subLabel":"","isShowLabel":true,"placeholderText":"Street Address","containerClass":"col-md-12 md-layout-item md-size-100","additionalContainerClass":"","additionalFieldClass":"","additionalLabelClass":"","defaultValue":"","validations":[],"typeAttribute":"text"},"control-8eb53859-04da-4722-9bdd-8d0eac8a0627":{"uniqueId":"control-8eb53859-04da-4722-9bdd-8d0eac8a0627","type":"input","name":"city","label":"City","subLabel":"","isShowLabel":true,"placeholderText":"City","containerClass":"col-md-12 md-layout-item md-size-100","additionalContainerClass":"","additionalFieldClass":"","additionalLabelClass":"","defaultValue":"","validations":[],"typeAttribute":"text"},"control-0491a556-97fb-40cb-b537-4646cf4fb9f5":{"uniqueId":"control-0491a556-97fb-40cb-b537-4646cf4fb9f5","type":"input","name":"state","label":"State","subLabel":"","isShowLabel":true,"placeholderText":"State","containerClass":"col-md-12 md-layout-item md-size-100","additionalContainerClass":"","additionalFieldClass":"","additionalLabelClass":"","defaultValue":"","validations":[],"typeAttribute":"text"},"control-40ab76ff-7286-4846-8873-b63dc0086fb8":{"uniqueId":"control-40ab76ff-7286-4846-8873-b63dc0086fb8","type":"input","name":"country","label":"Country","subLabel":"","isShowLabel":true,"placeholderText":"Country","containerClass":"col-md-12 md-layout-item md-size-100","additionalContainerClass":"","additionalFieldClass":"","additionalLabelClass":"","defaultValue":"","validations":[],"typeAttribute":"text"},"control-92cf89f9-7256-44fd-a615-2c0119a9cd15":{"uniqueId":"control-92cf89f9-7256-44fd-a615-2c0119a9cd15","type":"button","name":"","label":"Submit","subLabel":"","isShowLabel":false,"placeholderText":"","containerClass":"col-md-12 md-layout-item md-size-100","additionalContainerClass":"","additionalFieldClass":"","additionalLabelClass":"","defaultValue":"","validations":[],"buttonClass":"btn btn-success md-button md-raised md-success md-theme-default","buttonType":"button","emitEventCode":"saveData","emitEventData":"formInputData","isRunValidation":false}}}`,
+      demoData: `{"formConfig":{"headline":"","subHeadline":"","isShowHeadline":false,"renderFormTag":false,"formActionURL":"","formMethod":"POST","enableServerSideValidation":false,"serverSideValidationEndpoint":""},"sections":{"section-ecf524fd-2017-4966-9e80-19858eb79cb5":{"uniqueId":"section-ecf524fd-2017-4966-9e80-19858eb79cb5","headline":"Form Headline","headlineAdditionalClass":"","subHeadline":"This is a sub heading describing this supplier onboarding form","subHeadlineAdditionalClass":"","isShowHeadline":true,"sortOrder":1,"type":"normal","rows":[],"controls":["control-462f41a9-f800-4dff-80ac-fa8d5a759f96","control-0c2c194d-6f48-40c3-bec6-d69ea7b6589e","control-b53d73c5-34fe-469f-91ae-8b4df3e99a09","control-357b3272-ffe8-4766-832b-ceff493006ba","control-8eb53859-04da-4722-9bdd-8d0eac8a0627","control-0491a556-97fb-40cb-b537-4646cf4fb9f5","control-40ab76ff-7286-4846-8873-b63dc0086fb8","control-92cf89f9-7256-44fd-a615-2c0119a9cd15"]}},"rows":{},"controls":{"control-462f41a9-f800-4dff-80ac-fa8d5a759f96":{"uniqueId":"control-462f41a9-f800-4dff-80ac-fa8d5a759f96","type":"input","name":"bankName","label":"Bank Name","subLabel":"","isShowLabel":true,"placeholderText":"Bank Name","containerClass":"col-md-12 md-layout-item md-size-100","additionalContainerClass":"","additionalFieldClass":"field","additionalLabelClass":"","defaultValue":"","validations":[],"typeAttribute":"text"},"control-0c2c194d-6f48-40c3-bec6-d69ea7b6589e":{"uniqueId":"control-0c2c194d-6f48-40c3-bec6-d69ea7b6589e","type":"input","name":"bankAccountNumber","label":"Bank Account Number","subLabel":"","isShowLabel":true,"placeholderText":"Bank Account Number","containerClass":"col-md-12 md-layout-item md-size-100","additionalContainerClass":"","additionalFieldClass":"","additionalLabelClass":"","defaultValue":"","validations":[],"typeAttribute":"text"},"control-b53d73c5-34fe-469f-91ae-8b4df3e99a09":{"uniqueId":"control-b53d73c5-34fe-469f-91ae-8b4df3e99a09","type":"input","name":"bankRoutingNumber","label":"Bank Routing Number","subLabel":"","isShowLabel":true,"placeholderText":"Bank Routing Number","containerClass":"col-md-12 md-layout-item md-size-100","additionalContainerClass":"","additionalFieldClass":"","additionalLabelClass":"","defaultValue":"","validations":[],"typeAttribute":"text"},"control-357b3272-ffe8-4766-832b-ceff493006ba":{"uniqueId":"control-357b3272-ffe8-4766-832b-ceff493006ba","type":"input","name":"address","label":"Address","subLabel":"","isShowLabel":true,"placeholderText":"Street Address","containerClass":"col-md-12 md-layout-item md-size-100","additionalContainerClass":"","additionalFieldClass":"","additionalLabelClass":"","defaultValue":"","validations":[],"typeAttribute":"text"},"control-8eb53859-04da-4722-9bdd-8d0eac8a0627":{"uniqueId":"control-8eb53859-04da-4722-9bdd-8d0eac8a0627","type":"input","name":"city","label":"City","subLabel":"","isShowLabel":true,"placeholderText":"City","containerClass":"col-md-12 md-layout-item md-size-100","additionalContainerClass":"","additionalFieldClass":"","additionalLabelClass":"","defaultValue":"","validations":[],"typeAttribute":"text"},"control-0491a556-97fb-40cb-b537-4646cf4fb9f5":{"uniqueId":"control-0491a556-97fb-40cb-b537-4646cf4fb9f5","type":"input","name":"state","label":"State","subLabel":"","isShowLabel":true,"placeholderText":"State","containerClass":"col-md-12 md-layout-item md-size-100","additionalContainerClass":"","additionalFieldClass":"","additionalLabelClass":"","defaultValue":"","validations":[],"typeAttribute":"text"},"control-40ab76ff-7286-4846-8873-b63dc0086fb8":{"uniqueId":"control-40ab76ff-7286-4846-8873-b63dc0086fb8","type":"input","name":"country","label":"Country","subLabel":"","isShowLabel":true,"placeholderText":"Country","containerClass":"col-md-12 md-layout-item md-size-100","additionalContainerClass":"","additionalFieldClass":"","additionalLabelClass":"","defaultValue":"","validations":[],"typeAttribute":"text"},"control-92cf89f9-7256-44fd-a615-2c0119a9cd15":{"uniqueId":"control-92cf89f9-7256-44fd-a615-2c0119a9cd15","type":"button","name":"","label":"Submit","subLabel":"","isShowLabel":false,"placeholderText":"","containerClass":"col-md-12 md-layout-item md-size-100","additionalContainerClass":"","additionalFieldClass":"","additionalLabelClass":"","defaultValue":"","validations":[],"buttonClass":"btn btn-success md-button md-raised md-success md-theme-default","buttonType":"button","emitEventCode":"saveData","emitEventData":"formInputData","isRunValidation":false}}}`,
     };
   },
 
@@ -155,5 +160,15 @@ export default {
 }
 .form-control ::placeholder {
   color: #7f919b !important;
+}
+.formbase{
+  padding-bottom: 55px;
+}
+.control-view-wrapper .form-control.md-field, .field{
+height:46px !important;
+}
+.footerimg{
+  margin: 4em 0;
+  text-align: center;
 }
 </style>
