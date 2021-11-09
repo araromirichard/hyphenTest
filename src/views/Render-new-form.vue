@@ -77,7 +77,12 @@
             tile
             style="background-color: transparent"
           >
-            <v-card elevation="20" max-width="550" min-height="866" class="formbase">
+            <v-card
+              elevation="20"
+              max-width="550"
+              min-height="866"
+              class="formbase"
+            >
               <v-layout class="mx-16" style="padding-top: 51px">
                 <template>
                   <FormRenderer
@@ -97,10 +102,9 @@
             />
           </template> -->
           <p class="footerimg">
-            powered by 
-          <img :src="require('@/assets/pbot-svg.svg')" />
-          
-            </p>
+            powered by
+            <img :src="require('@/assets/pbot-svg.svg')" />
+          </p>
         </v-col>
       </v-row>
     </v-container>
@@ -161,13 +165,14 @@ export default {
 .form-control ::placeholder {
   color: #7f919b !important;
 }
-.formbase{
+.formbase {
   padding-bottom: 55px;
 }
-.control-view-wrapper .form-control.md-field, .field{
-height:46px !important;
+.control-view-wrapper .form-control.md-field,
+.field {
+  height: 46px !important;
 }
-.footerimg{
+.footerimg {
   margin: 4em 0;
   text-align: center;
 }
