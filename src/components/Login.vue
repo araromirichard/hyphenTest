@@ -1,127 +1,311 @@
 <template>
-  <v-card class="ma-auto my-auto elevation-4" max-width="514">
-    <v-card-title
-      class="text--secondary font-weight-bold"
-      style="
-        margin-left: 86px;
-        margin-top: 70px;
-        font-family: Inter;
-        font-style: normal;
-        font-weight: bold;
-        font-size: 24px;
-        line-height: 29px;
-        letter-spacing: 0.484848px;
-        color: #596a73;
-      "
-    >
-      <span class="mt-10 text--secondary">Sign in</span>
-    </v-card-title>
-    <v-form @submit="submitForm" class="ma-auto" ref="form">
-      <v-card-text class="card-items">
-        <v-text-field
-          hide-details="auto"
-          label="Your Name"
-          single-line
-          outlined
-          type="text"
-          required
-          class="font-weight-regular label--text"
-          v-model="loginData.fullName"
-          :rules="fullNameRules"
-        ></v-text-field>
+  <v-container class="pa-0 ma-0">
+    <v-row align="center" class="pa-0 ma-0">
+      <v-col
+        class="px-0"
+        cols="10"
+        offset="1"
+        md="6"
+        offset-md="3"
+        style="min-height: 100vh"
+      >
+        <v-card class="pb-10 mt-16" elevation="4">
+          <p
+            class="display-1 font-weight-bold pb-7 mt-10 text--secondary"
+            :style="{
+              paddingLeft: `${$vuetify.breakpoint.smAndUp ? '84px' : '36px'}`,
+              paddingTop: `${$vuetify.breakpoint.smAndUp ? '90px' : '34px'}`,
+            }"
+          >
+            Log in
+          </p>
 
-        <v-text-field
-          hide-details="auto"
-          label="Password"
-          single-line
-          outlined
-          class="mt-8 font-weight-regular text-subtitle-2 label--text pb-0 mb-0"
-          v-model="loginData.password"
-          type="password"
-          required
-          :rules="passwordRules"
-        ></v-text-field>
-        <div class="message-details d-flex justify-end">
-          <router-link to="#" style="text-decoration: none; color: inherit">
-            <p
-              class="pt-1"
-              style="
-                font-family: Lato;
-                font-style: normal;
-                font-weight: normal;
-                font-size: 14px;
-                line-height: 17px;
-                letter-spacing: 0.278409px;
-                color: #301f78;
-              "
+          <div
+            :style="{
+              paddingLeft: `${$vuetify.breakpoint.smAndUp ? '86px' : '36px'}`,
+              paddingRight: `${$vuetify.breakpoint.smAndUp ? '78px' : '34px'}`,
+            }"
+          >
+            <v-form @submit="submitForm" class="ma-auto" ref="form">
+              <v-card-text class="pa-0">
+                <v-text-field
+                  hide-details="auto"
+                  label="Your Email"
+                  single-line
+                  outlined
+                  type="email"
+                  required
+                  class="font-weight-regular label--text"
+                  v-model="loginData.email"
+                  :rules="emailRules"
+                ></v-text-field>
+
+                <v-text-field
+                  hide-details="auto"
+                  label="Password"
+                  single-line
+                  outlined
+                  class="
+                    mt-8
+                    font-weight-regular
+                    text-subtitle-2
+                    label--text
+                    pb-0
+                    mb-0
+                  "
+                  v-model="loginData.password"
+                  type="password"
+                  required
+                  :rules="passwordRules"
+                ></v-text-field>
+                <div class="message-details d-flex justify-end my-2">
+                  <v-btn
+                    text
+                    x-small
+                    class="text-capitalize py-1 align-center"
+                    @click.prevent="dialog = true"
+                  >
+                    <p
+                      :style="{
+                        fontSize: `${$vuetify.breakpoint.xs ? '9px' : ''}`,
+                      }"
+                      style="
+                        font-family: Lato;
+                        font-style: normal;
+                        font-weight: normal;
+                        line-height: 17px;
+                        letter-spacing: 0.278409px;
+                        color: #301f78;
+                      "
+                    >
+                      Forgot Password?
+                    </p>
+                  </v-btn>
+                </div>
+              </v-card-text>
+
+              <v-card-actions class="justify-center px-0">
+                <v-btn
+                  @click="submitForm"
+                  block
+                  color="primary"
+                  elevation="20"
+                  height="54px"
+                  width="88px"
+                  class="text-capitalize"
+                >
+                  <router-link @click.native="welcome" to="welcome">
+                    <span
+                      style="
+                        font-family: Inter;
+                        font-style: normal;
+                        font-weight: 900;
+                        font-size: 16px;
+                        line-height: 19px;
+                        text-align: center;
+                        letter-spacing: 0.727273px;
+                        color: #ffffff;
+                      "
+                      >Continue</span
+                    >
+                  </router-link>
+                </v-btn>
+              </v-card-actions>
+            </v-form>
+            <v-card-actions
+              class="justify-center mx-auto"
+              style="margin-top: 29px; margin-bottom: 73px"
             >
-              Forgot Password?
-            </p>
-          </router-link>
-        </div>
-      </v-card-text>
+              <v-chip
+                class="px-auto"
+                :style="{
+                  fontSize: `${$vuetify.breakpoint.xs ? '9px' : ''}`,
+                }"
+              >
+                <span
+                  class="pl-md-10"
+                  style="
+                    font-family: Inter;
+                    font-style: normal;
+                    font-weight: normal;
+                    color: #7f919b;
+                  "
+                  >Don’t have an account yet?</span
+                >
+                <router-link
+                  to="sign-up"
+                  style="
+                    text-decoration: none;
+                    font-family: Inter;
+                    font-style: normal;
+                    font-weight: 600;
+                    color: #311b92;
+                  "
+                >
+                  <span class="pl-md-4 pr-md-8 py-4"> Sign Up Here</span>
+                </router-link>
+              </v-chip>
+            </v-card-actions>
 
-      <v-card-actions class="card-items">
-        <v-btn
-          type="submit"
-          block
-          color="primary"
-          elevation="20"
-          large
-          height="54px"
-          width="346px"
-          class="text-capitalize"
+            <template>
+              <div>
+                <v-dialog v-model="dialog" max-width="516">
+                  <v-card color="#FEFCF8" class="rounded-lg">
+                    <v-card-title
+                      style="
+                        background: #ffffff;
+                        border-radius: 8px 8px 0px 0px;
+                      "
+                    >
+                      <span
+                        style="
+                          font-family: Inter;
+                          font-style: normal;
+                          font-weight: 600;
+                          font-size: 16px;
+                          line-height: 19px;
+                          color: #301f78;
+                        "
+                        >Send Mail</span
+                      >
+                      <v-spacer></v-spacer>
+                      <v-icon
+                        tag="button"
+                        @click="dialog = false"
+                        class="text-bolder"
+                        color="#596A73"
+                      >
+                        mdi-close
+                      </v-icon>
+                    </v-card-title>
+                    <form>
+                      <div class="px-8 d-flex" style="background: #fdfaf2">
+                        <p
+                          style="
+                            padding-top: 34px;
+                            font-family: Inter;
+                            font-style: normal;
+                            font-weight: normal;
+                            font-size: 12px;
+                            line-height: 18px;
+                            letter-spacing: 0.45px;
+                            color: #7f919b;
+                          "
+                        >
+                          Send a <strong>password recovery mail</strong>
+                        </p>
+                      </div>
+                      <div>
+                        <v-text-field
+                          background-color="#ffffff"
+                          style="margin-left: 52px; margin-right: 45px"
+                          hide-details="auto"
+                          label="Please enter your email address"
+                          single-line
+                          outlined
+                          type="email"
+                          required
+                          class="font-weight-regular label--text"
+                          v-model="loginData.email"
+                          :rules="emailRules"
+                        ></v-text-field>
+                      </div>
+                      <template>
+                        <v-card-actions
+                          class="d-flex justify-end align-center mr-9"
+                        >
+                          <v-btn
+                            type="submit"
+                            dark
+                            width="121"
+                            height="45"
+                            style="
+                              margin-top: 24px;
+                              margin-bottom: 41px;
+                              background: #16be98;
+                              box-shadow: 0px 12px 22px rgba(0, 0, 0, 0.24);
+                              border-radius: 4px;
+                            "
+                          >
+                            <simple-line-icons
+                              icon="arrow-right"
+                              style="font-size: 16px"
+                              size="small"
+                              no-svg
+                            />
+                            <span
+                              class="pl-4 m-0 text-capitalize"
+                              style="
+                                font-family: Inter;
+                                font-style: normal;
+                                font-weight: 500;
+                                font-size: 14px;
+                                line-height: 17px;
+                                text-align: center;
+                                letter-spacing: 0.636364px;
+
+                                color: #ffffff;
+                              "
+                              >send</span
+                            >
+                          </v-btn>
+                        </v-card-actions>
+                      </template>
+                    </form>
+                  </v-card>
+                </v-dialog>
+              </div>
+            </template>
+          </div>
+        </v-card>
+
+        <div
+          v-if="$vuetify.breakpoint.mdAndUp"
+          class="align-center mt-12 text-center text-break"
         >
           <span
+            class="pt-12"
             style="
-              font-family: Inter;
-              font-style: normal;
-              font-weight: 900;
-              font-size: 16px;
-              line-height: 19px;
-              text-align: center;
-              letter-spacing: 0.727273px;
-              color: #ffffff;
-            "
-            >Sign in</span
+          font-family: Inter;
+          font-style: normal;
+          font-weight: normal;
+          font-size: 14px;
+          line-height: 24px;s
+          letter-spacing: 0.278409px;
+          color: #7f919b;
+        "
           >
-        </v-btn>
-      </v-card-actions>
-    </v-form>
-    <div class="d-flex mx-auto justify-center pt-7 pb-16 card-items">
-      <div class="hint">
-        <div class="py-auto d-flex align-content-center">
-          <span class="span-text pl-6 py-auto">Don’t have an account yet?</span>
-          <router-link
-            to="sign-up"
-            style="text-decoration: none; color: inherit; padding-top: 4px"
-            ><span class="span-text-link py-auto">
-              Sign Up Here</span
-            ></router-link
+            We are commited to your privacy. pBot is fully encrypted and keeps
+            all your sensitive information 100% secure and private</span
           >
         </div>
-      </div>
-    </div>
-  </v-card>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
+import { mapActions } from "vuex";
 export default {
+  components: {
+    //
+  },
   name: "Login",
 
   data() {
     return {
+      dialog: false,
       loginData: {
-        fullName: "",
+        email: "",
         password: "",
       },
       forgotPassword: "",
       errorMsg: "",
-      fullNameRules: [
-        (value) => !!value || "Name field is required",
+      emailRules: [
+        (value) => !!value || "E-mail is required",
         (value) =>
-          (value && value.length <= 10) ||
-          "Name must be less than 10 characters",
+          /.+@.+\..+/.test(value) ||
+          "email or passwordincorrect, please confirm your email and password",
       ],
       passwordRules: [
         (value) => !!value || "Password is required",
@@ -130,7 +314,7 @@ export default {
             /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#+%+&+*])(?=.{8,})/;
           return (
             pattern.test(value) ||
-            "Min. 8 characters with at least one capital letter, a number and a special character."
+            "email or passwordincorrect, please confirm your email and password, Min. 8 characters with at least one capital letter, a number and a special character."
           );
         },
       ],
@@ -138,11 +322,19 @@ export default {
   },
 
   methods: {
+    ...mapActions({ showToast: "ui/showToast" }),
     submitForm(event) {
       if (this.$refs.form.validate()) {
         event.preventDefault();
         console.log("login Data", this.loginData);
         console.log("Login Details", JSON.stringify(this.loginData));
+
+        this.showToast({
+          sclass: "success",
+          show: true,
+          message: "Sign in succesfully",
+          timeout: 3000,
+        });
       }
     },
   },
@@ -150,9 +342,13 @@ export default {
 </script>
 
 <style scoped>
-.card-items {
+.dskTopTitleSpacing {
   padding-left: 84px;
-  padding-right: 84px;
+  padding-top: 90px;
+}
+.mobileTitleSpacing {
+  padding-left: 36px;
+  padding-top: 38px;
 }
 
 .card-input-field {
@@ -172,7 +368,6 @@ export default {
 .v-text-field >>> input {
   font-size: 1em;
   font-weight: 300;
-  text-transform: capitalize;
 }
 .v-text-field >>> label {
   font-size: 12px;

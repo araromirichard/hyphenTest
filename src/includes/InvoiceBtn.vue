@@ -120,7 +120,7 @@
                 class="justify-center custom-placeholer-color"
                 flat
                 outlined
-                placeholder="Select Workflow"
+                placeholder="Select file category"
               >
                 <template slot="append">
                   <v-btn
@@ -235,7 +235,7 @@ export default {
       fileUploadCategory: [
         "Purchase order",
         "Reciept",
-        "Good recieved",
+        "Goods received",
         "Proforma",
       ],
     };

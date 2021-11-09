@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-item-group @change="selectedActionChanged" v-model="selectedAction">
-      <v-row style="margin-right: 300px">
+      <v-row style="margin-right: 52px">
         <v-col v-for="(item, i) in actions" :key="i" cols="12" sm="4">
           <v-item :value="item" v-slot:default="{ active, toggle }">
             <v-card
@@ -38,8 +38,8 @@
                   position: absolute;
                   width: 34.06px;
                   height: 34.1px;
-                  left: 115px;
-                  top: 40px;
+                  margin-left: 40%;
+                  margin-top: 40px;
                 "
               >
               </v-img>
@@ -53,8 +53,8 @@
                   position: absolute;
                   width: 34.06px;
                   height: 34.1px;
-                  left: 115px;
-                  top: 40px;
+                  margin-left: 45%;
+                  margin-top: 40px;
                 "
               >
               </v-img>

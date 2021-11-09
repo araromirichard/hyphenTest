@@ -2,34 +2,33 @@
   <v-container>
     <div>
       <v-row align="center" class="mx-14">
-        <div>
-          <h3
-            class="text-bold"
+        <h3
+          class="text-bold"
+          style="
+            font-style: normal;
+            font-weight: bold;
+            font-size: 32px;
+            line-height: 39px;
+            color: #301f78;
+          "
+        >
+          Payables
+          <span
+            class="transTotal pl-5"
             style="
+              font-family: Inter;
               font-style: normal;
-              font-weight: bold;
-              font-size: 32px;
-              line-height: 39px;
-              color: #301f78;
+              font-weight: normal;
+              font-size: 16px;
+              line-height: 19px;
+              color: #7f919b;
+              mix-blend-mode: normal;
+              opacity: 0.5;
             "
+            >{{ payableRecord }}</span
           >
-            Payables
-            <span
-              class="transTotal pl-5"
-              style="
-                font-family: Inter;
-                font-style: normal;
-                font-weight: normal;
-                font-size: 16px;
-                line-height: 19px;
-                color: #7f919b;
-                mix-blend-mode: normal;
-                opacity: 0.5;
-              "
-              >{{ payableRecord }}</span
-            >
-          </h3>
-        </div>
+        </h3>
+
         <v-spacer></v-spacer>
 
         <PaymentDropDown
@@ -40,7 +39,7 @@
           style="margin-right: 88px"
         />
       </v-row>
-      <v-row>
+      <v-row align="center">
         <v-card
           flat
           height="180px"
@@ -140,13 +139,7 @@
           </v-row>
         </v-card>
       </v-row>
-      <v-card
-        flat
-        elevation="6"
-        max-width="1340"
-        min-height="674"
-        class="ml-14"
-      >
+      <v-card flat elevation="6" max-width="93%" min-height="674" class="ml-14">
         <div class="mt-12" justify="center">
           <v-card
             flat
@@ -219,7 +212,7 @@
 import PureVueChart from "pure-vue-chart";
 
 import Allpayables from "@/components/payablesTabs/AllPayables.vue";
-import SchedulledPayables from "@/components/payablesTabs/SchedulledPayables.vue";
+import ScheduledPayables from "@/components/payablesTabs/ScheduledPayables.vue";
 import PendingPayables from "../../components/payablesTabs/PendingPaybles.vue";
 import PaidPayables from "../../components/payablesTabs/PaidPayables.vue";
 import BudgetPayables from "../../components/payablesTabs/BudgetPayables.vue";
@@ -240,7 +233,7 @@ export default {
       search: "",
       items: [
         { tab: "All", content: "Allpayables" },
-        { tab: "Scheduled", content: "SchedulledPayables" },
+        { tab: "Scheduled", content: "ScheduledPayables" },
         { tab: "Pending", content: "PendingPayables" },
         { tab: "Paid", content: "PaidPayables" },
         { tab: "Budgets", content: "BudgetPayables" },
@@ -271,7 +264,7 @@ export default {
   },
   components: {
     Allpayables,
-    SchedulledPayables,
+    ScheduledPayables,
     PendingPayables,
     PaidPayables,
     BudgetPayables,

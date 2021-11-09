@@ -1,5 +1,5 @@
 <template>
-  <div style="background: #f0f0fa; max-width: 1407px">
+  <div style="background: #f0f0fa; width: 100%">
     <v-card elevation="0" style="background: #f9fafa; mix-blend-mode: normal">
       <v-expand-transition mode="out-in">
         <div v-show="show">
@@ -194,7 +194,7 @@
           <v-icon class="pr-4">{{
             show ? "mdi-chevron-up" : "mdi-chevron-down"
           }}</v-icon>
-          collapse
+          {{ show ? "collapse" : "expand" }}
         </v-btn>
       </div>
     </v-card>

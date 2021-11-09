@@ -8,197 +8,167 @@
         class="d-flex"
         style="background: rgba(127, 145, 155, 0.052607)"
       >
+        <v-switch
+          flat
+          dense
+          class="pl-4 mb-2"
+          color="#16be98"
+          v-model="autoPlay"
+          label="Auto play"
+        ></v-switch>
       </v-card>
     </div>
+    <v-layout row wrap class="align-center my-2 px-8">
+      <v-flex md1>
+        <div class="d-flex align-center">
+          <p class="mb-0 ml-2 mr-4 primary--text font-weight-bold">ID</p>
+        </div>
+      </v-flex>
+      <v-flex md2>
+        <div class="d-flex align-center">
+          <p class="mb-0 mx-4 primary--text font-weight-bold">Approved by</p>
+        </div>
+      </v-flex>
+
+      <v-flex md2>
+        <div class="d-flex align-center">
+          <p class="mb-0 pl-4 primary--text font-weight-bold">Amount</p>
+          <v-btn class="ml-1" color="grey lighten-1" icon>
+            <v-icon>mdi-chevron-down</v-icon>
+          </v-btn>
+        </div>
+      </v-flex>
+      <v-flex md1>
+        <div class="d-flex align-center">
+          <p class="mb-0 primary--text font-weight-bold">Ref No.</p>
+        </div>
+      </v-flex>
+      <v-flex md1>
+        <div class="d-flex align-center">
+          <p class="mb-0 primary--text font-weight-bold">Staus</p>
+          <v-btn class="ml-1" color="grey lighten-1" icon>
+            <v-icon>mdi-chevron-down</v-icon>
+          </v-btn>
+        </div>
+      </v-flex>
+      <v-flex md2>
+        <div class="d-flex align-center">
+          <p class="mb-0 primary--text font-weight-bold">Payee</p>
+          <v-btn class="ml-1" color="grey lighten-1" icon>
+            <v-icon>mdi-chevron-down</v-icon>
+          </v-btn>
+        </div>
+      </v-flex>
+      <v-flex md1>
+        <div>
+          <p class="mb-0 pl-md-4 primary--text font-weight-bold">Entry Date</p>
+        </div>
+      </v-flex>
+      <v-flex md2>
+        <div class="d-flex align-center">
+          <p class="mb-0 pl-md-8 primary--text font-weight-bold">Actions</p>
+        </div>
+      </v-flex>
+    </v-layout>
     <v-layout>
-      <v-data-table
-        dense
-        :headers="headers"
-        :items="inbox"
-        hide-default-footer
-        disable-pagination
-        item-key="id"
-        width="1340px"
-        class="elevation-0 table-text"
-      >
-        <!-- <template v-slot:[`item.id`]="{ item }"> </template> -->
-        <template v-slot:[`item.transactionType`]="{ item }">
-          <v-chip
-            :color="`${
-              item.transactionType === 'expense' ? '#F9EED2' : '#D5F7EF'
-            }`"
-            :text-color="`${
-              item.transactionType === 'expense' ? '#E3AA1C' : '#2BD5AE'
-            }`"
-            x-small
-          >
-            {{ item.transactionType }}
-          </v-chip>
-        </template>
-        <template v-slot:[`item.status`]="{ item }">
-          <div class="d-flex">
-            <v-icon
-              small
-              :color="`${item.status === 'processed' ? '#2BD5AE' : '#E3AA1C'}`"
-            >
-              mdi-circle-medium
-            </v-icon>
-            <span>
-              {{ item.status }}
-            </span>
-          </div>
-        </template>
-        <template v-slot:[`item.date`]="{ item }">
-          <span>
-            {{ item.date | date }}
-          </span>
-        </template>
-        <template v-slot:[`item.action`]="{}">
-          <div class="d-flex">
-            <v-btn
-              exact-path
-              rounded
-              depressed
-              dark
-              small
-              color="#2BD5AE"
-              class="text-lowercase px-2 my-1 mr-2"
-              style="color: #311b92"
-            >
-              view
-            </v-btn>
-            <v-btn
-              rounded
-              depressed
-              dark
-              small
-              color="#311B92"
-              class="text-lowercase px-2 my-1"
-              >review</v-btn
-            >
-          </div>
-        </template>
-      </v-data-table>
+      <v-row>
+        <v-col
+          cols="12"
+          v-for="payment in filteredPayments"
+          :key="payment.id"
+          class="py-0 ma-0"
+        >
+          <PaymentTable
+            :id="payment.id"
+            :paymentRef="payment.ref"
+            :approvedBy="payment.approvedBy"
+            :payee="payment.payee"
+            :date="payment.date | date"
+            :amount="payment.amount"
+            :status="payment.status"
+            :iconColor="payment.status === 'scheduled' ? '#2BD5AE' : '#E3AA1C'"
+          />
+        </v-col>
+      </v-row>
     </v-layout>
   </div>
 </template>
 
 <script>
+import PaymentTable from "./PaymentTable.vue";
 export default {
+  components: {
+    PaymentTable,
+  },
   data() {
     return {
-      autoProcess: true,
-      inbox: [
+      autoPlay: false,
+      amount: "N2,300,000",
+      Ref: "#EXP084492",
+      Payee: "Emmanuel John",
+      Subtotal: "172500",
+      dragging: false,
+      dialog: false,
+      payments: [
         {
           id: 1,
-          transactionType: "expense",
-          amount: 300000.0,
+          approvedBy: "John Bull",
+          amount: "200,000,000",
           ref: "#EXP084492",
-          requester: "John Bello",
+          payee: "John Bello",
           date: new Date(),
-          status: "processing",
+          status: "scheduled",
           action: "",
         },
         {
           id: 2,
-          transactionType: "invoice",
-          amount: 400000.0,
+          approvedBy: "Ken Chibuzor",
+          amount: "2,300,000",
           ref: "#EXP084492",
-          requester: "Emma Thomas",
-          date: new Date(),
-          status: "processed",
-          action: "",
-        },
-        {
-          id: 3,
-          transactionType: "expense",
-          amount: 100000.0,
-          ref: "#EXP084492",
-          requester: "Sussan Boma",
-          date: new Date(),
-          status: "processed",
-          action: "",
-        },
-        {
-          id: 4,
-          transactionType: "invoice",
-          amount: 250000.0,
-          ref: "#EXP084492",
-          requester: "John Bello",
-          date: new Date(),
-          status: "In review",
-          action: "",
-        },
-        {
-          id: 5,
-          transactionType: "expense",
-          amount: 150000.0,
-          ref: "#EXP084492",
-          requester: "Pat Ede",
-          date: new Date(),
-          status: "review needed",
-          action: "",
-        },
-        {
-          id: 6,
-          transactionType: "invoice",
-          amount: 3000.0,
-          ref: "#EXP084492",
-          requester: "Obinna Nwafor",
+          payee: "Emmanuel John",
           date: new Date(),
           status: "pending",
           action: "",
         },
-      ],
-      headers: [
         {
-          text: "ID",
-          align: "start",
-          sortable: false,
-          class: "primary--text",
-          value: "id",
+          id: 3,
+          approvedBy: "Durosimi Paul",
+          amount: "20,000,000",
+          ref: "#EXP084492",
+          payee: "Samuel Olawale",
+          date: new Date(),
+          status: "paid",
+          action: "",
         },
         {
-          text: "Approved by",
-          class: "primary--text",
-          value: "approvedBy",
+          id: 4,
+          approvedBy: "Chioma Williams",
+          amount: "1,200,500",
+          ref: "#EXP084492",
+          payee: "FIRS",
+          date: new Date(),
+          status: "pending",
+          action: "",
         },
         {
-          text: "Amount",
-          align: "end",
-          sortable: false,
-          class: "primary--text",
-          value: "amount",
+          id: 5,
+          approvedBy: "Bisi Oguntade",
+          amount: "200,000,000",
+          ref: "#EXP084492",
+          payee: "Brain&Hammer Ltd",
+          date: new Date(),
+          status: "pending",
+          action: "",
         },
         {
-          text: "Currency",
-          class: "primary--text",
-          value: "currency",
-        },
-        {
-          text: "Ref no.",
-          class: "primary--text",
-          value: "ref",
-        },
-        {
-          text: "Status",
-          class: "primary--text",
-          value: "status",
-        },
-        {
-          text: "Payee",
-          align: "end",
-          sortable: false,
-          class: "primary--text",
-          value: "payee",
-        },
-        { text: "Entry Date", class: "primary--text", value: "date" },
-        {
-          text: "Action",
-          class: "primary--text",
-          value: "action",
-          sortable: false,
-          align: "center",
+          id: 6,
+          approvedBy: "Julius Obe",
+          amount: "11,000,000",
+          ref: "#EXP084492",
+          payee: "Julius Berger",
+          date: new Date(),
+          status: "pending",
+          action: "",
         },
       ],
     };
@@ -206,6 +176,36 @@ export default {
   methods: {
     closeModal() {
       this.dialog = false;
+      // this.workflowName = e;
+      // console.log(e);
+    },
+    onDroppedFiles($event) {
+      this.dragging = false;
+      let files = [...$event.dataTransfer.items]
+        .filter((item) => item.kind === "file")
+        .map((item) => item.getAsFile());
+
+      console.table(files);
+    },
+    setSearchText(value) {
+      this.search = value;
+    },
+  },
+  computed: {
+    filteredPayments() {
+      if (this.search) {
+        return this.payments.filter((payment) => {
+          return (
+            payment.payee.toLowerCase().match(this.search.toLowerCase()) ||
+            payment.status.toLowerCase().match(this.search.toLowerCase) ||
+            payment.amount.toString().match(this.search) ||
+            payment.id.toString().match(this.search)
+          );
+        });
+      } else
+        return this.payments.filter(function (payment) {
+          return payment.status.match("paid");
+        });
     },
   },
 };

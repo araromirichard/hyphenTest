@@ -1,11 +1,11 @@
 <template>
-  <div>
+  <div class="pa-0 ma-0">
     <v-item-group @change="selectedDataSource" v-model="selectedData">
       <v-row>
         <v-col>
           <v-card flat color="white" class="d-flex" height="200px">
             <div
-              class="mt-6 flex-column pr-5"
+              class="flex-column pr-5"
               v-for="(dataItem, i) in dataSource"
               :key="i"
             >
@@ -102,6 +102,7 @@ export default {
         "Petty cash request",
       ],
       selectedData: null,
+      ShowFormSelect: false,
     };
   },
   components: {
@@ -115,6 +116,9 @@ export default {
       });
     },
   },
+  // computed: {
+  //   DisplaySelectedInput() {},
+  // },
 };
 </script>
 

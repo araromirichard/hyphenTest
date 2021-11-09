@@ -1,111 +1,198 @@
 <template>
   <div>
-    <div>
+    <v-container class="pa-0">
       <h1
-        class="text-center text-h3"
+        class="text-center text-h5 text-md-h3 px-0"
         style="padding-top: 124px; color: #311b92"
       >
         Hello Bunmi
       </h1>
-      <p class="text-center" style="padding-bottom: 49px; color: #7f919b">
+      <p
+        class="text-center text-caption text-md-h6"
+        style="padding-bottom: 49px; color: #7f919b"
+      >
         Let’s get you started on pbot
       </p>
-      <div class="d-flex flex-row ma-auto justify-center">
-        <v-card
-          max-width="300"
-          max-height="347"
-          color="#FCF7ED"
-          class="align-content-center mr-4 justify-center d-flex-column"
-          style="top: 63px"
-          flat
-        >
-          <img
-            :src="require('@/assets/person.svg')"
-            style="padding-top: 60px; padding-right: 129px; padding-left: 129px"
-          />
-          <v-card-title class="justify-center"
-            ><span>Help us know you <br />better</span></v-card-title
+      <v-container class="pa-0 ma-0 justify-center mx-auto">
+        <v-row g class="mx-8 mx-md-16 pa-0 px-md-10 d-flex justify-center">
+          <v-col
+            cols="12"
+            md="3"
+            sm="6"
+            class="justify-center mx-auto mb-10 ma-md-0 px-md-6 pa-0"
           >
-          <v-card-text
-            >Complete your account KYB by <br />
-            providing a few documentation</v-card-text
-          >
-          <div class="px-2 pt-4 mx-6">
-            <Button class="text-md-h6" height="50" width="207" label="Start" />
-          </div>
-        </v-card>
-        <v-card
-          max-width="300"
-          max-height="422"
-          color="#FCF7ED"
-          class="align-content-center ml-4 mr-4 justify-center d-flex-column"
-          style="top: 29px"
-          flat
-        >
-          <img
-            :src="require('@/assets/bank.svg')"
-            style="padding-top: 95px; padding-right: 129px; padding-left: 129px"
-          />
-          <v-card-title class="justify-center"
-            ><span>
-              Know your business <br />
-              health</span
-            ></v-card-title
-          >
-          <v-card-text
-            >Connect your primary business bank <br />
-            account, and pbot will tell you how profitable <br />
-            your business is growing.</v-card-text
-          >
-          <div class="px-2 mx-6">
-            <Button
-              class="text-md-h6"
-              height="50"
-              width="207"
-              label="Connect Bank"
-            />
-          </div>
-          <v-card-text
-            >pbot will not debit your account, <br />
-            instead we will credit you #100</v-card-text
-          >
-        </v-card>
-        <v-card
-          max-width="300"
-          max-height="347"
-          color="#FCF7ED"
-          class="ml-4 justify-center"
-          style="top: 63px"
-          flat
-        >
-          <img
-            :src="require('@/assets/arrows.svg')"
-            style="padding-top: 59px; padding-right: 129px; padding-left: 129px"
-          />
-          <v-card-title class="justify-center"
-            ><span>
-              Use your first <br />
-              workflow</span
-            ></v-card-title
-          >
-          <v-card-text
-            >It’s easy, so we created a video to <br />
-            guide you. Watch video here</v-card-text
-          >
-          <div class="px-2 pt-4 mx-6">
-            <Button
-              class="text-md-h6"
-              height="50"
-              width="207"
-              label="Use Workflow"
-            />
-          </div>
-        </v-card>
-      </div>
+            <v-card color="#FCF7ED" flat>
+              <img
+                :src="require('@/assets/person.svg')"
+                style="
+                  padding-top: 45px;
+                  padding-bottom: 20px;
+                  padding-right: 80%;
+                  padding-left: 40%;
+                "
+              />
+              <v-card-title class="justify-center"
+                ><span
+                  class="text-break"
+                  style="
+                  max-width: 150px
+                    font-family: Inter;
+                    font-style: normal;
+                    font-weight: bold;
+                    font-size: 18px;
+                    line-height: 24px;
+                    text-align: center;
+                    letter-spacing: -0.73px;
+                  "
+                  >Help us know you better</span
+                ></v-card-title
+              >
+              <v-card-text
+                >Complete your account KYB by <br />
+                providing a few documentation</v-card-text
+              >
+              <div class="px-2 pt-4 mx-6" style="padding-bottom: 68px">
+                <Button
+                  class="text-md-h6"
+                  height="50"
+                  width="95%"
+                  label="Start"
+                />
+              </div>
+            </v-card>
+          </v-col>
+          <v-col class="mb-10 ma-md-0 px-md-6 pa-0" cols="12" md="3" sm="6">
+            <v-card color="#FCF7ED" flat>
+              <img
+                :src="require('@/assets/bank.svg')"
+                style="
+                  padding-top: 45px;
+                  padding-bottom: 20px;
+                  padding-right: 80%;
+                  padding-left: 40%;
+                "
+              />
+              <v-card-title class="justify-center"
+                ><span
+                  class="text-break"
+                  style="
+                    font-family: Inter;
+                    font-style: normal;
+                    font-weight: bold;
+                    font-size: 18px;
+                    line-height: 24px;
+                    text-align: center;
+                    letter-spacing: -0.73px;
+                    max-width: 150px;
+                  "
+                >
+                  Understand your cashflow better</span
+                ></v-card-title
+              >
+              <v-card-text class="justify-center"
+                ><span
+                  class="text-break"
+                  style="max-width: 30%; text-align: center"
+                  >Connect your business bank accounts, to allow pBot confirm
+                  and reconcile company spend</span
+                ></v-card-text
+              >
+              <div class="px-2 pt-md-4 pb-5 mx-6">
+                <Button
+                  class="text-md-h6"
+                  height="50"
+                  width="95%"
+                  label="Connect Bank"
+                />
+              </div>
+              <v-card-text
+                class="pb-5 text-break text-center mx-auto justify-center"
+                style="max-width: 200px"
+              >
+                <span
+                  style="
+                    padding-bottom: 19px;
+                    font-family: Inter;
+                    font-style: normal;
+                    font-weight: normal;
+                    font-size: 10px;
+                    line-height: 16px;
+                    text-align: center;
+                    color: #7f919b;
+                  "
+                >
+                  pbot will not debit your account
+                </span>
+              </v-card-text>
+            </v-card>
+          </v-col>
+          <v-col class="ma-md-0 px-md-6 pa-0" cols="12" md="3" sm="6">
+            <v-card color="#FCF7ED" flat>
+              <img
+                :src="require('@/assets/person.svg')"
+                style="
+                  padding-top: 39px;
+                  padding-bottom: 20px;
+                  padding-right: 80%;
+                  padding-left: 40%;
+                "
+              />
+              <v-card-title
+                class="justify-center ma-md-0"
+                style="padding-bottom: 36px"
+                ><span
+                  style="
+                    font-family: Inter;
+                    font-style: normal;
+                    font-weight: bold;
+                    font-size: 18px;
+                    line-height: 24px;
+                    text-align: center;
+                    letter-spacing: -0.73px;
+                  "
+                >
+                  Invite Stakeholders</span
+                ></v-card-title
+              >
+              <v-card-text
+                >Invite your co-worker, financial advisor, accountant into this
+                company account for visibility and approvals</v-card-text
+              >
+              <div class="px-2 mt-2 mx-6" style="padding-bottom: 23px">
+                <Button
+                  class="text-md-h6"
+                  height="50"
+                  width="95%"
+                  label="Use Workflow"
+                />
+              </div>
+              <v-card-text
+                class="pb-5 text-break text-center mx-auto justify-center"
+                style="max-width: 200px"
+              >
+                <span
+                  style="
+                    font-family: Inter;
+                    font-style: normal;
+                    font-weight: normal;
+                    font-size: 10px;
+                    text-align: center;
+                    color: #7f919b;
+                  "
+                >
+                  pBot keeps an automatic audit trail for you to monitor all
+                  activities
+                </span>
+              </v-card-text>
+            </v-card>
+          </v-col>
+        </v-row>
+      </v-container>
       <div class="justify-center">
         <p
           style="
             padding-top: 50px;
+            padding-bottom: 50px;
             text-align: center;
             font-size: 12px;
             line-height: 15px;
@@ -113,10 +200,28 @@
             color: #7b4fff;
           "
         >
-          <router-link to="insight">Go to account overview</router-link>
+          <router-link to="inbox"
+            ><span
+              style="
+                padding-top: 91px;
+                font-family: Inter;
+                font-style: normal;
+                font-weight: normal;
+                font-size: 24px;
+                line-height: 29px;
+                text-decoration-line: underline;
+                color: #7b4fff;
+              "
+              :style="{
+                paddingBottom: `${$vuetify.breakpoint.mdAndUp ? '200px' : ''}`,
+                paddingTop: `${$vuetify.breakpoint.mdAndUp ? '91px' : '24px'}`,
+              }"
+              >Go to Auditor</span
+            ></router-link
+          >
         </p>
       </div>
-    </div>
+    </v-container>
   </div>
 </template>
 

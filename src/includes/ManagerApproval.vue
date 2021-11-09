@@ -1,12 +1,12 @@
 <template>
   <v-layout>
-    <v-card flat elevation="4" min-height="1200" style="width: 90%">
+    <v-card flat elevation="4" min-height="1200" style="width: 93%">
       <v-card
         flat
         class="rounded-t-lg"
-        style="margin-right: 57; background: rgba(127, 145, 155, 0.052607)"
+        style="background: rgba(127, 145, 155, 0.052607)"
       >
-        <v-row class="d-flex">
+        <v-row class="d-flex pa-0 ma-0">
           <img
             style="font-size: 24px; margin-top: 37px; margin-left: 49px"
             :src="require('@/assets/pbot_icons/ManagerApproval.svg')"
@@ -44,7 +44,7 @@
       <template>
         <v-stepper
           class="mx-auto pl-8"
-          style="top: 92px"
+          style="top: 32px"
           elevation="0"
           color="#301F78"
           v-model="e6"
@@ -57,8 +57,8 @@
             step="1"
           >
             <span
+              class="py-4 pl-0 mt-"
               style="
-                margin-top: 40px;
                 font-family: Inter;
                 font-style: normal;
                 font-weight: 500;
@@ -70,7 +70,7 @@
               Choose workflow trigger
             </span>
             <span
-              class="mt-6"
+              class="py-2"
               style="
                 font-family: Inter;
                 font-style: normal;

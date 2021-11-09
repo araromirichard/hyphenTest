@@ -82,6 +82,7 @@
                   <v-btn
                     v-model="selectedIcon"
                     @click="showForm(icon, index)"
+                    target="_blank"
                     class="px-0 mx-0"
                     style="margin-top: 4px"
                     icon
@@ -155,7 +156,7 @@ export default {
       selectedIcon: null,
       icons: [
         { title: "mdi-pencil-outline", path: "#" },
-        { title: "mdi-content-copy", path: "#" },
+        { title: "mdi-format-indent-increase", path: "#" },
         { title: "mdi-delete", path: "#" },
       ],
       formCards: [
@@ -173,10 +174,21 @@ export default {
       console.log({ icon, index });
       if (index === 0) {
         this.$emit("edit-form");
+        this.$router.push({
+          name: "Create-form",
+        });
+      } else if (index === 1) {
+        this.$emit("entries");
+        console.log(index);
       }
     },
+    // openEntries(icon, index) {
+    //   if (index === 1 && icon.title === "mdi-format-indent-increase") {
+    //     this.$emit("entries-form");
+    //   }
+    // },
     newForm() {
-      this.$emit("create-form", this.formCards.title);
+      this.$emit("create-form", this.formCards);
     },
   },
 };

@@ -1,5 +1,6 @@
 <template>
   <v-btn
+    :disabled="disabled"
     :to="to"
     :height="height"
     :width="width"
@@ -18,6 +19,9 @@ export default {
   props: {
     to: {
       type: String,
+    },
+    disabled: {
+      type: Boolean,
     },
     label: {
       type: String,

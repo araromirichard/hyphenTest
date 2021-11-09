@@ -1,85 +1,91 @@
 <template>
-  <div class="d-flex">
-    <div class="justify-center ma-auto">
-      <h3
-        class="mb-10 mx-auto"
-        style="
-          margin-top: 224px;
-          font-family: Inter;
-          font-style: normal;
-          font-weight: 700;
-          font-size: 38px;
-          line-height: 39px;
-          letter-spacing: 0.646465px;
-          color: #596a73;
-        "
-      >
-        Choose your account type
-      </h3>
-
-      <v-row class="d-flex flex-column">
-        <v-card
-          outlined
-          class="mt-16 mb-5 ma-auto"
-          elevation="0"
-          max-width="400"
-          to="#"
+  <v-container>
+    <v-row align="center" justify="center" class="d-flex flex-column pa-0 ma-0">
+      <v-col cols="12" md="6" class="px-8 px-md-auto" style="min-height: 100vh">
+        <h3
+          class="text-center text-h6 text-bold text-md-h3"
+          style="
+            font-family: Inter;
+            font-style: normal;
+            font-weight: 700;
+            line-height: 39px;
+            letter-spacing: 0.646465px;
+            color: #596a73;
+          "
+          :style="{
+            paddingTop: `${$vuetify.breakpoint.xs ? '38px' : '224px'}`,
+            paddingBottom: `${$vuetify.breakpoint.xs ? '8px' : '66px'}`,
+          }"
         >
-          <v-card-text>
-            <v-row class="d-flex">
-              <v-col class="ma-auto justify-center pl-6" cols="3">
-                <v-avatar size="80" color="#FDF9EF">
-                  <v-icon> mdi-account-outline</v-icon>
-                </v-avatar>
-              </v-col>
-              <v-col cols="9">
-                <v-card-title class="pl-4 py-auto"> Advisor </v-card-title>
-                <v-card-text class="py-auto">
-                  You provide funding/finance advise services to 5 or more
-                  businesses
-                </v-card-text>
-              </v-col>
-            </v-row>
-          </v-card-text>
-        </v-card>
-        <v-card
-          outlined
-          to="#"
-          elevation="0"
-          class="mb-12 ma-auto flat"
-          max-width="400"
+          Choose your account type
+        </h3>
+        <v-item-group
+          @change="selectedAccountTypeChanged"
+          v-model="selectedAccountType"
         >
-          <v-card-text>
-            <v-row class="d-flex">
-              <v-col class="ma-auto justify-center pl-6" cols="3"
-                ><v-avatar size="80" color="#FDF9EF"
-                  ><v-icon> mdi-account-outline</v-icon></v-avatar
-                ></v-col
-              >
-              <v-col cols="9"
-                ><v-card-title class="card-title pl-4 py-auto"
-                  >Business</v-card-title
+          <v-row class="d-flex flex-column mt-8 mt-md-auto">
+            <v-col
+              class="ma-auto"
+              v-for="accountType in accountTypes"
+              :key="accountType.title"
+            >
+              <v-item :value="accountType" v-slot:default="{ active, toggle }">
+                <v-card
+                  :disabled="accountType.disabled"
+                  @click="toggle"
+                  rounded
+                  :outlined="active"
+                  class="mb-5 ma-auto"
+                  elevation="0"
+                  max-width="400"
+                  to="#"
                 >
-                <v-card-text class="card-text py-auto"
-                  >You work at a business, in a finance or senior executive
-                  role</v-card-text
-                ></v-col
-              >
-            </v-row>
-          </v-card-text>
-        </v-card>
-        <Button
-          absolute
-          id="btn"
-          class="mx-10 text-md-h5"
-          height="54"
-          width="330"
-          to="welcome"
-          label="Next"
-        />
-      </v-row>
-    </div>
-  </div>
+                  <v-row align="center" justify="center" class="d-flex">
+                    <v-col class="ma-0 pa-0 text-center" cols="4">
+                      <v-avatar size="68" color="#FDF9EF" class="mx-auto pa">
+                        <v-icon> mdi-{{ accountType.icon }}</v-icon>
+                      </v-avatar>
+                    </v-col>
+                    <v-col cols="8" class="pa-0">
+                      <p
+                        class="
+                          ma-0
+                          text-subtitle
+                          font-weight-bold
+                          text-md-h6
+                          pt-8
+                        "
+                        style="color: rgba(0, 35, 56, 0.5)"
+                      >
+                        {{ accountType.title }}
+                      </p>
+                      <p
+                        class="text-caption pt-md-1 text-break"
+                        style="max-width: 164px; color: rgba(0, 35, 56, 0.5)"
+                      >
+                        {{ accountType.text }}
+                      </p>
+                    </v-col>
+                  </v-row>
+                </v-card>
+              </v-item>
+            </v-col>
+            <v-col class="d-flex justify-center align-center">
+              <Button
+                absolute
+                style="margin-top: 29px"
+                class="mx-auto text-md-h5"
+                height="54px"
+                :width="$vuetify.breakpoint.xs ? '280px' : '390px'"
+                to="welcome"
+                label="Next"
+              />
+            </v-col>
+          </v-row>
+        </v-item-group>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
@@ -90,13 +96,35 @@ export default {
   },
 
   data() {
-    return {};
+    return {
+      accountTypes: [
+        {
+          title: "Advisor",
+          icon: "account-outline",
+          disabled: true,
+          text: "You provide funding/finance advise services to 5 or more businesses",
+        },
+        {
+          title: "Company",
+          icon: "account-outline",
+          disabled: false,
+          text: "You work at a company, in a finance or senior executive role",
+        },
+      ],
+      selectedAccountType: null,
+    };
+  },
+
+  methods: {
+    selectedAccountTypeChanged(e) {
+      console.table({
+        e,
+        selectedAccountType: this.selectedAccountType,
+        title: e ? e.title : null,
+      });
+    },
   },
 };
 </script>
 
-<style scoped>
-#btn {
-  min-width: 400px !important;
-}
-</style>
+<style scoped></style>

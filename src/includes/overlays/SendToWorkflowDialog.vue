@@ -8,6 +8,7 @@
         dense
         hide-details="true"
         :value="dialog"
+        :true-value="tValue"
         class="px-4 mb-1"
         :color="`${(hasColor = true ? '#16BE98' : '')}`"
         label="Send to workflow"
@@ -46,8 +47,10 @@
       </v-card-title>
       <template>
         <v-select
+          @change="$emit('selectedWorkflow', { value: $event })"
           v-model="selectedWorkflow"
           :menu-props="{ bottom: true, offsetY: true }"
+          :value="workflowSelected"
           :items="workflowSelected"
           style="
             background: #ffffff;
@@ -60,6 +63,7 @@
           flat
           outlined
           placeholder="Select Workflow"
+          hide-details="auto"
         >
           <template slot="append">
             <v-btn
@@ -121,6 +125,11 @@
 
 <script>
 export default {
+  props: {
+    tValue: {
+      type: Boolean,
+    },
+  },
   data() {
     return {
       dialog: false,

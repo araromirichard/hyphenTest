@@ -116,8 +116,6 @@
 </template>
 
 <script>
-//import SimpleLineIcons from "vue-simple-line";
-
 export default {
   name: "SingleRule",
   props: {

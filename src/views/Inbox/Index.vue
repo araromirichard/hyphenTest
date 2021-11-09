@@ -1,7 +1,7 @@
 <template>
-  <v-container>
+  <v-container class="pa-0">
     <div v-if="noInvoice">
-      <v-row align="center" justify="end">
+      <v-row align="center" justify="end" class="mx-14 pt-md-10">
         <DropDownMenu btnText="New" icon="file" width="121" height="54" />
       </v-row>
       <v-row class="justify-center" style="padding-top: 105px">
@@ -72,7 +72,10 @@
       </v-row>
     </div>
     <div v-else>
-      <v-row align="center" class="d-flex justify-md-space-between mx-14">
+      <v-row
+        align="center"
+        class="d-flex justify-md-space-between mx-14 pt-md-10"
+      >
         <div>
           <h3
             class="text-bold"
@@ -97,7 +100,7 @@
         />
       </v-row>
 
-      <v-card flat elevation="6" width="80%" min-height="674" class="ml-14">
+      <v-card flat elevation="6" width="90%" min-height="674" class="mx-14">
         <div class="mt-12" justify="center">
           <v-card
             flat
@@ -205,7 +208,7 @@
                   line-height: 19px;
                   color: #301f78;
                 "
-                >Invite a Stateholder</span
+                >Invite a Stakeholder</span
               >
               <v-spacer></v-spacer>
               <v-icon
@@ -218,7 +221,7 @@
               </v-icon>
             </v-card-title>
             <validation-observer ref="observer" v-slot="{ invalid }">
-              <form>
+              <form @submit.prevent="sendInvite">
                 <div class="px-8 d-flex" style="background: #fdfaf2">
                   <p
                     style="
@@ -242,36 +245,58 @@
                     rules="required"
                   >
                     <v-text-field
+                      v-model="stakeholder.fullNames"
                       hide-details="auto"
-                      :error-messages="errors"
-                      v-model="stakeHolderDetails.fullNames"
+                      class="mb-4"
                       type="text"
                       background-color="#ffffff"
                       style="margin-left: 52px; margin-right: 45px"
                       outlined
                       label="Full Names"
-                    ></v-text-field>
+                      :error-messages="errors"
+                    >
+                    </v-text-field>
                   </validation-provider>
                   <validation-provider
                     v-slot="{ errors }"
-                    name="Email Address"
-                    rules="required"
+                    name="email"
+                    rules="required|email"
                   >
                     <v-text-field
+                      v-model="stakeholder.email"
                       hide-details="auto"
-                      :error-messages="errors"
-                      v-model="stakeHolderDetails.email"
+                      class="mb-4"
                       type="email"
                       background-color="#ffffff"
                       style="margin-left: 52px; margin-right: 45px"
                       outlined
                       label="Email Address"
+                      :error-messages="errors"
                     ></v-text-field>
+                  </validation-provider>
+                  <validation-provider
+                    v-slot="{ errors }"
+                    name="select"
+                    rules="required"
+                  >
+                    <v-select
+                      hide-details="auto"
+                      background-color="#ffffff"
+                      style="margin-left: 52px; margin-right: 45px"
+                      v-model="stakeholder.selectedType"
+                      :items="stakeholderTypes"
+                      outlined
+                      :error-messages="errors"
+                      label="Select"
+                      data-vv-name="select"
+                      required
+                    ></v-select>
                   </validation-provider>
                 </div>
                 <template>
                   <v-card-actions class="d-flex justify-end align-center mr-9">
                     <v-btn
+                      @click="sendInvite"
                       :disabled="invalid"
                       type="submit"
                       dark
@@ -285,7 +310,12 @@
                         border-radius: 4px;
                       "
                     >
-                      <simple-line-icons icon="plus" size="small" no-svg />
+                      <simple-line-icons
+                        icon="plus"
+                        size="small"
+                        style="color: #311b92"
+                        no-svg
+                      />
                       <span
                         class="pl-4 m-0 text-capitalize"
                         style="
@@ -297,7 +327,7 @@
                           text-align: center;
                           letter-spacing: 0.636364px;
 
-                          color: #ffffff;
+                          color: #311b92;
                         "
                         >Add</span
                       >
@@ -348,10 +378,12 @@ export default {
       isClicked: true,
       tab: 0,
       search: "",
-      stakeHolderDetails: {
+      stakeholder: {
         fullNames: "",
         email: "",
+        selectedType: null,
       },
+      stakeholderTypes: ["Co-worker", "Payee"],
       items: [
         { tab: "All", content: "TabDataTableAll" },
         { tab: "Email", content: "TabDataTableEmail" },
@@ -398,6 +430,9 @@ export default {
     },
     searchDataTable(e) {
       this.$refs.dataTable.setSearchText(e);
+    },
+    sendInvite() {
+      console.table(this.stakeholder);
     },
   },
 };

@@ -1,130 +1,135 @@
 <template>
   <div>
-    <div>
-      <v-card
-        width="100%"
-        flat
-        class="d-flex"
-        style="background: rgba(127, 145, 155, 0.052607)"
-      >
-        <v-switch
+    <v-container class="pa-0">
+      <div>
+        <v-card
+          width="100%"
           flat
-          dense
-          class="pl-4 mb-2"
-          color="#16be98"
-          v-model="autoProcess"
-          label="Auto process"
-        ></v-switch>
-        <SendToWorkflowDialog @closeDialog="closeModal" />
-        <v-chip class="mt-5" small
-          ><span
-            class="
-              font-family:
-              Inter;
-              font-style:
-              normal;
-              font-weight:
-              normal;
-              font-size:
-              10px;
-              line-height:
-              10px;
-              color:
-              #7F919B;
-            "
-          >
-            {{ workflowName }}
-          </span>
-        </v-chip>
-        <v-spacer></v-spacer>
-        <v-btn color="#2BD5AE" class="my-4 export-btn mr-9" elevation="3"
-          ><span class="material-icons pr-1"> import_export </span
-          ><span
-            style="
-              font-family: Inter;
-              font-style: normal;
-              font-weight: 500;
-              font-size: 11px;
-              line-height: 12px;
-              text-align: center;
-              letter-spacing: 0.636364px;
-              color: #301f78;
-            "
-            >Export</span
-          >
-        </v-btn>
-      </v-card>
-    </div>
-    <v-layout row wrap class="align-center my-2 px-8">
-      <v-flex md2>
-        <div class="d-flex align-center">
-          <p class="mb-0 ml-2 mr-4 primary--text font-weight-bold">ID</p>
-          <p class="mb-0 mx-4 primary--text font-weight-bold">Type</p>
-        </div>
-      </v-flex>
+          class="d-flex"
+          style="background: rgba(127, 145, 155, 0.052607)"
+        >
+          <v-switch
+            flat
+            dense
+            class="pl-4 mb-2"
+            color="#16be98"
+            v-model="autoProcess"
+            label="Auto process"
+          ></v-switch>
+          <SendToWorkflowDialog
+            @closeDialog="closeModal"
+            :tValue="switchState"
+          />
+          <v-chip class="mt-5" small
+            ><span
+              class="
+                font-family:
+                Inter;
+                font-style:
+                normal;
+                font-weight:
+                normal;
+                font-size:
+                10px;
+                line-height:
+                10px;
+                color:
+                #7F919B;
+              "
+            >
+              {{ workflowName }}
+            </span>
+          </v-chip>
+          <v-spacer></v-spacer>
+          <v-btn color="#2BD5AE" class="my-4 export-btn mr-9" elevation="3"
+            ><span class="material-icons pr-1"> import_export </span
+            ><span
+              style="
+                font-family: Inter;
+                font-style: normal;
+                font-weight: 500;
+                font-size: 11px;
+                line-height: 12px;
+                text-align: center;
+                letter-spacing: 0.636364px;
+                color: #301f78;
+              "
+              >Export</span
+            >
+          </v-btn>
+        </v-card>
+      </div>
+      <v-layout row wrap class="align-center my-2 px-8">
+        <v-flex md2>
+          <div class="d-flex align-center">
+            <p class="mb-0 ml-2 mr-4 primary--text font-weight-bold">ID</p>
+            <p class="mb-0 mx-4 primary--text font-weight-bold">Type</p>
+          </div>
+        </v-flex>
 
-      <v-flex md2>
-        <div class="d-flex align-center">
-          <p class="mb-0 pl-4 primary--text font-weight-bold">Amount</p>
-          <v-btn class="ml-1" color="grey lighten-1" icon>
-            <v-icon>mdi-chevron-down</v-icon>
-          </v-btn>
-        </div>
-      </v-flex>
-      <v-flex md1>
-        <div class="d-flex align-center">
-          <p class="mb-0 primary--text font-weight-bold">Ref No.</p>
-        </div>
-      </v-flex>
-      <v-flex md2>
-        <div class="d-flex align-center">
-          <p class="mb-0 primary--text font-weight-bold">Staus</p>
-          <v-btn class="ml-1" color="grey lighten-1" icon>
-            <v-icon>mdi-chevron-down</v-icon>
-          </v-btn>
-        </div>
-      </v-flex>
-      <v-flex md2>
-        <div class="d-flex align-center">
-          <p class="mb-0 primary--text font-weight-bold">Requester</p>
-          <v-btn class="ml-1" color="grey lighten-1" icon>
-            <v-icon>mdi-chevron-down</v-icon>
-          </v-btn>
-        </div>
-      </v-flex>
-      <v-flex md1>
-        <div>
-          <p class="mb-0 pl-md-4 primary--text font-weight-bold">Date</p>
-        </div>
-      </v-flex>
-      <v-flex md2>
-        <div class="d-flex align-center">
-          <p class="mb-0 pl-md-8 primary--text font-weight-bold">Actions</p>
-        </div>
-      </v-flex>
-    </v-layout>
-    <v-row>
-      <v-col
-        cols="12"
-        v-for="invoice in filteredInvoices"
-        :key="invoice.id"
-        class="py-0 ma-0"
-      >
-        <DataTable
-          :index="invoice"
-          :id="invoice.id"
-          :invoiceRef="invoice.ref"
-          :type="invoice.type"
-          :requester="invoice.requester"
-          :date="invoice.date | date"
-          :amount="invoice.amount"
-          :status="invoice.status"
-          :iconColor="invoice.status === 'processed' ? '#2BD5AE' : '#E3AA1C'"
-          :chipColor="invoice.type === 'expense' ? '#F9EED2' : '#D5F7EF'"
-          :textColor="invoice.type === 'expense' ? '#E3AA1C' : '#2BD5AE'"
-        />
-      </v-col>
-    </v-row>
+        <v-flex md2>
+          <div class="d-flex align-center">
+            <p class="mb-0 pl-4 primary--text font-weight-bold">Amount</p>
+            <v-btn class="ml-1" color="grey lighten-1" icon>
+              <v-icon>mdi-chevron-down</v-icon>
+            </v-btn>
+          </div>
+        </v-flex>
+        <v-flex md1>
+          <div class="d-flex align-center">
+            <p class="mb-0 primary--text font-weight-bold">Ref No.</p>
+          </div>
+        </v-flex>
+        <v-flex md2>
+          <div class="d-flex align-center">
+            <p class="mb-0 primary--text font-weight-bold">Staus</p>
+            <v-btn class="ml-1" color="grey lighten-1" icon>
+              <v-icon>mdi-chevron-down</v-icon>
+            </v-btn>
+          </div>
+        </v-flex>
+        <v-flex md2>
+          <div class="d-flex align-center">
+            <p class="mb-0 primary--text font-weight-bold">Requester</p>
+            <v-btn class="ml-1" color="grey lighten-1" icon>
+              <v-icon>mdi-chevron-down</v-icon>
+            </v-btn>
+          </div>
+        </v-flex>
+        <v-flex md1>
+          <div>
+            <p class="mb-0 pl-md-4 primary--text font-weight-bold">Date</p>
+          </div>
+        </v-flex>
+        <v-flex md2>
+          <div class="d-flex align-center">
+            <p class="mb-0 pl-md-8 primary--text font-weight-bold">Actions</p>
+          </div>
+        </v-flex>
+      </v-layout>
+      <v-row>
+        <v-col
+          cols="12"
+          v-for="invoice in filteredInvoices"
+          :key="invoice.id"
+          class="py-0 ma-0"
+        >
+          <DataTable
+            :index="invoice"
+            :id="invoice.id"
+            :invoiceRef="invoice.ref"
+            :type="invoice.type"
+            :requester="invoice.requester"
+            :date="invoice.date | date"
+            :amount="invoice.amount"
+            :status="invoice.status"
+            :iconColor="invoice.status === 'processed' ? '#2BD5AE' : '#E3AA1C'"
+            :chipColor="invoice.type === 'expense' ? '#F9EED2' : '#D5F7EF'"
+            :textColor="invoice.type === 'expense' ? '#E3AA1C' : '#2BD5AE'"
+          />
+        </v-col>
+      </v-row>
+    </v-container>
   </div>
 </template>
 
@@ -143,6 +148,7 @@ export default {
       selectedRows: [],
       sendToWorkflow: true,
       workflowName: "workflow name…",
+      switchState: false,
       invoices: [
         {
           id: 1,
@@ -203,14 +209,18 @@ export default {
   },
   methods: {
     closeModal(e) {
+      if (e) {
+        //this.dialog = true;
+        this.switchState = true;
+      } else this.switchState = false;
       this.dialog = false;
       this.workflowName = e;
       console.log(e);
     },
 
-    alert(item) {
-      alert("Hello " + item.name);
-    },
+    // alert(item) {
+    //   alert("Hello " + item.name);
+    // },
     setSearchText(value) {
       this.search = value;
     },
@@ -219,7 +229,12 @@ export default {
     filteredInvoices() {
       if (this.search) {
         return this.invoices.filter((invoice) => {
-          return invoice.requester.match(this.search);
+          return (
+            invoice.requester.toLowerCase().match(this.search.toLowerCase()) ||
+            invoice.status.toLowerCase().match(this.search.toLowerCase) ||
+            invoice.amount.toString().match(this.search) ||
+            invoice.id.toString().match(this.search)
+          );
         });
       } else return this.invoices;
     },

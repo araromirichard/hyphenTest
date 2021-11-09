@@ -10,7 +10,7 @@
         "
         class="px-6 py-4 my-1"
         style="cursor: pointer; transition: all 0.3s ease"
-        :elevation="hover ? 1 : 0"
+        :elevation="hover ? 2 : 0"
         :color="id % 2 ? '#f6f6f6' : ''"
       >
         <v-layout row wrap class="align-center">
@@ -198,4 +198,9 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.v-application .elevation-2 {
+  box-shadow: -6px 3px 1px -2px rgb(0 0 0 / 0%), 0px 2px 2px 0px rgb(0 0 0 / 0%),
+    0px 1px 5px 0px rgb(0 0 0 / 7%) !important;
+}
+</style>

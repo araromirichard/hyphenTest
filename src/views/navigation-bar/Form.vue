@@ -1,5 +1,5 @@
 <template>
-  <div class="ml-10">
+  <v-container>
     <div class="mx-14 my-0 pt-10 d-flex justify-sm-space-between">
       <h3
         class="text-bold"
@@ -15,6 +15,8 @@
       </h3>
       <v-spacer></v-spacer>
       <v-btn
+        to="/form/create-new-form"
+        target="_blank"
         height="54"
         width="121"
         color="primary"
@@ -44,21 +46,105 @@
       <v-card
         flat
         elevation="6"
-        width="90%"
+        width="93%"
         min-height="674"
-        class="ml-14 my-10"
+        class="mx-auto my-10"
       >
-        <template> <tab-data-table-forms class="pt-8" /> </template>
+        <template>
+          <v-card
+            flat
+            max-width="100%"
+            style="border-bottom: 1px solid rgba(127, 145, 155, 0.3)"
+          >
+            <v-tabs v-model="tab">
+              <v-tab
+                class="mt-2"
+                v-for="item in items"
+                :key="item.tab"
+                style="
+                  font-family: Inter;
+                  font-style: normal;
+                  font-weight: 700;
+                  font-size: 12px;
+                  line-height: 15px;
+                  text-transform: uppercase;
+                "
+                >{{ item.tab }}</v-tab
+              >
+
+              <v-spacer></v-spacer>
+
+              <v-btn
+                v-if="isClicked"
+                @click="toggleSearch"
+                plain
+                class="text-black mt-1 pt-4"
+                style="
+                  font-family: Inter;
+                  font-style: normal;
+                  font-weight: 500;
+                  font-size: 12px;
+                  line-height: 20px;
+                  letter-spacing: 0.55px;
+                  text-transform: uppercase;
+                  color: #7f919b;
+                "
+              >
+                search
+                <v-icon small right class="pr-1"> mdi-magnify </v-icon>
+              </v-btn>
+              <v-expand-x-transition v-else>
+                <v-text-field
+                  @input="searchDataTable"
+                  v-model="search"
+                  @blur="isClicked = true && !search"
+                  class="seacrh-field mt-2 mr-2"
+                  dense
+                  clearable
+                  autofocus
+                  hide-details="true"
+                  persistent-placeholder
+                  placeholder="Search"
+                  append-icon="mdi-magnify"
+                  filled
+                >
+                </v-text-field>
+              </v-expand-x-transition>
+            </v-tabs>
+          </v-card>
+
+          <component
+            v-bind:is="items[tab].content"
+            class="ml-0"
+            ref="formCards"
+          ></component>
+        </template>
       </v-card>
     </div>
-  </div>
+  </v-container>
 </template>
 
 <script>
-import TabDataTableForms from "../../components/TabDataTableForms.vue";
+import FormEntriesCards from "../../components/FormEntriesCards.vue";
 export default {
-  components: { TabDataTableForms },
+  components: { FormEntriesCards },
   name: "Form",
+  data() {
+    return {
+      isClicked: true,
+      search: "",
+      tab: 0,
+      items: [{ tab: "All", content: "FormEntriesCards" }],
+    };
+  },
+  methods: {
+    toggleSearch() {
+      this.isClicked = false;
+    },
+    searchDataTable(e) {
+      this.$refs.dataTable.setSearchText(e);
+    },
+  },
 };
 </script>
 

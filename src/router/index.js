@@ -71,7 +71,9 @@ const routes = [
   },
   {
     path: "/form/:id",
-    name: "Render-form",
+    name: "form.Render-form",
+
+    props: true,
     components: {
       default: () => import("@/views/Render-new-form"),
       MainLayout,
@@ -85,10 +87,7 @@ const routes = [
       MainLayout,
     },
   },
-  // { path: "forms", name: "Forms", component: Forms },
-  // { path: ":id", name: "", component: Forms },
-  // { path: ":id/build", name: "", component: Forms },
-  // { path: "review", name: "Review", component: Review },
+
   {
     path: "/payable",
     name: "Payables",

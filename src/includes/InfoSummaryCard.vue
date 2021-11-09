@@ -10,7 +10,7 @@
                   :src="require('@/assets/Persons.svg')"
                   style="padding: 6px"
                 />
-                <span class="card-title">Stateholder</span>
+                <span class="card-title">Stakeholder</span>
                 <v-spacer></v-spacer>
                 <v-btn
                   @click.prevent="dialog = true"
@@ -91,7 +91,7 @@
                       line-height: 19px;
                       color: #301f78;
                     "
-                    >Add a Stateholder</span
+                    >Add a Stakeholder</span
                   >
                   <v-spacer></v-spacer>
                   <v-icon
@@ -103,76 +103,124 @@
                     mdi-close
                   </v-icon>
                 </v-card-title>
-                <form>
-                  <div class="px-8 d-flex" style="background: #fdfaf2">
-                    <p
-                      style="
-                        padding-top: 34px;
-                        font-family: Inter;
-                        font-style: normal;
-                        font-weight: normal;
-                        font-size: 12px;
-                        line-height: 18px;
-                        letter-spacing: 0.45px;
-                        color: #7f919b;
-                      "
-                    >
-                      Add details of <strong> Stakeholder</strong>
-                    </p>
-                  </div>
-                  <div>
-                    <v-text-field
-                      type="text"
-                      background-color="#ffffff"
-                      style="margin-left: 52px; margin-right: 45px"
-                      outlined
-                      label="Full Names"
-                    ></v-text-field>
-                    <v-text-field
-                      type="email"
-                      background-color="#ffffff"
-                      style="margin-left: 52px; margin-right: 45px"
-                      outlined
-                      label="Email Address"
-                    ></v-text-field>
-                  </div>
-                  <template>
-                    <v-card-actions
-                      class="d-flex justify-end align-center mr-9"
-                    >
-                      <v-btn
-                        type="submit"
-                        dark
-                        width="121"
-                        height="45"
+                <validation-observer ref="observer" v-slot="{ invalid }">
+                  <form @submit.prevent="sendInvite">
+                    <div class="px-8 d-flex" style="background: #fdfaf2">
+                      <p
                         style="
-                          margin-top: 24px;
-                          margin-bottom: 41px;
-                          background: #16be98;
-                          box-shadow: 0px 12px 22px rgba(0, 0, 0, 0.24);
-                          border-radius: 4px;
+                          padding-top: 34px;
+                          font-family: Inter;
+                          font-style: normal;
+                          font-weight: normal;
+                          font-size: 12px;
+                          line-height: 18px;
+                          letter-spacing: 0.45px;
+                          color: #7f919b;
                         "
                       >
-                        <simple-line-icons icon="plus" size="small" no-svg />
-                        <span
-                          class="pl-4 m-0 text-capitalize"
-                          style="
-                            font-family: Inter;
-                            font-style: normal;
-                            font-weight: 500;
-                            font-size: 14px;
-                            line-height: 17px;
-                            text-align: center;
-                            letter-spacing: 0.636364px;
-
-                            color: #ffffff;
-                          "
-                          >Add</span
+                        Add details of <strong> Stakeholder</strong>
+                      </p>
+                    </div>
+                    <div>
+                      <validation-provider
+                        v-slot="{ errors }"
+                        name="Full Names"
+                        rules="required"
+                      >
+                        <v-text-field
+                          v-model="stakeholder.fullNames"
+                          hide-details="auto"
+                          class="mb-4"
+                          type="text"
+                          background-color="#ffffff"
+                          style="margin-left: 52px; margin-right: 45px"
+                          outlined
+                          label="Full Names"
+                          :error-messages="errors"
                         >
-                      </v-btn>
-                    </v-card-actions>
-                  </template>
-                </form>
+                        </v-text-field>
+                      </validation-provider>
+                      <validation-provider
+                        v-slot="{ errors }"
+                        name="email"
+                        rules="required|email"
+                      >
+                        <v-text-field
+                          v-model="stakeholder.email"
+                          hide-details="auto"
+                          class="mb-4"
+                          type="email"
+                          background-color="#ffffff"
+                          style="margin-left: 52px; margin-right: 45px"
+                          outlined
+                          label="Email Address"
+                          :error-messages="errors"
+                        ></v-text-field>
+                      </validation-provider>
+                      <validation-provider
+                        v-slot="{ errors }"
+                        name="select"
+                        rules="required"
+                      >
+                        <v-select
+                          hide-details="auto"
+                          background-color="#ffffff"
+                          style="margin-left: 52px; margin-right: 45px"
+                          v-model="stakeholder.selectedType"
+                          :items="stakeholderTypes"
+                          outlined
+                          :error-messages="errors"
+                          label="Select"
+                          data-vv-name="select"
+                          required
+                        ></v-select>
+                      </validation-provider>
+                    </div>
+                    <template>
+                      <v-card-actions
+                        class="d-flex justify-end align-center mr-9"
+                      >
+                        <v-btn
+                          @click="sendInvite"
+                          :disabled="invalid"
+                          type="submit"
+                          dark
+                          width="121"
+                          height="45"
+                          style="
+                            margin-top: 24px;
+                            margin-bottom: 41px;
+                            background: #16be98;
+                            box-shadow: 0px 12px 22px rgba(0, 0, 0, 0.24);
+                            border-radius: 4px;
+                          "
+                        >
+                          <simple-line-icons
+                            icon="plus"
+                            size="small"
+                            style="color: #311b92"
+                            no-svg
+                          />
+                          <span
+                            class="pl-4 m-0 text-capitalize"
+                            style="
+                              font-family: Inter;
+                              font-style: normal;
+                              font-weight: 500;
+                              font-size: 14px;
+                              line-height: 17px;
+                              text-align: center;
+                              letter-spacing: 0.636364px;
+
+                              color: #311b92;
+                            "
+                            >Add</span
+                          >
+                        </v-btn>
+                      </v-card-actions>
+                    </template>
+                  </form>
+                </validation-observer>
               </v-card>
             </v-dialog>
           </div>
@@ -183,10 +231,33 @@
 </template>
 
 <script>
+import { required, email } from "vee-validate/dist/rules";
+import {
+  extend,
+  ValidationObserver,
+  ValidationProvider,
+  setInteractionMode,
+} from "vee-validate";
+setInteractionMode("eager");
+
+extend("required", {
+  ...required,
+  message: "{_field_} can not be empty",
+});
+
+extend("email", {
+  ...email,
+  message: "Email must be valid",
+});
 export default {
   name: "InfoSummary",
+  components: {
+    ValidationProvider,
+    ValidationObserver,
+  },
   data() {
     return {
+      select: null,
       dialog: false,
       payees: "23",
       coWorkers: "5",
@@ -194,8 +265,15 @@ export default {
       stakeholder: {
         fullNames: "",
         email: "",
+        selectedType: null,
       },
+      stakeholderTypes: ["Co-worker", "Payee"],
     };
+  },
+  methods: {
+    sendInvite() {
+      console.table(this.stakeholder);
+    },
   },
 };
 </script>
