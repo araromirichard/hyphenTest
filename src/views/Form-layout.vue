@@ -31,7 +31,7 @@
             min-height="100%"
             src="@/assets/pexels-edward-jenner-4252894-min.png"
           >
-            <v-overlay opacity="0.27" style="position: absolute">
+            <v-overlay opacity="0.67" style="position: absolute">
               <div
                 class="text-break mx-auto"
                 style="max-width: 354px"
@@ -61,8 +61,8 @@
                     letter-spacing: 0.278409px;
                   "
                 >
-                  pBot wants to modernise the finance office, empowering any
-                  company with visibility, approval and workflow tools to grow
+                  pBot is empowering the finance office. <br /> Enabling every
+                  company with visibility, approval and workflow technology to grow
                   cashflow
                 </p>
               </div>
@@ -76,7 +76,7 @@
                     line-height: 34px;
                     letter-spacing: 0.278409px;
                   "
-                  >Unlock the potential of your company finance today</span
+                  >Flexible, no code finance operations for every company</span
                 >
 
                 <p
@@ -91,23 +91,12 @@
                     letter-spacing: 0.278409px;
                   "
                 >
-                  pBot’s team will help onboard you and your company with great
+                <strong>Setup in 5mins or less</strong><br />
+                  pBot team will help onboard you and your company with great
                   care and worldclass service
                 </p>
-                <p
-                  class="pt-8"
-                  style="
-                    font-family: Inter;
-                    font-style: normal;
-                    font-weight: 600;
-                    font-size: 14px;
-                    line-height: 24px;
-                    letter-spacing: 0.278409px;
-                  "
-                >
-                  Complete your account setup in 3mins or less
-                </p>
-                <p class="pt-6">
+                
+                <p class="pt-2">
                   <v-icon large>mdi-chevron-left</v-icon>
                 </p>
               </div>

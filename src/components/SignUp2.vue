@@ -21,7 +21,7 @@
       </v-col>
       <v-col cols="12" md="4" class="pl-9 pl-md-4 pa-0">
         <p
-          class="text-caption text-md-h6 text--disabled pb-md-7 mt-md-8"
+          class="text-caption pt-16 text--disabled pb-md-7 mt-md-8"
           :style="{
             paddingTop: `${$vuetify.breakpoint.smAndUp ? '44px' : '3px'}`,
           }"
@@ -183,7 +183,7 @@
           }"
         >
           <span
-            class="pl-md-10"
+            class="pl-md-3"
             style="
               font-family: Inter;
               font-style: normal;
@@ -193,7 +193,7 @@
             >Already have an account?</span
           >
           <router-link
-            to="sign-up"
+            to="login"
             style="
               text-decoration: none;
               font-family: Inter;
