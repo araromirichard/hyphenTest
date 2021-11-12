@@ -9,7 +9,7 @@
         offset-md="3"
         style="min-height: 100vh"
       >
-        <v-card class="pb-10 mt-16" elevation="4">
+        <v-card class="pb-10 mt-16 ma-25" elevation="4">
           <p
             class="display-1 font-weight-bold pb-7 mt-10 text--secondary"
             :style="{
@@ -17,7 +17,7 @@
               paddingTop: `${$vuetify.breakpoint.smAndUp ? '90px' : '34px'}`,
             }"
           >
-            Log in
+            Sign in
           </p>
 
           <div
@@ -62,18 +62,18 @@
                   <v-btn
                     text
                     x-small
-                    class="text-capitalize py-1 align-center"
+                    class="text-capitalize align-center"
                     @click.prevent="dialog = true"
                   >
                     <p
                       :style="{
-                        fontSize: `${$vuetify.breakpoint.xs ? '9px' : '14px'}`,
+                        fontSize: `${$vuetify.breakpoint.xs ? '10px' : ''}`,
                       }"
                       style="
-                        font-family: Lato;
+                        font-family: inter;
                         font-style: normal;
                         font-weight: normal;
-                        line-height: 17px;
+                        line-height: 16px;
                         letter-spacing: 0.278409px;
                         color: #301f78;
                       "
@@ -123,7 +123,7 @@
                 }"
               >
                 <span
-                  class="pl-md-10"
+                  class="pl-md-3"
                   style="
                     font-family: Inter;
                     font-style: normal;
@@ -166,7 +166,7 @@
                           line-height: 19px;
                           color: #301f78;
                         "
-                        >Send Mail</span
+                        >Recover Password</span
                       >
                       <v-spacer></v-spacer>
                       <v-icon
@@ -270,7 +270,7 @@
           font-style: normal;
           font-weight: normal;
           font-size: 14px;
-          line-height: 24px;s
+          line-height: 24px;
           letter-spacing: 0.278409px;
           color: #7f919b;
         "

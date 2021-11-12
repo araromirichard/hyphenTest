@@ -8,9 +8,11 @@
             font-family: Inter;
             font-style: normal;
             font-weight: 700;
-            line-height: 39px;
+            line-height: 48px;
             letter-spacing: 0.646465px;
             color: #596a73;
+            max-width:80%;
+            margin:0 auto;
           "
           :style="{
             paddingTop: `${$vuetify.breakpoint.xs ? '38px' : '224px'}`,
@@ -23,7 +25,7 @@
           @change="selectedAccountTypeChanged"
           v-model="selectedAccountType"
         >
-          <v-row class="d-flex flex-column mt-8 mt-md-auto">
+          <v-row class="d-flex flex-column mt-4 mt-sm-auto">
             <v-col
               class="ma-auto"
               v-for="accountType in accountTypes"
