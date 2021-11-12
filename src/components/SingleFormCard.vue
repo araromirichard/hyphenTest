@@ -3,13 +3,25 @@
     <v-item-group>
       <v-container>
         <v-row>
-          <v-col v-for="card in formCards" :key="card.title" cols="12" md="3">
+          <v-col
+            v-for="card in formCards"
+            :key="card.title"
+            cols="12"
+            sm="6"
+            md="3"
+          >
             <v-item v-slot:default="{ active, toggle }">
               <v-card
                 width="100%"
                 @click="toggle"
                 :elevation="active ? 4 : 0"
-                class="d-flex align-text-center flex-column rounded elevation-0"
+                class="
+                  d-flex
+                  align-md-center align-text-center
+                  flex-column
+                  rounded
+                  elevation-0
+                "
                 tile
                 style="
                   width: auto;
@@ -33,15 +45,20 @@
                   "
                   >{{ card.title }}</v-card-title
                 >
-                <div class="d-flex my-4">
+                <div class="d-flex justify-space-around my-4">
                   <div>
-                    <v-chip label small dark color="#636b70" class="mx-5">{{
-                      card.numberProcessed
-                    }}</v-chip>
-                    <h5 class="mx-5 text--disabled">entries</h5>
+                    <v-chip
+                      label
+                      small
+                      dark
+                      color="#636b70"
+                      class="mt-4 mx-md-5"
+                      >{{ card.numberProcessed }}</v-chip
+                    >
+                    <h5 class="mx-md-5 text--disabled">entries</h5>
                   </div>
-                  <v-spacer></v-spacer>
                   <v-switch
+                    class="pt-0"
                     hide-details="true"
                     dense
                     :value="card.switchValue"
@@ -104,7 +121,7 @@
               </v-card>
             </v-item>
           </v-col>
-          <v-col cols="12" md="3">
+          <v-col cols="12" sm="6" md="3">
             <v-card
               class="d-flex flex-column align-center justify-center"
               color="#f8f8f8"
@@ -194,4 +211,11 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style>
+.v-input--selection-controls {
+  /* margin-top: 16
+px
+; */
+  padding-top: 4px !important;
+}
+</style>

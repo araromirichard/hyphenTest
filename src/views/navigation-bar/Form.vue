@@ -1,6 +1,9 @@
 <template>
   <v-container>
-    <div class="mx-14 my-0 pt-10 d-flex justify-sm-space-between">
+    <div
+      class="mx-14 my-0 pt-10 d-flex justify-sm-space-between"
+      v-if="$vuetify.breakpoint.mdAndUp"
+    >
       <h3
         class="text-bold"
         style="
@@ -42,16 +45,54 @@
         </span>
       </v-btn>
     </div>
+    <div class="d-flex" v-if="$vuetify.breakpoint.mdAndDown">
+      <p
+        :style="{ display: `${isClicked != true ? 'none' : ''}` }"
+        class="pt-7 pl-5 primary--text"
+        style="
+          font-family: Inter;
+          font-style: normal;
+          font-weight: bold;
+          font-size: 24px;
+          line-height: 22px;
+          letter-spacing: -0.73px;
+        "
+      >
+        Form
+      </p>
+      <v-spacer></v-spacer>
+      <v-icon v-if="isClicked" @click="toggleSearch" class="pr-4 pt-7">
+        mdi-magnify
+      </v-icon>
+      <v-expand-x-transition v-else>
+        <v-text-field
+          @input="searchDataTable"
+          v-model="search"
+          @blur="isClicked = true && !search"
+          class="seacrh-field mt-4 mr-2"
+          dense
+          clearable
+          autofocus
+          hide-details="true"
+          persistent-placeholder
+          placeholder="Search"
+          append-icon="mdi-magnify"
+          filled
+        >
+        </v-text-field>
+      </v-expand-x-transition>
+    </div>
     <div class="py-6">
       <v-card
         flat
         elevation="6"
         width="93%"
         min-height="674"
-        class="mx-auto my-10"
+        class="mx-auto my-md-10"
       >
         <template>
           <v-card
+            v-if="$vuetify.breakpoint.mdAndUp"
             flat
             max-width="100%"
             style="border-bottom: 1px solid rgba(127, 145, 155, 0.3)"

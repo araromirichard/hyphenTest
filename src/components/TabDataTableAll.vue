@@ -42,22 +42,24 @@
             </span>
           </v-chip>
           <v-spacer></v-spacer>
-          <v-btn color="#2BD5AE" class="my-4 export-btn mr-9" elevation="3"
-            ><span class="material-icons pr-1"> import_export </span
-            ><span
-              style="
-                font-family: Inter;
-                font-style: normal;
-                font-weight: 500;
-                font-size: 11px;
-                line-height: 12px;
-                text-align: center;
-                letter-spacing: 0.636364px;
-                color: #301f78;
-              "
-              >Export</span
-            >
-          </v-btn>
+          <download-csv class="btn btn-default" :data="filteredInvoices">
+            <v-btn color="#2BD5AE" class="my-4 export-btn mr-9" elevation="3"
+              ><span class="material-icons pr-1"> import_export </span
+              ><span
+                style="
+                  font-family: Inter;
+                  font-style: normal;
+                  font-weight: 500;
+                  font-size: 11px;
+                  line-height: 12px;
+                  text-align: center;
+                  letter-spacing: 0.636364px;
+                  color: #301f78;
+                "
+                >Export</span
+              >
+            </v-btn>
+          </download-csv>
         </v-card>
         <div
           v-if="$vuetify.breakpoint.mdAndDown"

@@ -32,7 +32,7 @@
                   style="
                     padding-left: 79px;
                     padding-top: 21px;
-                    max-width: 400px;
+                    max-width: 257px;
                     font-family: Inter;
                     font-style: normal;
                     font-weight: normal;
@@ -137,7 +137,7 @@
           ></FormBuilder>
         </v-container>
         <v-row>
-          <v-col class="my-2 mx-5 d-flex justify-end">
+          <v-col class="my-2 mx-md-16 d-flex justify-end">
             <v-btn
               @click="saveData"
               dark

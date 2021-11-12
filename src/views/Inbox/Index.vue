@@ -159,7 +159,6 @@
                 ></v-tab
               >
 
-
               <v-spacer></v-spacer>
               <v-btn class="pt-4 mt-1" plain @click.prevent="dialog2 = true">
                 <simple-line-icons left class="pr-1" icon="people" no-svg />

@@ -71,7 +71,7 @@ const routes = [
   },
   {
     path: "/form/:id",
-    name: "form.Render-form",
+    name: "Render-form",
 
     props: true,
     components: {

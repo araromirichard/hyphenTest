@@ -7,12 +7,16 @@ import DateFilter from "./filters/date";
 import { VueFormBuilderPlugin } from "v-form-builder";
 import "../src/assets/styles/formbuilder.css";
 import "v-form-builder/dist/v-form-builder.css";
+import JsonCSV from "vue-json-csv";
 
 import SimpleLineIcons from "vue-simple-line";
 Vue.config.productionTip = false;
 
 //imported components
 Vue.component("simple-line-icons", SimpleLineIcons);
+
+// export json to csv
+Vue.component("downloadCsv", JsonCSV);
 
 // install now
 Vue.use(VueFormBuilderPlugin);

@@ -13,7 +13,7 @@
       "
     >
       <h5 class="px-auto mt-8 text-bold text-h5 text-center primary--text">
-         {{ exception }} Exceptions
+        {{ exception }} Exceptions
       </h5>
       <template>
         <v-simple-table dense>
