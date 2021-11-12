@@ -6,11 +6,10 @@
           dark
           v-bind="attrs"
           v-on="on"
-          class="mr-16"
           color="primary"
           :width="width"
           :height="height"
-          style="margin-top: 25px; background: #311b92; border-radius: 4px"
+          style=" background: #311b92; border-radius: 4px"
         >
           <img
             :src="btnIcon"

@@ -2,6 +2,7 @@
   <v-dialog v-model="dialog" persistent max-width="400">
     <template v-slot:activator="{ on, attrs }">
       <v-switch
+        v-if="$vuetify.breakpoint.mdAndUp"
         v-bind="attrs"
         v-on="on"
         flat
@@ -9,15 +10,29 @@
         hide-details="true"
         :value="dialog"
         :true-value="tValue"
-        class="px-4 mb-1"
+        class="px-4 mb-md-1"
         :color="`${(hasColor = true ? '#16BE98' : '')}`"
         label="Send to workflow"
       >
       </v-switch>
 
-      <!-- <v-btn color="red lighten-2" dark v-bind="attrs" v-on="on">
-        Click Me
-      </v-btn> -->
+      <!-- checkbox for mobile devices -->
+      <v-checkbox
+        v-if="$vuetify.breakpoint.mdAndDown"
+        v-bind="attrs"
+        v-on="on"
+        flat
+        dense
+        hide-details="true"
+        :value="dialog"
+        :true-value="tValue"
+        class="px-4 py-0"
+        :color="`${(hasColor = true ? '#16BE98' : '')}`"
+      >
+        <template v-slot:label>
+          <span class="py-0" style="font-size: 12px">Send to workflow</span>
+        </template>
+      </v-checkbox>
     </template>
     <v-card flat class="m-0" style="background: #fefcf8; border-radius: 8px">
       <v-card-title
@@ -45,42 +60,44 @@
           mdi-close
         </v-icon>
       </v-card-title>
-      <template>
-        <v-select
-          @change="$emit('selectedWorkflow', { value: $event })"
-          v-model="selectedWorkflow"
-          :menu-props="{ bottom: true, offsetY: true }"
-          :value="workflowSelected"
-          :items="workflowSelected"
-          style="
-            background: #ffffff;
-            box-sizing: border-box;
-            border-radius: 3px;
-            width: 330px;
-            height: 54px;
-          "
-          class="justify-center mt-8 mx-8 custom-placeholer-color"
-          flat
-          outlined
-          placeholder="Select Workflow"
-          hide-details="auto"
-        >
-          <template slot="append">
-            <v-btn
-              text
-              fab
-              dark
-              width="20"
-              height="20"
-              class="my-1"
-              style="background: rgba(127, 145, 155, 0.5)"
-            >
-              <v-icon small>mdi-plus</v-icon>
-            </v-btn>
-            <v-icon class="pl-2">mdi-menu-down</v-icon>
-          </template>
-        </v-select>
-      </template>
+      <div class="pa-md-0 ma-md-0 px-6">
+        <template>
+          <v-select
+            @change="$emit('selectedWorkflow', { value: $event })"
+            v-model="selectedWorkflow"
+            :menu-props="{ bottom: true, offsetY: true }"
+            :value="workflowSelected"
+            :items="workflowSelected"
+            style="
+              background: #ffffff;
+              box-sizing: border-box;
+              border-radius: 3px;
+              width: 330px;
+              height: 54px;
+            "
+            class="justify-center mt-8 mx-0 mx-md-8 custom-placeholer-color"
+            flat
+            outlined
+            placeholder="Select Workflow"
+            hide-details="auto"
+          >
+            <template slot="append">
+              <v-btn
+                text
+                fab
+                dark
+                width="20"
+                height="20"
+                class="my-1"
+                style="background: rgba(127, 145, 155, 0.5)"
+              >
+                <v-icon small>mdi-plus</v-icon>
+              </v-btn>
+              <v-icon class="pl-2">mdi-menu-down</v-icon>
+            </template>
+          </v-select>
+        </template>
+      </div>
       <template>
         <v-card-text
           class="px-8 mt-4 text-justify"

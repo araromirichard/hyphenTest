@@ -1,7 +1,12 @@
 <template>
-  <v-container class="pa-0">
-    <div v-if="noInvoice">
-      <v-row align="center" justify="end" class="mx-14 pt-md-10">
+  <v-container class="d-flex justify-center">
+    <div v-if="noInvoice" class="pa-0 ma-0">
+      <v-row
+        align="center"
+        justify="end"
+        class="mx-14 pt-md-10"
+        v-if="$vuetify.breakpoint.mdAndUp"
+      >
         <DropDownMenu btnText="New" icon="file" width="121" height="54" />
       </v-row>
       <v-row class="justify-center" style="padding-top: 105px">
@@ -73,41 +78,57 @@
     </div>
     <div v-else>
       <v-row
+        v-if="$vuetify.breakpoint.mdAndUp"
         align="center"
         class="d-flex justify-md-space-between mx-14 pt-md-10"
       >
-        <div>
-          <h3
-            class="text-bold"
-            style="
-              font-style: normal;
-              font-weight: bold;
-              font-size: 32px;
-              line-height: 39px;
-              color: #301f78;
-            "
-          >
-            Inbox <span class="transTotal align-center">234 Transactions</span>
-          </h3>
-        </div>
-
-        <DropDownMenu
-          btnText="New"
-          icon="file"
-          width="121px"
-          height="54px"
-          justify="end"
-        />
+        <v-col class="pa-sm-0 d-flex align-center">
+          <div class="pa-0">
+            <h3
+              class="text-bold"
+              style="
+                font-style: normal;
+                font-weight: bold;
+                font-size: 32px;
+                line-height: 39px;
+                color: #301f78;
+              "
+            >
+              Inbox
+              <span class="transTotal align-center">234 Transactions</span>
+            </h3>
+          </div>
+          <v-spacer></v-spacer>
+          <DropDownMenu
+            btnText="New"
+            icon="file"
+            width="121px"
+            height="54px"
+            justify="right"
+          />
+        </v-col>
       </v-row>
 
-      <v-card flat elevation="6" width="90%" min-height="674" class="mx-14">
-        <div class="mt-12" justify="center">
+      <v-card
+        flat
+        elevation="6"
+        max-width="100%"
+        min-width="320px"
+        :min-height="$vuetify.breakpoint.xs ? '450px' : '674px'"
+        class="mx-auto mx-md-14"
+      >
+        <div class="mt-md-12 mx-0">
           <v-card
             flat
             max-width="100%"
             style="border-bottom: 1px solid rgba(127, 145, 155, 0.3)"
           >
-            <v-tabs v-model="tab">
+            <v-tabs
+              slider-size="3"
+              v-model="tab"
+              mobile-breakpoint="5"
+              v-if="$vuetify.breakpoint.mdAndUp"
+            >
               <v-tab
                 class="mt-2"
                 v-for="item in items"
@@ -120,15 +141,25 @@
                   line-height: 15px;
                   text-transform: uppercase;
                 "
-                >{{ item.tab }}</v-tab
               >
-
-              <v-tab style="color: #ff6a6a"
-                ><v-icon left color="#FF6A6A" small class="pr-1 mt-2 mr-0"
+                <v-icon
+                  v-if="item.tab == 'Exception'"
+                  left
+                  color="#ff6a6a"
+                  small
+                  class="pr-1 mr-0"
                   >mdi-stop-circle-outline
                 </v-icon>
-                <span class="mt-2">EXCEPTION</span>
-              </v-tab>
+                <span
+                  class="font-weight-bold"
+                  :style="{
+                    color: `${item.tab == 'Exception' ? '#ff6a6a' : ''}`,
+                  }"
+                  >{{ item.tab }}</span
+                ></v-tab
+              >
+
+
               <v-spacer></v-spacer>
               <v-btn class="pt-4 mt-1" plain @click.prevent="dialog2 = true">
                 <simple-line-icons left class="pr-1" icon="people" no-svg />
@@ -190,6 +221,8 @@
           class="ml-0"
           ref="dataTable"
         ></component>
+
+        <!-- tab component for mobile devices -->
       </v-card>
     </div>
     <template>
@@ -340,6 +373,49 @@
         </v-dialog>
       </div>
     </template>
+
+    <!-- tabs for mobile devices -->
+    <v-container class="pa-0" v-if="$vuetify.breakpoint.mdAndDown">
+      <v-row>
+        <v-col cols="12">
+          <v-bottom-navigation fixed class="pa-0" dark>
+            <v-tabs
+              centered
+              class="ma-0"
+              background-color="primary"
+              v-model="tab"
+            >
+              <v-tab
+                class="mt-2"
+                v-for="item in items"
+                :key="item.tab"
+                style="
+                  font-family: Inter;
+                  font-style: normal;
+                  font-weight: 700;
+                  font-size: 12px;
+                  line-height: 15px;
+                  text-transform: uppercase;
+                "
+                >{{ item.tab }}</v-tab
+              >
+
+              <!-- <v-tab style="color: #ff6a6a">
+                <span class="mt-2">{{ exceptnItems.tab }}</span>
+              </v-tab> -->
+            </v-tabs>
+          </v-bottom-navigation>
+        </v-col>
+      </v-row>
+      <!-- <template >
+        <v-tabs grow background-color="primary" dark class="mt-10">
+          <v-tab> Option </v-tab>
+          <v-tab> Another Selection </v-tab>
+          <v-tab> Items </v-tab>
+          <v-tab> Another Screen </v-tab>
+        </v-tabs>
+      </template> -->
+    </v-container>
   </v-container>
 </template>
 
@@ -363,7 +439,7 @@ extend("email", {
   message: "Email must be valid",
 });
 import TabDataTableAll from "../../components/TabDataTableAll.vue";
-import TabDataTableEmail from "../../components/TabDataTableEmail.vue";
+import TabDataTableException from "../../components/TabDataTableException.vue";
 import TabDataTableReviews from "../../components/TabDataTableReviews.vue";
 import DropDownMenu from "../../includes/DropDownMenu.vue";
 import SimpleLineIcons from "vue-simple-line";
@@ -377,6 +453,7 @@ export default {
       noInvoice: false,
       isClicked: true,
       tab: 0,
+      tab1: 0,
       search: "",
       stakeholder: {
         fullNames: "",
@@ -386,9 +463,9 @@ export default {
       stakeholderTypes: ["Co-worker", "Payee"],
       items: [
         { tab: "All", content: "TabDataTableAll" },
-        { tab: "Email", content: "TabDataTableEmail" },
-        //{ tab: "Forms", content: "TabDataTableForms" },
+        //{ tab: "Email", content: "TabDataTableEmail" },
         { tab: "Reviews", content: "TabDataTableReviews" },
+        { tab: "Exception", content: "TabDataTableException" },
       ],
       inboxMenus: [
         {
@@ -416,9 +493,8 @@ export default {
   },
   components: {
     TabDataTableAll,
-    TabDataTableEmail,
+    TabDataTableException,
     TabDataTableReviews,
-    //TabDataTableForms,
     DropDownMenu,
     SimpleLineIcons,
     ValidationProvider,

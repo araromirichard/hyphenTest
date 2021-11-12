@@ -1,10 +1,9 @@
 <template>
   <form @submit="submitInput">
-    <div justify-center dense max-height="24px">
+    <div>
       <v-subheader
-        class="py-10"
+        class="py-md-10 py-5"
         style="
-          margin-left: 48px;
           font-family: Inter;
           font-style: normal;
           font-weight: bold;
@@ -12,6 +11,9 @@
           line-height: 19px;
           color: #7f919b;
         "
+        :style="{
+          marginLeft: `${$vuetify.breakpoint.mdAndDown ? '8px' : '48px'}`,
+        }"
       >
         Basic Data
       </v-subheader>
@@ -27,9 +29,11 @@
             line-height: 15px;
             color: #301f78;
           "
+          :style="{
+            marginLeft: `${$vuetify.breakpoint.mdAndDown ? '8px' : '84px'}`,
+          }"
           >Invoice no.</v-list-item-title
         >
-
         <v-spacer></v-spacer>
         <v-text-field
           v-model="basicDataInput.invoiceNumber"
@@ -39,7 +43,7 @@
           solo
           flat
           dense
-          :class="[!changeState ? changeState : '']"
+          :class="!changeState ? changeState : ''"
           reverse
           style="
             font-family: Inter;

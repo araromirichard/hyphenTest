@@ -14,19 +14,19 @@
         Let’s get you started on pbot
       </p>
       <v-container class="pa-0 ma-0 justify-center mx-auto">
-        <v-row g class="mx-8 mx-md-16 pa-0 px-md-10 d-flex justify-center">
+        <v-row class="mx-8 mx-md-16 pa-0 px-md-10 d-flex justify-center">
           <v-col
             cols="12"
             md="3"
             sm="6"
-            class="justify-center mx-auto mb-10 ma-md-0 px-md-6 pa-0"
+            class="mx-auto mb-10 ma-md-0 px-md-6 pa-0"
           >
-            <v-card color="#FCF7ED" flat>
+            <v-card color="#FCF7ED" height="100%" flat>
               <img
                 :src="require('@/assets/person.svg')"
                 style="
-                  padding-top: 45px;
-                  padding-bottom: 20px;
+                  padding-top: 10%;
+                  padding-bottom: 10%;
                   padding-right: 80%;
                   padding-left: 40%;
                 "
@@ -62,12 +62,12 @@
             </v-card>
           </v-col>
           <v-col class="mb-10 ma-md-0 px-md-6 pa-0" cols="12" md="3" sm="6">
-            <v-card color="#FCF7ED" flat>
+            <v-card color="#FCF7ED" height="100%" flat>
               <img
                 :src="require('@/assets/bank.svg')"
                 style="
-                  padding-top: 45px;
-                  padding-bottom: 20px;
+                  padding-top: 10%;
+                  padding-bottom: 10%;
                   padding-right: 80%;
                   padding-left: 40%;
                 "
@@ -127,19 +127,17 @@
             </v-card>
           </v-col>
           <v-col class="ma-md-0 px-md-6 pa-0" cols="12" md="3" sm="6">
-            <v-card color="#FCF7ED" flat>
+            <v-card color="#FCF7ED" height="100%" flat>
               <img
                 :src="require('@/assets/person.svg')"
                 style="
-                  padding-top: 39px;
-                  padding-bottom: 20px;
+                  padding-top: 10%;
+                  padding-bottom: 10%;
                   padding-right: 80%;
                   padding-left: 40%;
                 "
               />
-              <v-card-title
-                class="justify-center ma-md-0"
-                style="padding-bottom: 36px"
+              <v-card-title class="justify-center ma-md-0"
                 ><span
                   style="
                     font-family: Inter;
@@ -154,11 +152,11 @@
                   Invite Stakeholders</span
                 ></v-card-title
               >
-              <v-card-text
-                >Invite your co-worker, financial advisor, accountant into this
-                company account for visibility and approvals</v-card-text
-              >
-              <div class="px-2 mt-2 mx-6" style="padding-bottom: 23px">
+              <p class="text-caption text-center px-4 mb-9 mb-sm-4 mb-md-4">
+                Invite your co-worker, financial advisor, accountant into this
+                company account for visibility and approvals
+              </p>
+              <div class="px-2 mx-6" style="padding-bottom: 20px">
                 <Button
                   class="text-md-h6"
                   height="50"
@@ -199,11 +197,15 @@
             text-decoration-line: underline;
             color: #7b4fff;
           "
+          :style="{
+            paddingBottom: `${$vuetify.breakpoint.mdAndUp ? '200px' : '50px'}`,
+            paddingTop: `${$vuetify.breakpoint.mdAndUp ? '91px' : '50px'}`,
+          }"
         >
           <router-link to="inbox"
             ><span
+              class="my-0"
               style="
-                padding-top: 91px;
                 font-family: Inter;
                 font-style: normal;
                 font-weight: normal;
@@ -212,10 +214,6 @@
                 text-decoration-line: underline;
                 color: #7b4fff;
               "
-              :style="{
-                paddingBottom: `${$vuetify.breakpoint.mdAndUp ? '200px' : ''}`,
-                paddingTop: `${$vuetify.breakpoint.mdAndUp ? '91px' : '24px'}`,
-              }"
               >Go to Auditor</span
             ></router-link
           >
@@ -290,7 +288,7 @@ p {
 
 .theme--light.v-card > .v-card__text,
 .theme--light.v-card > .v-card__subtitle {
-  font-family: Inter;
+  font-family: "Inter" sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 10px;

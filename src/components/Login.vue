@@ -67,7 +67,7 @@
                   >
                     <p
                       :style="{
-                        fontSize: `${$vuetify.breakpoint.xs ? '9px' : ''}`,
+                        fontSize: `${$vuetify.breakpoint.xs ? '9px' : '14px'}`,
                       }"
                       style="
                         font-family: Lato;

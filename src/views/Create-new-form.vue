@@ -1,61 +1,187 @@
 <template>
-  <div>
+  <v-card elevation="0" tile class="d-flex justify-center align-center">
     <v-row no-gutters>
-      <v-col style="padding-top: 64px; padding-left: 64px; padding-right: 64px">
-        <FormBuilder v-model="formData"></FormBuilder>
+      <v-col
+        cols="12"
+        md="3"
+        style="min-height: 100vh"
+        class="white d-flex flex-column align-center"
+        v-if="$vuetify.breakpoint.mdAndUp"
+      >
+        <v-container>
+          <v-row>
+            <v-col>
+              <div class="pb-5">
+                <h6
+                  style="
+                    padding-left: 79px;
+                    padding-top: 76px;
+                    font-family: Inter;
+                    font-style: normal;
+                    font-weight: bold;
+                    font-size: 24px;
+                    line-height: 29px;
+                    letter-spacing: -0.73px;
+                    color: #7f919b;
+                  "
+                >
+                  Form preview
+                </h6>
+                <p
+                  class="text-break"
+                  style="
+                    padding-left: 79px;
+                    padding-top: 21px;
+                    max-width: 400px;
+                    font-family: Inter;
+                    font-style: normal;
+                    font-weight: normal;
+                    font-size: 12px;
+                    line-height: 20px;
+                    color: #596a73;
+                  "
+                >
+                  Below is a preview of your published form. Use your form to
+                  collect finance related data from your co-workers, suppliers,
+                  advisors, auditors, etc
+                </p>
+                <v-sheet
+                  outlined
+                  rounded="lg"
+                  width="273px"
+                  height="48px"
+                  style="margin-left: 79px"
+                  class="d-flex justify-center align-center"
+                >
+                  <v-icon small color="disabled" class="px-2"
+                    >mdi-clipboard-text-outline</v-icon
+                  >
+                  <span
+                    class="text-center text-truncate"
+                    style="
+                      font-family: Inter;
+                      font-style: normal;
+                      font-weight: bold;
+                      font-size: 10px;
+                      line-height: 20px;
+                      color: #596a73;
+                    "
+                    >https://forms.onpbot.com/your-form-name-h</span
+                  >
+                </v-sheet>
+              </div>
+              <v-divider style="width: 272px; margin-left: 79px"></v-divider>
+              <div class="d-flex flex-column justify-center align-center">
+                <p
+                  class="text-center"
+                  style="
+                    padding-top: 120px;
+                    font-family: Inter;
+                    font-style: normal;
+                    font-weight: normal;
+                    font-size: 14px;
+                    line-height: 17px;
+                    letter-spacing: -0.73px;
+                    color: #ff6a6a;
+                  "
+                >
+                  Show form here
+                </p>
+                <v-row>
+                  <v-col cols="12">
+                    <v-layout style="padding-top: 51px">
+                      <template>
+                        <FormRenderer
+                          :form-configuration="formData"
+                          v-if="formData"
+                        />
+                      </template>
+                    </v-layout>
+                  </v-col>
+                </v-row>
+              </div>
+            </v-col>
+          </v-row>
+        </v-container>
       </v-col>
-    </v-row>
-    <v-row>
-      <v-col class="my-2 d-flex justify-end" style="padding-right: 80px">
-        <!-- <Overlaybtns
-            @click="saveData"
-            width="136"
-            height="45"
-            btnTitle="save"
-            icon="arrow-right"
-          /> -->
-        <v-btn
-          @click="saveData"
-          dark
-          width="136"
-          height="45"
-          style="
-            padding: 14px;
-            background: #16be98;
-            box-shadow: 0px 12px 22px rgba(0, 0, 0, 0.24);
-            border-radius: 4px;
-          "
-        >
-          <simple-line-icons
-            icon="arrow-right"
-            color="#FFFFFF"
-            style="
-              font-family: simple-line-icons;
-              font-style: normal;
-              font-weight: normal;
-              font-size: 12px;
-              line-height: 16px;
-            "
-            no-svg
-          />
-          <span
-            class="btnSucces text-capitalize py-4 pl-3"
+      <v-col
+        class="d-flex flex-column justify-center"
+        style="background-color: #f2f2f; min-height: 100vh"
+        cols="12"
+        md="9"
+      >
+        <div class="d-flex justify-start">
+          <h6
+            class="pl-6 pt-md-16"
             style="
               font-family: Inter;
               font-style: normal;
-              font-weight: 500;
-              font-size: 14px;
-              line-height: 17px;
-              text-align: center;
-              letter-spacing: 0.636364px;
-              color: #ffffff;
+              font-weight: bold;
+              font-size: 24px;
+              line-height: 29px;
+              letter-spacing: -0.73px;
+              color: #311b92;
             "
-            >save form</span
+            :style="{
+              paddingTop: `${$vuetify.breakpoint.mdAndDown ? '10px' : '76px'}`,
+              paddingLeft: `${$vuetify.breakpoint.mdAndDown ? '8px' : '79px'}`,
+            }"
           >
-        </v-btn>
+            Form
+          </h6>
+        </div>
+        <v-container>
+          <FormBuilder
+            style="background-color: #fdf9ef"
+            v-model="formData"
+          ></FormBuilder>
+        </v-container>
+        <v-row>
+          <v-col class="my-2 mx-5 d-flex justify-end">
+            <v-btn
+              @click="saveData"
+              dark
+              width="136"
+              height="45"
+              style="
+                padding: 14px;
+                background: #16be98;
+                box-shadow: 0px 12px 22px rgba(0, 0, 0, 0.24);
+                border-radius: 4px;
+              "
+            >
+              <simple-line-icons
+                icon="arrow-right"
+                color="#FFFFFF"
+                style="
+                  font-family: simple-line-icons;
+                  font-style: normal;
+                  font-weight: normal;
+                  font-size: 12px;
+                  line-height: 16px;
+                "
+                no-svg
+              />
+              <span
+                class="btnSucces text-capitalize py-4 pl-3"
+                style="
+                  font-family: Inter;
+                  font-style: normal;
+                  font-weight: 500;
+                  font-size: 14px;
+                  line-height: 17px;
+                  text-align: center;
+                  letter-spacing: 0.636364px;
+                  color: #ffffff;
+                "
+                >save form</span
+              >
+            </v-btn>
+          </v-col>
+        </v-row>
       </v-col>
     </v-row>
-  </div>
+  </v-card>
 </template>
 
 <script>
@@ -100,5 +226,12 @@ export default {
 }
 .section-config {
   display: none !important;
+}
+.form-configuration-block {
+  display: none !important;
+}
+.full-height {
+  min-height: 100%;
+  max-height: 100vh;
 }
 </style>

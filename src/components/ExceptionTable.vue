@@ -14,10 +14,10 @@
         :color="id % 2 ? '#f6f6f6' : ''"
       >
         <v-layout row wrap class="align-center">
-          <v-flex md1>
-            <div class="d-flex align-center justify-center">
+          <v-flex md2>
+            <div class="d-flex align-center">
               <span
-                class="mb-0 text-center"
+                class="mb-0 mx-4"
                 style="
                   font-family: Lato;
                   font-style: normal;
@@ -28,20 +28,20 @@
                 "
                 >{{ id }}</span
               >
-            </div>
-          </v-flex>
-          <v-flex md1>
-            <div class="d-flex align-center justify-center">
-              <v-chip :color="chipColor" :text-color="textColor" x-small>{{
-                type
-              }}</v-chip>
+              <v-chip
+                class="mx-4"
+                :color="chipColor"
+                :text-color="textColor"
+                x-small
+                >{{ type }}</v-chip
+              >
             </div>
           </v-flex>
 
           <v-flex md1>
             <div class="d-flex align-center">
               <span
-                class="mb-0 pl-6 pr-4"
+                class="mb-0"
                 style="
                   font-family: Lato;
                   font-style: normal;
@@ -57,7 +57,7 @@
           <v-flex md2>
             <div class="d-flex align-center justify-center">
               <span
-                class="mb-0 pl-6 pr-4"
+                class="mb-0 text-center"
                 style="
                   font-family: Lato;
                   font-style: normal;
@@ -66,11 +66,11 @@
                   line-height: 14px;
                   color: #596a73;
                 "
-                >{{ category }}</span
+                >{{ exception }}</span
               >
             </div>
           </v-flex>
-          <v-flex md1>
+          <v-flex md2>
             <div class="d-flex align-center">
               <span
                 class="mb-0"
@@ -102,10 +102,10 @@
               >
             </div>
           </v-flex>
-          <v-flex md2>
-            <div class="d-flex align-center justify-right">
+          <v-flex md1>
+            <div class="d-flex align-center">
               <span
-                class="mb-0 text-right"
+                class="mb-0"
                 style="
                   font-family: Lato;
                   font-style: normal;
@@ -186,7 +186,7 @@ export default {
     amount: {
       type: Number,
     },
-    category: {
+    exception: {
       type: String,
     },
     invoiceRef: {

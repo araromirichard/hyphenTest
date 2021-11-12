@@ -3,6 +3,7 @@
     <v-container class="pa-0">
       <div>
         <v-card
+          v-if="$vuetify.breakpoint.mdAndUp"
           width="100%"
           flat
           class="d-flex"
@@ -58,18 +59,62 @@
             >
           </v-btn>
         </v-card>
+        <div
+          v-if="$vuetify.breakpoint.mdAndDown"
+          class="d-flex flex-column justify-center align-center"
+        >
+          <div class="py-3 ma-0 text-subtitle-1 text-center primary--text">
+            {{ workflowName }}
+          </div>
+          <div class="pa-0 ma-0 d-flex justify-center align-center">
+            <v-checkbox
+              class="pl-2 mb-0 py-0"
+              color="#16be98"
+              v-model="autoProcess"
+            >
+              <template v-slot:label>
+                <span class="mb-0 py-0" style="font-size: 12px"
+                  >Auto process</span
+                >
+              </template>
+            </v-checkbox>
+            <SendToWorkflowDialog
+              @closeDialog="closeModal"
+              :tValue="switchState"
+            />
+          </div>
+        </div>
       </div>
-      <v-layout row wrap class="align-center my-2 px-8">
-        <v-flex md2>
-          <div class="d-flex align-center">
-            <p class="mb-0 ml-2 mr-4 primary--text font-weight-bold">ID</p>
-            <p class="mb-0 mx-4 primary--text font-weight-bold">Type</p>
+      <v-layout
+        row
+        wrap
+        class="align-center my-2 px-8"
+        v-if="$vuetify.breakpoint.mdAndUp"
+      >
+        <v-flex md1>
+          <div class="d-flex align-center justify-center">
+            <p class="mb-0 primary--text font-weight-bold text-center">ID</p>
+          </div>
+        </v-flex>
+        <v-flex md1>
+          <div class="d-flex align-center justify-center">
+            <p class="mb-0 primary--text font-weight-bold text-center">Type</p>
           </div>
         </v-flex>
 
-        <v-flex md2>
+        <v-flex md1>
           <div class="d-flex align-center">
             <p class="mb-0 pl-4 primary--text font-weight-bold">Amount</p>
+            <v-btn class="ml-1" color="grey lighten-1" icon>
+              <v-icon>mdi-chevron-down</v-icon>
+            </v-btn>
+          </div>
+        </v-flex>
+        <v-flex md2>
+          <div class="d-flex align-center justify-center">
+            <p class="mb-0 pl-4 primary--text font-weight-bold text-center">
+              Category
+            </p>
             <v-btn class="ml-1" color="grey lighten-1" icon>
               <v-icon>mdi-chevron-down</v-icon>
             </v-btn>
@@ -80,7 +125,7 @@
             <p class="mb-0 primary--text font-weight-bold">Ref No.</p>
           </div>
         </v-flex>
-        <v-flex md2>
+        <v-flex md1>
           <div class="d-flex align-center">
             <p class="mb-0 primary--text font-weight-bold">Staus</p>
             <v-btn class="ml-1" color="grey lighten-1" icon>
@@ -110,22 +155,42 @@
       <v-row>
         <v-col
           cols="12"
-          v-for="invoice in filteredInvoices"
-          :key="invoice.id"
+          v-for="(invoice, i) in filteredInvoices"
+          :key="i"
           class="py-0 ma-0"
         >
           <DataTable
-            :index="invoice"
-            :id="invoice.id"
+            v-if="$vuetify.breakpoint.mdAndUp"
+            :index="i"
+            :id="i + 1"
             :invoiceRef="invoice.ref"
             :type="invoice.type"
             :requester="invoice.requester"
             :date="invoice.date | date"
             :amount="invoice.amount"
             :status="invoice.status"
+            :category="invoice.category"
             :iconColor="invoice.status === 'processed' ? '#2BD5AE' : '#E3AA1C'"
             :chipColor="invoice.type === 'expense' ? '#F9EED2' : '#D5F7EF'"
             :textColor="invoice.type === 'expense' ? '#E3AA1C' : '#2BD5AE'"
+          />
+
+          <!-- Data table for mobile -->
+          <DataTableCard
+            v-if="$vuetify.breakpoint.mdAndDown"
+            :index="i"
+            :id="i + 1"
+            :invoiceRef="invoice.ref"
+            :type="invoice.type"
+            :requester="invoice.requester"
+            :date="invoice.date | date"
+            :amount="invoice.amount"
+            :status="invoice.status"
+            :category="invoice.category"
+            :chipColor="invoice.type === 'expense' ? '#2BD5AE' : '#E3AA1C'"
+            :statusColor="
+              invoice.status === 'processed' ? '#2BD5AE' : '#E3AA1C'
+            "
           />
         </v-col>
       </v-row>
@@ -136,10 +201,14 @@
 <script>
 import SendToWorkflowDialog from "../includes/overlays/SendToWorkflowDialog.vue";
 import DataTable from "./DataTable.vue";
+import DataTableCard from "./DataTableCard.vue";
+//import { ExportToCsv } from "export-to-csv";
+
 export default {
   components: {
     SendToWorkflowDialog,
     DataTable,
+    DataTableCard,
   },
   data() {
     return {
@@ -158,6 +227,7 @@ export default {
           requester: "John Bello",
           date: new Date(),
           status: "processing",
+          category: "N",
         },
         {
           id: 2,
@@ -167,6 +237,7 @@ export default {
           requester: "Emma Thomas",
           date: new Date(),
           status: "processed",
+          category: "$",
         },
         {
           id: 3,
@@ -176,6 +247,7 @@ export default {
           requester: "Sussan Boma",
           date: new Date(),
           status: "processed",
+          category: "N",
         },
         {
           id: 4,
@@ -185,6 +257,7 @@ export default {
           requester: "John Bello",
           date: new Date(),
           status: "In review",
+          category: "$",
         },
         {
           id: 5,
@@ -194,6 +267,7 @@ export default {
           requester: "Pat Ede",
           date: new Date(),
           status: "review needed",
+          category: "N",
         },
         {
           id: 6,
@@ -203,6 +277,7 @@ export default {
           requester: "Obinna Nwafor",
           date: new Date(),
           status: "pending",
+          category: "$",
         },
       ],
     };
@@ -232,8 +307,7 @@ export default {
           return (
             invoice.requester.toLowerCase().match(this.search.toLowerCase()) ||
             invoice.status.toLowerCase().match(this.search.toLowerCase) ||
-            invoice.amount.toString().match(this.search) ||
-            invoice.id.toString().match(this.search)
+            invoice.amount.toString().match(this.search)
           );
         });
       } else return this.invoices;
@@ -243,6 +317,9 @@ export default {
 </script>
 
 <style>
+.v-input__slot {
+  margin-bottom: 0px;
+}
 .switch-card {
   height: 53px;
   background: rgba(127, 145, 155, 0.052607);

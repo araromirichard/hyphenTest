@@ -9,7 +9,7 @@
     large
     class="text-capitalize mx-auto"
   >
-    {{ label }}</v-btn
+    <span class="text-button text-bold">{{ label }}</span></v-btn
   >
 </template>
 

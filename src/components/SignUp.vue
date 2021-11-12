@@ -141,7 +141,7 @@
               </div> -->
                 </v-card-text>
 
-                <v-card-actions class="justify-center px-0">
+                <v-card-actions class="justify-center pt-md-8 px-0">
                   <v-btn
                     :disabled="invalid"
                     block
