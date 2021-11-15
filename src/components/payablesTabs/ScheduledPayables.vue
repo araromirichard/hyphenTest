@@ -13,8 +13,8 @@
           dense
           class="pl-4 mb-2"
           color="#16be98"
-          v-model="autoPlay"
-          label="Auto play"
+          v-model="autoPay"
+          label="Auto pay"
         ></v-switch>
       </v-card>
     </div>
@@ -74,12 +74,13 @@
       <v-row>
         <v-col
           cols="12"
-          v-for="payment in filteredPayments"
-          :key="payment.id"
+          v-for="(payment, i) in filteredPayments"
+          :key="i"
           class="py-0 ma-0"
         >
           <PaymentTable
-            :id="payment.id"
+            :index="i"
+            :id="i + 1"
             :paymentRef="payment.ref"
             :approvedBy="payment.approvedBy"
             :payee="payment.payee"

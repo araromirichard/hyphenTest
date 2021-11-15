@@ -61,9 +61,9 @@
                     letter-spacing: 0.278409px;
                   "
                 >
-                  pBot is empowering the finance office. <br /> Enabling every
-                  company with visibility, approval and workflow technology to grow
-                  cashflow
+                  pBot is empowering the finance office. <br />
+                  Enabling every company with visibility, approval and workflow
+                  technology to grow cashflow
                 </p>
               </div>
               <div class="text-break mx-auto" style="max-width: 354px" v-else>
@@ -91,11 +91,11 @@
                     letter-spacing: 0.278409px;
                   "
                 >
-                <strong>Setup in 5mins or less</strong><br />
+                  <strong>Setup in 5mins or less</strong><br />
                   pBot team will help onboard you and your company with great
                   care and worldclass service
                 </p>
-                
+
                 <p class="pt-2">
                   <v-icon large>mdi-chevron-left</v-icon>
                 </p>

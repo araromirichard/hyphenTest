@@ -74,12 +74,13 @@
       <v-row>
         <v-col
           cols="12"
-          v-for="payment in filteredPayments"
-          :key="payment.id"
+          v-for="(payment, i) in filteredPayments"
+          :key="i"
           class="py-0 ma-0"
         >
           <PaymentTable
-            :id="payment.id"
+            :index="i"
+            :id="i + 1"
             :paymentRef="payment.ref"
             :approvedBy="payment.approvedBy"
             :payee="payment.payee"

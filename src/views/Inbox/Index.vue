@@ -1,229 +1,232 @@
 <template>
-  <v-container class="d-flex justify-center">
-    <div v-if="noInvoice" class="pa-0 ma-0">
-      <v-row
-        align="center"
-        justify="end"
-        class="mx-14 pt-md-10"
-        v-if="$vuetify.breakpoint.mdAndUp"
-      >
-        <DropDownMenu btnText="New" icon="file" width="121" height="54" />
-      </v-row>
-      <v-row class="justify-center" style="padding-top: 105px">
-        <img :src="require('@/assets/folder.svg')" alt="folder svg" />
-      </v-row>
-      <v-row class="justify-center" style="padding-top: 40px">
-        <p
-          style="
-            font-family: Inter;
-            font-style: normal;
-            font-weight: bold;
-            font-size: 24px;
-            line-height: 29px;
-            color: #311b92;
-          "
+  <v-container>
+    <v-row>
+      <v-col cols="12">
+        <v-row
+          v-if="$vuetify.breakpoint.mdAndUp"
+          align="center"
+          class="d-flex justify-md-space-between mx-14 pt-md-10"
         >
-          No invoice/transaction is awaiting action
-        </p>
-      </v-row>
-      <v-row class="justify-center pt-0">
-        <p
-          style="
-            font-family: Inter;
-            font-style: normal;
-            font-weight: normal;
-            font-size: 12px;
-            line-height: 15px;
-            color: #596a73;
-          "
+          <v-col class="pa-sm-0 d-flex align-center">
+            <div class="pa-0" v-if="!noInvoice">
+              <h3
+                class="text-bold"
+                style="
+                  font-style: normal;
+                  font-weight: bold;
+                  font-size: 32px;
+                  line-height: 39px;
+                  color: #301f78;
+                "
+              >
+                Inbox
+                <span class="transTotal align-center">234 Transactions</span>
+              </h3>
+            </div>
+            <v-spacer></v-spacer>
+            <DropDownMenu
+              btnText="New"
+              icon="file"
+              width="121px"
+              height="54px"
+              justify="right"
+            />
+          </v-col>
+        </v-row>
+        <v-row
+          class="justify-center"
+          style="padding-top: 105px"
+          v-if="noInvoice"
         >
-          Click here to upload an invoice or generate an expense request form
-        </p>
-      </v-row>
-      <v-row class="d-flex justify-center pt-8">
-        <v-card
-          class="d-flex flex-row"
-          elevation="0"
-          style="
-            width: 414px;
-            height: 94px;
-            background: #ffffff;
-            border: 1px solid #fbf4e4;
-            box-sizing: border-box;
-            border-radius: 4px;
-          "
+          <img :src="require('@/assets/folder.svg')" alt="folder svg" />
+        </v-row>
+        <v-row
+          class="justify-center"
+          style="padding-top: 40px"
+          v-if="noInvoice"
         >
-          <v-avatar
-            class="d-flex align-center mx-auto my-auto ml-6"
-            style="padding: 8px; margin: 8px"
-            color="#F9EED2"
-            size="20"
-          >
-            <img :src="require('@/assets/info.svg')" alt="" />
-          </v-avatar>
-          <v-card-text
+          <p
             style="
+              font-family: Inter;
+              font-style: normal;
+              font-weight: bold;
+              font-size: 24px;
+              line-height: 29px;
+              color: #311b92;
+            "
+          >
+            No invoice/transaction is awaiting action
+          </p>
+        </v-row>
+        <v-row class="justify-center pt-0" v-if="noInvoice">
+          <p
+            style="
+              font-family: Inter;
               font-style: normal;
               font-weight: normal;
               font-size: 12px;
-              line-height: 20px;
+              line-height: 15px;
               color: #596a73;
             "
           >
-            To capture invoices sent to email, forward attachements to
-            mtn@process.finance or ask your vendors to send directly
-          </v-card-text>
-        </v-card>
-      </v-row>
-    </div>
-    <div v-else>
-      <v-row
-        v-if="$vuetify.breakpoint.mdAndUp"
-        align="center"
-        class="d-flex justify-md-space-between mx-14 pt-md-10"
-      >
-        <v-col class="pa-sm-0 d-flex align-center">
-          <div class="pa-0">
-            <h3
-              class="text-bold"
+            Click here to upload an invoice or generate an expense request form
+          </p>
+        </v-row>
+        <v-row class="d-flex justify-center pt-8" v-if="noInvoice">
+          <v-card
+            class="d-flex flex-row"
+            elevation="0"
+            style="
+              width: 414px;
+              height: 94px;
+              background: #ffffff;
+              border: 1px solid #fbf4e4;
+              box-sizing: border-box;
+              border-radius: 4px;
+            "
+          >
+            <v-avatar
+              class="d-flex align-center mx-auto my-auto ml-6"
+              style="padding: 8px; margin: 8px"
+              color="#F9EED2"
+              size="20"
+            >
+              <img :src="require('@/assets/info.svg')" alt="" />
+            </v-avatar>
+            <v-card-text
               style="
                 font-style: normal;
-                font-weight: bold;
-                font-size: 32px;
-                line-height: 39px;
-                color: #301f78;
+                font-weight: normal;
+                font-size: 12px;
+                line-height: 20px;
+                color: #596a73;
               "
             >
-              Inbox
-              <span class="transTotal align-center">234 Transactions</span>
-            </h3>
-          </div>
-          <v-spacer></v-spacer>
-          <DropDownMenu
-            btnText="New"
-            icon="file"
-            width="121px"
-            height="54px"
-            justify="right"
-          />
-        </v-col>
-      </v-row>
+              To capture invoices sent to email, forward attachements to
+              mtn@process.finance or ask your vendors to send directly
+            </v-card-text>
+          </v-card>
+        </v-row>
+      </v-col>
+    </v-row>
 
-      <v-card
-        flat
-        elevation="6"
-        max-width="100%"
-        min-width="320px"
-        :min-height="$vuetify.breakpoint.xs ? '450px' : '674px'"
-        class="mx-auto mx-md-14"
-      >
-        <div class="mt-md-12 mx-0">
-          <v-card
-            flat
-            max-width="100%"
-            style="border-bottom: 1px solid rgba(127, 145, 155, 0.3)"
-          >
-            <v-tabs
-              slider-size="3"
-              v-model="tab"
-              mobile-breakpoint="5"
-              v-if="$vuetify.breakpoint.mdAndUp"
+    <v-row v-if="!noInvoice">
+      <v-col cols="12">
+        <v-card
+          flat
+          elevation="6"
+          max-width="100%"
+          min-width="320px"
+          :min-height="$vuetify.breakpoint.xs ? '450px' : '674px'"
+          class="mx-auto mx-md-14"
+        >
+          <div class="mt-md-12 mx-0">
+            <v-card
+              flat
+              max-width="100%"
+              style="border-bottom: 1px solid rgba(127, 145, 155, 0.3)"
             >
-              <v-tab
-                class="mt-2"
-                v-for="item in items"
-                :key="item.tab"
-                style="
-                  font-family: Inter;
-                  font-style: normal;
-                  font-weight: 700;
-                  font-size: 12px;
-                  line-height: 15px;
-                  text-transform: uppercase;
-                "
+              <v-tabs
+                slider-size="3"
+                v-model="tab"
+                mobile-breakpoint="5"
+                v-if="$vuetify.breakpoint.mdAndUp"
               >
-                <v-icon
-                  v-if="item.tab == 'Exception'"
-                  left
-                  color="#ff6a6a"
-                  small
-                  class="pr-1 mr-0"
-                  >mdi-stop-circle-outline
-                </v-icon>
-                <span
-                  class="font-weight-bold"
-                  :style="{
-                    color: `${item.tab == 'Exception' ? '#ff6a6a' : ''}`,
-                  }"
-                  >{{ item.tab }}</span
-                ></v-tab
-              >
-
-              <v-spacer></v-spacer>
-              <v-btn class="pt-4 mt-1" plain @click.prevent="dialog2 = true">
-                <simple-line-icons left class="pr-1" icon="people" no-svg />
-
-                <b
+                <v-tab
+                  class="mt-2"
+                  v-for="item in items"
+                  :key="item.tab"
                   style="
                     font-family: Inter;
                     font-style: normal;
-                    font-weight: 900;
+                    font-weight: 700;
+                    font-size: 12px;
+                    line-height: 15px;
+                    text-transform: uppercase;
+                  "
+                >
+                  <v-icon
+                    v-if="item.tab == 'Exception'"
+                    left
+                    color="#ff6a6a"
+                    small
+                    class="pr-1 mr-0"
+                    >mdi-stop-circle-outline
+                  </v-icon>
+                  <span
+                    class="font-weight-bold"
+                    :style="{
+                      color: `${item.tab == 'Exception' ? '#ff6a6a' : ''}`,
+                    }"
+                    >{{ item.tab }}</span
+                  ></v-tab
+                >
+
+                <v-spacer></v-spacer>
+                <v-btn class="pt-4 mt-1" plain @click.prevent="dialog2 = true">
+                  <simple-line-icons left class="pr-1" icon="people" no-svg />
+
+                  <b
+                    style="
+                      font-family: Inter;
+                      font-style: normal;
+                      font-weight: 900;
+                      font-size: 12px;
+                      line-height: 20px;
+                      letter-spacing: 0.55px;
+                      text-transform: uppercase;
+                    "
+                    >invite</b
+                  ></v-btn
+                >
+                <v-btn
+                  v-if="isClicked"
+                  @click="toggleSearch"
+                  plain
+                  class="text-black mt-1 pt-4"
+                  style="
+                    font-family: Inter;
+                    font-style: normal;
+                    font-weight: 500;
                     font-size: 12px;
                     line-height: 20px;
                     letter-spacing: 0.55px;
                     text-transform: uppercase;
+                    color: #7f919b;
                   "
-                  >invite</b
-                ></v-btn
-              >
-              <v-btn
-                v-if="isClicked"
-                @click="toggleSearch"
-                plain
-                class="text-black mt-1 pt-4"
-                style="
-                  font-family: Inter;
-                  font-style: normal;
-                  font-weight: 500;
-                  font-size: 12px;
-                  line-height: 20px;
-                  letter-spacing: 0.55px;
-                  text-transform: uppercase;
-                  color: #7f919b;
-                "
-              >
-                search
-                <v-icon small right class="pr-1"> mdi-magnify </v-icon>
-              </v-btn>
-              <v-expand-x-transition v-else>
-                <v-text-field
-                  @input="searchDataTable"
-                  v-model="search"
-                  @blur="isClicked = true && !search"
-                  class="seacrh-field mt-2 mr-2"
-                  dense
-                  clearable
-                  autofocus
-                  hide-details="true"
-                  persistent-placeholder
-                  placeholder="Search"
-                  append-icon="mdi-magnify"
-                  filled
                 >
-                </v-text-field>
-              </v-expand-x-transition>
-            </v-tabs>
-          </v-card>
-        </div>
-        <component
-          v-bind:is="items[tab].content"
-          class="ml-0"
-          ref="dataTable"
-        ></component>
+                  search
+                  <v-icon small right class="pr-1"> mdi-magnify </v-icon>
+                </v-btn>
+                <v-expand-x-transition v-else>
+                  <v-text-field
+                    @input="searchDataTable"
+                    v-model="search"
+                    @blur="isClicked = true && !search"
+                    class="seacrh-field mt-2 mr-2"
+                    dense
+                    clearable
+                    autofocus
+                    hide-details="true"
+                    persistent-placeholder
+                    placeholder="Search"
+                    append-icon="mdi-magnify"
+                    filled
+                  >
+                  </v-text-field>
+                </v-expand-x-transition>
+              </v-tabs>
+            </v-card>
+          </div>
+          <component
+            v-bind:is="items[tab].content"
+            class="ml-0"
+            ref="dataTable"
+          ></component>
+        </v-card>
+      </v-col>
+    </v-row>
 
-        <!-- tab component for mobile devices -->
-      </v-card>
-    </div>
     <template>
       <div>
         <v-dialog v-model="dialog2" max-width="516">
@@ -375,7 +378,7 @@
 
     <!-- tabs for mobile devices -->
     <v-container class="pa-0" v-if="$vuetify.breakpoint.mdAndDown">
-      <v-row>
+      <v-row v-if="!noInvoice">
         <v-col cols="12">
           <v-bottom-navigation fixed class="pa-0" dark>
             <v-tabs
@@ -398,22 +401,10 @@
                 "
                 >{{ item.tab }}</v-tab
               >
-
-              <!-- <v-tab style="color: #ff6a6a">
-                <span class="mt-2">{{ exceptnItems.tab }}</span>
-              </v-tab> -->
             </v-tabs>
           </v-bottom-navigation>
         </v-col>
       </v-row>
-      <!-- <template >
-        <v-tabs grow background-color="primary" dark class="mt-10">
-          <v-tab> Option </v-tab>
-          <v-tab> Another Selection </v-tab>
-          <v-tab> Items </v-tab>
-          <v-tab> Another Screen </v-tab>
-        </v-tabs>
-      </template> -->
     </v-container>
   </v-container>
 </template>
@@ -557,5 +548,4 @@ th {
   box-shadow: 0px 3px 5px -1px rgb(0 0 0 / 3%), 0px 6px 10px 0px rgb(0 0 0 / 3%),
     0px 1px 18px 0px rgb(0 0 0 / 3%) !important;
 }
-
 </style>

@@ -25,24 +25,16 @@
     </div>
     <v-container>
       <v-row class="mx-13">
-        <v-col v-for="(card, i) in cards" :key="i" cols="12" md="4">
-          <BudgetCard
-            :budgetTitle="card.budgetTitle"
-            :budgetAmount="card.budgetAmount"
-            :percentUsed="card.percentUsed"
-          />
-          <!-- <BudgetCard
-            class="mx-4"
-            budgetTitle="Transportation "
-            budgetAmount="1,234,000"
-            percentUsed="60"
-          />
-          <BudgetCard
-            class="ml-2"
-            budgetTitle="Procurement"
-            budgetAmount="1,234,000"
-            percentUsed="60"
-          /> -->
+        <v-col cols="12" md="10" offset-md="1">
+          <v-row class="pa-0">
+            <v-col v-for="(card, i) in cards" :key="i" cols="12" md="4">
+              <BudgetCard
+                :budgetTitle="card.budgetTitle"
+                :budgetAmount="card.budgetAmount"
+                :percentUsed="card.percentUsed"
+              />
+            </v-col>
+          </v-row>
         </v-col>
       </v-row>
     </v-container>
@@ -90,13 +82,7 @@
                   >
                     Budget Title
                   </h5>
-                  <!-- <v-text-field
-                  @click="openTitle"
-                  placeholder="New Budget_"
-                  v-model="newBudget.title"
-                >
-                  {{ newBudget.title }}
-                </v-text-field> -->
+                 
                   <span
                     class="pb-5"
                     style="

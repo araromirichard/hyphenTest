@@ -11,8 +11,8 @@
             line-height: 48px;
             letter-spacing: 0.646465px;
             color: #596a73;
-            max-width:80%;
-            margin:0 auto;
+            max-width: 80%;
+            margin: 0 auto;
           "
           :style="{
             paddingTop: `${$vuetify.breakpoint.xs ? '38px' : '224px'}`,

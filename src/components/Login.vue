@@ -266,14 +266,14 @@
           <span
             class="pt-12"
             style="
-          font-family: Inter;
-          font-style: normal;
-          font-weight: normal;
-          font-size: 14px;
-          line-height: 24px;
-          letter-spacing: 0.278409px;
-          color: #7f919b;
-        "
+              font-family: Inter;
+              font-style: normal;
+              font-weight: normal;
+              font-size: 14px;
+              line-height: 24px;
+              letter-spacing: 0.278409px;
+              color: #7f919b;
+            "
           >
             We are commited to your privacy. pBot is fully encrypted and keeps
             all your sensitive information 100% secure and private</span

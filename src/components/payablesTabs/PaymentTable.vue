@@ -445,7 +445,7 @@ export default {
       type: String,
     },
     amount: {
-      type: Number,
+      type: String,
     },
     paymentRef: {
       type: String,
