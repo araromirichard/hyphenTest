@@ -14,7 +14,7 @@
           style="margin-top: 160px; padding-left: 21px; mix-blend-mode: normal"
         >
           <v-tab> Details </v-tab>
-          <v-tab class="pl-10"> Audit Trail </v-tab>
+          <v-tab class="pl-10"> Audit Trail </v-tab> 
         </v-tabs>
         <v-divider></v-divider>
       </v-col>
