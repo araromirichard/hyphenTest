@@ -436,7 +436,7 @@
 export default {
   props: {
     index: {
-      type: Object,
+      type: Number,
     },
     id: {
       type: Number,

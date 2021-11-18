@@ -4,18 +4,18 @@
       max-height="40vh"
       max-width="90vw"
       outlined
-      class="my-4 mx-8 rounded-lg"
-      @click="
-        $router.push({
-          name: 'inbox.invoice',
-          params: { id: id },
-        })
-      "
+      class="my-4 mx-3 rounded-lg"
     >
       <h5
-        class="px-auto mt-8 font-weight-bold text-h5 text-center primary--text"
+        class="
+          px-auto
+          mt-8
+          font-weight-bold
+          text-subtitle-1 text-center
+          primary--text
+        "
       >
-        Invoice {{ invoiceRef }}
+        Payment {{ paymentRef }}
       </h5>
       <template>
         <v-simple-table dense>
@@ -23,23 +23,23 @@
             <thead class="px-0">
               <tr class="px-0">
                 <th class="px-0 text-center primary--text text-subtitle-2">
-                  Category
-                </th>
-                <th class="px-0 text-center primary--text text-subtitle-2">
                   Amount
                 </th>
                 <th class="px-0 text-center primary--text text-subtitle-2">
-                  Requester
+                  Approved By
+                </th>
+                <th class="px-0 text-center primary--text text-subtitle-2">
+                  Payee
                 </th>
               </tr>
             </thead>
-            <tbody class="px-0">
-              <tr class="px-0">
-                <td class="px-0 text-center">
-                  {{ category }}
+            <tbody class="px-2">
+              <tr class="px-2">
+                <td class="px-2 text-center">
+                  {{ amount }}
                 </td>
-                <td class="px-0 text-center">{{ amount }}</td>
-                <td class="px-0 text-center">{{ requester }}</td>
+                <td class="px-2 text-center">{{ approvedBy }}</td>
+                <td class="px-2 text-center">{{ payee }}</td>
               </tr>
             </tbody>
           </template>
@@ -47,13 +47,6 @@
       </template>
       <v-row class="pa-0 ma-0">
         <v-col class="d-flex justify-space-around align-center px-2">
-          <v-chip
-            class="mx-2 pa-1 text-center"
-            outlined
-            x-small
-            :color="chipColor"
-            ><span class="text-caption">{{ type }}</span></v-chip
-          >
           <v-chip
             class="mx-2 pa-1 text-center"
             outlined
@@ -76,12 +69,6 @@
                   class="d-flex flex-column justify-center align-center"
                 >
                   <v-btn
-                    @click="
-                      $router.push({
-                        name: 'inbox.invoice',
-                        params: { id: '123' },
-                      })
-                    "
                     exact-path
                     rounded
                     depressed
@@ -121,19 +108,16 @@ export default {
     id: {
       type: Number,
     },
-    type: {
+    approvedBy: {
       type: String,
     },
     amount: {
-      type: Number,
-    },
-    category: {
       type: String,
     },
-    invoiceRef: {
+    paymentRef: {
       type: String,
     },
-    requester: {
+    payee: {
       type: String,
     },
     date: {
@@ -142,13 +126,10 @@ export default {
     status: {
       type: String,
     },
+    iconColor: {
+      type: String,
+    },
     statusColor: {
-      type: String,
-    },
-    chipColor: {
-      type: String,
-    },
-    textColor: {
       type: String,
     },
   },

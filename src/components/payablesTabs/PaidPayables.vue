@@ -13,12 +13,17 @@
           dense
           class="pl-4 mb-2"
           color="#16be98"
-          v-model="autoPlay"
-          label="Auto play"
+          v-model="autoPay"
+          label="Auto pay"
         ></v-switch>
       </v-card>
     </div>
-    <v-layout row wrap class="align-center my-2 px-8">
+    <v-layout
+      row
+      wrap
+      class="align-center my-2 px-8"
+      v-if="$vuetify.breakpoint.mdAndUp"
+    >
       <v-flex md1>
         <div class="d-flex align-center">
           <p class="mb-0 ml-2 mr-4 primary--text font-weight-bold">ID</p>
@@ -79,6 +84,7 @@
           class="py-0 ma-0"
         >
           <PaymentTable
+            v-if="$vuetify.breakpoint.mdAndUp"
             :index="i"
             :id="i + 1"
             :paymentRef="payment.ref"
@@ -89,6 +95,23 @@
             :status="payment.status"
             :iconColor="payment.status === 'scheduled' ? '#2BD5AE' : '#E3AA1C'"
           />
+
+          <!-- Data table for mobile -->
+          <PayableTableCard
+            v-if="$vuetify.breakpoint.mdAndDown"
+            :index="i"
+            :id="i + 1"
+            :paymentRef="payment.ref"
+            :approvedBy="payment.approvedBy"
+            :payee="payment.payee"
+            :date="payment.date | date"
+            :amount="payment.amount"
+            :status="payment.status"
+            :iconColor="payment.status === 'scheduled' ? '#2BD5AE' : '#E3AA1C'"
+            :statusColor="
+              payment.status === 'scheduled' ? '#2BD5AE' : '#E3AA1C'
+            "
+          />
         </v-col>
       </v-row>
     </v-layout>
@@ -97,13 +120,15 @@
 
 <script>
 import PaymentTable from "./PaymentTable.vue";
+import PayableTableCard from "./PayableTableCard.vue";
 export default {
   components: {
     PaymentTable,
+    PayableTableCard,
   },
   data() {
     return {
-      autoPlay: false,
+      autoPay: false,
       amount: "N2,300,000",
       Ref: "#EXP084492",
       Payee: "Emmanuel John",

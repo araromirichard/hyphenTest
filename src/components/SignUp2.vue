@@ -56,8 +56,12 @@
         paddingRight: `${$vuetify.breakpoint.smAndUp ? '78px' : '34px'}`,
       }"
     >
-      <validation-observer ref="observer" v-slot="{ invalid }">
-        <v-form @submit.prevent class="ma-auto" ref="form">
+      <validation-observer ref="observer" v-slot="{ handleSubmit }">
+        <v-form
+          @submit.prevent="handleSubmit(onSubmit)"
+          class="ma-auto"
+          ref="form"
+        >
           <v-card-text class="pa-0">
             <v-row class="pt-2">
               <v-col cols="12">
@@ -138,6 +142,7 @@
             <v-btn
               :disabled="invalid"
               @click="submit"
+              to="/onboarding"
               block
               width="88px"
               height="54px"
@@ -145,26 +150,21 @@
               class="text-capitalize"
               elevation="20"
               large
-              ><router-link
-                @click.native="onboarding"
-                to="onboarding"
-                style="text-decoration: none"
+            >
+              <span
+                style="
+                  font-family: Inter;
+                  font-style: normal;
+                  font-weight: 900;
+                  font-size: 16px;
+                  line-height: 19px;
+                  text-align: center;
+                  letter-spacing: 0.727273px;
+                  color: #ffffff;
+                "
               >
-                <span
-                  style="
-                    font-family: Inter;
-                    font-style: normal;
-                    font-weight: 900;
-                    font-size: 16px;
-                    line-height: 19px;
-                    text-align: center;
-                    letter-spacing: 0.727273px;
-                    color: #ffffff;
-                  "
-                >
-                  Continue
-                </span>
-              </router-link>
+                Continue
+              </span>
             </v-btn>
           </v-card-actions>
         </v-form>
@@ -212,25 +212,25 @@
 
 <script>
 import { mapActions } from "vuex";
-import { required, email } from "vee-validate/dist/rules";
-import {
-  extend,
-  ValidationObserver,
-  ValidationProvider,
-  setInteractionMode,
-} from "vee-validate";
+// import { required, email } from "vee-validate/dist/rules";
+// import {
+//   extend,
+//   ValidationObserver,
+//   ValidationProvider,
+//   setInteractionMode,
+// } from "vee-validate";
 
-setInteractionMode("eager");
+// setInteractionMode("eager");
 
-extend("required", {
-  ...required,
-  message: "{_field_} can not be empty",
-});
+// extend("required", {
+//   ...required,
+//   message: "{_field_} can not be empty",
+// });
 
-extend("email", {
-  ...email,
-  message: "Email must be valid",
-});
+// extend("email", {
+//   ...email,
+//   message: "Email must be valid",
+// });
 export default {
   data() {
     return {
@@ -262,13 +262,13 @@ export default {
       ],
     };
   },
-  components: {
-    ValidationProvider,
-    ValidationObserver,
-  },
+  // components: {
+  //   ValidationProvider,
+  //   ValidationObserver,
+  // },
   methods: {
     ...mapActions({ showToast: "ui/showToast" }),
-    submit() {
+    onSubmit() {
       if (this.$refs.observer.validate()) {
         console.log(this.companyDetails);
         console.log("Company Details", JSON.stringify(this.companyDetails));

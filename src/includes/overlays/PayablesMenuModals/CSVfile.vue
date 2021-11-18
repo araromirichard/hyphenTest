@@ -2,12 +2,9 @@
   <div>
     <v-dialog v-model="dialog" max-width="290">
       <v-card>
-        <v-card-title class="headline">Add to Payables</v-card-title>
+        <v-card-title class="headline">Show List of CSV files</v-card-title>
 
-        <v-card-text>
-          Let Google help apps determine location. This means sending anonymous
-          location data to Google, even when no apps are running.
-        </v-card-text>
+        <v-card-text> Adding this functionality soon..... </v-card-text>
 
         <v-card-actions>
           <v-spacer></v-spacer>

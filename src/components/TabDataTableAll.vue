@@ -43,7 +43,11 @@
           </v-chip>
           <v-spacer></v-spacer>
           <download-csv class="btn btn-default" :data="filteredInvoices">
-            <v-btn color="#2BD5AE" class="my-4 export-btn mr-9" elevation="3"
+            <v-btn
+              @click="alertCSVDownload"
+              color="#2BD5AE"
+              class="my-4 export-btn mr-9"
+              elevation="3"
               ><span class="material-icons pr-1"> import_export </span
               ><span
                 style="
@@ -204,7 +208,7 @@
 import SendToWorkflowDialog from "../includes/overlays/SendToWorkflowDialog.vue";
 import DataTable from "./DataTable.vue";
 import DataTableCard from "./DataTableCard.vue";
-//import { ExportToCsv } from "export-to-csv";
+import { mapActions } from "vuex";
 
 export default {
   components: {
@@ -285,6 +289,7 @@ export default {
     };
   },
   methods: {
+    ...mapActions({ showToast: "ui/showToast" }),
     closeModal(e) {
       if (e) {
         //this.dialog = true;
@@ -294,12 +299,16 @@ export default {
       this.workflowName = e;
       console.log(e);
     },
-
-    // alert(item) {
-    //   alert("Hello " + item.name);
-    // },
     setSearchText(value) {
       this.search = value;
+    },
+    alertCSVDownload() {
+      this.showToast({
+        sclass: "success",
+        show: true,
+        message: "CSV downloaded!",
+        timeout: 3000,
+      });
     },
   },
   computed: {

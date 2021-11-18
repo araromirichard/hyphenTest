@@ -36,6 +36,47 @@
             />
           </v-col>
         </v-row>
+        <v-row>
+          <v-col cols="12">
+            <div class="d-flex" v-if="$vuetify.breakpoint.mdAndDown">
+              <p
+                :style="{ display: `${isClicked != true ? 'none' : ''}` }"
+                class="pt-7 pl-5 primary--text"
+                style="
+                  font-family: Inter;
+                  font-style: normal;
+                  font-weight: bold;
+                  font-size: 24px;
+                  line-height: 22px;
+                  letter-spacing: -0.73px;
+                "
+              >
+                Payables
+              </p>
+              <v-spacer></v-spacer>
+              <v-icon v-if="isClicked" @click="toggleSearch" class="pr-4 pt-7">
+                mdi-magnify
+              </v-icon>
+              <v-expand-x-transition v-else>
+                <v-text-field
+                  @input="searchDataTable"
+                  v-model="search"
+                  @blur="isClicked = true && !search"
+                  class="seacrh-field mt-4 mr-2"
+                  dense
+                  clearable
+                  autofocus
+                  hide-details="true"
+                  persistent-placeholder
+                  placeholder="Search"
+                  append-icon="mdi-magnify"
+                  filled
+                >
+                </v-text-field>
+              </v-expand-x-transition>
+            </div>
+          </v-col>
+        </v-row>
         <v-row align="center" v-if="$vuetify.breakpoint.mdAndUp">
           <v-col class="pa-0" cols="12" sm="12" md="5" offset-md="1">
             <v-card
@@ -141,13 +182,14 @@
             </v-card>
           </v-col>
         </v-row>
-        <v-container class="mt-12">
-          <v-row class="mx-10 pa-0">
+        <v-container class="mt-md-12">
+          <v-row class="mx-md-10 pa-0">
             <v-col
               class="d-flex flex-column align-center justify-center"
               cols="12"
             >
               <v-card
+                v-if="$vuetify.breakpoint.mdAndUp"
                 flat
                 width="100%"
                 style="border-bottom: 1px solid rgba(127, 145, 155, 0.3)"
@@ -219,6 +261,34 @@
         </v-container>
       </v-col>
     </v-row>
+    <!-- tabs for mobile devices -->
+    <v-row class="px-0 mx-0" v-if="$vuetify.breakpoint.mdAndDown">
+      <v-col class="ma-0 pa-0" cols="12">
+        <v-bottom-navigation fixed class="pa-0 mx-0" dark>
+          <v-tabs
+            center-active
+            class="ma-0"
+            background-color="primary"
+            v-model="tab"
+          >
+            <v-tab
+              class="mt-2"
+              v-for="item in items"
+              :key="item.tab"
+              style="
+                font-family: Inter;
+                font-style: normal;
+                font-weight: 700;
+                font-size: 12px;
+                line-height: 15px;
+                text-transform: uppercase;
+              "
+              >{{ item.tab }}</v-tab
+            >
+          </v-tabs>
+        </v-bottom-navigation>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 
@@ -288,6 +358,9 @@ export default {
   methods: {
     toggleSearch() {
       this.isClicked = false;
+    },
+    searchDataTable(e) {
+      this.$refs.dataTable.setSearchText(e);
     },
   },
 };

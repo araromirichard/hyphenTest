@@ -294,6 +294,10 @@ import WorkflowDataSource from "./WorkflowDataSource.vue";
 import SimpleLineIcons from "vue-simple-line";
 
 export default {
+  mounted() {
+    console.log(this.$route);
+  },
+
   data() {
     return {
       e6: 1,

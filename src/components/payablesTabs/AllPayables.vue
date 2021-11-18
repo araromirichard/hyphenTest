@@ -18,7 +18,12 @@
         ></v-switch>
       </v-card>
     </div>
-    <v-layout row wrap class="align-center my-2 px-8">
+    <v-layout
+      row
+      wrap
+      class="align-center my-2 px-8"
+      v-if="$vuetify.breakpoint.mdAndUp"
+    >
       <v-flex md1>
         <div class="d-flex align-center">
           <p class="mb-0 ml-2 mr-4 primary--text font-weight-bold">ID</p>
@@ -79,6 +84,7 @@
           class="py-0 ma-0"
         >
           <PaymentTable
+            v-if="$vuetify.breakpoint.mdAndUp"
             :index="i"
             :id="i + 1"
             :paymentRef="payment.ref"
@@ -89,6 +95,22 @@
             :status="payment.status"
             :iconColor="payment.status === 'scheduled' ? '#2BD5AE' : '#E3AA1C'"
           />
+          <!-- Data table for mobile -->
+          <PayableTableCard
+            v-if="$vuetify.breakpoint.mdAndDown"
+            :index="i"
+            :id="i + 1"
+            :paymentRef="payment.ref"
+            :approvedBy="payment.approvedBy"
+            :payee="payment.payee"
+            :date="payment.date | date"
+            :amount="payment.amount"
+            :status="payment.status"
+            :iconColor="payment.status === 'scheduled' ? '#2BD5AE' : '#E3AA1C'"
+            :statusColor="
+              payment.status === 'scheduled' ? '#2BD5AE' : '#E3AA1C'
+            "
+          />
         </v-col>
       </v-row>
     </v-layout>
@@ -96,10 +118,12 @@
 </template>
 
 <script>
+import PayableTableCard from "./PayableTableCard.vue";
 import PaymentTable from "./PaymentTable.vue";
 export default {
   components: {
     PaymentTable,
+    PayableTableCard,
   },
   data() {
     return {

@@ -43,14 +43,16 @@
         </p>
 
         <v-card
-          @click.native="uploadFile"
+          @click.native="onPickFile"
           @drop.prevent="onDroppedFiles"
           @dragover.prevent="dragging = true"
           @dragleave.prevent="dragging = false"
           width="530"
           height="126"
-          class="mx-auto my-0 justify-center d-flex"
+          class="mx-auto justify-center d-flex"
           style="
+            margin-top: 30px;
+            margin-bottom: 30px;
             background: #ffffff;
             border: 1px dashed rgba(127, 145, 155, 0.551929);
             box-sizing: border-box;
@@ -78,6 +80,22 @@
             png/jpg invoice</span
           >
         </v-card>
+        <div v-if="attachedFiles.length" class="text-center">
+          <p
+            class="text-caption primary--text px-8 py-4"
+            v-for="file in attachedFiles"
+            :key="file"
+          >
+            {{ file.name }}
+          </p>
+        </div>
+        <input
+          type="file"
+          style="display: none"
+          ref="fileInput"
+          accept="image/*"
+          @change="onFilePicked"
+        />
         <template>
           <v-card-actions class="d-flex justify-end align-center mr-9">
             <v-btn
@@ -121,7 +139,8 @@
 </template>
 
 <script>
-//import Overlaybtns from "../../btns/Overlaybtns.vue";
+import { mapActions } from "vuex";
+
 export default {
   components: {
     //Overlaybtns
@@ -130,9 +149,11 @@ export default {
     return {
       dialog: false,
       dragging: false,
+      attachedFiles: [],
     };
   },
   methods: {
+     ...mapActions({ showToast: "ui/showToast" }),
     closeDialog() {
       return (this.dialog = false);
     },
@@ -145,7 +166,41 @@ export default {
         .filter((item) => item.kind === "file")
         .map((item) => item.getAsFile());
 
+      this.attachedFiles.push(files);
+
+      if (this.attachedFiles) {
+        this.showToast({
+          sclass: "success",
+          show: true,
+          message: "file attahched successfully",
+          timeout: 3000,
+        });
+      } else
+        return this.showToast({
+          sclass: "alert",
+          show: true,
+          message: "no file has been attached",
+          timeout: 3000,
+        });
+
       console.table(files);
+    },
+    onPickFile() {
+      this.$refs.fileInput.click();
+      console.log(this.$refs);
+    },
+    onFilePicked(event) {
+      {
+        this.attachedFiles = event.target.files;
+        if (this.attachedFiles) {
+          this.showToast({
+            sclass: "success",
+            show: true,
+            message: "file attahched successfully",
+            timeout: 3000,
+          });
+        }
+      }
     },
   },
 };

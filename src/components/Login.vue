@@ -56,7 +56,6 @@
                   v-model="loginData.password"
                   type="password"
                   required
-                  :rules="passwordRules"
                 ></v-text-field>
                 <div class="message-details d-flex justify-end my-2">
                   <v-btn
@@ -307,17 +306,17 @@ export default {
           /.+@.+\..+/.test(value) ||
           "email or passwordincorrect, please confirm your email and password",
       ],
-      passwordRules: [
-        (value) => !!value || "Password is required",
-        (value) => {
-          const pattern =
-            /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#+%+&+*])(?=.{8,})/;
-          return (
-            pattern.test(value) ||
-            "email or passwordincorrect, please confirm your email and password, Min. 8 characters with at least one capital letter, a number and a special character."
-          );
-        },
-      ],
+      // passwordRules: [
+      //   (value) => !!value || "Password is required",
+      //   (value) => {
+      //     const pattern =
+      //       /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#+%+&+*])(?=.{8,})/;
+      //     return (
+      //       pattern.test(value) ||
+      //       "email or passwordincorrect, please confirm your email and password, Min. 8 characters with at least one capital letter, a number and a special character."
+      //     );
+      //   },
+      // ],
     };
   },
 

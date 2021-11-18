@@ -4,7 +4,7 @@
       <v-item-group>
         <v-container>
           <v-row>
-            <v-col v-for="card in cards" :key="card.title" cols="12" md="3">
+            <v-col v-for="(card, i) in cards" :key="i" cols="12" md="3">
               <v-item v-slot:default="{ active, toggle }">
                 <v-card
                   @click="toggle"
@@ -90,7 +90,9 @@
                       style="margin-top: 4px"
                       icon
                       id="no-background-hover"
-                      :to="icon.path"
+                      @click="
+                        $router.push({ params: { id: i }, name: icon.path })
+                      "
                       v-for="(icon, index) in icons"
                       :key="icon.title"
                     >
@@ -132,7 +134,10 @@ export default {
       switch1: [],
 
       icons: [
-        { title: "mdi-pencil-outline", path: "/workflow/rules-edit" },
+        {
+          title: "mdi-pencil-outline",
+          path: "WorkflowRulesEdit",
+        },
         { title: "mdi-content-copy", path: "#" },
         { title: "mdi-delete", path: "#" },
       ],
