@@ -14,8 +14,6 @@
               <div class="pb-5">
                 <h6
                   style="
-                    padding-left: 79px;
-                    padding-top: 76px;
                     font-family: Inter;
                     font-style: normal;
                     font-weight: bold;
@@ -30,8 +28,7 @@
                 <p
                   class="text-break"
                   style="
-                    padding-left: 79px;
-                    padding-top: 21px;
+                    
                     max-width: 257px;
                     font-family: Inter;
                     font-style: normal;
@@ -50,8 +47,8 @@
                   rounded="lg"
                   width="273px"
                   height="48px"
-                  style="margin-left: 79px"
-                  class="d-flex justify-center align-center"
+                  style=""
+                  class="d-flex align-center"
                 >
                   <v-icon small color="disabled" class="px-2"
                     >mdi-clipboard-text-outline</v-icon
@@ -70,26 +67,12 @@
                   >
                 </v-sheet>
               </div>
-              <v-divider style="width: 272px; margin-left: 79px"></v-divider>
-              <div class="d-flex flex-column justify-center align-center">
-                <p
-                  class="text-center"
-                  style="
-                    padding-top: 120px;
-                    font-family: Inter;
-                    font-style: normal;
-                    font-weight: normal;
-                    font-size: 14px;
-                    line-height: 17px;
-                    letter-spacing: -0.73px;
-                    color: #ff6a6a;
-                  "
-                >
-                  Show form here
-                </p>
+              <div class="d-flex flex-column justify-center align-center"
+              style="border:1px dotted #ccc;border-radius:4px;background-color:#fff"
+              >
                 <v-row>
                   <v-col cols="12">
-                    <v-layout style="padding-top: 51px">
+                    <v-layout style="padding-top: 20px">
                       <template>
                         <FormRenderer
                           :form-configuration="formData"
@@ -105,14 +88,16 @@
         </v-container>
       </v-col>
       <v-col
-        class="d-flex flex-column justify-center"
-        style="background-color: #f2f2f; min-height: 100vh"
+        class="d-flex flex-column justify-center pa-2"
+        style="background-color: rgb(253, 249, 239); min-height: 100vh"
         cols="12"
         md="9"
       >
-        <div class="d-flex justify-start">
+        
+        <div>
+         
           <h6
-            class="pl-6 pt-md-16"
+            class="pl-5 pt-md-5"
             style="
               font-family: Inter;
               font-style: normal;
@@ -123,21 +108,20 @@
               color: #311b92;
             "
             :style="{
-              paddingTop: `${$vuetify.breakpoint.mdAndDown ? '10px' : '76px'}`,
-              paddingLeft: `${$vuetify.breakpoint.mdAndDown ? '8px' : '79px'}`,
+              paddingTop: `${$vuetify.breakpoint.mdAndDown ? '10px' : '16px'}`,
+              paddingLeft: `${$vuetify.breakpoint.mdAndDown ? '8px' : '16px'}`,
             }"
           >
-            Form
+            Form Builder
           </h6>
-        </div>
-        <v-container>
+          
           <FormBuilder
-            style="background-color: #fdf9ef"
+            style=""
             v-model="formData"
           ></FormBuilder>
-        </v-container>
+        </div>
         <v-row>
-          <v-col class="my-2 mx-md-16 d-flex justify-end">
+          <v-col class="my-2 mx-md-5 d-flex justify-end">
             <v-btn
               @click="saveData"
               dark
