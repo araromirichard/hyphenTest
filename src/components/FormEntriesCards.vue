@@ -1,10 +1,10 @@
 <template>
-  <v-container class="justify-center mx-auto">
+  <v-container class="justify-center px-0 pt-0">
     <v-card
       width="100%"
       height="48px"
       flat
-      class="d-flex py-0 py-md-2"
+      class="d-flex mx-sm-0 py-0 py-md-2"
       color="#f4f4f4"
     >
       <v-btn

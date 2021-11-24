@@ -15,13 +15,7 @@
                 width="100%"
                 @click="toggle"
                 :elevation="active ? 4 : 0"
-                class="
-                  d-flex
-                  align-md-center align-text-center
-                  flex-column
-                  rounded
-                  elevation-0
-                "
+                class="d-flex align-text-center flex-column rounded elevation-0"
                 tile
                 style="
                   width: auto;
@@ -45,7 +39,7 @@
                   "
                   >{{ card.title }}</v-card-title
                 >
-                <div class="d-flex justify-space-around my-4">
+                <div class="d-flex justify-space-between my-4">
                   <div>
                     <v-chip
                       label

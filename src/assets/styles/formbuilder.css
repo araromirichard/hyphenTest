@@ -54,46 +54,66 @@
     margin: 30px 0;
 }
 
-.vue-form-builder .copyright-text {
+.vue-form-builder .copyright-text, .vue-form-builder h4 {
     padding-top: 20px;
     color: rgba(0, 0, 0, 0.4);
     font-size: 13px;
     text-align: center;
 }
+.vue-form-builder .copyright-text, .vue-form-builder hr{
+    content: ".";
+    display:none;
+}
 
 .vue-form-builder .add-section-container {
-    margin-top: 30px;
-    border: 3px rgba(0, 0, 0, 0.4) dotted;
+    margin-top: 20px;
+    border: 1px rgba(0, 0, 0, 0.4) dotted !important;
     padding: 40px;
     user-select: none;
     font-size: 18px;
     position: relative;
     text-align: center;
+    border-radius: 4px;
 }
 
 .vue-form-builder .add-section-container:hover {
-    border-color: #4834d4;
+    border-color: rgb(49, 27, 146);
     cursor: pointer;
 }
 
 .vue-form-builder .add-section-container>p {
     margin: 0;
+    font-size: 12px;
 }
 
 .vue-form-builder .add-section-container:hover>p {
     font-weight: bold;
 }
 
+.vue-form-builder .add-section-container>p svg, .vue-form-builder .add-control-container span:nth-child(1){
+    display: none;
+}
+.vue-form-builder .add-section-container>p span:nth-child(2)::before, .vue-form-builder .add-control-container span:nth-child(2)::before{
+    content: "+";
+    padding-right: 5px;
+    font-size: 18px;
+  }
+.add-section-container .list-group .list-group-item-action:nth-child(n+2){
+    display: none;
+}
 .vue-form-builder .add-container-list {
     margin-top: 15px;
 }
 
 .vue-form-builder .type-desc {
-    font-size: 14px;
+    font-size: 10px;
+    color: rgb(89, 106, 115);
 }
 
 .vue-form-builder .type-headline {
     font-weight: bold;
+    margin-bottom: 10px;
+    padding-top: 10px;
 }
 
 .vue-form-builder .section-container {
@@ -145,6 +165,15 @@
 .vue-form-builder .sidebar-form-configuration .headline-block h5 {
     font-size: 16px;
 }
+.vue-form-builder .sidebar-form-configuration .type-headline::before{
+    content: "⬒";
+    padding-right: 5px;
+    font-size: 18px;
+  }
+
+  .vue-form-builder .sidebar-form-configuration .toggleable-section:nth-child(3){
+    display: none;
+  }
 
 .vue-form-builder .row-block {
     background-color: rgba(0, 0, 0, 0.2);
@@ -161,18 +190,20 @@
 
 .vue-form-builder .add-row-container,
 .vue-form-builder .add-control-container {
-    margin-top: 40px;
-    border: 3px rgba(0, 0, 0, 0.4) dotted;
-    padding: 40px;
+    margin-top: 20px;
+    padding: 20px;
     user-select: none;
     font-size: 18px;
     position: relative;
     text-align: center;
+    border-width: none;
+    border-radius: 4px;
+    background-color: rgb(49, 27, 146);
+    color: #fff;
 }
 
 .vue-form-builder .add-row-container:hover,
 .vue-form-builder .add-control-container:hover {
-    border-color: #badc58;
     cursor: pointer;
     font-weight: bold;
 }
@@ -220,11 +251,16 @@
 }
 
 .vue-form-builder .control-list-container.empty {
-    border: 3px dotted #000;
+    border: 1px dotted rgba(0, 0, 0, 0.4) !important;
     padding: 50px 0;
     color: rgba(0, 0, 0, 0.4);
     font-size: 14px;
     text-align: center;
+    border-radius: 4px;
+    background-color:#fff;
+}
+.vue-form-builder .control-view-wrapper.col-md-4, .vue-form-renderer .control-view-wrapper.col-md-4  {
+    width:100%;
 }
 
 .vue-form-builder .control-list-container.empty p {
@@ -270,7 +306,11 @@
 .vue-form-builder .control-option-container .option-control.drag-item:active {
     cursor: grabbing;
 }
-
+.vue-form-builder .control-option-container .option-control svg{ 
+    width: 18px;
+    height: 18px;
+    fill: rgb(49, 27, 146);
+}
 .ghost {
     opacity: 0.5;
     background: #c8ebfb;
@@ -337,6 +377,8 @@
     padding-top: 60px;
     transition: 0.5s;
     border-left: 1px solid rgba(0, 0, 0, 0.3);
+    padding: 15px;
+    color: rgb(89, 106, 115);
 }
 
 .vue-form-builder .sidebar .close {
