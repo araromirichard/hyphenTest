@@ -1,12 +1,12 @@
 <template>
   <v-layout>
-    <v-card flat elevation="4" min-height="1200" style="width: 93%">
+    <v-card flat elevation="4" min-height="1200" style="width: 90%">
       <v-card
         flat
         class="rounded-t-lg"
-        style="background: rgba(127, 145, 155, 0.052607)"
+        style="margin-right: 57; background: rgba(127, 145, 155, 0.052607)"
       >
-        <v-row class="d-flex pa-0 ma-0">
+        <v-row class="d-flex">
           <img
             style="font-size: 24px; margin-top: 37px; margin-left: 49px"
             :src="require('@/assets/pbot_icons/ManagerApproval.svg')"
@@ -44,7 +44,7 @@
       <template>
         <v-stepper
           class="mx-auto pl-8"
-          style="top: 32px"
+          style="top: 92px"
           elevation="0"
           color="#301F78"
           v-model="e6"
@@ -53,12 +53,12 @@
           <v-stepper-step
             non-linear
             color="#311B92"
-            :complete="e6 > 1"
+            :editable="e6 > 1"
             step="1"
           >
             <span
-              class="py-4 pl-0 mt-"
               style="
+                margin-top: 40px;
                 font-family: Inter;
                 font-style: normal;
                 font-weight: 500;
@@ -70,7 +70,7 @@
               Choose workflow trigger
             </span>
             <span
-              class="py-2"
+              class="mt-6"
               style="
                 font-family: Inter;
                 font-style: normal;
@@ -132,7 +132,7 @@
             </v-btn>
           </v-stepper-content>
 
-          <v-stepper-step non-linear :complete="e6 > 2" step="2">
+          <v-stepper-step non-linear :editable="e6 > 2" step="2">
             <span
               style="
                 margin-top: 40px;
@@ -163,46 +163,7 @@
           </v-stepper-step>
 
           <v-stepper-content step="2">
-            <div v-for="(card, i) in selectedCompareGroup" :key="i">
-              <ApprovalCard
-                :comparisonType="card.comparisonType"
-                ref="ApprovalCard"
-                @checkApprovalCard="checkApprovalCard($event, i)"
-              />
-
-              <v-timeline style="margin-left: 30px">
-                <div class="d-flex">
-                  <v-menu bottom offset-y>
-                    <template v-slot:activator="{ on, attrs }">
-                      <v-btn
-                        width="130"
-                        rounded
-                        depressed
-                        v-bind="attrs"
-                        v-on="on"
-                        class="mx-auto justify-center"
-                      >
-                        <v-icon class="pl-2" x-small>mdi-plus</v-icon>
-                        <span class="pr-2"> WITH </span>
-                      </v-btn>
-                    </template>
-                    <v-list>
-                      <v-list-item-group>
-                        <v-list-item
-                          v-for="(item, j) in comparisonType"
-                          :key="j"
-                        >
-                          <v-list-item-title
-                            @click="addApprovalCard(item, i)"
-                            >{{ item }}</v-list-item-title
-                          >
-                        </v-list-item>
-                      </v-list-item-group>
-                    </v-list>
-                  </v-menu>
-                </div>
-              </v-timeline>
-            </div>
+            <compose-workflow v-model="schema" />
             <v-btn
               @click="e6 = 3"
               dark
@@ -247,7 +208,7 @@
             </v-btn>
           </v-stepper-content>
 
-          <v-stepper-step :complete="e6 > 3" step="3">
+          <v-stepper-step :editable="e6 > 3" step="3">
             <span
               style="
                 margin-top: 40px;
@@ -278,65 +239,205 @@
           </v-stepper-step>
 
           <v-stepper-content step="3">
-            <ExecuteActions style="margin-top: 42px" />
+            <ExecuteActions v-model="actions" style="margin-top: 42px" />
+            <v-btn
+              @click="completed = true"
+              dark
+              text
+              elevation="0"
+              width="125"
+              height="55"
+              style="
+                margin-top: 26px;
+                margin-bottom: 73px;
+                background: #311b92;
+                box-shadow: 0px 12px 22px rgba(0, 0, 0, 0.24);
+                border-radius: 4px;
+              "
+            >
+              <simple-line-icons
+                icon="arrow-right"
+                color="#FFFFFF"
+                style="
+                  font-family: simple-line-icons;
+                  font-style: normal;
+                  font-weight: normal;
+                  font-size: 16px;
+                  line-height: 16px;
+                "
+                no-svg
+              />
+              <span
+                class="text-capitalize pl-3 py-4"
+                style="
+                  font-family: Inter;
+                  font-style: normal;
+                  font-weight: 500;
+                  font-size: 14px;
+                  line-height: 17px;
+                  text-align: center;
+                  letter-spacing: 0.636364px;
+                  color: #ffffff;
+                "
+                >Save</span
+              >
+            </v-btn>
           </v-stepper-content>
         </v-stepper>
       </template>
     </v-card>
+
+    <v-dialog v-model="completed" max-width="450">
+      <v-card color="#FEFCF8" class="rounded-lg">
+        <v-card-title
+          class="mb-8"
+          style="background: #ffffff; border-radius: 8px 8px 0px 0px"
+        >
+          <span
+            style="
+              font-family: Inter;
+              font-style: normal;
+              font-weight: 600;
+              font-size: 16px;
+              line-height: 19px;
+              color: #301f78;
+            "
+            >Confirm Workflow</span
+          >
+          <v-spacer></v-spacer>
+          <v-icon
+            tag="button"
+            @click="dialog2 = false"
+            class="text-bolder"
+            color="#596A73"
+          >
+            mdi-close
+          </v-icon>
+        </v-card-title>
+
+        <div class="mx-auto px-15 pb-10 text-center">
+          <div class="block" style="color: #757575; font-size: 18px">
+            Confirm this workflow is completed and ready for use
+          </div>
+
+          <v-btn
+            @click="saveWorkflow"
+            dark
+            text
+            elevation="0"
+            width="125"
+            height="55"
+            style="
+              margin-top: 20px;
+              margin-bottom: 20px;
+              background: #311b92;
+              box-shadow: 0px 12px 22px rgba(0, 0, 0, 0.24);
+              border-radius: 4px;
+            "
+          >
+            <simple-line-icons
+              icon="arrow-right"
+              color="#FFFFFF"
+              style="
+                font-family: simple-line-icons;
+                font-style: normal;
+                font-weight: normal;
+                font-size: 16px;
+                line-height: 16px;
+              "
+              no-svg
+            />
+            <span
+              class="text-capitalize pl-3 py-4"
+              style="
+                font-family: Inter;
+                font-style: normal;
+                font-weight: 500;
+                font-size: 14px;
+                line-height: 17px;
+                text-align: center;
+                letter-spacing: 0.636364px;
+                color: #ffffff;
+              "
+              >Save</span
+            >
+          </v-btn>
+
+          <div @click="saveDraft"
+            class="block"
+            style="
+              color: #757575;
+              font-size: 18px;
+              text-decoration: underline;
+              cursor: pointer;
+            "
+          >
+            No, Add to draft
+          </div>
+        </div>
+      </v-card>
+    </v-dialog>
   </v-layout>
 </template>
 
 <script>
-import { comparisonType } from "@/utils/ManagerApprovalOptions.js";
-import ApprovalCard from "./ApprovalCard.vue";
 import ExecuteActions from "./ExecuteActions.vue";
 import WorkflowDataSource from "./WorkflowDataSource.vue";
 import SimpleLineIcons from "vue-simple-line";
+import ComposeWorkflow from "../components/pages/workflow/compose/compose-workflow.vue";
 
 export default {
-  mounted() {
-    console.log(this.$route);
-  },
-
   data() {
     return {
       e6: 1,
-
       activeItem: null,
-
-      selectedCompareGroup: [
-        {
-          comparisonType: "",
-        },
-      ],
-      comparisonType,
+      id: null,
+      schema: null,
+      actions: null,
+      completed: false,
     };
   },
   components: {
-    ApprovalCard,
     ExecuteActions,
     WorkflowDataSource,
     SimpleLineIcons,
+    ComposeWorkflow,
+  },
+  mounted() {
+    this.generateID();
   },
   methods: {
-    addApprovalCard(item, i) {
-      // console.log(this.$refs.ApprovalCard);
-      // this.selectedCompareGroup.push(this.$refs.ApprovalCard);
-      console.log({ item, i });
-      if (this.selectedCompareGroup.length - 1 === i) {
-        this.selectedCompareGroup.push({ comparisonType: item });
-      } else {
-        this.selectedCompareGroup[i + 1].comparisonType = item;
-      }
+    generateID() {
+      //generate rand id
+      this.id = Date.now();
     },
-    checkApprovalCard(e, i) {
-      console.log({ e, i });
-      if (!e) {
-        if (this.selectedCompareGroup.length === 1) {
-          return;
-        }
-        this.selectedCompareGroup.splice(i, 1);
-      }
+
+    saveWorkflow() {
+      this.completed = false;
+    },
+
+    saveDraft(){
+       this.completed = false;
+    }
+  },
+  computed: {
+    payload() {
+      return {
+        id: this.id,
+        schema: this.schema,
+        actions: this.actions,
+      };
+    },
+  },
+
+  watch: {
+    payload: {
+      deep: true,
+      immediate: true,
+      handler(val) {
+        this.$store.dispatch("workflow/setWorkflow", val);
+        console.log(JSON.stringify(val, null, 2));
+      },
     },
   },
 };

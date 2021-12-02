@@ -116,17 +116,51 @@
                   will be sent along with your custom message above.
                 </v-card-text>
                 <v-card-actions class="justify-end pa-8">
-                  <Overlaybtns
-                    btn-title="save"
-                    style="margin-right: 44px"
-                    icon="arrow-right"
-                    width="121px"
-                    height="45px"
-                  />
+                  <v-btn
+                    @click="saveAction"
+                    dark
+                    width="121"
+                    height="45"
+                    style="
+                      margin-right: 57px;
+                      background: #311b92;
+                      box-shadow: 0px 12px 22px rgba(0, 0, 0, 0.24);
+                      border-radius: 4px;
+                    "
+                  >
+                    <simple-line-icons
+                      icon="arrow-right"
+                      color="#FFFFFF"
+                      style="
+                        font-family: simple-line-icons;
+                        font-style: normal;
+                        font-weight: normal;
+                        font-size: 12px;
+                        line-height: 16px;
+                      "
+                      no-svg
+                    />
+                    <span
+                      class="text-capitalize pl-3"
+                      style="
+                        font-family: Inter;
+                        font-style: normal;
+                        font-weight: 500;
+                        font-size: 14px;
+                        line-height: 17px;
+                        text-align: center;
+                        letter-spacing: 0.636364px;
+                        color: #ffffff;
+                      "
+                      >save</span
+                    >
+                  </v-btn>
                 </v-card-actions>
               </v-form>
             </v-card>
           </v-tab-item>
+
+          <!-- SIMPLE NOTIFICATION -->
           <v-tab-item>
             <v-card style="background-color: transparent" flat>
               <v-form v-model="form">
@@ -202,13 +236,45 @@
                 </div>
 
                 <v-card-actions class="justify-end pa-8">
-                  <Overlaybtns
-                    btn-title="save"
-                    style="margin-right: 44px"
-                    icon="arrow-right"
-                    width="121px"
-                    height="45px"
-                  />
+                  <v-btn
+                    @click="saveAction"
+                    dark
+                    width="121"
+                    height="45"
+                    style="
+                      margin-right: 57px;
+                      background: #311b92;
+                      box-shadow: 0px 12px 22px rgba(0, 0, 0, 0.24);
+                      border-radius: 4px;
+                    "
+                  >
+                    <simple-line-icons
+                      icon="arrow-right"
+                      color="#FFFFFF"
+                      style="
+                        font-family: simple-line-icons;
+                        font-style: normal;
+                        font-weight: normal;
+                        font-size: 12px;
+                        line-height: 16px;
+                      "
+                      no-svg
+                    />
+                    <span
+                      class="text-capitalize pl-3"
+                      style="
+                        font-family: Inter;
+                        font-style: normal;
+                        font-weight: 500;
+                        font-size: 14px;
+                        line-height: 17px;
+                        text-align: center;
+                        letter-spacing: 0.636364px;
+                        color: #ffffff;
+                      "
+                      >save</span
+                    >
+                  </v-btn>
                 </v-card-actions>
               </v-form>
             </v-card>
@@ -216,17 +282,109 @@
         </v-tabs-items>
       </v-card>
     </v-dialog>
+
+    <v-dialog :value="dialog2" v-model="dialog2" max-width="574px">
+      <v-card height="722" color="#FEFCF8" class="rounded-lg">
+        <v-card-title
+          class="mb-8"
+          style="background: #ffffff; border-radius: 8px 8px 0px 0px"
+        >
+          <span
+            style="
+              font-family: Inter;
+              font-style: normal;
+              font-weight: 600;
+              font-size: 16px;
+              line-height: 19px;
+              color: #301f78;
+            "
+            >Confirmation</span
+          >
+          <v-spacer></v-spacer>
+          <v-icon
+            tag="button"
+            @click="dialog2 = false"
+            class="text-bolder"
+            color="#596A73"
+          >
+            mdi-close
+          </v-icon>
+        </v-card-title>
+        <div
+          class="mx-auto text-center"
+          style="
+            margin-top: 70px;
+            font-family: Inter;
+            font-style: normal;
+            font-weight: bold;
+            font-size: 32px;
+            line-height: 39px;
+            color: #301f78;
+          "
+        >
+          <h4>Completed</h4>
+
+          <v-card-text>
+            <v-img
+              class="mx-auto justify-center my-8"
+              :src="require('@/assets/pbot_icons/confirmation-success.png')"
+              alt="confirm image"
+              width="180px"
+            ></v-img>
+          </v-card-text>
+        </div>
+        <div class="justify-center mt-9">
+          <v-btn
+            @click="goBack"
+            dark
+            width="132"
+            height="45"
+            style="
+              margin-left: 221px;
+              background: #311b92;
+              box-shadow: 0px 12px 22px rgba(0, 0, 0, 0.24);
+              border-radius: 4px;
+            "
+          >
+            <simple-line-icons
+              icon="arrow-left"
+              color="#FFFFFF"
+              style="
+                font-family: simple-line-icons;
+                font-style: normal;
+                font-weight: normal;
+                font-size: 12px;
+                line-height: 16px;
+              "
+              no-svg
+            />
+            <span
+              class="text-capitalize pl-3"
+              style="
+                font-family: Inter;
+                font-style: normal;
+                font-weight: 500;
+                font-size: 14px;
+                line-height: 17px;
+                text-align: center;
+                letter-spacing: 0.636364px;
+                color: #ffffff;
+              "
+              >Go Back</span
+            >
+          </v-btn>
+        </div>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
 <script>
-import Overlaybtns from "../../btns/Overlaybtns.vue";
-
 export default {
-  components: { Overlaybtns },
   data() {
     return {
       dialog: false,
+      dialog2: false,
       switch1: false,
       switch2: false,
       radioGroup: null,
@@ -250,6 +408,45 @@ export default {
 
     formState() {
       this.form = !this.form;
+    },
+
+    goBack() {
+      this.dialog = true;
+      this.dialog2 = false;
+    },
+
+    saveAction() {
+      let data = {
+        type: "SendNotifications",
+        properties: {
+          keys: [
+            "to",
+            "from",
+            "text",
+            "type",
+            "orgid",
+            "subject",
+            "template",
+            "url",
+            "webhook",
+          ],
+          values: [
+            "to-value",
+            "from-value",
+            "text-value",
+            "type-value",
+            "orgid-value",
+            "subject-value",
+            "template-value",
+            "url-value",
+            "webhook-value",
+          ],
+        },
+      };
+
+      this.$emit("input", data);
+      this.dialog = false;
+      this.dialog2 = true;
     },
   },
 };

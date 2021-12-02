@@ -269,7 +269,7 @@
         </v-card>
         <v-row class="mx-auto justify-end mt-9">
           <v-btn
-            @click="dialog2 = !dialog2"
+            @click="saveAction"
             dark
             width="121"
             height="45"
@@ -362,14 +362,45 @@
           </v-card-text>
         </div>
         <div class="justify-center mt-9">
-          <Overlaybtns
-            to="/workflow"
-            style="margin-left: 221px"
+          <v-btn
+            @click="goBack"
+            dark
             width="132"
             height="45"
-            btn-title="Go Back"
-            icon="arrow-left"
-          />
+            style="
+              margin-left: 221px;
+              background: #311b92;
+              box-shadow: 0px 12px 22px rgba(0, 0, 0, 0.24);
+              border-radius: 4px;
+            "
+          >
+            <simple-line-icons
+              icon="arrow-left"
+              color="#FFFFFF"
+              style="
+                font-family: simple-line-icons;
+                font-style: normal;
+                font-weight: normal;
+                font-size: 12px;
+                line-height: 16px;
+              "
+              no-svg
+            />
+            <span
+              class="text-capitalize pl-3"
+              style="
+                font-family: Inter;
+                font-style: normal;
+                font-weight: 500;
+                font-size: 14px;
+                line-height: 17px;
+                text-align: center;
+                letter-spacing: 0.636364px;
+                color: #ffffff;
+              "
+              >Go Back</span
+            >
+          </v-btn>
         </div>
       </v-card>
     </v-dialog>
@@ -378,12 +409,8 @@
 
 <script>
 import format from "date-fns/format";
-import Overlaybtns from "../../btns/Overlaybtns.vue";
 
 export default {
-  components: {
-    Overlaybtns,
-  },
   data() {
     return {
       dialog: false,
@@ -395,13 +422,51 @@ export default {
     };
   },
   created() {
-    setTimeout(() => {
-      this.dialog2 = false;
-    }, 3000);
+    // setTimeout(() => {
+    //   this.dialog2 = false;
+    // }, 3000);
   },
   methods: {
     show(value) {
       this.dialog = value;
+    },
+
+    goBack() {
+      this.dialog = true;
+      this.dialog2 = false;
+    },
+    saveAction() {
+      let data = {
+        type: "SendPayment",
+        properties: {
+          keys: [
+            "reference",
+            "amount",
+            "description",
+            "payeeBankCode",
+            "payeeBankName",
+            "orgName",
+            "orgAccountNo",
+            "orgBankName",
+            "orgId",
+          ],
+          values: [
+            "reference-value",
+            "amount-value",
+            "description-value",
+            "payeeBankCode-value",
+            "payeeBankName-value",
+            "orgName-value",
+            "orgAccountNo-value",
+            "orgBankName-value",
+            "orgId-value",
+          ],
+        },
+      };
+
+      this.$emit("input", data);
+      this.dialog = false;
+      this.dialog2 = true;
     },
   },
   computed: {

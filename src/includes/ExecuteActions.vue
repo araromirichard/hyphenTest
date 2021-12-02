@@ -1,184 +1,152 @@
 <template>
-  <div>
-    <v-item-group @change="selectedActionChanged" v-model="selectedAction">
-      <v-row style="margin-right: 52px">
-        <v-col v-for="(item, i) in actions" :key="i" cols="12" sm="4">
-          <v-item :value="item" v-slot:default="{ active, toggle }">
-            <v-card
-              @click="toggle"
-              :elevation="active ? 4 : 0"
-              class="
-                d-flex
-                align-text-center
-                flex-column
-                rounded-lg
-                elevation-0
-              "
-              tile
-              :style="{
-                border: active
-                  ? '1px solid #6f7dc9'
-                  : ' 1px solid rgba(49, 27, 146, 0.2)',
-              }"
-              style="
-                width: auto;
-                height: 180px;
-                background: #ffffff;
-                box-sizing: border-box;
-                border-radius: 8px;
-              "
-            >
-              <v-img
-                v-if="item.text == 'Add Custom'"
-                contain
-                src="@/assets/pbot_icons/cross.png"
-                width="24.06px"
-                height="24.1px"
-                style="
-                  position: absolute;
-                  width: 34.06px;
-                  height: 34.1px;
-                  margin-left: 40%;
-                  margin-top: 40px;
-                "
-              >
-              </v-img>
-              <v-img
-                v-else
-                contain
-                src="@/assets/pbot_icons/rocket-pbot.png"
-                width="24.06px"
-                height="24.1px"
-                style="
-                  position: absolute;
-                  width: 34.06px;
-                  height: 34.1px;
-                  margin-left: 45%;
-                  margin-top: 40px;
-                "
-              >
-              </v-img>
-              <v-card
-                @click="showDialog(item.modalKey)"
+  <div
+    style="
+      padding: 50px 0px;
+      background-color: #fdf9ef;
+      min-height: 400px;
+      border-radius: 6px;
+    "
+  >
+    <div class="d-flex justify-center w-full">
+      <v-btn
+        color="#F9EED2"
+        style="text-transform: capitalize"
+        light
+        rounded
+        depressed
+        >Add action(s)</v-btn
+      >
+    </div>
+
+    <v-timeline>
+      <div class="d-flex mt-5">
+        <v-menu bottom offset-y>
+          <template v-slot:activator="{ on, attrs }">
+            <div class="d-flex mx-auto" v-bind="attrs" v-on="on">
+              <v-btn
+                v-if="selectedActions.length == 0"
+                fab
                 dark
-                tile
-                class="rounded-b-lg elevation-0 text-center"
-                style="
-                  width: 100%;
-                  height: 78px;
-                  position: absolute;
-                  bottom: 0;
-                  background: #fcfcfc;
-                  border-top: 1px solid rgba(49, 27, 146, 0.2);
-                  box-sizing: border-box;
-                "
+                height="45"
+                width="45"
+                color="#311B92"
+                depressed
+                class="mx-auto justify-center"
               >
-                <v-card-text
-                  class="
-                    text-primary
-                    mx-auto
-                    text-center text-break text-body-1
-                  "
-                  style="
-                    font-family: Inter;
-                    font-style: normal;
-                    font-weight: 500;
-                    font-size: 12px;
-                    line-height: 18px;
-                    text-align: center;
-                    letter-spacing: 0.45px;
-                    color: #301f78;
-                    mix-blend-mode: normal;
-                    opacity: 0.5;
-                    max-width: 10.5rem;
-                  "
-                >
-                  {{ item.text }}
-                </v-card-text>
-              </v-card>
-            </v-card>
-          </v-item>
-        </v-col>
-      </v-row>
-    </v-item-group>
-    <AddToPayables ref="addToPayables" />
-    <CreateDocument ref="CreateDocument" />
-    <SendNotifications ref="SendNotifications" />
-    <SendPayment ref="SendPayment" />
-    <UpdateERP ref="UpdateERP" />
+                <v-icon>mdi-plus</v-icon>
+              </v-btn>
+            </div>
+          </template>
+          <v-list>
+            <v-list-item-group>
+              <v-list-item
+                @click="selectedActions.push(item)"
+                class="py-3"
+                v-for="(item, j) in availableActions"
+                :key="j"
+              >
+                <v-list-item-title>{{ item.text }}</v-list-item-title>
+              </v-list-item>
+            </v-list-item-group>
+          </v-list>
+        </v-menu>
+      </div>
+    </v-timeline>
+
+      <!-- <div v-sortable="{ onUpdate: reOrder }"> -->
+
+    <div>
+      <action-workflow
+        v-for="(action, index) in selectedActions"
+        :isLast="index == selectedActions.length-1"
+        :key="index"
+        :index="index"
+        :action="action"
+        :availableActions="availableActions"
+        @properties="selectedProperties.splice(index, 1, $event)"
+        @add-action="addAction($event)"
+        @remove-action="removeAction(index)"
+      />
+    </div>
   </div>
 </template>
 
 <script>
-import AddToPayables from "../includes/overlays/ExecuteActionsModals/AddToPayables.vue";
-import SendPayment from "../includes/overlays/ExecuteActionsModals/SendPayment.vue";
-import UpdateERP from "../includes/overlays/ExecuteActionsModals/UpdateERP.vue";
-import CreateDocument from "./overlays/ExecuteActionsModals/CreateDocument.vue";
-import SendNotifications from "./overlays/ExecuteActionsModals/SendNotifications.vue";
+import actionWorkflow from "../components/pages/workflow/actions/action-workflow.vue";
 export default {
+  components: { actionWorkflow },
   name: "ExecuteActions",
   data() {
     return {
       dialog: false,
       switch1: false,
-      actions: [
+      list: ["Foo", "Bar", "Baz"],
+      availableActions: [
         {
           text: "Send Payment",
-          modalKey: "SendPayment",
+          channel: "SendPayment",
         },
         {
           text: "Add to Payables",
-          modalKey: "addToPayables",
+          channel: "addToPayables",
         },
         {
           text: "Send Notification",
-          modalKey: "SendNotifications",
+          channel: "SendNotifications",
         },
         {
           text: "Update ERP/Accounting",
-          modalKey: "UpdateERP",
+          channel: "UpdateERP",
         },
         {
           text: "Create Document",
-          modalKey: "CreateDocument",
+          channel: "CreateDocument",
         },
         {
           text: "Add Custom",
-          modalKey: "",
+          channel: "",
         },
       ],
-      selectedAction: null,
+      selectedActions: [],
+      selectedProperties: [],
     };
-  },
-  components: {
-    AddToPayables,
-    SendPayment,
-    UpdateERP,
-    CreateDocument,
-    SendNotifications,
   },
 
   methods: {
-    closeDialog() {
-      this.dialog = false;
+    onUpdate: function (event) {
+      this.list.splice(
+        event.newIndex,
+        0,
+        this.list.splice(event.oldIndex, 1)[0]
+      );
     },
 
-    selectedActionChanged(e) {
-      console.table({
-        e,
-        selectedAction: this.selectedAction,
-        text: e ? e.text : null,
-      });
+    reOrder(event) {
+        this.selectedActions.splice(event.newIndex, 0, this.selectedActions.splice(event.oldIndex, 1)[0]);
+                this.selectedProperties.splice(event.newIndex, 0, this.selectedProperties.splice(event.oldIndex, 1)[0])
+
     },
-    triggerDialog(item) {
-      this.selectedAction = item;
-      this.dialog = true;
+
+    addAction(action) {
+      this.selectedActions.push(action);
     },
-    showDialog(ref) {
-      this.$refs[ref].show(true);
+    removeAction(index) {
+      this.selectedActions.splice(index, 1);
+      this.selectedProperties.splice(index, 1);
+    },
+  },
+
+  watch: {
+    selectedProperties: {
+      deep: true,
+      immediate: true,
+      handler(newVal) {
+       this.$emit('input',newVal)
+       console.log(JSON.stringify(newVal, null, 2));
+      }
     },
   },
 };
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped></style>
