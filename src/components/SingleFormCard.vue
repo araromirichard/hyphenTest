@@ -8,7 +8,7 @@
             :key="card.title"
             cols="12"
             sm="6"
-            md="3"
+            md="4"
           >
             <v-item v-slot:default="{ active, toggle }">
               <v-card
@@ -29,12 +29,12 @@
                 <v-card-title
                   class="mx-2 mt-4 text-break"
                   style="
-                    max-width: 80%;
+                    max-width: 90%;
                     font-family: Inter;
                     font-style: normal;
-                    font-weight: 600;
+                    font-weight: 400;
                     font-size: 14px;
-                    line-height: 17px;
+                    line-height: 24px;
                     color: #596a73;
                   "
                   >{{ card.title }}</v-card-title
@@ -75,7 +75,7 @@
                   <p
                     class="ml-4"
                     style="
-                      margin-top: 11px;
+                      margin-top: 1.2em;
                       font-family: Inter;
                       font-style: normal;
                       font-weight: normal;

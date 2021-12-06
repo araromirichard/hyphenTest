@@ -4,7 +4,7 @@
       <v-item-group>
         <v-container>
           <v-row>
-            <v-col v-for="(card, i) in cards" :key="i" cols="12" md="3">
+            <v-col v-for="(card, i) in cards" :key="i" cols="12" md="4">
               <v-item v-slot:default="{ active, toggle }">
                 <v-card
                   @click="toggle"
@@ -27,15 +27,8 @@
                   "
                 >
                   <v-card-title
-                    class="mx-2 mt-4 text-break"
+                    class="mx-2 mt-4 text-break cardTitle"
                     style="
-                      max-width: 80%;
-                      font-family: Inter;
-                      font-style: normal;
-                      font-weight: 600;
-                      font-size: 14px;
-                      line-height: 17px;
-                      color: #596a73;
                     "
                     >{{ card.title }}</v-card-title
                   >
@@ -207,5 +200,14 @@ export default {
 .v-input--selection-controls {
   margin-top: 6px;
   padding-top: 0px;
+}
+.cardTitle {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 24px;
+  color: rgb(89, 106, 115);
+  text-align: left;
 }
 </style>

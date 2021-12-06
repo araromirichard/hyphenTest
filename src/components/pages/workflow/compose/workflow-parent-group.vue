@@ -1,6 +1,6 @@
 <template>
   <div class="mt-5">
-    <div class="font-weight-bold " style="color: #7f919b; font-size: 18px">
+    <div class="font-weight-bold " style="color: #7f919b; font-size: 16px">
       WHEN
       <v-menu bottom offset-y>
         <template v-slot:activator="{ on, attrs }">

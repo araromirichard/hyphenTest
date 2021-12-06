@@ -56,7 +56,7 @@
             </v-btn>
           </template>
           <v-card
-            max-width="360"
+            max-width=""
             height="300"
             flat
             class="m-0"
@@ -214,8 +214,8 @@
                 font-family: Inter;
                 font-style: normal;
                 font-weight: normal;
-                font-size: 12px;
-                line-height: 15px;
+                font-size: 16px;
+                line-height: 24px;
                 color: #596a73;
               "
             >
@@ -225,13 +225,14 @@
           <!-- -----------------------expansion-panel begins ------------------------------->
           <ExpansionPanel style="margin-bottom: 35px" />
           <!-- -----------------------expansion-panel ends ------------------------------->
+         
           <span
-            class="noWorkFlowTitle"
-            style="font-weight: 900; font-size: 19px"
+            class="noWorkFlowTitle px-12"
+            style="font-weight: 700; font-size: 24px"
           >
             {{ Rules ? `Your rules` : `Your workflow(s)` }}
           </span>
-          <span class="noWorkFlowText">
+          <span class="noWorkFlowText px-12 mt-4">
             Build your custom finance process rules
           </span>
           <v-card
@@ -343,9 +344,10 @@
               </v-btn>
             </v-row>
           </v-card>
+          
           <template v-else>
-            <SingleRule
-              style="margin-left: 43px; margin-top: 28px"
+            <SingleRule class="px-10"
+              style="margin-left: 0px; margin-top: 16px"
               :createdAt="dateValue() | date"
             />
           </template>
@@ -389,25 +391,24 @@ export default {
 <style scoped>
 .noWorkFlowTitle {
   display: block;
-  margin-left: 41px;
-  margin-top: 35px;
+  margin-left: 0px;
+  margin-top: 0px;
   font-family: "Inter", sans-serif;
   font-style: normal;
   font-weight: bold;
   font-size: 16px;
-  line-height: 19px;
-  letter-spacing: 0.45px;
+  line-height: 24px;
 
   color: #311b92;
 }
 .noWorkFlowText {
-  margin-left: 41px;
-  margin-top: 7px;
+  margin-left: 0px;
+  margin-top: 0px;
   font-family: "Inter", sans-serif;
   font-style: normal;
   font-weight: normal;
-  font-size: 12px;
-  line-height: 15px;
+  font-size: 16px;
+  line-height: 24px;
   color: #596a73;
 }
 

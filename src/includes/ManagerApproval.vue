@@ -1,37 +1,30 @@
 <template>
   <v-layout>
-    <v-card flat elevation="4" min-height="1200" style="width: 90%">
+    <v-card flat elevation="4" min-height="1200" style="width: 90%" class="workflow-wrap">
       <v-card
         flat
         class="rounded-t-lg"
-        style="margin-right: 57; background: rgba(127, 145, 155, 0.052607)"
+        style="background: rgba(127, 145, 155, 0.052607);margin-top:12px;padding-bottom:25px;"
       >
         <v-row class="d-flex">
           <img
-            style="font-size: 24px; margin-top: 37px; margin-left: 49px"
-            :src="require('@/assets/pbot_icons/ManagerApproval.svg')"
-            alt="Manager-approval-icon"
+            style="font-size: 24px; margin-top: 30px; margin-left: 40px;"
+            :src="require('@/assets/pbot_icons/chevron-forward.svg')"
+            alt="chevron-icon"
           />
           <v-card-title
-            class="ml-4 pa-6 justify-center align-center"
+            class="ml-2 pa-4 justify-center align-center flow-page-title"
             style="
-              margin-top: 34px;
-              font-family: Inter;
-              font-style: normal;
-              font-weight: bold;
-              font-size: 24px;
-              line-height: 29px;
-              color: #311b92;
             "
           >
-            Approval by MD & Snr. Managers
+            This title is dynamic,the workflow title and it can be as long as possible
           </v-card-title>
           <v-spacer></v-spacer>
           <v-switch
             dense
             color="#16BE98"
             hide-details="auto"
-            class="d-flex, row-reverse mr-16 justify-center align-center"
+            class="d-flex, row-reverse mr-6 justify-center align-center;margin-top:50px;"
           >
             <template #prepend>
               <v-label>
@@ -43,8 +36,8 @@
       </v-card>
       <template>
         <v-stepper
-          class="mx-auto pl-8"
-          style="top: 92px"
+          class="mx-auto pa-4"
+          style=""
           elevation="0"
           color="#301F78"
           v-model="e6"
@@ -57,31 +50,14 @@
             step="1"
           >
             <span
-              style="
-                margin-top: 40px;
-                font-family: Inter;
-                font-style: normal;
-                font-weight: 500;
-                font-size: 18px;
-                line-height: 19px;
-                color: #311b92;
-              "
+            class="flow-title"
             >
               Choose workflow trigger
             </span>
             <span
-              class="mt-6"
-              style="
-                font-family: Inter;
-                font-style: normal;
-                font-weight: 200;
-                font-size: 14px;
-                line-height: 15px;
-                letter-spacing: 0.45px;
-                color: #596a73;
-              "
+              class="mt-2 flow-txt"
               >All automation begins with a data source, choose one below to
-              initiate your automation rule</span
+              begin your workflow</span
             >
           </v-stepper-step>
 
@@ -97,7 +73,7 @@
               height="55"
               style="
                 margin-top: 26px;
-                margin-bottom: 73px;
+                margin-bottom: 72px;
                 background: #311b92;
                 box-shadow: 0px 12px 22px rgba(0, 0, 0, 0.24);
                 border-radius: 4px;
@@ -134,35 +110,18 @@
 
           <v-stepper-step non-linear :editable="e6 > 2" step="2">
             <span
-              style="
-                margin-top: 40px;
-                font-family: Inter;
-                font-style: normal;
-                font-weight: 500;
-                font-size: 18px;
-                line-height: 19px;
-                color: #311b92;
-              "
+              class="flow-title"
             >
               Compose workflow
             </span>
             <span
-              class="mt-6"
-              style="
-                font-family: Inter;
-                font-style: normal;
-                font-weight: 200;
-                font-size: 14px;
-                line-height: 15px;
-                letter-spacing: 0.45px;
-                color: #596a73;
-              "
+              class="mt-2 flow-txt"
               >Select items from your data source and compose how it should be
               handled by pbot</span
             >
           </v-stepper-step>
 
-          <v-stepper-content step="2">
+          <v-stepper-content step="2" class="pt-0">
             <compose-workflow v-model="schema" />
             <v-btn
               @click="e6 = 3"
@@ -210,31 +169,13 @@
 
           <v-stepper-step :editable="e6 > 3" step="3">
             <span
-              style="
-                margin-top: 40px;
-                font-family: Inter;
-                font-style: normal;
-                font-weight: 500;
-                font-size: 18px;
-                line-height: 19px;
-                color: #311b92;
-              "
+              class="flow-title"
             >
               Execute action
             </span>
             <span
-              class="mt-6"
-              style="
-                font-family: Inter;
-                font-style: normal;
-                font-weight: 200;
-                font-size: 14px;
-                line-height: 15px;
-                letter-spacing: 0.45px;
-                color: #596a73;
-              "
-              >Choose an action to be performed by the above rule or create a
-              new action.</span
+              class="mt-2 flow-txt"
+              >Arrange a set of actions you want executed when the above conditions are true for all data sent to this workflow</span
             >
           </v-stepper-step>
 
@@ -367,7 +308,7 @@
             class="block"
             style="
               color: #757575;
-              font-size: 18px;
+              font-size: 14px;
               text-decoration: underline;
               cursor: pointer;
             "
@@ -457,7 +398,7 @@ export default {
   font-family: "Inter";
   font-style: normal;
   font-weight: 500;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 15px;
   color: rgb(89, 106, 115);
   text-align: center;
@@ -466,7 +407,7 @@ export default {
   font-family: "Inter";
   font-style: normal;
   font-weight: normal;
-  font-size: 10px;
+  font-size: 12px;
   line-height: 14px;
   text-align: center;
   letter-spacing: 0.45px;
@@ -497,5 +438,38 @@ export default {
   border-top-right-radius: 0 !important;
   border-bottom-left-radius: 0 !important;
   border-bottom-right-radius: 0 !important;
+}
+.workflow-wrap .v-stepper__step{
+  align-items: start !important;
+}
+.flow-txt{
+  font-family: Inter;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.45px;
+    color: rgb(89, 106, 115);
+}
+.flow-title{
+  font-family: Inter;
+                font-style: normal;
+                font-weight: 600;
+                font-size: 18px;
+                line-height: 24px;
+                color: #311b92;
+}
+.flow-page-title{
+   margin-top: 30px;
+              font-family: Inter;
+              font-style: normal;
+              font-weight: 300;
+              font-size: 24px;
+              line-height: 32px;
+              color: #311b92;
+              max-width: 500px;
+              /*white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;*/
 }
 </style>

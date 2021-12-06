@@ -1,5 +1,5 @@
 <template>
-  <v-row class="mx-2" style="align-items: center" no-gutters>
+  <v-row class="mx-2 pl-4" style="align-items: center" no-gutters>
     <v-col cols="12" md="4">
       <v-select
         v-model="form.field"

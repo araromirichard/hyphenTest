@@ -18,7 +18,7 @@
                   class="justify-center notActive"
                   flat
                   width="110"
-                  height="80"
+                  height="100"
                   style="
                     border: 1px solid rgba(48, 31, 120, 0.07);
                     border-radius: 8px;
@@ -26,20 +26,21 @@
                   "
                 >
                   <v-img
-                    class="mx-auto mt-7"
+                    class="mx-auto"
                     contain
                     width="22px"
                     height="22px"
+                    style="margin-top: 32%;"
                     src="@/assets/pbot_icons/wFlowTrigger1.png"
                   >
                   </v-img>
                 </v-card>
               </v-item>
-              <div class="mt-2">
+              <div class="mt-1">
                 <h5 class="cardTitle">
                   {{ dataItem.title }}
                 </h5>
-                <h6 class="spanText mt-1 text-break" style="max-width: 8rem">
+                <h6 class="spanText text-break" style="max-width: 8rem">
                   {{ dataItem.text }}
                 </h6>
               </div>
@@ -57,7 +58,7 @@
             background: #ffffff;
             box-sizing: border-box;
             border-radius: 3px;
-            width: 223px;
+            width: 50%;
             height: 50px;
           "
           class="justify-center flex-column custom-placeholer-color"
@@ -133,20 +134,19 @@ export default {
 .cardTitle {
   font-family: "Inter";
   font-style: normal;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 15px;
-  color: rgb(89, 106, 115);
-  text-align: center;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #000; /*rgb(89, 106, 115);*/
+  text-align: left;
 }
 .spanText {
   font-family: "Inter";
   font-style: normal;
   font-weight: normal;
   font-size: 12px;
-  line-height: 14px;
-  text-align: center;
-  letter-spacing: 0.45px;
+  line-height: 16px;
+  text-align: left;
   color: #7f919b;
 }
 .notActive {

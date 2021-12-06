@@ -7,14 +7,14 @@
           slider-color="#301F78"
           slider-size="4"
           background-color="#fffbf1"
-          style="margin:140px auto auto auto;width:100% mix-blend-mode: normal;padding:0px"
+          style="margin:0px auto auto auto;width:100% mix-blend-mode: normal;padding:10px"
         >
           <v-tab> Details </v-tab>
           <v-tab> Audit Trail </v-tab>
 
           <v-tab-item>
             <v-divider></v-divider>
-            <div style="background-color: #fffbf1; width: 100%; padding: 10px">
+            <div class="full-height pa-4" style="background-color: #fffbf1; width: 100%; padding: 10px">
               <div
                 class="d-flex mx-auto"
                 style="
@@ -63,23 +63,23 @@
 
               <div v-if="conditions != null">
                 <span
-                  class="d-block my-8"
+                  class="d-block my-4"
                   style="color: #7f919b; font-size: 18px"
                   >Conditions</span
                 >
 
-                <div class="my-3 mt-14 uppercase" style="font-size: 18px">
+                <div class="my-4 uppercase" style="font-size: 14px">
                   When
                   <span
                     class="font-weight-bold"
-                    style="font-size: 16px; color: #311b92"
+                    style="font-size: 14px; color: #311b92"
                     >{{ group_Type(conditions.properties.type) }}</span
                   >
                   of the following is
 
                   <span
                     class="font-weight-bold"
-                    style="font-size: 16px; color: #16be98"
+                    style="font-size: 14px; color: #16be98"
                     >TRUE</span
                   >
                 </div>
@@ -89,23 +89,22 @@
                   :key="z"
                 >
                   <div
-                    class="my-3 mt-14"
-                    style="font-size: 18px"
+                    class="my-3 mt-4"
+                    style="font-size: 14px"
                     v-if="condition.type == 'group'"
                   >
-                    When
+                    With
                     <span
                       class="font-weight-bold"
-                      style="font-size: 16px; color: #311b92"
+                      style="font-size: 14px; color: #311b92"
                       >{{ group_Type(condition.properties.type) }}</span
                     >
-                    of the following is
+                    of the following
 
-                    <span
+                   <!-- <span
                       class="font-weight-bold"
-                      style="font-size: 16px; color: #16be98"
-                      >TRUE</span
-                    >
+                      style="font-size: 14px; color: #16be98"
+                      >TRUE</span>-->
                   </div>
                   <template v-if="condition.type == 'group'">
                     <div
@@ -123,14 +122,14 @@
                       >
                         <span
                           class="font-weight-bold mx-1"
-                          style="font-size: 17px; color: #000"
+                          style="font-size: 16px; color: #000"
                           >{{ condition.properties.field }}</span
                         >
                         is
                         <span
                           class="font-weight-bold px-2 mx-2"
                           style="
-                            font-size: 17px;
+                            font-size: 16px;
                             color: #16be98;
                             background-color: #d4f6ef;
                             border-radius: 50px;
@@ -143,7 +142,7 @@
                         <span
                           class="font-weight-bold px-2 mx-2"
                           style="
-                            font-size: 17px;
+                            font-size: 16px;
                             color: #e3aa1c;
                             background-color: #f9eed2;
                             border-radius: 50px;
@@ -166,14 +165,14 @@
 
                       <span
                         class="font-weight-bold mx-1"
-                        style="font-size: 17px; color: #000"
+                        style="font-size: 16px; color: #000"
                         >{{ condition.properties.field }}</span
                       >
                       is
                       <span
                         class="font-weight-bold px-2 mx-2"
                         style="
-                          font-size: 17px;
+                          font-size: 16px;
                           color: #16be98;
                           background-color: #d4f6ef;
                           border-radius: 50px;
@@ -186,7 +185,7 @@
                       <span
                         class="font-weight-bold px-2 mx-2"
                         style="
-                          font-size: 17px;
+                          font-size: 16px;
                           color: #e3aa1c;
                           background-color: #f9eed2;
                           border-radius: 50px;
@@ -220,20 +219,14 @@
           <v-icon large color="#311b92">mdi-chevron-left</v-icon>
           <span
             style="
-            margin-right: 58px
-              font-family: Inter;
-              font-style: normal;
-              font-weight: 700;
-              font-size: 16px;
-              line-height: 19px;
-              color: #311b92;
             "
+            class="back"
             >Back</span
           >
         </v-btn>
       </v-row>
       <v-row>
-        <ManagerApproval style="margin-top: 59px; margin-left: 47px" />
+        <ManagerApproval style="margin-top: 10px; margin-left: 10px" />
       </v-row>
     </v-col>
   </v-row>
@@ -302,4 +295,14 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.back{
+  margin-right: 58px;
+              font-family: Inter;
+              font-style: normal;
+              font-weight: 700;
+              font-size: 16px;
+              line-height: 24px;
+              color: #311b92;
+}
+</style>

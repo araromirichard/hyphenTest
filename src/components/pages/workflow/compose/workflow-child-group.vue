@@ -18,7 +18,7 @@
           ? '#F8F9FC'
           : 'transparent'
       "
-      class="mb-5 mt-11"
+      class="mb-5 mt-5"
     >
       <div class="text-left mt-5">
         <div
@@ -36,9 +36,8 @@
             font-size: 15px;
             line-height: 15px;
             text-transform: uppercase;
-            color: #96a9cf;
           "
-          :style="groupConditions.length > 1 ? undefined : 'opacity:0.4'"
+          :style="groupConditions.length > 1 ? undefined : 'opacity:1'"
         >
           WITH
 
@@ -48,6 +47,7 @@
                 id="chip"
                 small
                 text-color="#311b92"
+                color="white"
                 class="font-weight-bold px-4 mx-1"
                 style="font-size: 16px"
                 v-bind="attrs"
