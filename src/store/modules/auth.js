@@ -34,7 +34,16 @@ const actions = {
     } catch (error) {
       return Promise.reject(error);
     }
-  }
+  },
+
+  async registerCoWorkerUser({ commit }, payload) {
+    try {
+      const {data} = await Auth.registerCoWorkerUser(payload);
+      return data;
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  },
 };
 
 export default {
