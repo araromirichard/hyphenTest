@@ -322,11 +322,25 @@ export default {
 
   methods: {
     ...mapActions({ showToast: "ui/showToast" }),
-    submitForm(event) {
+    async submitForm(event) {
       if (this.$refs.form.validate()) {
         event.preventDefault();
         console.log("login Data", this.loginData);
         console.log("Login Details", JSON.stringify(this.loginData));
+
+
+
+        try {
+          const {data} = await this.$store.dispatch("auth/login", {
+            identifier: this.loginData.email,
+            password: this.loginData.password,
+          });
+
+          console.log(JSON.stringify(data, null, 2));
+        } catch (error) {
+          console.log(error);
+        //  console.log(JSON.stringify(error.msg[0].messages[0].message, null, 2));
+        }
 
         this.showToast({
           sclass: "success",

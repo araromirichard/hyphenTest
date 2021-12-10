@@ -5,8 +5,8 @@
         class="px-0"
         cols="10"
         offset="1"
-        md="6"
-        offset-md="3"
+        md="8"
+        offset-md="2"
         style="min-height: 100vh"
       >
         <v-card class="pb-10 mt-16" elevation="4" v-if="pageTwo">
@@ -53,7 +53,7 @@
             <validation-observer ref="observer" v-slot="{ invalid }">
               <v-form class="ma-auto" ref="form">
                 <v-card-text class="pa-0">
-                  <v-row class="pt-2">
+                  <v-row class="pt-2 mb-0">
                     <v-col cols="12" md="6">
                       <validation-provider
                         v-slot="{ errors }"
@@ -107,7 +107,7 @@
                       outlined
                       type="email"
                       required
-                      class="py-6 font-weight-regular text-lowercase"
+                      class="py-3 pb-0 mb-0 font-weight-regular text-lowercase"
                       v-model="signUpDetails.email"
                       :error-messages="errors"
                     ></v-text-field>
@@ -125,8 +125,30 @@
                       placeholder="Mobile Phone. e.g. +234080990000"
                       single-line
                       outlined
-                      class="font-weight-regular pb-0 mb-0"
+                      class="py-6 font-weight-regular"
                       v-model="signUpDetails.phoneNumber"
+                      required
+                      :error-messages="errors"
+                    ></v-text-field>
+                  </validation-provider>
+
+
+                        <validation-provider
+                    v-slot="{ errors }"
+                    name="Password"
+                    :rules="{
+                      required: true,
+                      min:{length: 6},
+                    }"
+                  >
+                    <v-text-field
+                      hide-details="auto"
+                      placeholder="Password"
+                      single-line
+                      outlined
+                      type="password"
+                      class="font-weight-regular"
+                      v-model="signUpDetails.password"
                       required
                       :error-messages="errors"
                     ></v-text-field>
@@ -267,6 +289,7 @@ export default {
         lastName: "",
         email: "",
         phoneNumber: "",
+        password:""
       },
       pageTwo: true,
     };
@@ -291,7 +314,9 @@ export default {
     //   this.email = "";
     //   this.$refs.observer.reset();
     // },
+    
   },
+  
 };
 </script>
 
