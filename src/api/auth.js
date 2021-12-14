@@ -11,7 +11,7 @@ export default {
   },
 
   registerUser(credentials){
-      return api().post("/auth/register", credentials);
+      return api().post("/auth/local/register", credentials);
 
       // {
       //   "username":"gdi",
