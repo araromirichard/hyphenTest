@@ -5,7 +5,7 @@
         class="text-center text-h5 text-md-h3 px-0"
         style="padding-top: 124px; color: #311b92"
       >
-        Hello Bunmi
+        Hello {{user.username}}
       </h1>
       <p
         class="text-center text-caption text-md-h6"
@@ -225,6 +225,7 @@
 
 <script>
 import Button from "../../includes/flat-button.vue";
+import { mapGetters } from "vuex";
 export default {
   data() {
     return {
@@ -237,6 +238,9 @@ export default {
   },
 
   methods: {},
+  computed:{
+    ...mapGetters("auth", ["user"])
+  }
 };
 </script>
 

@@ -1,5 +1,6 @@
 <template>
   <v-card class="pb-10 mt-16" elevation="4">
+
     <v-row class="pa-0 ma-0 d-flex flex-row">
       <v-col cols="12" md="8" class="pa-0">
         <p
@@ -46,7 +47,7 @@
         "
         v-if="$vuetify.breakpoint.mdAndUp"
       >
-        Hello {{ firstName }}, to get great value from pbot please provide
+        Hello {{ user.username }}, to get great value from pbot please provide
         information about your company below
       </p>
     </div>
@@ -211,7 +212,7 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions,mapGetters } from "vuex";
 // import { required, email } from "vee-validate/dist/rules";
 // import {
 //   extend,
@@ -281,6 +282,9 @@ export default {
       }
     },
   },
+  computed:{
+     ...mapGetters("auth",["user"])
+  }
 };
 </script>
 
