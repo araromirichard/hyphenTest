@@ -4,7 +4,10 @@ const state = {
   user: null,
 };
 
-const getters = {}
+const getters = {
+  isAuthenticated: (state) => !!state.user,
+  user: (state) => state.user.user,
+}
 
 const mutations = {
   setUser(state, user) {
@@ -17,7 +20,7 @@ const actions = {
 
   async login({ commit }, payload) {
     try {
-      const {data} = await Auth.login(payload);
+      const { data } = await Auth.login(payload);
       commit("setUser", data);
       return data;
     } catch (error) {
@@ -27,18 +30,20 @@ const actions = {
 
 
   async register({ commit }, payload) {
+    console.log(JSON.stringify(payload, null, 2));
     try {
-      const {data} = await Auth.register(payload);
-      commit("setUser", data);
-      return data;
+      const  req  = await Auth.registerUser(payload);
+      commit("setUser", req.data);
+      return req.data;
     } catch (error) {
       return Promise.reject(error);
     }
   },
 
-  async registerCoWorkerUser({ commit }, payload) {
+  async registerCoWorkerUser({commit}, payload) {
     try {
-      const {data} = await Auth.registerCoWorkerUser(payload);
+      const data = await Auth.registerCoWorkerUser(payload);
+      commit("coworker", data);
       return data;
     } catch (error) {
       return Promise.reject(error);
