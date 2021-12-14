@@ -33,6 +33,7 @@
                   label="Your Email"
                   single-line
                   outlined
+                  :disabled="isLoginin"
                   type="email"
                   required
                   class="font-weight-regular label--text"
@@ -45,6 +46,7 @@
                   label="Password"
                   single-line
                   outlined
+                :disabled="isLoginin"
                   class="
                     mt-8
                     font-weight-regular
@@ -92,9 +94,8 @@
                   height="54px"
                   width="88px"
                   class="text-capitalize"
-                >
-                  <router-link @click.native="welcome" to="welcome">
-                    <span
+                  :loading="isLoginin"
+                > <span
                       style="
                         font-family: Inter;
                         font-style: normal;
@@ -105,9 +106,7 @@
                         letter-spacing: 0.727273px;
                         color: #ffffff;
                       "
-                      >Continue</span
-                    >
-                  </router-link>
+                      >Continue</span>
                 </v-btn>
               </v-card-actions>
             </v-form>
@@ -298,6 +297,7 @@ export default {
         email: "",
         password: "",
       },
+      isLoginin:false,
       forgotPassword: "",
       errorMsg: "",
       emailRules: [
@@ -331,23 +331,35 @@ export default {
 
 
         try {
+          this.isLoginin = true;
           const {data} = await this.$store.dispatch("auth/login", {
             identifier: this.loginData.email,
             password: this.loginData.password,
           });
 
           console.log(JSON.stringify(data, null, 2));
-        } catch (error) {
-          console.log(error);
-        //  console.log(JSON.stringify(error.msg[0].messages[0].message, null, 2));
-        }
 
-        this.showToast({
+             this.showToast({
           sclass: "success",
           show: true,
           message: "Sign in succesfully",
           timeout: 3000,
         });
+        this.$router.push('/welcome');
+        } catch (error) {
+          console.log(error);
+              this.showToast({
+          sclass: "error",
+          show: true,
+          message: "Invalid email or password",
+          timeout: 3000,
+        });
+        //  console.log(JSON.stringify(error.msg[0].messages[0].message, null, 2));
+        }finally{
+          this.isLoginin = false;
+        }
+
+     
       }
     },
   },
