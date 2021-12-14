@@ -9,7 +9,7 @@
         offset-md="2"
         style="min-height: 100vh"
       >
-        <v-card class="pb-10 mt-16" elevation="4" v-if="pageTwo">
+        <v-card class="pb-10 mt-16" elevation="4" v-if="pageOne">
           <v-row class="pa-0 ma-0 d-flex flex-row">
             <v-col cols="12" md="8" class="pa-0">
               <p
@@ -69,7 +69,7 @@
                           required
                           :error-messages="errors"
                           class="font-weight-regular"
-                          v-model="signUpDetails.firstName"
+                          v-model="signUpDetails.Firstname"
                         >
                         </v-text-field>
                       </validation-provider>
@@ -89,12 +89,31 @@
                           required
                           :error-messages="errors"
                           class="font-weight-regular"
-                          v-model="signUpDetails.lastName"
+                          v-model="signUpDetails.LastName"
                         >
                         </v-text-field>
                       </validation-provider>
                     </v-col>
                   </v-row>
+                  <validation-provider
+                    v-slot="{ errors }"
+                    name="Username"
+                    :rules="{
+                      required: true,
+                    }"
+                  >
+                    <v-text-field
+                      hide-details="auto"
+                      placeholder="Username"
+                      single-line
+                      outlined
+                      type="text"
+                      class="font-weight-regular"
+                      v-model="signUpDetails.username"
+                      required
+                      :error-messages="errors"
+                    ></v-text-field>
+                  </validation-provider>
                   <validation-provider
                     v-slot="{ errors }"
                     name="Business Email"
@@ -132,13 +151,12 @@
                     ></v-text-field>
                   </validation-provider>
 
-
-                        <validation-provider
+                  <validation-provider
                     v-slot="{ errors }"
                     name="Password"
                     :rules="{
                       required: true,
-                      min:{length: 6},
+                      min: { length: 6 },
                     }"
                   >
                     <v-text-field
@@ -171,9 +189,10 @@
                     height="54px"
                     color="primary"
                     elevation="20"
+                    :loading="isCreating"
                     large
                     class="text-capitalize"
-                    @click="goNext"
+                    @click="createAccount"
                   >
                     <span
                       style="
@@ -278,20 +297,23 @@ import SignUp2 from "./SignUp2";
 //   message:
 //     "Please use a company email you have access to, this will be used for login later",
 // });
-
+import { mapActions } from "vuex";
 export default {
   name: "SignUp",
 
   data() {
     return {
       signUpDetails: {
-        firstName: "",
-        lastName: "",
+        Firstname: "",
+        Lastname: "",
+        username: "",
         email: "",
         phoneNumber: "",
-        password:""
+        password: "",
       },
-      pageTwo: true,
+
+      pageOne: true,
+      isCreating:false
     };
   },
   components: {
@@ -300,13 +322,42 @@ export default {
     // ValidationObserver,
   },
   methods: {
-    goNext() {
+     ...mapActions({ showToast: "ui/showToast" }),
+    async createAccount() {
       if (this.$refs.observer.validate()) {
-        console.log(this.signUpDetails);
-        console.log("User Details", JSON.stringify(this.signUpDetails));
-        this.pageTwo = !this.pageTwo;
+        console.log('ready')
+        try {
+          this.isCreating = true;
+          const req = await this.$store.dispatch(
+            "auth/register",
+            this.signUpDetails
+          );
+          console.log(JSON.stringify(req, null, 2));
+
+             this.showToast({
+          sclass: "success",
+          show: true,
+          message: "Account created successfully",
+          timeout: 3000,
+        });
+
+        localStorage.setItem("token", JSON.stringify(req.data));
+          
+          this.pageOne = false;
+        } catch (err) {
+          console.log(JSON.stringify(err, null, 2));
+        } finally {
+          this.isCreating = false
+        }
       }
     },
+    //   goNext() {
+    //  //   if (this.$refs.observer.validate()) {
+    //       console.log(this.signUpDetails);
+    //       console.log("User Details", JSON.stringify(this.signUpDetails));
+    //       this.pageOne = !this.pageOne;
+    //     }
+    //   },
     // clear() {
     //   this.firstName = "";
     //   this.lastName = "";
@@ -314,9 +365,7 @@ export default {
     //   this.email = "";
     //   this.$refs.observer.reset();
     // },
-    
   },
-  
 };
 </script>
 
