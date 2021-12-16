@@ -2,16 +2,19 @@ import Auth from "../../api/auth";
 
 const state = {
   user: null,
+  token: null,
 };
 
 const getters = {
   isAuthenticated: (state) => !!state.user,
   user: (state) => state.user.user,
+  token: (state) => state.user.jwt,
 }
 
 const mutations = {
   setUser(state, user) {
     state.user = user;
+    state.token = user.jwt;
   },
 };
 
