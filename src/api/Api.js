@@ -22,28 +22,24 @@ export default () => {
             console.log("it was not found...404");
         }
 
-        console.log(JSON.stringify(error.response, null, 2));
+         console.log(JSON.stringify(error.response.data, null, 2));
 
         error_message = {
           msg:
-            error.response.data.msg != undefined
-              ? error.response.data.msg
-              : error.response.data.message != undefined
-              ? error.response.data.message
-              : error.response.data.errors != undefined
-              ? error.response.data.errors[0].msg
-              : "Unknown Error",
-          status:
-            error.response.status != undefined ? error.response.status : null,
+          error.response.data.data[0].messages[0].message != undefined
+          ?   error.response.data.data[0].messages[0].message :
+            'Unknown Error',
+          
+              status: error.response.status != undefined ? error.response.status : null,
         };
       } catch (err) {
         error_message = {
           msg: "An error occurred",
           status: null,
         };
-
+      }
         return Promise.reject(error_message);
-      } 
+      
     }
   );
 

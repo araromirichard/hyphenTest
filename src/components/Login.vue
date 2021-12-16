@@ -46,7 +46,7 @@
                   label="Password"
                   single-line
                   outlined
-                :disabled="isLoginin"
+                  :disabled="isLoginin"
                   class="
                     mt-8
                     font-weight-regular
@@ -95,18 +95,20 @@
                   width="88px"
                   class="text-capitalize"
                   :loading="isLoginin"
-                > <span
-                      style="
-                        font-family: Inter;
-                        font-style: normal;
-                        font-weight: 900;
-                        font-size: 16px;
-                        line-height: 19px;
-                        text-align: center;
-                        letter-spacing: 0.727273px;
-                        color: #ffffff;
-                      "
-                      >Continue</span>
+                >
+                  <span
+                    style="
+                      font-family: Inter;
+                      font-style: normal;
+                      font-weight: 900;
+                      font-size: 16px;
+                      line-height: 19px;
+                      text-align: center;
+                      letter-spacing: 0.727273px;
+                      color: #ffffff;
+                    "
+                    >Continue</span
+                  >
                 </v-btn>
               </v-card-actions>
             </v-form>
@@ -297,7 +299,7 @@ export default {
         email: "",
         password: "",
       },
-      isLoginin:false,
+      isLoginin: false,
       forgotPassword: "",
       errorMsg: "",
       emailRules: [
@@ -328,38 +330,34 @@ export default {
         console.log("login Data", this.loginData);
         console.log("Login Details", JSON.stringify(this.loginData));
 
-
-
         try {
           this.isLoginin = true;
-          const {data} = await this.$store.dispatch("auth/login", {
+          const data = await this.$store.dispatch("auth/login", {
             identifier: this.loginData.email,
             password: this.loginData.password,
           });
 
           console.log(JSON.stringify(data, null, 2));
 
-             this.showToast({
-          sclass: "success",
-          show: true,
-          message: "Sign in succesfully",
-          timeout: 3000,
-        });
-        this.$router.push('/welcome');
+          this.showToast({
+            sclass: "success",
+            show: true,
+            message: "Sign in succesfully",
+            timeout: 3000,
+          });
+          this.$router.push("/welcome");
         } catch (error) {
-          console.log(error);
-              this.showToast({
-          sclass: "error",
-          show: true,
-          message: "Invalid email or password",
-          timeout: 3000,
-        });
-        //  console.log(JSON.stringify(error.msg[0].messages[0].message, null, 2));
-        }finally{
+          console.log(JSON.stringify(error, null, 2));
+          this.showToast({
+            sclass: "error",
+            show: true,
+            message:error.msg,
+            timeout: 3000,
+          });
+       
+        } finally {
           this.isLoginin = false;
         }
-
-     
       }
     },
   },

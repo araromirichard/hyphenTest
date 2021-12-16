@@ -313,7 +313,7 @@ export default {
       },
 
       pageOne: true,
-      isCreating:false
+      isCreating: false,
     };
   },
   components: {
@@ -322,10 +322,10 @@ export default {
     // ValidationObserver,
   },
   methods: {
-     ...mapActions({ showToast: "ui/showToast" }),
+    ...mapActions({ showToast: "ui/showToast" }),
     async createAccount() {
       if (this.$refs.observer.validate()) {
-        console.log('ready')
+        console.log("ready");
         try {
           this.isCreating = true;
           const req = await this.$store.dispatch(
@@ -334,20 +334,25 @@ export default {
           );
           console.log(JSON.stringify(req, null, 2));
 
-             this.showToast({
-          sclass: "success",
-          show: true,
-          message: "Account created successfully",
-          timeout: 3000,
-        });
+          this.showToast({
+            sclass: "success",
+            show: true,
+            message: "Account created successfully",
+            timeout: 3000,
+          });
 
-        localStorage.setItem("token", JSON.stringify(req.data));
-          
+          localStorage.setItem("token", JSON.stringify(req.data));
+
           this.pageOne = false;
         } catch (err) {
-          console.log(JSON.stringify(err, null, 2));
+          this.showToast({
+            sclass: "error",
+            show: true,
+            message: err.msg,
+            timeout: 3000,
+          });
         } finally {
-          this.isCreating = false
+          this.isCreating = false;
         }
       }
     },
