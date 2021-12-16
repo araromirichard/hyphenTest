@@ -1,6 +1,5 @@
 <template>
   <v-card class="pb-10 mt-16" elevation="4">
-
     <v-row class="pa-0 ma-0 d-flex flex-row">
       <v-col cols="12" md="8" class="pa-0">
         <p
@@ -47,8 +46,8 @@
         "
         v-if="$vuetify.breakpoint.mdAndUp"
       >
-        Hello {{ user.username }}, to get great value from pbot please provide
-        information about your company below
+        Hello {{user.username}}, to get great value from pbot please provide information about
+        your company below
       </p>
     </div>
     <div
@@ -57,9 +56,9 @@
         paddingRight: `${$vuetify.breakpoint.smAndUp ? '78px' : '34px'}`,
       }"
     >
-      <validation-observer ref="observer" v-slot="{ handleSubmit }">
+      <validation-observer ref="observer" v-slot="{ invalid }">
         <v-form
-          @submit.prevent="handleSubmit(onSubmit)"
+          @submit.prevent="onSubmit "
           class="ma-auto"
           ref="form"
         >
@@ -81,7 +80,7 @@
                     type="text"
                     required
                     class="font-weight-regular text-subtitle-2 pb-0 mt-3 mb-6"
-                    v-model="companyDetails.companyName"
+                    v-model="companyDetails.orgname"
                   ></v-text-field>
                 </validation-provider>
 
@@ -132,6 +131,8 @@
                     class="font-weight-regular text-subtitle-2 pb-0 mb-6"
                     v-model="companyDetails.size"
                     :items="companyTeamSize"
+                    item-value="value"
+                    item-text="string"
                     required
                   ></v-select>
                 </validation-provider>
@@ -142,8 +143,7 @@
           <v-card-actions class="justify-center px-0">
             <v-btn
               :disabled="invalid"
-              @click="submit"
-              to="/onboarding"
+              @click="onSubmit"
               block
               width="88px"
               height="54px"
@@ -212,7 +212,7 @@
 </template>
 
 <script>
-import { mapActions,mapGetters } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 // import { required, email } from "vee-validate/dist/rules";
 // import {
 //   extend,
@@ -235,18 +235,19 @@ import { mapActions,mapGetters } from "vuex";
 export default {
   data() {
     return {
-      firstName: "John",
       snackbar: {
         snackbar: false,
         text: null,
         sclass: null,
         timeout: 1000,
       },
+      isCreating:false,
       companyDetails: {
-        companyName: "",
+        orgname: "",
         country: "",
         accountSystem: "",
         cac: "",
+        size: "",
         email: "",
       },
       operatingCountries: [
@@ -256,10 +257,22 @@ export default {
         "Ghana",
       ],
       companyTeamSize: [
-        "Less than 10",
-        "Less than 50",
-        "Less than 100",
-        "More than 100",
+         {
+         string:'Les than 10',
+          value: 9
+       },
+        {
+         string:'Less than 50',
+          value: 49
+       },
+        {
+         string:'Less than 100',
+          value: 99
+       },
+        {
+         string:'More than 100',
+          value: 101
+       }
       ],
     };
   },
@@ -267,24 +280,89 @@ export default {
   //   ValidationProvider,
   //   ValidationObserver,
   // },
+
+  // {
+  //     "orgname": "Mulaa 44 Ltd",
+  //     "members": [
+  //       "9"
+  //     ],
+  //     "multitenant": false,
+  //     "bank": [
+  //       {
+  //         "account_name": "Mulaa Analytics",
+  //         "bank_name": "GTB",
+  //         "routing_number": "",
+  //         "account_type": "current",
+  //         "account_number": "9030303033",
+  //         "authid": ""
+  //       }
+  //     ],
+  //     "company": {
+  //       "company_name": "Mulaa Analytics",
+  //       "registration_number": "293303033",
+  //       "country": "Nigeria"
+  //     },
+  //     "office": [
+  //       {
+  //         "address": "18 cooper road ",
+  //         "state": "Lagos",
+  //         "city": "Ikoyi",
+  //         "country": "Nigeria",
+  //         "postcode": 102105
+  //       }
+  //     ],
+  //     "leadership": [
+  //       {
+  //         "first_name": "Samson",
+  //         "last_name": "Aligba",
+  //         "percentage": "30",
+  //         "email": "sa@mulaa.me",
+  //         "phone": "08029735939",
+  //         "position": "MD"
+  //       }
+  //     ]
+  //   }
   methods: {
     ...mapActions({ showToast: "ui/showToast" }),
-    onSubmit() {
+    async onSubmit() {
       if (this.$refs.observer.validate()) {
-        console.log(this.companyDetails);
-        console.log("Company Details", JSON.stringify(this.companyDetails));
-        this.showToast({
-          sclass: "success",
-          show: true,
-          message: "Sign Up succesfully",
-          timeout: 3000,
-        });
+  
+        const payload = {
+          orgname: this.companyDetails.orgname,
+          members: [this.companyDetails.size],
+          company: {
+            company_name: this.companyDetails.orgname,
+            registration_number: this.companyDetails.cac,
+            country: this.companyDetails.country,
+          },
+        };
+
+        try {
+          this.isCreating
+          const req = await this.$store.dispatch(
+            "organizations/createOrganization",
+            payload
+          );
+          console.log(JSON.stringify(req, null, 2));
+
+           this.$router.push('/welcome')
+        } catch (error) {
+          console.log(JSON.stringify(error, null, 2));
+          this.showToast({
+            sclass: "error",
+            show: true,
+            message: error.msg,
+            timeout: 3000,
+          });
+        }finally{
+          this.isCreating = false
+        }
       }
     },
   },
-  computed:{
-     ...mapGetters("auth",["user"])
-  }
+  computed: {
+    ...mapGetters("auth", ["user"]),
+  },
 };
 </script>
 

@@ -341,7 +341,7 @@ export default {
             timeout: 3000,
           });
 
-          localStorage.setItem("token", JSON.stringify(req.data));
+          localStorage.setItem("user", JSON.stringify(req));
 
           this.pageOne = false;
         } catch (err) {
