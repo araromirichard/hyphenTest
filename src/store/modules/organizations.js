@@ -1,37 +1,43 @@
 import Organization from "../../api/organizations";
 
-const state = {}
+const state = {};
 
-const getters = {}
+const getters = {};
+
+const mutations = {
+    commitOrganization(state, organization) {
+        state.organization = organization;
+    }
+};
 
 const actions = {
-
-    async createOrganization({}, organization) {
-        try {
-            const response = await Organization.create(organization);
-            return response;
-        } catch (error) {
-            return Promise.reject(error);
-        }
-    },
-
-    async updateOrganization({}, organization) {
-        try {
-            const response = await Organization.update(organization);
-            return response;
-        } catch (error) {
-            return Promise.reject(error);
-        }
+  async createOrganization({ commit }, organization) {
+    try {
+      const response = await Organization.create(organization);
+      commit("commitOrganization", response.data);
+      return response;
+    } catch (error) {
+      return Promise.reject(error);
     }
-}
+  },
+
+  async updateOrganization({ commit }, organization) {
+    try {
+      const response = await Organization.update(organization);
+      commit("commitOrganization", response.data);
+      return response;
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  },
+};
 
 
 
 export default {
-    namespaced: true,
-    state,
-    getters,
-    actions,
-    mutations,
-  };
-  
+  namespaced: true,
+  state,
+  getters,
+  actions,
+  mutations,
+};
