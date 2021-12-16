@@ -4,7 +4,7 @@ export default {
   create(organization) {
     return api().post("/organizations", organization, {
       headers: {
-        authorization: localStorage.getItem("token"),
+        'Authorization': 'Bearer ' +JSON.parse(localStorage.getItem("user")).jwt,
       },
     });
 
@@ -51,10 +51,10 @@ export default {
     //   }
   },
 
-  update(orgId,credentials) {
-    return api().put("/organizations/" +orgId, credentials, {
+  update(orgId, credentials) {
+    return api().put("/organizations/" + orgId, credentials, {
       headers: {
-        authorization: localStorage.getItem("token"),
+        'Authorization': 'Bearer '+localStorage.getItem("token"),
       },
     });
 
@@ -114,24 +114,22 @@ export default {
 
     // {"code":"code_gtqXeDkGMQ9CvTYAgQRS"}
   },
-  
-    getBankAccounts(organizationId) {
+
+  getBankAccounts(organizationId) {
     return api().get("/organizations/" + organizationId + "/bankAccounts");
   },
 
-  sendEmail( email) {
+  sendEmail(email) {
     return api().post("/organizations/email", email);
 
     //   {
-//     "to": "sa@mulaa.me",
-//     "sender": "mtn@process.finance",
-//     "subject": "This is the subject",
-//     "orgid": 12,
-//     "text": "The body text and message",
-//     "key": "key-here-id",
-//     "template": "template-id"
-// }
-  }
-
-
+    //     "to": "sa@mulaa.me",
+    //     "sender": "mtn@process.finance",
+    //     "subject": "This is the subject",
+    //     "orgid": 12,
+    //     "text": "The body text and message",
+    //     "key": "key-here-id",
+    //     "template": "template-id"
+    // }
+  },
 };
