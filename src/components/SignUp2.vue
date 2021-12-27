@@ -117,7 +117,7 @@
                     type="text"
                   ></v-text-field>
                 </validation-provider>
-                <validation-provider
+                <!-- <validation-provider
                   v-slot="{ errors }"
                   name="Account System"
                   rules="required"
@@ -135,7 +135,7 @@
                     item-text="string"
                     required
                   ></v-select>
-                </validation-provider>
+                </validation-provider> -->
               </v-col>
             </v-row>
           </v-card-text>
@@ -256,24 +256,24 @@ export default {
         "UAE",
         "Ghana",
       ],
-      companyTeamSize: [
-         {
-         string:'Les than 10',
-          value: 9
-       },
-        {
-         string:'Less than 50',
-          value: 49
-       },
-        {
-         string:'Less than 100',
-          value: 99
-       },
-        {
-         string:'More than 100',
-          value: 101
-       }
-      ],
+      // companyTeamSize: [
+      //    {
+      //    string:'Les than 10',
+      //     value: 9
+      //  },
+      //   {
+      //    string:'Less than 50',
+      //     value: 49
+      //  },
+      //   {
+      //    string:'Less than 100',
+      //     value: 99
+      //  },
+      //   {
+      //    string:'More than 100',
+      //     value: 101
+      //  }
+      // ],
     };
   },
   // components: {
@@ -329,7 +329,7 @@ export default {
   
         const payload = {
           orgname: this.companyDetails.orgname,
-          members: [this.companyDetails.size],
+          // members: [this.companyDetails.size],
           company: {
             company_name: this.companyDetails.orgname,
             registration_number: this.companyDetails.cac,
