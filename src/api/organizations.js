@@ -1,15 +1,16 @@
 import api from "./Api";
 
 export default {
-  create(organization) {
+  create(organization) { 
     return api().post("/organizations", organization, {
       headers: {
         'Authorization': 'Bearer ' +JSON.parse(localStorage.getItem("user")).jwt,
       },
     });
-
-    // {
-    //     "orgname": "Mulaa 44 Ltd",
+      
+    
+    // organization:{
+    //     "orgname": "Mulaa 44 Ltd",  //required
     //     "members": [
     //       "9"
     //     ],
@@ -58,7 +59,7 @@ export default {
       },
     });
 
-    // {
+    // credentials:{
     //     "orgname": "Mulaa 44 Ltd",
     //     "members": [
     //       "9"
@@ -111,8 +112,7 @@ export default {
 
   addBankAccount(organizationId, bankCode) {
     return api().put("/organizations/" + organizationId + "/addBank", bankCode);
-
-    // {"code":"code_gtqXeDkGMQ9CvTYAgQRS"}
+    //bankCode: {"code":"code_gtqXeDkGMQ9CvTYAgQRS"}
   },
 
   getBankAccounts(organizationId) {
@@ -121,8 +121,7 @@ export default {
 
   sendEmail(email) {
     return api().post("/organizations/email", email);
-
-    //   {
+    //   email:{
     //     "to": "sa@mulaa.me",
     //     "sender": "mtn@process.finance",
     //     "subject": "This is the subject",

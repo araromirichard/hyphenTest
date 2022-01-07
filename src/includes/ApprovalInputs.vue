@@ -59,6 +59,7 @@
 </template>
 
 <script>
+//OBSOLETE COMPONENT DELETE WITH CAUTION !!!
 import { formItems, operators } from "@/utils/ManagerApprovalOptions.js";
 export default {
   props: ["rule", "index"],

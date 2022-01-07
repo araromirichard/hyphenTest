@@ -22,6 +22,8 @@
 </template>
 
 <script>
+//  <workflow-parent-group> components holds the parent condition 
+// ..it holds childen conditions/group (slot components)
 import { comparisonType } from "@/utils/ManagerApprovalOptions.js";
 import WorkflowChildGroup from "./workflow-child-group.vue";
 import WorkflowParentGroup from "./workflow-parent-group.vue";
@@ -30,7 +32,7 @@ export default {
   data() {
     return {
       comparisonType,
-      selectedCompareGroup: ["and"],
+      selectedCompareGroup: ["and"], // we are using this to store the whole group condition
       schema: {
         condition: {
           type: "group",
@@ -45,14 +47,17 @@ export default {
   methods: {
     addNewGroup(item, i) {
       if (this.selectedCompareGroup.length - 1 === i) {
+        // if it called from last condition, add new group to list
         this.selectedCompareGroup.push(item);
       } else {
+        // just add condition to current group
         this.selectedCompareGroup[i + 1] = item;
       }
     },
     removeCondition(e, i) {
       if (!e) {
         if (this.selectedCompareGroup.length === 1) {
+          // we can't remove the first group
           return;
         }
         this.selectedCompareGroup.splice(i, 1);
@@ -72,7 +77,7 @@ export default {
     schema: {
       immediate: true,
       deep: true,
-      handler(val) {
+      handler(val) {// push out the latest changes
         this.$emit("input", val);
       },
     },

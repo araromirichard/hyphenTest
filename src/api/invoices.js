@@ -8,7 +8,7 @@ export default {
             },
         });
 
-        //   {
+        //  data: {
         //     "name": "email recipient: subject 3",
         //     "invoicenumber": "20918392905",
         //     "total": 200000,
@@ -32,7 +32,7 @@ export default {
     createWithToken(token, data) {
         return api().post('/invoices/?token=' + token, data);
 
-        //    {
+        //    data:{
         //     "invoicenumber": "30156789",
         //     "total": 500000,
         //     "po": "po-034949403",

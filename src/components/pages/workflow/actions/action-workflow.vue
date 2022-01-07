@@ -96,7 +96,7 @@ export default {
       type: Number,
       default: null,
     },
-    isLast: {
+    isLast: { // this would let us know if current condition is the last on the list
       type: Boolean,
       default: false,
     },
@@ -109,7 +109,7 @@ export default {
 
   methods: {
     showDialog(ref) {
-      //console.log(ref);
+      //call show function of modal component identified the "ref"
       this.$refs[ref].show(true);
     },
   },
@@ -118,7 +118,7 @@ export default {
     data: {
       immediate: true,
       deep: true,
-      handler(newValue) {
+      handler(newValue) { // send out the collected from the modal form
         this.$emit("properties", newValue);
       },
     },

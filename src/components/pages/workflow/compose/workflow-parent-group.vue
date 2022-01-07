@@ -37,6 +37,8 @@
 </template>
 
 <script>
+// this component appears only once.
+// it envelopes all children conditions
 import { operators, comparisonType } from "@/utils/ManagerApprovalOptions.js";
 export default {
   props: {
@@ -53,7 +55,7 @@ export default {
   },
 
   computed: {
-    group_Type() {
+    group_Type() { // filter out group type AND/ALL from and/or
       let t = "";
       this.comparisonType.map((type) => {
         if (type.val == this.groupType) {

@@ -46,8 +46,8 @@
         "
         v-if="$vuetify.breakpoint.mdAndUp"
       >
-        Hello {{user.username}}, to get great value from pbot please provide information about
-        your company below
+        Hello {{ user.username }}, to get great value from pbot please provide
+        information about your company below
       </p>
     </div>
     <div
@@ -56,120 +56,88 @@
         paddingRight: `${$vuetify.breakpoint.smAndUp ? '78px' : '34px'}`,
       }"
     >
-      <validation-observer ref="observer" v-slot="{ invalid }">
-        <v-form
-          @submit.prevent="onSubmit "
-          class="ma-auto"
-          ref="form"
-        >
-          <v-card-text class="pa-0">
-            <v-row class="pt-2">
-              <v-col cols="12">
-                <validation-provider
-                  v-slot="{ errors }"
-                  name="Company Name"
-                  rules="required"
-                >
-                  <v-text-field
-                    hide-details="auto"
-                    :error-messages="errors"
-                    height="48"
-                    placeholder="Company Name"
-                    single-line
-                    outlined
-                    type="text"
-                    required
-                    class="font-weight-regular text-subtitle-2 pb-0 mt-3 mb-6"
-                    v-model="companyDetails.orgname"
-                  ></v-text-field>
-                </validation-provider>
+      <v-form @submit.prevent="onSubmit" class="ma-auto" ref="form">
+        <v-card-text class="pa-0">
+          <v-row class="pt-2">
+            <v-col cols="12">
+              <v-text-field
+                ref="orgname"
+                prepend-inner-icon="mdi-office-building-outline"
+                color="primary"
+                hide-details="auto"
+                :rules="rules.orgname"
+                height="48"
+                placeholder="Company Name"
+                single-line
+                outlined
+                type="text"
+                required
+                class="font-weight-regular text-subtitle-2 pb-0 mt-3 mb-6"
+                v-model="companyDetails.orgname"
+              ></v-text-field>
 
-                <validation-provider
-                  v-slot="{ errors }"
-                  name="Account System"
-                  rules="required"
-                >
-                  <v-select
-                    hide-details="auto"
-                    :error-messages="errors"
-                    placeholder="Country of Operation"
-                    single-line
-                    outlined
-                    class="font-weight-regular text-subtitle-2 pb-0 mb-6"
-                    v-model="companyDetails.country"
-                    :items="operatingCountries"
-                    required
-                  ></v-select>
-                </validation-provider>
-                <validation-provider
-                  v-slot="{ errors }"
-                  name="CAC"
-                  rules="required"
-                >
-                  <v-text-field
-                    hide-details="auto"
-                    :error-messages="errors"
-                    placeholder="CAC Reg Number/Tax ID"
-                    single-line
-                    outlined
-                    class="font-weight-regular text-subtitle-2 pb-0 mb-6"
-                    v-model="companyDetails.cac"
-                    type="text"
-                  ></v-text-field>
-                </validation-provider>
-                <!-- <validation-provider
-                  v-slot="{ errors }"
-                  name="Account System"
-                  rules="required"
-                >
-                  <v-select
-                    hide-details="auto"
-                    :error-messages="errors"
-                    placeholder="Company Team Size"
-                    single-line
-                    outlined
-                    class="font-weight-regular text-subtitle-2 pb-0 mb-6"
-                    v-model="companyDetails.size"
-                    :items="companyTeamSize"
-                    item-value="value"
-                    item-text="string"
-                    required
-                  ></v-select>
-                </validation-provider> -->
-              </v-col>
-            </v-row>
-          </v-card-text>
+              <v-select
+                ref="country"
+                color="primary"
+                hide-details="auto"
+                prepend-inner-icon="mdi-office-building-marker-outline"
+                :rules="rules.country"
+                placeholder="Country of Operation"
+                single-line
+                outlined
+                class="font-weight-regular text-subtitle-2 pb-0 mb-6"
+                v-model="companyDetails.country"
+                :items="operatingCountries"
+                required
+              ></v-select>
 
-          <v-card-actions class="justify-center px-0">
-            <v-btn
-              :disabled="invalid"
-              @click="onSubmit"
-              block
-              width="88px"
-              height="54px"
-              color="primary"
-              class="text-capitalize"
-              elevation="20"
-              large
+              <v-text-field
+                ref="cac"
+                color="primary"
+                hide-details="auto"
+                :rules="rules.cac"
+                :error-messages="errors"
+                placeholder="CAC Reg Number/Tax ID"
+                single-line
+                outlined
+                class="font-weight-regular text-subtitle-2 pb-0 mb-6"
+                prepend-inner-icon="mdi-office-building-cog-outline"
+                v-model="companyDetails.cac"
+                type="text"
+              ></v-text-field>
+            </v-col>
+          </v-row>
+        </v-card-text>
+
+        <v-card-actions class="justify-center px-0">
+          <v-btn
+            @click="onSubmit"
+            block
+            width="88px"
+            height="54px"
+            color="primary"
+            class="text-capitalize"
+            elevation="20"
+            large
+          >
+            <span
+              style="
+                font-family: Inter;
+                font-style: normal;
+                font-weight: 900;
+                font-size: 16px;
+                line-height: 19px;
+                text-align: center;
+                letter-spacing: 0.727273px;
+                color: #ffffff;
+              "
             >
-              <span
-                style="
-                  font-family: Inter;
-                  font-style: normal;
-                  font-weight: 900;
-                  font-size: 16px;
-                  line-height: 19px;
-                  text-align: center;
-                  letter-spacing: 0.727273px;
-                  color: #ffffff;
-                "
-              >
-                Continue
-              </span>
-            </v-btn>
-          </v-card-actions>
-        </v-form>
-      </validation-observer>
+              Continue
+            </span>
+          </v-btn>
+        </v-card-actions>
+      </v-form>
+
       <v-card-actions
         class="justify-center mx-auto"
         style="margin-top: 29px"
@@ -213,25 +181,6 @@
 
 <script>
 import { mapActions, mapGetters } from "vuex";
-// import { required, email } from "vee-validate/dist/rules";
-// import {
-//   extend,
-//   ValidationObserver,
-//   ValidationProvider,
-//   setInteractionMode,
-// } from "vee-validate";
-
-// setInteractionMode("eager");
-
-// extend("required", {
-//   ...required,
-//   message: "{_field_} can not be empty",
-// });
-
-// extend("email", {
-//   ...email,
-//   message: "Email must be valid",
-// });
 export default {
   data() {
     return {
@@ -241,14 +190,11 @@ export default {
         sclass: null,
         timeout: 1000,
       },
-      isCreating:false,
+      isCreating: false,
       companyDetails: {
         orgname: "",
         country: "",
-        accountSystem: "",
         cac: "",
-        size: "",
-        email: "",
       },
       operatingCountries: [
         "Nigeria",
@@ -256,80 +202,25 @@ export default {
         "UAE",
         "Ghana",
       ],
-      // companyTeamSize: [
-      //    {
-      //    string:'Les than 10',
-      //     value: 9
-      //  },
-      //   {
-      //    string:'Less than 50',
-      //     value: 49
-      //  },
-      //   {
-      //    string:'Less than 100',
-      //     value: 99
-      //  },
-      //   {
-      //    string:'More than 100',
-      //     value: 101
-      //  }
-      // ],
+
+      rules: {
+        orgname: [(v) => !!v || "This field is required "],
+        country: [(v) => !!v || "This field is required "],
+        cac: [(v) => !!v || "This field is required "],
+      },
     };
   },
-  // components: {
-  //   ValidationProvider,
-  //   ValidationObserver,
-  // },
-
-  // {
-  //     "orgname": "Mulaa 44 Ltd",
-  //     "members": [
-  //       "9"
-  //     ],
-  //     "multitenant": false,
-  //     "bank": [
-  //       {
-  //         "account_name": "Mulaa Analytics",
-  //         "bank_name": "GTB",
-  //         "routing_number": "",
-  //         "account_type": "current",
-  //         "account_number": "9030303033",
-  //         "authid": ""
-  //       }
-  //     ],
-  //     "company": {
-  //       "company_name": "Mulaa Analytics",
-  //       "registration_number": "293303033",
-  //       "country": "Nigeria"
-  //     },
-  //     "office": [
-  //       {
-  //         "address": "18 cooper road ",
-  //         "state": "Lagos",
-  //         "city": "Ikoyi",
-  //         "country": "Nigeria",
-  //         "postcode": 102105
-  //       }
-  //     ],
-  //     "leadership": [
-  //       {
-  //         "first_name": "Samson",
-  //         "last_name": "Aligba",
-  //         "percentage": "30",
-  //         "email": "sa@mulaa.me",
-  //         "phone": "08029735939",
-  //         "position": "MD"
-  //       }
-  //     ]
-  //   }
   methods: {
     ...mapActions({ showToast: "ui/showToast" }),
     async onSubmit() {
-      if (this.$refs.observer.validate()) {
-  
+      Object.keys(this.form).forEach((f) => {
+        //throw error to ui if there is any
+        this.$refs[f].validate(true);
+      });
+
+      if (this.canCompleOrgCreation) {
         const payload = {
           orgname: this.companyDetails.orgname,
-          // members: [this.companyDetails.size],
           company: {
             company_name: this.companyDetails.orgname,
             registration_number: this.companyDetails.cac,
@@ -338,14 +229,15 @@ export default {
         };
 
         try {
-          this.isCreating
-          const req = await this.$store.dispatch(
+          this.isCreating;
+          await this.$store.dispatch(
             "organizations/createOrganization",
             payload
           );
-          console.log(JSON.stringify(req, null, 2));
+          // console.log(JSON.stringify(req, null, 2));
 
-           this.$router.push('/welcome')
+          //sucess creating org
+          this.$router.push("/welcome");
         } catch (error) {
           console.log(JSON.stringify(error, null, 2));
           this.showToast({
@@ -354,14 +246,36 @@ export default {
             message: error.msg,
             timeout: 3000,
           });
-        }finally{
-          this.isCreating = false
+        } finally {
+          this.isCreating = false;
         }
       }
     },
   },
   computed: {
     ...mapGetters("auth", ["user"]),
+    form() {
+      return {
+        orgname: this.companyDetails.orgname,
+        country: this.companyDetails.country,
+        cac: this.companyDetails.cac,
+      };
+    },
+
+
+
+    canCompleOrgCreation() { // loop through rules, if all pass user can create org
+      const rules = Object.keys(this.rules);
+      return rules
+        .map((rule) => {
+          return Object.keys(this.rules[rule])
+            .map((field, index) => {
+              return this.rules[rule][index](this.companyDetails[rule]);
+            })
+            .every((val) => val == true);
+        })
+        .every((val) => val == true);
+    },
   },
 };
 </script>

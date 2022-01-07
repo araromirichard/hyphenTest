@@ -1,30 +1,46 @@
 <template>
   <v-layout>
-    <v-card flat elevation="4" min-height="1200" style="width: 90%" class="workflow-wrap">
+    <v-card
+      flat
+      elevation="4"
+      min-height="1200"
+      style="width: 90%"
+      class="workflow-wrap"
+    >
       <v-card
         flat
         class="rounded-t-lg"
-        style="background: rgba(127, 145, 155, 0.052607);margin-top:12px;padding-bottom:25px;"
+        style="
+          background: rgba(127, 145, 155, 0.052607);
+          margin-top: 12px;
+          padding-bottom: 25px;
+        "
       >
         <v-row class="d-flex">
           <img
-            style="font-size: 24px; margin-top: 30px; margin-left: 40px;"
+            style="font-size: 24px; margin-top: 30px; margin-left: 40px"
             :src="require('@/assets/pbot_icons/chevron-forward.svg')"
             alt="chevron-icon"
           />
           <v-card-title
             class="ml-2 pa-4 justify-center align-center flow-page-title"
-            style="
-            "
+            style=""
           >
-            This title is dynamic,the workflow title and it can be as long as possible
+            This title is dynamic,the workflow title and it can be as long as
+            possible
           </v-card-title>
           <v-spacer></v-spacer>
           <v-switch
             dense
             color="#16BE98"
             hide-details="auto"
-            class="d-flex, row-reverse mr-6 justify-center align-center;margin-top:50px;"
+            class="
+              d-flex,
+              row-reverse
+              mr-6
+              justify-center
+              align-center;margin-top:50px;
+            "
           >
             <template #prepend>
               <v-label>
@@ -49,13 +65,8 @@
             :editable="e6 > 1"
             step="1"
           >
-            <span
-            class="flow-title"
-            >
-              Choose workflow trigger
-            </span>
-            <span
-              class="mt-2 flow-txt"
+            <span class="flow-title"> Choose workflow trigger </span>
+            <span class="mt-2 flow-txt"
               >All automation begins with a data source, choose one below to
               begin your workflow</span
             >
@@ -109,13 +120,8 @@
           </v-stepper-content>
 
           <v-stepper-step non-linear :editable="e6 > 2" step="2">
-            <span
-              class="flow-title"
-            >
-              Compose workflow
-            </span>
-            <span
-              class="mt-2 flow-txt"
+            <span class="flow-title"> Compose workflow </span>
+            <span class="mt-2 flow-txt"
               >Select items from your data source and compose how it should be
               handled by pbot</span
             >
@@ -168,14 +174,10 @@
           </v-stepper-content>
 
           <v-stepper-step :editable="e6 > 3" step="3">
-            <span
-              class="flow-title"
-            >
-              Execute action
-            </span>
-            <span
-              class="mt-2 flow-txt"
-              >Arrange a set of actions you want executed when the above conditions are true for all data sent to this workflow</span
+            <span class="flow-title"> Execute action </span>
+            <span class="mt-2 flow-txt"
+              >Arrange a set of actions you want executed when the above
+              conditions are true for all data sent to this workflow</span
             >
           </v-stepper-step>
 
@@ -304,7 +306,8 @@
             >
           </v-btn>
 
-          <div @click="saveDraft"
+          <div
+            @click="saveDraft"
             class="block"
             style="
               color: #757575;
@@ -357,16 +360,16 @@ export default {
       this.completed = false;
     },
 
-    saveDraft(){
-       this.completed = false;
-    }
+    saveDraft() {
+      this.completed = false;
+    },
   },
   computed: {
     payload() {
       return {
-        id: this.id,
-        schema: this.schema,
-        actions: this.actions,
+        id: this.id, // rand it by time stamp for now
+        schema: this.schema, // data gotten from workflow component
+        actions: this.actions, // data gotten from workflo actions component
       };
     },
   },
@@ -376,8 +379,9 @@ export default {
       deep: true,
       immediate: true,
       handler(val) {
+        // this sets the whole workflow actions to vuex store
         this.$store.dispatch("workflow/setWorkflow", val);
-        console.log(JSON.stringify(val, null, 2));
+        // console.log(JSON.stringify(val, null, 2));
       },
     },
   },
@@ -439,36 +443,36 @@ export default {
   border-bottom-left-radius: 0 !important;
   border-bottom-right-radius: 0 !important;
 }
-.workflow-wrap .v-stepper__step{
+.workflow-wrap .v-stepper__step {
   align-items: start !important;
 }
-.flow-txt{
+.flow-txt {
   font-family: Inter;
-    font-style: normal;
-    font-weight: 300;
-    font-size: 16px;
-    line-height: 24px;
-    letter-spacing: 0.45px;
-    color: rgb(89, 106, 115);
+  font-style: normal;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.45px;
+  color: rgb(89, 106, 115);
 }
-.flow-title{
+.flow-title {
   font-family: Inter;
-                font-style: normal;
-                font-weight: 600;
-                font-size: 18px;
-                line-height: 24px;
-                color: #311b92;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 24px;
+  color: #311b92;
 }
-.flow-page-title{
-   margin-top: 30px;
-              font-family: Inter;
-              font-style: normal;
-              font-weight: 300;
-              font-size: 24px;
-              line-height: 32px;
-              color: #311b92;
-              max-width: 500px;
-              /*white-space:nowrap;
+.flow-page-title {
+  margin-top: 30px;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 24px;
+  line-height: 32px;
+  color: #311b92;
+  max-width: 500px;
+  /*white-space:nowrap;
   overflow:hidden;
   text-overflow:ellipsis;*/
 }

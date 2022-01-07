@@ -72,6 +72,7 @@
 </template>
 
 <script>
+// this component houses everything about creating action workflow
 import actionWorkflow from "../components/pages/workflow/actions/action-workflow.vue";
 export default {
   components: { actionWorkflow },
@@ -121,6 +122,7 @@ export default {
       );
     },
 
+  /// this is still very buggy
     reOrder(event) {
         this.selectedActions.splice(event.newIndex, 0, this.selectedActions.splice(event.oldIndex, 1)[0]);
                 this.selectedProperties.splice(event.newIndex, 0, this.selectedProperties.splice(event.oldIndex, 1)[0])

@@ -21,6 +21,14 @@
       class="mb-5 mt-5"
     >
       <div class="text-left mt-5">
+        <!-- 
+          this would show only if
+          condition is more than one(which means it is a group) or
+          it is the last or only condition in that space/group
+
+
+          basically we decide a group only occurs when it has more than one condition
+         -->
         <div
           v-if="
             groupConditions.length > 1 ||
@@ -253,11 +261,13 @@ export default {
     sendOutGroup() {
       let payload = {};
       const isGroup = this.groupConditions.length > 1;
+      // i decide it is a group if condition is more than one
       if (!isGroup) {
-        //just one
+        //not a group
         this.$set(payload, "type", "comparison");
         this.$set(payload, "properties", this.groupConditions[0]);
       } else {
+        // this is a group hence this structure bellow
         this.$set(payload, "type", "group");
         this.$set(payload, "properties", {
           type: this.groupType,
@@ -274,13 +284,14 @@ export default {
         });
       }
 
-      //console.log(JSON.stringify(payload, null, 2));
+      // now push the group/condition out
       this.$emit("update-group", payload);
     },
   },
 
   computed: {
     group_Type() {
+      // get condition type from AND/ALL from and/or
       let t = "";
       this.comparisonType.map((type) => {
         if (type.val == this.groupType) {
@@ -292,6 +303,7 @@ export default {
     },
 
     newGroup_Type() {
+       // get condition type from AND/ALL from and/or for new group created
       let t = "";
       this.comparisonType.map((type) => {
         if (type.val == this.newGroup) {

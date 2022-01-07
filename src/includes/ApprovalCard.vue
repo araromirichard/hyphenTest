@@ -68,6 +68,7 @@
 </template>
 
 <script>
+//OBSOLETE COMPONENT DELETE WITH CAUTION !!!
 import { formItems, operators } from "@/utils/ManagerApprovalOptions.js";
 import ApprovalInputs from "./ApprovalInputs.vue";
 export default {

@@ -464,6 +464,7 @@ export default {
         },
       };
 
+      // push out the details entered
       this.$emit("input", data);
       this.dialog = false;
       this.dialog2 = true;

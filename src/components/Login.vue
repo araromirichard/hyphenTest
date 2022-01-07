@@ -9,7 +9,7 @@
         offset-md="3"
         style="min-height: 100vh"
       >
-        <v-card class="pb-10 mt-16 ma-25" elevation="4">
+        <v-card class="pb-10 mt-16 ma-25" elevation="1">
           <p
             class="display-1 font-weight-bold pb-7 mt-10 text--secondary"
             :style="{
@@ -29,35 +29,33 @@
             <v-form @submit="submitForm" class="ma-auto" ref="form">
               <v-card-text class="pa-0">
                 <v-text-field
-                  hide-details="auto"
+                ref="email"
+                  color="primary"
                   label="Your Email"
-                  single-line
                   outlined
                   :disabled="isLoginin"
                   type="email"
                   required
-                  class="font-weight-regular label--text"
                   v-model="loginData.email"
-                  :rules="emailRules"
+                  prepend-inner-icon="mdi-email-outline"
+                  :rules="rules.email"
                 ></v-text-field>
 
                 <v-text-field
-                  hide-details="auto"
+                ref="password"
+                  color="primary"
+                 hide-details="auto"
                   label="Password"
-                  single-line
+                  prepend-inner-icon="mdi-lock-outline"
+                  class="pb-0 mb-0 mt-4"
                   outlined
                   :disabled="isLoginin"
-                  class="
-                    mt-8
-                    font-weight-regular
-                    text-subtitle-2
-                    label--text
-                    pb-0
-                    mb-0
-                  "
                   v-model="loginData.password"
-                  type="password"
+                  :append-icon="showPass ? 'mdi-eye' : 'mdi-eye-off'"
+                  :type="showPass ? 'text' : 'password'"
+                  @click:append="showPass = !showPass"
                   required
+                  :rules="rules.password"
                 ></v-text-field>
                 <div class="message-details d-flex justify-end my-2">
                   <v-btn
@@ -90,25 +88,23 @@
                   @click="submitForm"
                   block
                   color="primary"
-                  elevation="20"
+                  elevation="5"
                   height="54px"
                   width="88px"
                   class="text-capitalize"
                   :loading="isLoginin"
+                  style="
+                    font-family: Inter;
+                    font-style: normal;
+                    font-weight: 900;
+                    font-size: 16px;
+                    line-height: 19px;
+                    text-align: center;
+                    letter-spacing: 0.727273px;
+                    color: #ffffff;
+                  "
                 >
-                  <span
-                    style="
-                      font-family: Inter;
-                      font-style: normal;
-                      font-weight: 900;
-                      font-size: 16px;
-                      line-height: 19px;
-                      text-align: center;
-                      letter-spacing: 0.727273px;
-                      color: #ffffff;
-                    "
-                    >Continue</span
-                  >
+                  Continue
                 </v-btn>
               </v-card-actions>
             </v-form>
@@ -122,19 +118,11 @@
                   fontSize: `${$vuetify.breakpoint.xs ? '9px' : ''}`,
                 }"
               >
-                <span
-                  class="pl-md-3"
-                  style="
-                    font-family: Inter;
-                    font-style: normal;
-                    font-weight: normal;
-                    color: #7f919b;
-                  "
-                  >Don’t have an account yet?</span
-                >
+               
+                <br>
                 <router-link
                   to="sign-up"
-                  style="
+                  style=" 
                     text-decoration: none;
                     font-family: Inter;
                     font-style: normal;
@@ -142,7 +130,16 @@
                     color: #311b92;
                   "
                 >
-                  <span class="pl-md-4 pr-md-8 py-4"> Sign Up Here</span>
+                  <span
+                  class="pl-md-3"
+                  style="
+                    font-family: Inter;
+                    font-style: normal;
+                    font-weight: normal;
+                      color: #311b92;
+                  "
+                  >Don’t have an account yet?</span
+                > 
                 </router-link>
               </v-chip>
             </v-card-actions>
@@ -207,7 +204,7 @@
                           required
                           class="font-weight-regular label--text"
                           v-model="loginData.email"
-                          :rules="emailRules"
+                          :rules="rules.email"
                         ></v-text-field>
                       </div>
                       <template>
@@ -292,9 +289,12 @@ export default {
   },
   name: "Login",
 
+  mounted() {},
+
   data() {
     return {
       dialog: false,
+      showPass: false,
       loginData: {
         email: "",
         password: "",
@@ -302,63 +302,75 @@ export default {
       isLoginin: false,
       forgotPassword: "",
       errorMsg: "",
-      emailRules: [
-        (value) => !!value || "E-mail is required",
-        (value) =>
-          /.+@.+\..+/.test(value) ||
-          "email or passwordincorrect, please confirm your email and password",
-      ],
-      // passwordRules: [
-      //   (value) => !!value || "Password is required",
-      //   (value) => {
-      //     const pattern =
-      //       /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#+%+&+*])(?=.{8,})/;
-      //     return (
-      //       pattern.test(value) ||
-      //       "email or passwordincorrect, please confirm your email and password, Min. 8 characters with at least one capital letter, a number and a special character."
-      //     );
-      //   },
-      // ],
+      rules: {
+        email: [
+          (v) => !!v || "E-mail is required",
+          (v) => /.+@.+\..+/.test(v) || "E-mail must be valid",
+        ],
+        password: [(v) => !!v || "This field is required"],
+      },
     };
   },
 
   methods: {
     ...mapActions({ showToast: "ui/showToast" }),
+
     async submitForm(event) {
-      if (this.$refs.form.validate()) {
+            Object.keys(this.form).forEach((f) => {
+        this.$refs[f].validate(true);
+      });
+
+
+      if (this.canLogin) {
         event.preventDefault();
-        console.log("login Data", this.loginData);
-        console.log("Login Details", JSON.stringify(this.loginData));
 
         try {
           this.isLoginin = true;
-          const data = await this.$store.dispatch("auth/login", {
+          await this.$store.dispatch("auth/login", {
             identifier: this.loginData.email,
             password: this.loginData.password,
           });
 
-          console.log(JSON.stringify(data, null, 2));
-
           this.showToast({
             sclass: "success",
             show: true,
-            message: "Sign in succesfully",
+            message: "Welcome back",
             timeout: 3000,
           });
           this.$router.push("/welcome");
         } catch (error) {
-          console.log(JSON.stringify(error, null, 2));
           this.showToast({
             sclass: "error",
             show: true,
-            message:error.msg,
+            message: error.msg,
             timeout: 3000,
           });
-       
         } finally {
           this.isLoginin = false;
         }
       }
+    },
+  },
+
+  computed: {
+    form() {
+      return {
+        email: this.loginData.email,
+        password: this.loginData.password,
+      };
+    },
+
+    canLogin() { // loop through rules, if all pass user can try to login
+      const rules = Object.keys(this.rules);
+      return rules
+        .map((rule) => {
+          return Object.keys(this.rules[rule])
+            .map((field, index) => {
+              return this.rules[rule][index](this.loginData[rule]);
+            })
+            .every((val) => val == true);
+        })
+        .every((val) => val == true);
     },
   },
 };
@@ -374,7 +386,7 @@ export default {
   padding-top: 38px;
 }
 
-.card-input-field {
+/* .card-input-field {
   background: #ffffff;
   border: 1px solid rgba(49, 27, 146, 0.2);
   box-sizing: border-box;
@@ -386,17 +398,17 @@ export default {
   font-style: normal;
   font-weight: bold;
   line-height: 29px;
-}
+} */
 
-.v-text-field >>> input {
+/* .v-text-field >>> input {
   font-size: 1em;
   font-weight: 300;
 }
 .v-text-field >>> label {
   font-size: 12px;
   padding-left: 4px;
-}
-.message-details {
+} */
+/* .message-details {
   font-family: "Lato";
   font-style: normal;
   font-weight: normal;
@@ -411,26 +423,26 @@ export default {
 }
 .v-text-field >>> button {
   font-size: 0.8em;
-}
+} */
 
-.form-link {
+/* .form-link {
   height: 32px;
   width: 325px;
   left: 0px;
   top: 0px;
   border-radius: 16px;
   background: rgba(127, 145, 155, 0.08);
-}
+} */
 
-.hint {
+/* .hint {
   height: 32px;
   width: 325px;
   left: 0px;
   top: 0px;
   border-radius: 16px;
   background: rgba(127, 145, 155, 0.08);
-}
-.span-text {
+} */
+/* .span-text {
   height: 17px;
   left: 5.23%;
   right: 41.23%;
@@ -461,7 +473,7 @@ export default {
   letter-spacing: 0.278409px;
 
   color: #311b92;
-}
+} */
 .v-application .elevation-4 {
   box-shadow: 0px 3px 3px -2px rgb(0 0 0 / 3%), 0px 3px 3px 0px rgb(0 0 0 / 4%),
     0px 3px 5px 0px rgb(0 0 0 / 4%) !important;

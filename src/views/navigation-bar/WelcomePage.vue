@@ -5,7 +5,7 @@
         class="text-center text-h5 text-md-h3 px-0"
         style="padding-top: 124px; color: #311b92"
       >
-        Hello {{user.username}}
+        Hello {{ user.username }}
       </h1>
       <p
         class="text-center text-caption text-md-h6"
@@ -14,7 +14,7 @@
         Let’s get you started on pbot
       </p>
       <v-container class="pa-0 ma-0 justify-center mx-auto">
-        <v-row class="mx-8 mx-md-16 pa-0 px-md-10 d-flex justify-center">
+        <v-row class=" d-flex justify-center">
           <v-col
             cols="12"
             md="3"
@@ -52,12 +52,7 @@
                 providing a few documentation</v-card-text
               >
               <div class="px-2 pt-4 mx-6" style="padding-bottom: 68px">
-                <Button
-                  class="text-md-h6"
-                  height="50"
-                  width="95%"
-                  label="Start"
-                />
+                <v-btn large elevation="10" color="primary">Start</v-btn>
               </div>
             </v-card>
           </v-col>
@@ -98,12 +93,7 @@
                 ></v-card-text
               >
               <div class="px-2 pt-md-4 pb-5 mx-6">
-                <Button
-                  class="text-md-h6"
-                  height="50"
-                  width="95%"
-                  label="Connect Bank"
-                />
+                <v-btn large elevation="10" color="primary">Connect Bank</v-btn>
               </div>
               <v-card-text
                 class="pb-5 text-break text-center mx-auto justify-center"
@@ -157,12 +147,7 @@
                 company account for visibility and approvals
               </p>
               <div class="px-2 mx-6" style="padding-bottom: 20px">
-                <Button
-                  class="text-md-h6"
-                  height="50"
-                  width="95%"
-                  label="Use Workflow"
-                />
+                <v-btn large elevation="10" color="primary">Use Workflow</v-btn>
               </div>
               <v-card-text
                 class="pb-5 text-break text-center mx-auto justify-center"
@@ -224,7 +209,7 @@
 </template>
 
 <script>
-import Button from "../../includes/flat-button.vue";
+
 import { mapGetters } from "vuex";
 export default {
   data() {
@@ -233,14 +218,12 @@ export default {
     };
   },
 
-  components: {
-    Button,
+  mounted(){
+  //  this.$store.dispatch("auth/fetchUserDetails");
   },
-
-  methods: {},
-  computed:{
-    ...mapGetters("auth", ["user"])
-  }
+  computed: {
+    ...mapGetters("auth", ["user"]),
+  },
 };
 </script>
 

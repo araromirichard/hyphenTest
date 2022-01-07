@@ -50,135 +50,104 @@
               paddingRight: `${$vuetify.breakpoint.smAndUp ? '78px' : '34px'}`,
             }"
           >
-            <validation-observer ref="observer" v-slot="{ invalid }">
+        
               <v-form class="ma-auto" ref="form">
                 <v-card-text class="pa-0">
                   <v-row class="pt-2 mb-0">
                     <v-col cols="12" md="6">
-                      <validation-provider
-                        v-slot="{ errors }"
-                        name="First Name"
-                        rules="required|alpha"
+                      <v-text-field
+                        ref="Firstname"
+                        color="primary"
+                        hide-details="auto"
+                        placeholder="First Name"
+                        single-line
+                        outlined
+                        type="text"
+                        prepend-inner-icon="mdi-account-outline"
+                  
+                        class="font-weight-regular"
+                        v-model="signUpDetails.Firstname"
+                        :rules="rules.Firstname"
                       >
-                        <v-text-field
-                          hide-details="auto"
-                          placeholder="First Name"
-                          single-line
-                          outlined
-                          type="text"
-                          required
-                          :error-messages="errors"
-                          class="font-weight-regular"
-                          v-model="signUpDetails.Firstname"
-                        >
-                        </v-text-field>
-                      </validation-provider>
+                      </v-text-field>
                     </v-col>
                     <v-col cols="12" md="6">
-                      <validation-provider
-                        v-slot="{ errors }"
-                        name="Last Name"
-                        rules="required|alpha"
+                      <v-text-field
+                        ref="Lastname"
+                        color="primary"
+                        hide-details="auto"
+                        placeholder="Last Name"
+                        prepend-inner-icon="mdi-account-outline"
+                        single-line
+                        outlined
+                        type="text"
+                     
+                        class="font-weight-regular"
+                        v-model="signUpDetails.Lastname"
+                        :rules="rules.Lastname"
                       >
-                        <v-text-field
-                          hide-details="auto"
-                          placeholder="Last Name"
-                          single-line
-                          outlined
-                          type="text"
-                          required
-                          :error-messages="errors"
-                          class="font-weight-regular"
-                          v-model="signUpDetails.LastName"
-                        >
-                        </v-text-field>
-                      </validation-provider>
+                      </v-text-field>
                     </v-col>
                   </v-row>
-                  <validation-provider
-                    v-slot="{ errors }"
-                    name="Username"
-                    :rules="{
-                      required: true,
-                    }"
-                  >
-                    <v-text-field
-                      hide-details="auto"
-                      placeholder="Username"
-                      single-line
-                      outlined
-                      type="text"
-                      class="font-weight-regular"
-                      v-model="signUpDetails.username"
-                      required
-                      :error-messages="errors"
-                    ></v-text-field>
-                  </validation-provider>
-                  <validation-provider
-                    v-slot="{ errors }"
-                    name="Business Email"
-                    rules="required|email"
-                  >
-                    <v-text-field
-                      hide-details="auto"
-                      placeholder="Business Email"
-                      single-line
-                      outlined
-                      type="email"
-                      required
-                      class="py-3 pb-0 mb-0 font-weight-regular text-lowercase"
-                      v-model="signUpDetails.email"
-                      :error-messages="errors"
-                    ></v-text-field>
-                  </validation-provider>
-                  <validation-provider
-                    v-slot="{ errors }"
-                    name="Phone Number"
-                    :rules="{
-                      required: true,
-                      regex: `^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$`,
-                    }"
-                  >
-                    <v-text-field
-                      hide-details="auto"
-                      placeholder="Mobile Phone. e.g. +234080990000"
-                      single-line
-                      outlined
-                      class="py-6 font-weight-regular"
-                      v-model="signUpDetails.phoneNumber"
-                      required
-                      :error-messages="errors"
-                    ></v-text-field>
-                  </validation-provider>
 
-                  <validation-provider
-                    v-slot="{ errors }"
-                    name="Password"
-                    :rules="{
-                      required: true,
-                      min: { length: 6 },
-                    }"
+                  <v-text-field
+                    ref="username"
+                    color="primary"
+                    hide-details="auto"
+                    placeholder="Username"
+                    single-line
+                    outlined
+                    type="text"
+                    prepend-inner-icon="mdi-account-outline"
+                 
+                    class="font-weight-regular"
+                    v-model="signUpDetails.username"
+                    :rules="rules.username"
                   >
-                    <v-text-field
-                      hide-details="auto"
-                      placeholder="Password"
-                      single-line
-                      outlined
-                      type="password"
-                      class="font-weight-regular"
-                      v-model="signUpDetails.password"
-                      required
-                      :error-messages="errors"
-                    ></v-text-field>
-                  </validation-provider>
-                  <!-- <div class="message-details d-flex justify-end">
-                <router-link
-                  to="#"
-                  style="text-decoration: none; color: inherit; padding: none"
-                >
-                  <p class="pt-3">Forgot Password?</p>
-                </router-link>
-              </div> -->
+                  </v-text-field>
+
+                  <v-text-field
+                    ref="email"
+                    color="primary"
+                    hide-details="auto"
+                    prepend-inner-icon="mdi-email-outline"
+                    placeholder="Business Email"
+                    single-line
+                    outlined
+                    type="email"
+                    class="py-3 pb-0 mb-0 font-weight-regular text-lowercase"
+                    v-model="signUpDetails.email"
+                    :rules="rules.email"
+                  ></v-text-field>
+
+                  <v-text-field
+                    ref="phoneNumber"
+                    color="primary"
+                    hide-details="auto"
+                    prepend-inner-icon="mdi-phone-outline"
+                    placeholder="Mobile Phone. e.g. +234080990000"
+                    single-line
+                    outlined
+                    class="py-6 font-weight-regular"
+                    v-model="signUpDetails.phoneNumber"
+                    :rules="rules.phoneNumber"
+                  ></v-text-field>
+
+                  <v-text-field
+                    ref="password"
+                    color="primary"
+                    hide-details="auto"
+                    prepend-inner-icon="mdi-lock-outline"
+                    placeholder="Password"
+                    single-line
+                    outlined
+                    class="font-weight-regular"
+                    v-model="signUpDetails.password"
+                    :append-icon="showPass ? 'mdi-eye' : 'mdi-eye-off'"
+                    :type="showPass ? 'text' : 'password'"
+                    @click:append="showPass = !showPass"
+                    :rules="rules.password"
+                  ></v-text-field>
                 </v-card-text>
 
                 <v-card-actions class="justify-center pt-md-8 px-0">
@@ -211,7 +180,7 @@
                   >
                 </v-card-actions>
               </v-form>
-            </validation-observer>
+       
             <v-card-actions
               class="justify-center mx-auto"
               style="margin-top: 29px"
@@ -260,49 +229,15 @@
 </template>
 
 <script>
-// import { required, digits, email, max, regex } from "vee-validate/dist/rules";
-// import {
-//   extend,
-//   ValidationObserver,
-//   ValidationProvider,
-//   setInteractionMode,
-// } from "vee-validate";
-
 import SignUp2 from "./SignUp2";
 
-// setInteractionMode("eager");
-
-// extend("digits", {
-//   ...digits,
-//   message: "{_field_} needs to be {length} digits. ({_value_})",
-// });
-
-// extend("required", {
-//   ...required,
-//   message: "{_field_} can not be empty",
-// });
-
-// extend("max", {
-//   ...max,
-//   message: "{_field_} may not be greater than {length} characters",
-// });
-
-// extend("regex", {
-//   ...regex,
-//   message: "{_field_} {_value_} does not match format",
-// });
-
-// extend("email", {
-//   ...email,
-//   message:
-//     "Please use a company email you have access to, this will be used for login later",
-// });
 import { mapActions } from "vuex";
 export default {
   name: "SignUp",
 
   data() {
     return {
+      showPass: false,
       signUpDetails: {
         Firstname: "",
         Lastname: "",
@@ -311,6 +246,31 @@ export default {
         phoneNumber: "",
         password: "",
       },
+      rules: {
+        Firstname: [(v) => !!v || "This field is required "],
+        Lastname: [(v) => !!v || "This field is required "],
+        username: [(v) => !!v || "This field is required "],
+        email: [
+          (v) => !!v || "E-mail is ",
+          (v) => /.+@.+\..+/.test(v) || "E-mail must be valid",
+        ],
+        phoneNumber: [
+          (v) => !!v || "This field is required ",
+          // (v) =>
+          //   /(^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$)/.test(v) ||
+          //   "Number is invalid",
+        ],
+        password: [
+          (v) => !!v || "This field is ",
+          (v) => /(?=.*?[A-Z])/.test(v) || "At least 1 Upper Case",
+          (v) => /(?=.*?[a-z])/.test(v) || "At least 1 Lower Case",
+          (v) => /(?=.*?[0-9])/.test(v) || "At least 1 Number",
+          (v) =>
+            /(?=.*?[#?!@$%^&*-])/.test(v) ||
+            "At least 1 Special Character/Symbol",
+          (v) => /.{6,}/.test(v) || "At least 6 Characters",
+        ],
+      },
 
       pageOne: true,
       isCreating: false,
@@ -318,21 +278,20 @@ export default {
   },
   components: {
     SignUp2,
-    // ValidationProvider,
-    // ValidationObserver,
+ 
   },
   methods: {
     ...mapActions({ showToast: "ui/showToast" }),
     async createAccount() {
-      if (this.$refs.observer.validate()) {
-        console.log("ready");
+      Object.keys(this.form).forEach((f) => { //throw error to ui if there is any
+        this.$refs[f].validate(true);
+      });
+
+      if (this.canCreateOrg) {
         try {
           this.isCreating = true;
-          const req = await this.$store.dispatch(
-            "auth/register",
-            this.signUpDetails
-          );
-          console.log(JSON.stringify(req, null, 2));
+          await this.$store.dispatch("auth/register", this.signUpDetails);
+          // console.log(JSON.stringify(req, null, 2));
 
           this.showToast({
             sclass: "success",
@@ -341,8 +300,7 @@ export default {
             timeout: 3000,
           });
 
-          localStorage.setItem("user", JSON.stringify(req));
-
+          //now show organisation details component
           this.pageOne = false;
         } catch (err) {
           this.showToast({
@@ -356,20 +314,33 @@ export default {
         }
       }
     },
-    //   goNext() {
-    //  //   if (this.$refs.observer.validate()) {
-    //       console.log(this.signUpDetails);
-    //       console.log("User Details", JSON.stringify(this.signUpDetails));
-    //       this.pageOne = !this.pageOne;
-    //     }
-    //   },
-    // clear() {
-    //   this.firstName = "";
-    //   this.lastName = "";
-    //   this.phoneNumber = "";
-    //   this.email = "";
-    //   this.$refs.observer.reset();
-    // },
+  },
+  computed: {
+    form() {
+      return {
+        Firstname: this.signUpDetails.Firstname,
+        Lastname: this.signUpDetails.Lastname,
+        username: this.signUpDetails.username,
+        email: this.signUpDetails.email,
+        phoneNumber: this.signUpDetails.phoneNumber,
+        password: this.signUpDetails.password,
+      };
+    },
+
+
+
+    canCreateOrg() {// loop through rules, if all pass user can create org
+      const rules = Object.keys(this.rules);
+      return rules
+        .map((rule) => {
+          return Object.keys(this.rules[rule])
+            .map((field, index) => {
+              return this.rules[rule][index](this.signUpDetails[rule]);
+            })
+            .every((val) => val == true);
+        })
+        .every((val) => val == true);
+    },
   },
 };
 </script>
@@ -394,10 +365,10 @@ export default {
   line-height: 29px;
 }
 
-.v-text-field >>> input {
+/* .v-text-field >>> input {
   font-size: 1em;
   font-weight: 300;
-}
+} */
 
 .message-details {
   font-family: "Lato";
