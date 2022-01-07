@@ -152,7 +152,7 @@
 
                 <v-card-actions class="justify-center pt-md-8 px-0">
                   <v-btn
-                    :disabled="invalid"
+
                     block
                     width="88px"
                     height="54px"

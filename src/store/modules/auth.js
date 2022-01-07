@@ -40,12 +40,12 @@ const actions = {
 
   async register({ commit }, payload) {
     try {
-      const req = await Auth.registerUser(payload);
-      commit("setUser", req.data);
+      const {data} = await Auth.registerUser(payload);
+      commit("setUser", data);
       // save user token to browser
-      localStorage.setItem("token", req.data.jwt);
-      localStorage.setItem("userId", req.user.id);
-      return req.data;
+      localStorage.setItem("token", data.jwt);
+      localStorage.setItem("userId", data.user.id);
+      return data;
     } catch (error) {
       return Promise.reject(error);
     }
