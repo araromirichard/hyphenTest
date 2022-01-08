@@ -61,9 +61,9 @@ const actions = {
     }
   },
 
-  async fetchUserDetails({ commit }, payload) {
+  async fetchUserDetails({ commit }) {
     try {
-      const { data } = await Auth.getUser(payload);
+      const { data } = await Auth.getUser();
       commit("setUser", data);
       return data;
     } catch (error) {
