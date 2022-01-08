@@ -152,7 +152,7 @@
 
                 <v-card-actions class="justify-center pt-md-8 px-0">
                   <v-btn
-
+                  
                     block
                     width="88px"
                     height="54px"
@@ -255,7 +255,9 @@ export default {
           (v) => /.+@.+\..+/.test(v) || "E-mail must be valid",
         ],
         phoneNumber: [
+        
           (v) => !!v || "This field is required ",
+          (v) =>   v.length == 14 || "Numbe is invalid"
           // (v) =>
           //   /(^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$)/.test(v) ||
           //   "Number is invalid",
