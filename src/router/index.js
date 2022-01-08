@@ -5,7 +5,17 @@ import OnBoarding from "../views/OnboardingPage.vue";
 import MainLayout from "../views/MainLayout.vue";
 import Index from "../views/Inbox/Index.vue";
 
+import  _middleware  from "./middleware";
+import store from "../store";
+
+
+//_middleware.userDetails() 
+
+
+
 Vue.use(VueRouter);
+
+
 
 const routes = [{
         path: "/",
@@ -17,6 +27,7 @@ const routes = [{
         path: "/login",
         name: "Login",
         component: Formlayout,
+       meta:{ middleware:["userDetails"]}
     },
     {
         path: "/sign-up",
@@ -129,5 +140,19 @@ const router = new VueRouter({
     routes,
     linkActiveClass: "active",
 });
+
+router.beforeEach((to,from,next   ) => {
+     const middleware = to.meta.middleware;
+     const context = { to, from, next,store };
+
+    if(middleware && middleware.length > 0){
+        middleware.forEach(m => {
+            _middleware[m]({...context});
+        });
+    }else{
+        next();
+    }
+
+})
 
 export default router;
