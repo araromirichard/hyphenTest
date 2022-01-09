@@ -1,7 +1,7 @@
 <template>
   <v-row>
-    <v-col class="full-height" cols="4" style="max-width: 450px">
-      <div class="full-height" style="background-color: #fffbf1">
+    <v-col class="" cols="4" style="max-width: 450px">
+      <div class="" style="background-color: #fffbf1">
         <v-tabs
           grow
           slider-color="#301F78"
@@ -14,7 +14,7 @@
 
           <v-tab-item>
             <v-divider></v-divider>
-            <div class="full-height pa-4" style="background-color: #fffbf1; width: 100%; padding: 10px">
+            <div class=" pa-4" style="background-color: #fffbf1; width: 100%; padding: 10px">
               <div
                 class="d-flex mx-auto"
                 style="
