@@ -111,18 +111,21 @@
                   border: 1px solid rgba(212, 216, 223, 0.377431);
                   border-radius: 3px;
                 "
-                hide-details="true"
+             
                 dense
+                :hide-details="true"
                 label="Workflow Name"
                 single-line
                 outlined
+                color="primary"
+                 v-model="name"
               ></v-text-field>
             </template>
             <template class="mt-6">
               <v-card-actions class="d-flex justify-end mt-2 mr-9">
                 <v-btn
                   link
-                  to="/workflow/rules-edit"
+                  @click="startWorkflow"
                   dark
                   width="121"
                   height="45"
@@ -361,6 +364,7 @@
 import ExpansionPanel from "../../includes/ExpansionPanel.vue";
 import SingleRule from "../../includes/SingleRule.vue";
 import SimpleLineIcons from "vue-simple-line";
+import { mapActions } from "vuex";
 export default {
   components: { ExpansionPanel, SimpleLineIcons, SingleRule },
   data() {
@@ -369,9 +373,11 @@ export default {
       Rules: true,
       isClicked: true,
       search: "",
+      name:"",
     };
   },
   methods: {
+        ...mapActions({ showToast: "ui/showToast" }),
     closeWorkflowDialog() {
       this.dialog = false;
     },
@@ -381,6 +387,19 @@ export default {
     toggleSearch() {
       this.isClicked = false;
     },
+
+    startWorkflow(){
+      if(this.name != ""){
+        this.$router.push("/workflow/new?name="+this.name);
+      }else{
+           this.showToast({
+            sclass: "error",
+            show: true,
+            message: "Workflow name is required",
+            timeout: 3000,
+          });
+      }
+    }
     // pushRoute() {
     //   $router.push("/workflow/rules-edit");
     // },
