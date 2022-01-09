@@ -2,10 +2,11 @@ import Auth from "../../api/auth";
 
 const state = {
   user: null,
+  isLoggedIn: localStorage.getItem("userId") != null
 };
 
 const getters = {
-  isAuthenticated: (state) => !!state.user,
+  isLoggedIn: (state) => !!state.user,
   user: (state) => state.user,
   token: () => localStorage.getItem("token"),
 };
@@ -17,7 +18,15 @@ const mutations = {
     } else {
       state.user = data;
     }
+
+    state.isLoggedIn = true
   },
+
+
+  emptyUser(state){
+    state.user = null
+    state.isLoggedIn = false
+  }
 };
 
 const actions = {
@@ -33,9 +42,8 @@ const actions = {
     }
   },
 
-  async logout({ state }) {
-    state.user = null;
-    state.token = null;
+  async logout({ commit }) {
+     commit("emptyUser")
   },
 
   async register({ commit }, payload) {
