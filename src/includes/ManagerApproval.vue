@@ -26,8 +26,7 @@
             class="ml-2 pa-4 justify-center align-center flow-page-title"
             style=""
           >
-            This title is dynamic,the workflow title and it can be as long as
-            possible
+           {{workflowName}}
           </v-card-title>
           <v-spacer></v-spacer>
           <v-switch
@@ -334,7 +333,7 @@ export default {
   data() {
     return {
       e6: 1,
-      activeItem: null,
+      workflowName:this.$route.query.name,
       id: null,
       schema: null,
       actions: null,
