@@ -4,6 +4,7 @@ import Formlayout from "../views/Form-layout.vue";
 import OnBoarding from "../views/OnboardingPage.vue";
 import MainLayout from "../views/MainLayout.vue";
 import Index from "../views/Inbox/Index.vue";
+import errorPage  from "../views/error-page.vue"
 
 import _middleware from "./middleware";
 import store from "../store";
@@ -17,6 +18,9 @@ const routes = [
     redirect: "/login",
     name: "Form-layout",
     component: Formlayout,
+  },{
+     path:"/error",
+     component:errorPage,
   },
   {
     path: "/login",
@@ -60,7 +64,7 @@ const routes = [
     },
   },
   {
-    path: "/workflow/rules-edit/",
+    path: "/workflow/new",
     name: "NewWorkFlow",
     components: {
       default: () => import("@/views/workflow/RulesEdit.vue"),
@@ -68,7 +72,7 @@ const routes = [
     },
   },
   {
-    path: "/workflow/rules-edit/:id",
+    path: "/workflow/:id",
     name: "WorkflowRulesEdit",
     components: {
       default: () => import("@/views/workflow/RulesEdit.vue"),
