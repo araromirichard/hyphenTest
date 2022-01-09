@@ -60,6 +60,14 @@ const routes = [
     },
   },
   {
+    path: "/workflow/rules-edit/",
+    name: "NewWorkFlow",
+    components: {
+      default: () => import("@/views/workflow/RulesEdit.vue"),
+      MainLayout,
+    },
+  },
+  {
     path: "/workflow/rules-edit/:id",
     name: "WorkflowRulesEdit",
     components: {
