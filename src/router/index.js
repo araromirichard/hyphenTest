@@ -46,6 +46,7 @@ const routes = [
       default: () => import("@/views/navigation-bar/WelcomePage.vue"),
       MainLayout,
     },
+    meta: { middleware: ["auth"] },
   },
   {
     path: "/insight",
@@ -54,6 +55,7 @@ const routes = [
       default: () => import("@/views/navigation-bar/Insight.vue"),
       MainLayout,
     },
+    meta: { middleware: ["auth"] },
   },
   {
     path: "/workflow",
@@ -62,6 +64,7 @@ const routes = [
       default: () => import("@/views/navigation-bar/Workflow.vue"),
       MainLayout,
     },
+    meta: { middleware: ["auth"] },
   },
   {
     path: "/workflow/new",
@@ -70,6 +73,7 @@ const routes = [
       default: () => import("@/views/workflow/RulesEdit.vue"),
       MainLayout,
     },
+    meta: { middleware: ["auth"] },
   },
   {
     path: "/workflow/:id",
@@ -78,6 +82,7 @@ const routes = [
       default: () => import("@/views/workflow/RulesEdit.vue"),
       MainLayout,
     },
+    meta: { middleware: ["auth"] },
   },
   {
     path: "/form/create-new-form",
@@ -86,6 +91,7 @@ const routes = [
       default: () => import("@/views/Create-new-form"),
       MainLayout,
     },
+    meta: { middleware: ["auth"] },
   },
   {
     path: "/form/:id",
@@ -96,6 +102,7 @@ const routes = [
       default: () => import("@/views/Render-new-form"),
       MainLayout,
     },
+    meta: { middleware: ["auth"] },
   },
   {
     path: "/inbox",
@@ -104,6 +111,7 @@ const routes = [
       default: Index,
       MainLayout,
     },
+    meta: { middleware: ["auth"] },
   },
 
   {
@@ -113,6 +121,7 @@ const routes = [
       default: () => import("@/views/navigation-bar/Payables.vue"),
       MainLayout,
     },
+    meta: { middleware: ["auth"] },
   },
   {
     path: "/form",
@@ -121,6 +130,7 @@ const routes = [
       default: () => import("@/views/navigation-bar/Form.vue"),
       MainLayout,
     },
+    meta: { middleware: ["auth"] },
   },
   {
     path: "/inbox/:id",
@@ -130,6 +140,7 @@ const routes = [
       default: () => import("@/views/navigation-bar/Invoice.vue"),
       MainLayout,
     },
+    meta: { middleware: ["auth"] },
   },
 ];
 
