@@ -105,7 +105,7 @@
               font-size: 24px;
               line-height: 29px;
               letter-spacing: -0.73px;
-              color: #311b92;
+              color: var(--v-primary-base);
             "
             :style="{
               paddingTop: `${$vuetify.breakpoint.mdAndDown ? '10px' : '16px'}`,

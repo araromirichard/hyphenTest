@@ -198,7 +198,7 @@
                           <simple-line-icons
                             icon="plus"
                             size="small"
-                            style="color: #311b92"
+                            style="color: var(--v-primary-base)"
                             no-svg
                           />
                           <span
@@ -212,7 +212,7 @@
                               text-align: center;
                               letter-spacing: 0.636364px;
 
-                              color: #311b92;
+                              color: var(--v-primary-base);
                             "
                             >Add</span
                           >

@@ -129,7 +129,7 @@
                 small
                 color="#2BD5AE"
                 class="text-lowercase px-2 my-1 mr-2"
-                style="color: #311b92"
+                style="color: var(--v-primary-base)"
               >
                 view
               </v-btn>
@@ -138,7 +138,7 @@
                 depressed
                 dark
                 small
-                color="#311B92"
+                color="primary"
                 class="text-lowercase px-2 my-1"
                 >review</v-btn
               >
@@ -372,7 +372,7 @@
                     margin-right: 12px;
                     margin-top: 24px;
                     margin-bottom: 41px;
-                    background: #311b92;
+                    background: var(--v-primary-base);
                     box-shadow: 0px 12px 22px rgba(0, 0, 0, 0.24);
                     border-radius: 4px;
                   "

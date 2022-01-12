@@ -60,7 +60,7 @@
         >
           <v-stepper-step
             non-linear
-            color="#311B92"
+            color="primary"
             :editable="e6 > 1"
             step="1"
           >
@@ -84,7 +84,7 @@
               style="
                 margin-top: 26px;
                 margin-bottom: 72px;
-                background: #311b92;
+                background: var(--v-primary-base);
                 box-shadow: 0px 12px 22px rgba(0, 0, 0, 0.24);
                 border-radius: 4px;
               "
@@ -138,7 +138,7 @@
               style="
                 margin-top: 26px;
                 margin-bottom: 73px;
-                background: #311b92;
+                background: var(--v-primary-base);
                 box-shadow: 0px 12px 22px rgba(0, 0, 0, 0.24);
                 border-radius: 4px;
               "
@@ -192,7 +192,7 @@
               style="
                 margin-top: 26px;
                 margin-bottom: 73px;
-                background: #311b92;
+                background: var(--v-primary-base);
                 box-shadow: 0px 12px 22px rgba(0, 0, 0, 0.24);
                 border-radius: 4px;
               "
@@ -272,7 +272,7 @@
             style="
               margin-top: 20px;
               margin-bottom: 20px;
-              background: #311b92;
+              background: var(--v-primary-base);
               box-shadow: 0px 12px 22px rgba(0, 0, 0, 0.24);
               border-radius: 4px;
             "
@@ -460,7 +460,7 @@ export default {
   font-weight: 600;
   font-size: 18px;
   line-height: 24px;
-  color: #311b92;
+  color: var(--v-primary-base);
 }
 .flow-page-title {
   margin-top: 30px;
@@ -469,7 +469,7 @@ export default {
   font-weight: 300;
   font-size: 24px;
   line-height: 32px;
-  color: #311b92;
+  color: var(--v-primary-base);
   max-width: 500px;
   /*white-space:nowrap;
   overflow:hidden;

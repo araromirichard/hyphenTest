@@ -20,7 +20,7 @@
 
       <v-btn
         dark
-        color="#311B92"
+        color="primary"
         text
         class="text-lowercase pl-8"
         style="
@@ -32,7 +32,7 @@
           font-weight: 600;
           font-size: 10px;
           line-height: 20px;
-          color: #311b92;
+        
         "
       >
         click here

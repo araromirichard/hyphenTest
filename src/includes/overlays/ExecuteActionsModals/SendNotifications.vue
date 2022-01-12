@@ -123,7 +123,7 @@
                     height="45"
                     style="
                       margin-right: 57px;
-                      background: #311b92;
+                      background: var(--v-primary-base);
                       box-shadow: 0px 12px 22px rgba(0, 0, 0, 0.24);
                       border-radius: 4px;
                     "
@@ -243,7 +243,7 @@
                     height="45"
                     style="
                       margin-right: 57px;
-                      background: #311b92;
+                      background: var(--v-primary-base);
                       box-shadow: 0px 12px 22px rgba(0, 0, 0, 0.24);
                       border-radius: 4px;
                     "
@@ -341,7 +341,7 @@
             height="45"
             style="
               margin-left: 221px;
-              background: #311b92;
+              background: var(--v-primary-base);
               box-shadow: 0px 12px 22px rgba(0, 0, 0, 0.24);
               border-radius: 4px;
             "

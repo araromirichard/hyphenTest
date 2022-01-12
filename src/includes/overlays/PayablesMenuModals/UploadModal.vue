@@ -105,7 +105,7 @@
               style="
                 margin-top: 24px;
                 margin-bottom: 41px;
-                background: #311b92;
+                background: var(--v-primary-base);
                 box-shadow: 0px 12px 22px rgba(0, 0, 0, 0.24);
                 border-radius: 4px;
               "

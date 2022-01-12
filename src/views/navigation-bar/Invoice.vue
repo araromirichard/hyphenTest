@@ -130,7 +130,7 @@
               </template>
             </v-breadcrumbs>
             <v-btn plain to="/inbox" class="mt-14 mr-15">
-              <v-icon large color="#311b92">mdi-chevron-left</v-icon>
+              <v-icon large color="primary">mdi-chevron-left</v-icon>
               <span
                 style="
                   font-family: Inter;
@@ -138,7 +138,7 @@
                   font-weight: 700;
                   font-size: 16px;
                   line-height: 19px;
-                  color: #311b92;
+                  color: var(--v-primary-base);
                 "
                 >Back</span
               >

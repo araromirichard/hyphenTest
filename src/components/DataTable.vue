@@ -150,7 +150,7 @@
                 small
                 color="#2BD5AE"
                 class="text-lowercase px-2 my-1 mr-2"
-                style="color: #311b92"
+                style="color: var(--v-primary-base)"
               >
                 view
               </v-btn>
@@ -159,7 +159,7 @@
                 depressed
                 dark
                 small
-                color="#311B92"
+                color="primary"
                 class="text-lowercase px-2 my-1"
                 >review</v-btn
               >

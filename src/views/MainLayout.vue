@@ -382,6 +382,6 @@ export default {
 }
 
 .navlink {
-  color: #311b92;
+  color: var(--v-primary-base);
 }
 </style>

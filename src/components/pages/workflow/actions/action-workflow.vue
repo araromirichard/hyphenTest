@@ -3,7 +3,7 @@
     <div class="selected-action">
       <div class="selected-action__icon">
         <div>
-          <v-icon color="#311B92">mdi-lightning-bolt-outline </v-icon>
+          <v-icon color="primary">mdi-lightning-bolt-outline </v-icon>
         </div>
       </div>
       <div class="selection-acion__text">
@@ -36,7 +36,7 @@
                 dark
                 height="45"
                 width="45"
-                color="#311B92"
+                color="primary"
                 depressed
                 class="mx-auto justify-center"
               >

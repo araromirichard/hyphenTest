@@ -3,7 +3,7 @@
     <v-container class="pa-0">
       <h1
         class="text-center text-h5 text-md-h3 px-0"
-        style="padding-top: 124px; color: #311b92"
+        style="padding-top: 124px; color: var(--v-primary-base)"
       >
         Hello {{ user.username }}
       </h1>
@@ -262,7 +262,7 @@ p {
 }
 
 .theme--light.v-card {
-  color: #311b92;
+  color: var(--v-primary-base);
   font-family: Inter;
   font-style: normal;
   font-weight: normal;

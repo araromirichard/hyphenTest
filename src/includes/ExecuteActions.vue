@@ -29,7 +29,7 @@
                 dark
                 height="45"
                 width="45"
-                color="#311B92"
+                color="var(--v-primary-base)"
                 depressed
                 class="mx-auto justify-center"
               >

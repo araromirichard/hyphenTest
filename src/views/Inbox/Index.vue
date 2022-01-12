@@ -52,7 +52,7 @@
               font-weight: bold;
               font-size: 24px;
               line-height: 29px;
-              color: #311b92;
+              color: var(--v-primary-base);
             "
           >
             No invoice/transaction is awaiting action
@@ -348,7 +348,7 @@
                       <simple-line-icons
                         icon="plus"
                         size="small"
-                        style="color: #311b92"
+                        style="color: var(--v-primary-base)"
                         no-svg
                       />
                       <span
@@ -362,7 +362,7 @@
                           text-align: center;
                           letter-spacing: 0.636364px;
 
-                          color: #311b92;
+                          color: var(--v-primary-base);
                         "
                         >Add</span
                       >
@@ -541,7 +541,7 @@ th {
   font-weight: bold;
   font-size: 12px;
   line-height: 15px;
-  color: #311b92;
+  color: var(--v-primary-base);
 }
 
 .v-application .elevation-6 {

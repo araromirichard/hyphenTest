@@ -9,7 +9,7 @@
           color="primary"
           :width="width"
           :height="height"
-          style="background: #311b92; border-radius: 4px"
+          style="background: var(--v-primary-base); border-radius: 4px"
         >
           <img
             :src="btnIcon"

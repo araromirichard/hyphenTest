@@ -34,7 +34,7 @@
           my-auto
           px-6
         "
-        style="max-width: 416px; color: #311b92"
+        style="max-width: 416px; color: var(--v-primary-base);"
       >
         {{ formName }}
       </span>
@@ -231,7 +231,7 @@ export default {
 
 <style>
 .active {
-  color: #311b92;
+  color: var(--v-primary-base);
 }
 tbody tr:nth-of-type(odd) {
   background-color: #f8f9fc;
@@ -283,7 +283,7 @@ table th {
   font-size: 18px;
   line-height: 19px;
   letter-spacing: 0.45px;
-  color: #311b92;
+  color: var(--v-primary-base);
 }
 
 .pageDespt {

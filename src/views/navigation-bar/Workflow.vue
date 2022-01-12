@@ -32,7 +32,7 @@
                 width: 209px;
                 height: 54px;
                 margin-top: 30px;
-                background: #311b92;
+                background: var(--v-primary-base);
                 box-shadow: 0px 12px 22px rgba(0, 0, 0, 0.24);
                 border-radius: 4px;
               "
@@ -129,9 +129,10 @@
                   dark
                   width="121"
                   height="45"
+                  color="primary"
                   class="text-capitalize"
                   style="
-                    background: #311b92;
+                   
                     box-shadow: 0px 12px 22px rgba(0, 0, 0, 0.24);
                     border-radius: 4px;
                   "
@@ -313,7 +314,7 @@
                 width="121"
                 height="45"
                 style="
-                  background: #311b92;
+                  background: var(--v-primary-base);
                   box-shadow: 0px 12px 22px rgba(0, 0, 0, 0.24);
                   border-radius: 4px;
                 "
@@ -418,7 +419,7 @@ export default {
   font-size: 16px;
   line-height: 24px;
 
-  color: #311b92;
+  color: var(--v-primary-base);
 }
 .noWorkFlowText {
   margin-left: 0px;

@@ -403,7 +403,7 @@ th {
   font-weight: bold;
   font-size: 12px;
   line-height: 15px;
-  color: #311b92;
+  color: var(--v-primary-base);
 }
 
 .v-application .elevation-6 {

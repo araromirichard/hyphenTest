@@ -538,7 +538,7 @@
                 width="300"
                 dark
                 block
-                color="#311B92"
+                color="primary"
                 class="mt-16"
                 style="
                   margin-left: 76px;
@@ -911,7 +911,7 @@
                 @click="submitInput"
                 width="200px"
                 dark
-                color="#311B92"
+                color="primary"
                 class="mt-8"
               >
                 <simple-line-icons

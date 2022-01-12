@@ -54,7 +54,7 @@
               <v-chip
                 id="chip"
                 small
-                text-color="#311b92"
+                text-color="primary"
                 color="white"
                 class="font-weight-bold px-4 mx-1"
                 style="font-size: 16px"
@@ -95,7 +95,7 @@
       <v-btn
         :ripple="false"
         @click="addGroupCondition"
-        color="#311b92"
+        color="primary"
         class="font-weight-bold mb-3 pl-0 ml-6"
         text
         style="text-transform: lowercase; font-size: 16px"
@@ -147,7 +147,7 @@
             <v-chip
               id="chip"
               small
-              text-color="#311b92"
+              text-color="primary"
               class="font-weight-bold px-4 mx-3"
               style="font-size: 16px"
               v-bind="attrs"

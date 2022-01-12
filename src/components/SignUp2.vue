@@ -168,7 +168,7 @@
               font-family: Inter;
               font-style: normal;
               font-weight: 600;
-              color: #311b92;
+              color: var(--v-primary-base);
             "
           >
             <span class="pl-md-4 pr-md-8 py-4"> Sign In Here</span>
@@ -367,7 +367,7 @@ export default {
   line-height: 18px;
   letter-spacing: 0.278409px;
 
-  color: #311b92;
+  color: var(--v-primary-base);
 }
 
 .v-application .elevation-4 {

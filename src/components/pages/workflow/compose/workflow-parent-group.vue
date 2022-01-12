@@ -7,7 +7,7 @@
           <v-chip
             id="chip"
             small
-            text-color="#311b92"
+            text-color="primary"
             class="font-weight-bold px-4 mx-1"
             style="font-size: 16px"
             v-bind="attrs"

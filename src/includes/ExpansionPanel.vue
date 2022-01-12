@@ -13,7 +13,7 @@
               font-size: 16px;
               line-height: 19px;
               letter-spacing: 0.45px;
-              color: #311b92;
+              color: var(--v-primary-base);
             "
           >
             Use templates

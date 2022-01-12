@@ -29,7 +29,7 @@
                   >
                   <span
                     class="mt-4 d-block font-weight-bold"
-                    style="color: #311b92; font-size: 24px"
+                    style="color: var(--v-primary-base); font-size: 24px"
                     >231</span
                   >
                 </div>
@@ -54,7 +54,7 @@
                   border-radius: 5px;
                   background-color: #fbf4e4;
                   padding: 15px;
-                  color: #311b92;
+                  color: var(--v-primaary-base);
                 "
               >
                 <span>Trigger</span>
@@ -72,7 +72,7 @@
                   When
                   <span
                     class="font-weight-bold"
-                    style="font-size: 14px; color: #311b92"
+                    style="font-size: 14px; color: var(--v-primary-base)"
                     >{{ group_Type(conditions.properties.type) }}</span
                   >
                   of the following is
@@ -96,7 +96,7 @@
                     With
                     <span
                       class="font-weight-bold"
-                      style="font-size: 14px; color: #311b92"
+                      style="font-size: 14px; color: var(--v-primary-base)"
                       >{{ group_Type(condition.properties.type) }}</span
                     >
                     of the following
@@ -216,7 +216,7 @@
         </v-breadcrumbs>
         <v-spacer></v-spacer>
         <v-btn plain to="/workflow" class="mt-14">
-          <v-icon large color="#311b92">mdi-chevron-left</v-icon>
+          <v-icon large color="primary">mdi-chevron-left</v-icon>
           <span
             style="
             "
@@ -303,6 +303,6 @@ export default {
               font-weight: 700;
               font-size: 16px;
               line-height: 24px;
-              color: #311b92;
+              color: var(--v-primary-base);
 }
 </style>

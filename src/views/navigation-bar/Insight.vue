@@ -171,7 +171,7 @@
                 font-weight: normal;
                 font-size: 24px;
                 line-height: 29px;
-                color: #311b92;
+                color: var(--v-primary-base);
                 padding-top: 88px;
               "
             >
@@ -216,7 +216,7 @@
                       font-size: 24px;
                       line-height: 29px;
                       text-transform: uppercase;
-                      color: #311b92;
+                      color: var(--v-primary-base);
                     "
                     v-if="card.title === 'Total Payments'"
                   >
@@ -231,7 +231,7 @@
                       font-size: 24px;
                       line-height: 29px;
                       text-transform: uppercase;
-                      color: #311b92;
+                      color: var(--v-primary-base);
                     "
                     v-else
                   >
@@ -247,7 +247,7 @@
                       class="text-black ml-0"
                       x-small
                       size="26"
-                      color="#311B92"
+                      color="primary"
                     >
                       mdi-arrow-right-thick
                     </v-icon></v-btn
@@ -361,7 +361,7 @@ export default {
   font-size: 24px;
   line-height: 29px;
 
-  color: #311b92;
+  color: var(--v-primary-base);
 } */
 .v-divider {
   display: block;
