@@ -24,7 +24,7 @@
           temporary
         >
           <template v-slot:prepend>
-            <v-list-item two-line class="pl-10 justify-center">
+            <!-- <v-list-item two-line class="pl-10 justify-center">
               <v-list-item-avatar color="primary" size="46">
                 <img :src="require('@/assets/Shape.svg')" class="logo" />
               </v-list-item-avatar>
@@ -37,7 +37,13 @@
                   >on pBot</v-list-item-subtitle
                 >
               </v-list-item-content>
-            </v-list-item>
+            </v-list-item> -->
+
+            <div>
+          
+           <img class="logo" :src="require('@/assets/hyphen-logo.png')"
+            />
+        </div>
           </template>
           <v-list nav dense flat class="py-4 pl-10">
             <v-list-item-group
@@ -196,7 +202,7 @@
       class="px-0"
     >
       <template v-slot:prepend>
-        <v-list-item two-line class="pl-10 justify-center">
+        <!-- <v-list-item two-line class="pl-10 justify-center">
           <v-list-item-avatar color="primary" size="46">
             <img :src="require('@/assets/Shape.svg')" class="logo" />
           </v-list-item-avatar>
@@ -207,7 +213,13 @@
             /></v-list-item-title>
             <v-list-item-subtitle class="ml-6">on pBot</v-list-item-subtitle>
           </v-list-item-content>
-        </v-list-item>
+        </v-list-item> -->
+
+        <div>
+          
+           <img class="logo" :src="require('@/assets/hyphen-logo.png')"
+            />
+        </div>
       </template>
       <v-list flat class="py-4 pl-10">
         <v-list-item-group
@@ -361,9 +373,10 @@ export default {
   justify-content: center;
 }
 .logo {
-  height: 60px;
-  width: 140px;
-  border-radius: 0px;
+ width: 65%;
+ display: block;
+ object-fit: contain;
+ margin: 30px auto;
 }
 
 .navIcon {
