@@ -119,6 +119,7 @@
             class="text-capitalize"
             elevation="20"
             large
+            :loading="isCreating"
           >
             <span
               style="
