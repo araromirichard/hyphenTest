@@ -17,6 +17,7 @@ const actions = {
       commit("commitOrganization", response.data);
       return response;
     } catch (error) {
+      console.log(JSON.stringify(error,null,2));
       return Promise.reject(error);
     }
   },
