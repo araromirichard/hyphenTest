@@ -96,7 +96,7 @@
                 color="primary"
                 hide-details="auto"
                 :rules="rules.cac"
-                :error-messages="errors"
+                
                 placeholder="CAC Reg Number/Tax ID"
                 single-line
                 outlined
@@ -228,8 +228,10 @@ export default {
           },
         };
 
+        console.log(JSON.stringify(payload, null, 2));
+
         try {
-          this.isCreating;
+          this.isCreating = true;
           await this.$store.dispatch(
             "organizations/createOrganization",
             payload
@@ -239,7 +241,10 @@ export default {
           //sucess creating org
           this.$router.push("/welcome");
         } catch (error) {
-          console.log(JSON.stringify(error, null, 2));
+         if(process.env.NODE_ENV === 'development'){
+           console.log(JSON.stringify(error, null, 2));
+         }
+
           this.showToast({
             sclass: "error",
             show: true,
