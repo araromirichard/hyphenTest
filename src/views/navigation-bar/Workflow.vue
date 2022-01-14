@@ -111,14 +111,13 @@
                   border: 1px solid rgba(212, 216, 223, 0.377431);
                   border-radius: 3px;
                 "
-             
                 dense
                 :hide-details="true"
                 label="Workflow Name"
                 single-line
                 outlined
                 color="primary"
-                 v-model="name"
+                v-model="name"
               ></v-text-field>
             </template>
             <template class="mt-6">
@@ -132,7 +131,6 @@
                   color="primary"
                   class="text-capitalize"
                   style="
-                   
                     box-shadow: 0px 12px 22px rgba(0, 0, 0, 0.24);
                     border-radius: 4px;
                   "
@@ -229,7 +227,7 @@
           <!-- -----------------------expansion-panel begins ------------------------------->
           <ExpansionPanel style="margin-bottom: 35px" />
           <!-- -----------------------expansion-panel ends ------------------------------->
-         
+
           <span
             class="noWorkFlowTitle px-12"
             style="font-weight: 700; font-size: 24px"
@@ -348,9 +346,10 @@
               </v-btn>
             </v-row>
           </v-card>
-          
+
           <template v-else>
-            <SingleRule class="px-10"
+            <SingleRule
+              class="px-10"
               style="margin-left: 0px; margin-top: 16px"
               :createdAt="dateValue() | date"
             />
@@ -374,11 +373,11 @@ export default {
       Rules: true,
       isClicked: true,
       search: "",
-      name:"",
+      name: "",
     };
   },
   methods: {
-        ...mapActions({ showToast: "ui/showToast" }),
+    ...mapActions({ showToast: "ui/showToast" }),
     closeWorkflowDialog() {
       this.dialog = false;
     },
@@ -389,18 +388,18 @@ export default {
       this.isClicked = false;
     },
 
-    startWorkflow(){
-      if(this.name != ""){
-        this.$router.push("/workflow/new?name="+this.name);
-      }else{
-           this.showToast({
-            sclass: "error",
-            show: true,
-            message: "Workflow name is required",
-            timeout: 3000,
-          });
+    startWorkflow() {
+      if (this.name != "") {
+        this.$router.push("/workflow/new?name=" + this.name);
+      } else {
+        this.showToast({
+          sclass: "error",
+          show: true,
+          message: "Workflow name is required",
+          timeout: 3000,
+        });
       }
-    }
+    },
     // pushRoute() {
     //   $router.push("/workflow/rules-edit");
     // },

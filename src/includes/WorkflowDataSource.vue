@@ -30,7 +30,7 @@
                     contain
                     width="22px"
                     height="22px"
-                    style="margin-top: 32%;"
+                    style="margin-top: 32%"
                     src="@/assets/pbot_icons/wFlowTrigger1.png"
                   >
                   </v-img>

@@ -14,7 +14,10 @@
 
           <v-tab-item>
             <v-divider></v-divider>
-            <div class=" pa-4" style="background-color: #fffbf1; width: 100%; padding: 10px">
+            <div
+              class="pa-4"
+              style="background-color: #fffbf1; width: 100%; padding: 10px"
+            >
               <div
                 class="d-flex mx-auto"
                 style="
@@ -101,7 +104,7 @@
                     >
                     of the following
 
-                   <!-- <span
+                    <!-- <span
                       class="font-weight-bold"
                       style="font-size: 14px; color: #16be98"
                       >TRUE</span>-->
@@ -217,12 +220,7 @@
         <v-spacer></v-spacer>
         <v-btn plain to="/workflow" class="mt-14">
           <v-icon large color="primary">mdi-chevron-left</v-icon>
-          <span
-            style="
-            "
-            class="back"
-            >Back</span
-          >
+          <span style="" class="back">Back</span>
         </v-btn>
       </v-row>
       <v-row>
@@ -296,13 +294,13 @@ export default {
 </script>
 
 <style scoped>
-.back{
+.back {
   margin-right: 58px;
-              font-family: Inter;
-              font-style: normal;
-              font-weight: 700;
-              font-size: 16px;
-              line-height: 24px;
-              color: var(--v-primary-base);
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--v-primary-base);
 }
 </style>

@@ -50,137 +50,132 @@
               paddingRight: `${$vuetify.breakpoint.smAndUp ? '78px' : '34px'}`,
             }"
           >
-        
-              <v-form class="ma-auto" ref="form">
-                <v-card-text class="pa-0">
-                  <v-row class="pt-2 mb-0">
-                    <v-col cols="12" md="6">
-                      <v-text-field
-                        ref="Firstname"
-                        color="primary"
-                        hide-details="auto"
-                        placeholder="First Name"
-                        single-line
-                        outlined
-                        type="text"
-                        prepend-inner-icon="mdi-account-outline"
-                  
-                        class="font-weight-regular"
-                        v-model="signUpDetails.Firstname"
-                        :rules="rules.Firstname"
-                      >
-                      </v-text-field>
-                    </v-col>
-                    <v-col cols="12" md="6">
-                      <v-text-field
-                        ref="Lastname"
-                        color="primary"
-                        hide-details="auto"
-                        placeholder="Last Name"
-                        prepend-inner-icon="mdi-account-outline"
-                        single-line
-                        outlined
-                        type="text"
-                     
-                        class="font-weight-regular"
-                        v-model="signUpDetails.Lastname"
-                        :rules="rules.Lastname"
-                      >
-                      </v-text-field>
-                    </v-col>
-                  </v-row>
-
-                  <v-text-field
-                    ref="username"
-                    color="primary"
-                    hide-details="auto"
-                    placeholder="Username"
-                    single-line
-                    outlined
-                    type="text"
-                    prepend-inner-icon="mdi-account-outline"
-                 
-                    class="font-weight-regular"
-                    v-model="signUpDetails.username"
-                    :rules="rules.username"
-                  >
-                  </v-text-field>
-
-                  <v-text-field
-                    ref="email"
-                    color="primary"
-                    hide-details="auto"
-                    prepend-inner-icon="mdi-email-outline"
-                    placeholder="Business Email"
-                    single-line
-                    outlined
-                    type="email"
-                    class="py-3 pb-0 mb-0 font-weight-regular text-lowercase"
-                    v-model="signUpDetails.email"
-                    :rules="rules.email"
-                  ></v-text-field>
-
-                  <v-text-field
-                    ref="phoneNumber"
-                    color="primary"
-                    hide-details="auto"
-                    prepend-inner-icon="mdi-phone-outline"
-                    placeholder="Mobile Phone. e.g. +234080990000"
-                    single-line
-                    outlined
-                    class="py-6 font-weight-regular"
-                    v-model="signUpDetails.phoneNumber"
-                    :rules="rules.phoneNumber"
-                  ></v-text-field>
-
-                  <v-text-field
-                    ref="password"
-                    color="primary"
-                    hide-details="auto"
-                    prepend-inner-icon="mdi-lock-outline"
-                    placeholder="Password"
-                    single-line
-                    outlined
-                    class="font-weight-regular"
-                    v-model="signUpDetails.password"
-                    :append-icon="showPass ? 'mdi-eye' : 'mdi-eye-off'"
-                    :type="showPass ? 'text' : 'password'"
-                    @click:append="showPass = !showPass"
-                    :rules="rules.password"
-                  ></v-text-field>
-                </v-card-text>
-
-                <v-card-actions class="justify-center pt-md-8 px-0">
-                  <v-btn
-                  
-                    block
-                    width="88px"
-                    height="54px"
-                    color="primary"
-                    elevation="20"
-                    :loading="isCreating"
-                    large
-                    class="text-capitalize"
-                    @click="createAccount"
-                  >
-                    <span
-                      style="
-                        font-family: Inter;
-                        font-style: normal;
-                        font-weight: 900;
-                        font-size: 16px;
-                        line-height: 19px;
-                        text-align: center;
-                        letter-spacing: 0.727273px;
-                        color: #ffffff;
-                      "
+            <v-form class="ma-auto" ref="form">
+              <v-card-text class="pa-0">
+                <v-row class="pt-2 mb-0">
+                  <v-col cols="12" md="6">
+                    <v-text-field
+                      ref="Firstname"
+                      color="primary"
+                      hide-details="auto"
+                      placeholder="First Name"
+                      single-line
+                      outlined
+                      type="text"
+                      prepend-inner-icon="mdi-account-outline"
+                      class="font-weight-regular"
+                      v-model="signUpDetails.Firstname"
+                      :rules="rules.Firstname"
                     >
-                      Continue</span
-                    ></v-btn
+                    </v-text-field>
+                  </v-col>
+                  <v-col cols="12" md="6">
+                    <v-text-field
+                      ref="Lastname"
+                      color="primary"
+                      hide-details="auto"
+                      placeholder="Last Name"
+                      prepend-inner-icon="mdi-account-outline"
+                      single-line
+                      outlined
+                      type="text"
+                      class="font-weight-regular"
+                      v-model="signUpDetails.Lastname"
+                      :rules="rules.Lastname"
+                    >
+                    </v-text-field>
+                  </v-col>
+                </v-row>
+
+                <v-text-field
+                  ref="username"
+                  color="primary"
+                  hide-details="auto"
+                  placeholder="Username"
+                  single-line
+                  outlined
+                  type="text"
+                  prepend-inner-icon="mdi-account-outline"
+                  class="font-weight-regular"
+                  v-model="signUpDetails.username"
+                  :rules="rules.username"
+                >
+                </v-text-field>
+
+                <v-text-field
+                  ref="email"
+                  color="primary"
+                  hide-details="auto"
+                  prepend-inner-icon="mdi-email-outline"
+                  placeholder="Business Email"
+                  single-line
+                  outlined
+                  type="email"
+                  class="py-3 pb-0 mb-0 font-weight-regular text-lowercase"
+                  v-model="signUpDetails.email"
+                  :rules="rules.email"
+                ></v-text-field>
+
+                <v-text-field
+                  ref="phoneNumber"
+                  color="primary"
+                  hide-details="auto"
+                  prepend-inner-icon="mdi-phone-outline"
+                  placeholder="Mobile Phone. e.g. +234080990000"
+                  single-line
+                  outlined
+                  class="py-6 font-weight-regular"
+                  v-model="signUpDetails.phoneNumber"
+                  :rules="rules.phoneNumber"
+                ></v-text-field>
+
+                <v-text-field
+                  ref="password"
+                  color="primary"
+                  hide-details="auto"
+                  prepend-inner-icon="mdi-lock-outline"
+                  placeholder="Password"
+                  single-line
+                  outlined
+                  class="font-weight-regular"
+                  v-model="signUpDetails.password"
+                  :append-icon="showPass ? 'mdi-eye' : 'mdi-eye-off'"
+                  :type="showPass ? 'text' : 'password'"
+                  @click:append="showPass = !showPass"
+                  :rules="rules.password"
+                ></v-text-field>
+              </v-card-text>
+
+              <v-card-actions class="justify-center pt-md-8 px-0">
+                <v-btn
+                  block
+                  width="88px"
+                  height="54px"
+                  color="primary"
+                  elevation="20"
+                  :loading="isCreating"
+                  large
+                  class="text-capitalize"
+                  @click="createAccount"
+                >
+                  <span
+                    style="
+                      font-family: Inter;
+                      font-style: normal;
+                      font-weight: 900;
+                      font-size: 16px;
+                      line-height: 19px;
+                      text-align: center;
+                      letter-spacing: 0.727273px;
+                      color: #ffffff;
+                    "
                   >
-                </v-card-actions>
-              </v-form>
-       
+                    Continue</span
+                  ></v-btn
+                >
+              </v-card-actions>
+            </v-form>
+
             <v-card-actions
               class="justify-center mx-auto"
               style="margin-top: 29px"
@@ -255,9 +250,8 @@ export default {
           (v) => /.+@.+\..+/.test(v) || "E-mail must be valid",
         ],
         phoneNumber: [
-        
           (v) => !!v || "This field is required ",
-          (v) =>   v.length == 14 || "Numbe is invalid"
+          (v) => v.length == 14 || "Numbe is invalid",
           // (v) =>
           //   /(^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$)/.test(v) ||
           //   "Number is invalid",
@@ -280,12 +274,12 @@ export default {
   },
   components: {
     SignUp2,
- 
   },
   methods: {
     ...mapActions({ showToast: "ui/showToast" }),
     async createAccount() {
-      Object.keys(this.form).forEach((f) => { //throw error to ui if there is any
+      Object.keys(this.form).forEach((f) => {
+        //throw error to ui if there is any
         this.$refs[f].validate(true);
       });
 
@@ -329,9 +323,8 @@ export default {
       };
     },
 
-
-
-    canCreateOrg() {// loop through rules, if all pass user can create org
+    canCreateOrg() {
+      // loop through rules, if all pass user can create org
       const rules = Object.keys(this.rules);
       return rules
         .map((rule) => {

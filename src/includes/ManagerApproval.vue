@@ -26,7 +26,7 @@
             class="ml-2 pa-4 justify-center align-center flow-page-title"
             style=""
           >
-           {{workflowName}}
+            {{ workflowName }}
           </v-card-title>
           <v-spacer></v-spacer>
           <v-switch
@@ -333,7 +333,7 @@ export default {
   data() {
     return {
       e6: 1,
-      workflowName:this.$route.query.name,
+      workflowName: this.$route.query.name,
       id: null,
       schema: null,
       actions: null,

@@ -10,28 +10,28 @@ export default {
     // }
   },
 
-  getUser(){
+  getUser() {
     return api().get("/users/me", {
       headers: {
-        'Authorization': 'Bearer '+localStorage.getItem("token"),
+        Authorization: "Bearer " + localStorage.getItem("token"),
       },
     });
   },
 
-  registerUser(credentials){
-      return api().post("/auth/local/register", credentials);
+  registerUser(credentials) {
+    return api().post("/auth/local/register", credentials);
 
-      // credentials: {
-      //   "username":"gdi",
-      //   "email":"sa@muhhhlaa.me",
-      //   "password":"password",
-      //   "Firstname":"Samson",
-      //   "Lastname":"Aligba"
-      //   }
+    // credentials: {
+    //   "username":"gdi",
+    //   "email":"sa@muhhhlaa.me",
+    //   "password":"password",
+    //   "Firstname":"Samson",
+    //   "Lastname":"Aligba"
+    //   }
   },
 
-  registerCoWorkerUser(credentials){
-    return api().post('/auth/local/register',credentials);
+  registerCoWorkerUser(credentials) {
+    return api().post("/auth/local/register", credentials);
 
     // credentials: {
     //   "username":"blue014",
@@ -44,5 +44,5 @@ export default {
     //       "id":7
     //   }
     //   }
-  }
+  },
 };

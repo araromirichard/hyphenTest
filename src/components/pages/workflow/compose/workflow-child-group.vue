@@ -303,7 +303,7 @@ export default {
     },
 
     newGroup_Type() {
-       // get condition type from AND/ALL from and/or for new group created
+      // get condition type from AND/ALL from and/or for new group created
       let t = "";
       this.comparisonType.map((type) => {
         if (type.val == this.newGroup) {

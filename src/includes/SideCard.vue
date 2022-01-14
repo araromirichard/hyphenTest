@@ -32,7 +32,6 @@
           font-weight: 600;
           font-size: 10px;
           line-height: 20px;
-        
         "
       >
         click here

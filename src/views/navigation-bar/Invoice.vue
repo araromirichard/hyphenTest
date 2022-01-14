@@ -202,6 +202,9 @@ export default {
     };
   },
 
+  mounted() {
+    this.isAnException = this.$route.query.exception || false;
+  },
   components: {
     BasicData,
   },

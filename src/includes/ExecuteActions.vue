@@ -53,12 +53,12 @@
       </div>
     </v-timeline>
 
-      <!-- <div v-sortable="{ onUpdate: reOrder }"> -->
+    <!-- <div v-sortable="{ onUpdate: reOrder }"> -->
 
     <div>
       <action-workflow
         v-for="(action, index) in selectedActions"
-        :isLast="index == selectedActions.length-1"
+        :isLast="index == selectedActions.length - 1"
         :key="index"
         :index="index"
         :action="action"
@@ -122,11 +122,18 @@ export default {
       );
     },
 
-  /// this is still very buggy
+    /// this is still very buggy
     reOrder(event) {
-        this.selectedActions.splice(event.newIndex, 0, this.selectedActions.splice(event.oldIndex, 1)[0]);
-                this.selectedProperties.splice(event.newIndex, 0, this.selectedProperties.splice(event.oldIndex, 1)[0])
-
+      this.selectedActions.splice(
+        event.newIndex,
+        0,
+        this.selectedActions.splice(event.oldIndex, 1)[0]
+      );
+      this.selectedProperties.splice(
+        event.newIndex,
+        0,
+        this.selectedProperties.splice(event.oldIndex, 1)[0]
+      );
     },
 
     addAction(action) {
@@ -143,9 +150,9 @@ export default {
       deep: true,
       immediate: true,
       handler(newVal) {
-       this.$emit('input',newVal)
-       console.log(JSON.stringify(newVal, null, 2));
-      }
+        this.$emit("input", newVal);
+        console.log(JSON.stringify(newVal, null, 2));
+      },
     },
   },
 };

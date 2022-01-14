@@ -40,10 +40,8 @@
             </v-list-item> -->
 
             <div>
-          
-           <img class="logo" :src="require('@/assets/hyphen-logo.png')"
-            />
-        </div>
+              <img class="logo" :src="require('@/assets/hyphen-logo.png')" />
+            </div>
           </template>
           <v-list nav dense flat class="py-4 pl-10">
             <v-list-item-group
@@ -216,9 +214,7 @@
         </v-list-item> -->
 
         <div>
-          
-           <img class="logo" :src="require('@/assets/hyphen-logo.png')"
-            />
+          <img class="logo" :src="require('@/assets/hyphen-logo.png')" />
         </div>
       </template>
       <v-list flat class="py-4 pl-10">
@@ -373,10 +369,10 @@ export default {
   justify-content: center;
 }
 .logo {
- width: 65%;
- display: block;
- object-fit: contain;
- margin: 30px auto;
+  width: 65%;
+  display: block;
+  object-fit: contain;
+  margin: 30px auto;
 }
 
 .navIcon {

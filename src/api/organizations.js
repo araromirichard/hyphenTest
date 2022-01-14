@@ -1,14 +1,13 @@
 import api from "./Api";
 
 export default {
-  create(organization) { 
+  create(organization) {
     return api().post("/organizations", organization, {
       headers: {
-        'Authorization': 'Bearer ' +JSON.parse(localStorage.getItem("user")).jwt,
+        Authorization: "Bearer " + JSON.parse(localStorage.getItem("user")).jwt,
       },
     });
-      
-    
+
     // organization:{
     //     "orgname": "Mulaa 44 Ltd",  //required
     //     "members": [
@@ -55,7 +54,7 @@ export default {
   update(orgId, credentials) {
     return api().put("/organizations/" + orgId, credentials, {
       headers: {
-        'Authorization': 'Bearer '+localStorage.getItem("token"),
+        Authorization: "Bearer " + localStorage.getItem("token"),
       },
     });
 

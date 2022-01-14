@@ -4,11 +4,10 @@ import Formlayout from "../views/Form-layout.vue";
 import OnBoarding from "../views/OnboardingPage.vue";
 import MainLayout from "../views/MainLayout.vue";
 import Index from "../views/Inbox/Index.vue";
-import errorPage  from "../views/error-page.vue"
+import errorPage from "../views/error-page.vue";
 
 import _middleware from "./middleware";
 import store from "../store";
-
 
 Vue.use(VueRouter);
 
@@ -18,9 +17,10 @@ const routes = [
     redirect: "/login",
     name: "Form-layout",
     component: Formlayout,
-  },{
-     path:"/error",
-     component:errorPage,
+  },
+  {
+    path: "/error",
+    component: errorPage,
   },
   {
     path: "/login",
@@ -151,24 +151,23 @@ const router = new VueRouter({
   linkActiveClass: "active",
 });
 
-
-
-
- router.beforeEach((to, from, next) => {
-  
-    // middleware specified in route config
+router.beforeEach((to, from, next) => {
+  // middleware specified in route config
   const routeMiddlewares = to.meta.middleware;
 
   // middleware specified in global config
-  const globalMiddlewares = _middleware.global ? Object.keys(_middleware.global) : [];
+  const globalMiddlewares = _middleware.global
+    ? Object.keys(_middleware.global)
+    : [];
 
   // add the two middleware arrays together and create a new array with no duplicate middleware names
-  const middlewares = [...new Set(globalMiddlewares.concat(routeMiddlewares || []))];
+  const middlewares = [
+    ...new Set(globalMiddlewares.concat(routeMiddlewares || [])),
+  ];
 
-  // flatten middleware object list 
-  const MIDDLEWARE = {..._middleware,..._middleware.global}
+  // flatten middleware object list
+  const MIDDLEWARE = { ..._middleware, ..._middleware.global };
   delete MIDDLEWARE.global;
-
 
   // redirection callback
   const redirect = (route) => {
@@ -178,12 +177,11 @@ const router = new VueRouter({
     next(route);
   };
 
-
   // if middleware is not defined, just continue to the route
   if (middlewares && middlewares.length > 0) {
-     middlewares.forEach(async (m) => {
+    middlewares.forEach(async (m) => {
       try {
-        await  MIDDLEWARE[m]({ to, from, store, redirect });
+        await MIDDLEWARE[m]({ to, from, store, redirect });
       } catch (e) {
         if (process.env.NODE_ENV === "development") {
           console.log(JSON.stringify(e, null, 2));

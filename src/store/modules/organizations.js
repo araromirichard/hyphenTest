@@ -5,9 +5,9 @@ const state = {};
 const getters = {};
 
 const mutations = {
-    commitOrganization(state, organization) {
-        state.organization = organization;
-    }
+  commitOrganization(state, organization) {
+    state.organization = organization;
+  },
 };
 
 const actions = {
@@ -17,7 +17,7 @@ const actions = {
       commit("commitOrganization", response.data);
       return response;
     } catch (error) {
-      console.log(JSON.stringify(error,null,2));
+      console.log(JSON.stringify(error, null, 2));
       return Promise.reject(error);
     }
   },
@@ -32,8 +32,6 @@ const actions = {
     }
   },
 };
-
-
 
 export default {
   namespaced: true,

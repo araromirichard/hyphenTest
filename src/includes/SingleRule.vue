@@ -28,8 +28,7 @@
                 >
                   <v-card-title
                     class="mx-2 mt-4 text-break cardTitle"
-                    style="
-                    "
+                    style=""
                     >{{ card.title }}</v-card-title
                   >
                   <div class="d-flex my-4">

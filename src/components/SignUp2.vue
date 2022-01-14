@@ -262,9 +262,8 @@ export default {
       };
     },
 
-
-
-    canCompleOrgCreation() { // loop through rules, if all pass user can create org
+    canCompleOrgCreation() {
+      // loop through rules, if all pass user can create org
       const rules = Object.keys(this.rules);
       return rules
         .map((rule) => {

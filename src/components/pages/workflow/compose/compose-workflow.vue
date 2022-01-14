@@ -22,7 +22,7 @@
 </template>
 
 <script>
-//  <workflow-parent-group> components holds the parent condition 
+//  <workflow-parent-group> components holds the parent condition
 // ..it holds childen conditions/group (slot components)
 import { comparisonType } from "@/utils/ManagerApprovalOptions.js";
 import WorkflowChildGroup from "./workflow-child-group.vue";
@@ -77,7 +77,8 @@ export default {
     schema: {
       immediate: true,
       deep: true,
-      handler(val) {// push out the latest changes
+      handler(val) {
+        // push out the latest changes
         this.$emit("input", val);
       },
     },

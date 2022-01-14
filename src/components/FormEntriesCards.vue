@@ -34,7 +34,7 @@
           my-auto
           px-6
         "
-        style="max-width: 416px; color: var(--v-primary-base);"
+        style="max-width: 416px; color: var(--v-primary-base)"
       >
         {{ formName }}
       </span>

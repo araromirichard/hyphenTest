@@ -96,7 +96,8 @@ export default {
       type: Number,
       default: null,
     },
-    isLast: { // this would let us know if current condition is the last on the list
+    isLast: {
+      // this would let us know if current condition is the last on the list
       type: Boolean,
       default: false,
     },
@@ -118,7 +119,8 @@ export default {
     data: {
       immediate: true,
       deep: true,
-      handler(newValue) { // send out the collected from the modal form
+      handler(newValue) {
+        // send out the collected from the modal form
         this.$emit("properties", newValue);
       },
     },

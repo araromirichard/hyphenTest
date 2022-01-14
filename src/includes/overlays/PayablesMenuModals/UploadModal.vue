@@ -153,7 +153,7 @@ export default {
     };
   },
   methods: {
-     ...mapActions({ showToast: "ui/showToast" }),
+    ...mapActions({ showToast: "ui/showToast" }),
     closeDialog() {
       return (this.dialog = false);
     },

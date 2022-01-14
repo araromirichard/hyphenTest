@@ -1,6 +1,6 @@
 <template>
   <div class="mt-5">
-    <div class="font-weight-bold " style="color: #7f919b; font-size: 16px">
+    <div class="font-weight-bold" style="color: #7f919b; font-size: 16px">
       WHEN
       <v-menu bottom offset-y>
         <template v-slot:activator="{ on, attrs }">
@@ -55,7 +55,8 @@ export default {
   },
 
   computed: {
-    group_Type() { // filter out group type AND/ALL from and/or
+    group_Type() {
+      // filter out group type AND/ALL from and/or
       let t = "";
       this.comparisonType.map((type) => {
         if (type.val == this.groupType) {

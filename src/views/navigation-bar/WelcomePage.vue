@@ -14,7 +14,7 @@
         Let’s get you started on pbot
       </p>
       <v-container class="pa-0 ma-0 justify-center mx-auto">
-        <v-row class=" d-flex justify-center">
+        <v-row class="d-flex justify-center">
           <v-col
             cols="12"
             md="3"
@@ -209,7 +209,6 @@
 </template>
 
 <script>
-
 import { mapGetters } from "vuex";
 export default {
   data() {
@@ -218,8 +217,8 @@ export default {
     };
   },
 
-  mounted(){
-  //  this.$store.dispatch("auth/fetchUserDetails");
+  mounted() {
+    //  this.$store.dispatch("auth/fetchUserDetails");
   },
   computed: {
     ...mapGetters("auth", ["user"]),

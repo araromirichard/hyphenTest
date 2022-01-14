@@ -10,7 +10,11 @@
           color="primary"
           :width="width"
           :height="height"
-          style="margin-top: 25px; background: var(--v-primary-base); border-radius: 4px"
+          style="
+            margin-top: 25px;
+            background: var(--v-primary-base);
+            border-radius: 4px;
+          "
         >
           <img
             :src="btnIcon"

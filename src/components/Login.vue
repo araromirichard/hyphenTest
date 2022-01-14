@@ -29,7 +29,7 @@
             <v-form @submit="submitForm" class="ma-auto" ref="form">
               <v-card-text class="pa-0">
                 <v-text-field
-                ref="email"
+                  ref="email"
                   color="primary"
                   label="Your Email"
                   outlined
@@ -42,9 +42,9 @@
                 ></v-text-field>
 
                 <v-text-field
-                ref="password"
+                  ref="password"
                   color="primary"
-                 hide-details="auto"
+                  hide-details="auto"
                   label="Password"
                   prepend-inner-icon="mdi-lock-outline"
                   class="pb-0 mb-0 mt-4"
@@ -118,11 +118,10 @@
                   fontSize: `${$vuetify.breakpoint.xs ? '9px' : ''}`,
                 }"
               >
-               
-                <br>
+                <br />
                 <router-link
                   to="sign-up"
-                  style=" 
+                  style="
                     text-decoration: none;
                     font-family: Inter;
                     font-style: normal;
@@ -131,15 +130,15 @@
                   "
                 >
                   <span
-                  class="pl-md-3"
-                  style="
-                    font-family: Inter;
-                    font-style: normal;
-                    font-weight: normal;
+                    class="pl-md-3"
+                    style="
+                      font-family: Inter;
+                      font-style: normal;
+                      font-weight: normal;
                       color: var(--v-primary-base);
-                  "
-                  >Don’t have an account yet?</span
-                > 
+                    "
+                    >Don’t have an account yet?</span
+                  >
                 </router-link>
               </v-chip>
             </v-card-actions>
@@ -316,10 +315,9 @@ export default {
     ...mapActions({ showToast: "ui/showToast" }),
 
     async submitForm(event) {
-            Object.keys(this.form).forEach((f) => {
+      Object.keys(this.form).forEach((f) => {
         this.$refs[f].validate(true);
       });
-
 
       if (this.canLogin) {
         event.preventDefault();
@@ -360,7 +358,8 @@ export default {
       };
     },
 
-    canLogin() { // loop through rules, if all pass user can try to login
+    canLogin() {
+      // loop through rules, if all pass user can try to login
       const rules = Object.keys(this.rules);
       return rules
         .map((rule) => {

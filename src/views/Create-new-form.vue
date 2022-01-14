@@ -28,7 +28,6 @@
                 <p
                   class="text-break"
                   style="
-                    
                     max-width: 257px;
                     font-family: Inter;
                     font-style: normal;
@@ -67,8 +66,13 @@
                   >
                 </v-sheet>
               </div>
-              <div class="d-flex flex-column justify-center align-center"
-              style="border:1px dotted #ccc;border-radius:4px;background-color:#fff"
+              <div
+                class="d-flex flex-column justify-center align-center"
+                style="
+                  border: 1px dotted #ccc;
+                  border-radius: 4px;
+                  background-color: #fff;
+                "
               >
                 <v-row>
                   <v-col cols="12">
@@ -93,9 +97,7 @@
         cols="12"
         md="9"
       >
-        
         <div>
-         
           <h6
             class="pl-5 pt-md-5"
             style="
@@ -114,11 +116,8 @@
           >
             Form Builder
           </h6>
-          
-          <FormBuilder
-            style=""
-            v-model="formData"
-          ></FormBuilder>
+
+          <FormBuilder style="" v-model="formData"></FormBuilder>
         </div>
         <v-row>
           <v-col class="my-2 mx-md-5 d-flex justify-end">

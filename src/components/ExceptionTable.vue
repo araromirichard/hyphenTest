@@ -6,6 +6,7 @@
           $router.push({
             name: 'inbox.invoice',
             params: { id: id },
+            query: { exception: true },
           })
         "
         class="px-6 py-4 my-1"

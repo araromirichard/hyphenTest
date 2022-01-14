@@ -3,7 +3,7 @@
  */
 
 export default async function ({ store, redirect }) {
-    console.log("userDetails middleware");
+  console.log("userDetails middleware");
   let userId = localStorage.getItem("userId");
 
   // user details is empty and userId is present in the local storage
