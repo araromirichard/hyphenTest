@@ -4,8 +4,8 @@
       <v-container>
         <v-row>
           <v-col
-            v-for="card in formCards"
-            :key="card.title"
+            v-for="(card, j) in formCards"
+            :key="j"
             cols="12"
             sm="6"
             md="4"
@@ -40,7 +40,7 @@
                   >{{ card.title }}</v-card-title
                 >
                 <div class="d-flex justify-space-between my-4">
-                  <div>
+                  <div class="mx-4 mx-md-1">
                     <v-chip
                       label
                       small
@@ -75,7 +75,6 @@
                   <p
                     class="ml-4"
                     style="
-                      margin-top: 1.2em;
                       font-family: Inter;
                       font-style: normal;
                       font-weight: normal;
@@ -86,13 +85,18 @@
                       mix-blend-mode: normal;
                       opacity: 0.5;
                     "
+                    :style="{
+                      marginTop: `${
+                        $vuetify.breakpoint.md ? '0.7em' : '1.2em'
+                      }`,
+                    }"
                   >
                     Created {{ createdAt }}
                   </p>
                   <v-spacer></v-spacer>
                   <v-btn
                     v-model="selectedIcon"
-                    @click="showForm(icon, index)"
+                    @click="showForm(icon, index, j)"
                     target="_blank"
                     class="px-0 mx-0"
                     style="margin-top: 4px"
@@ -115,14 +119,14 @@
               </v-card>
             </v-item>
           </v-col>
-          <v-col cols="12" sm="6" md="3">
+          <v-col cols="12" sm="6" md="4">
             <v-card
               class="d-flex flex-column align-center justify-center"
               color="#f8f8f8"
               max-width="100%"
               height="200"
               outlined
-              style="margin-left: 8px; border-color: rgba(49, 27, 146, 0.2)"
+              style="border-color: rgba(49, 27, 146, 0.2)"
             >
               <v-card-actions class="ma-0 pa-0">
                 <v-btn plain fab to="/form/create-new-form" target="_blank">
@@ -172,7 +176,32 @@ export default {
       ],
       formCards: [
         {
+          title: "Form Name ",
+          numberProcessed: "23",
+          switchValue: 1,
+        },
+        {
+          title: "Form Title",
+          numberProcessed: "23",
+          switchValue: 1,
+        },
+        {
           title: "Form Name and Title",
+          numberProcessed: "23",
+          switchValue: 1,
+        },
+        {
+          title: "Title",
+          numberProcessed: "23",
+          switchValue: 1,
+        },
+        {
+          title: "Form ",
+          numberProcessed: "23",
+          switchValue: 1,
+        },
+        {
+          title: " and Title",
           numberProcessed: "23",
           switchValue: 1,
         },
@@ -180,7 +209,7 @@ export default {
     };
   },
   methods: {
-    showForm(icon, index) {
+    showForm(icon, index, parentIndex) {
       // i = this.selectedIcon;
       console.log({ icon, index });
       if (index === 0) {
@@ -190,7 +219,10 @@ export default {
         });
       } else if (index === 1) {
         this.$emit("entries");
-        console.log(index);
+        //console.log(index);
+      } else if (index === 2) {
+        this.formCards.splice(parentIndex, 1);
+        console.log(this.formCards);
       }
     },
     // openEntries(icon, index) {

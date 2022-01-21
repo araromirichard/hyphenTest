@@ -207,9 +207,9 @@ export default {
 .headline-block {
   display: none !important;
 }
-.section-config {
+/* .section-config {
   display: none !important;
-}
+} */
 .form-configuration-block {
   display: none !important;
 }

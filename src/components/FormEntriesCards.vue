@@ -47,7 +47,7 @@
           v-if="showFormCards"
           @create-form="buildForm"
           @entries="showFormCards = false"
-          class="ml-md-10"
+          class="mx-md-10"
           :createdAt="dateValue() | date"
         />
 
