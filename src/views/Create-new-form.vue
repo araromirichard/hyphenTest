@@ -188,6 +188,7 @@ export default {
     saveData() {
       console.log(this.formData);
       const dataPayload = this.createRequestData;
+
       //post dataPayload to the server
       formBuider
         .postForm(dataPayload)
@@ -207,10 +208,25 @@ export default {
     //return full object to send to
     createRequestData() {
       return {
-        form_title: this.configuration.formTitle,
+        form_title: this.fmName,
         data: this.formData,
         is_private: this.configuration.isPrivate,
       };
+    },
+
+    getFormName() {
+      if (this.formData == null && this.formData == undefined) return;
+      console.log(JSON.stringify(this.formData, null, 2));
+      var fmName = "";
+      try {
+        fmName =
+          this.formData.sections[Object.keys(this.formData.sections)].headline;
+
+        console.log(fmName);
+        return fmName;
+      } catch (error) {
+        return "";
+      }
     },
   },
 };

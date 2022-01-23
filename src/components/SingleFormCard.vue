@@ -37,7 +37,7 @@
                     line-height: 24px;
                     color: #596a73;
                   "
-                  >{{ card.title }}</v-card-title
+                  >{{ card.form_title }}</v-card-title
                 >
                 <div class="d-flex justify-space-between my-4">
                   <div class="mx-4 mx-md-1">
@@ -47,7 +47,7 @@
                       dark
                       color="#636b70"
                       class="mt-4 mx-md-5"
-                      >{{ card.numberProcessed }}</v-chip
+                      >{{ numFormEntries }}</v-chip
                     >
                     <h5 class="mx-md-5 text--disabled">entries</h5>
                   </div>
@@ -158,6 +158,7 @@
 </template>
 
 <script>
+import formBuider from "@/api/formbuilder.js";
 export default {
   props: {
     createdAt: {
@@ -169,43 +170,14 @@ export default {
     return {
       switch1: [],
       selectedIcon: null,
+      numFormEntries: 0,
+      formEntries: [],
       icons: [
         { title: "mdi-pencil-outline", path: "#" },
         { title: "mdi-format-indent-increase", path: "#" },
         { title: "mdi-delete", path: "#" },
       ],
-      formCards: [
-        {
-          title: "Form Name ",
-          numberProcessed: "23",
-          switchValue: 1,
-        },
-        {
-          title: "Form Title",
-          numberProcessed: "23",
-          switchValue: 1,
-        },
-        {
-          title: "Form Name and Title",
-          numberProcessed: "23",
-          switchValue: 1,
-        },
-        {
-          title: "Title",
-          numberProcessed: "23",
-          switchValue: 1,
-        },
-        {
-          title: "Form ",
-          numberProcessed: "23",
-          switchValue: 1,
-        },
-        {
-          title: " and Title",
-          numberProcessed: "23",
-          switchValue: 1,
-        },
-      ],
+      formCards: [],
     };
   },
   methods: {
@@ -234,6 +206,25 @@ export default {
       this.$emit("create-form", this.formCards);
     },
   },
+  mounted() {
+    formBuider
+      .getAllForms()
+      .then((response) => {
+        console.log(JSON.stringify(response.data, null, 2));
+        this.formCards = response.data;
+        this.numFormEntries = this.formEntries.length;
+        console.log(this.formEntries.length);
+        console.log(JSON.stringify(this.formCards, null, 2));
+      })
+      .catch((error) => {
+        console.log("There was an errror:", error.response);
+      });
+  },
+  // computed: {
+  //   totalEntriesNum() {
+  //     return this.formEntries.length;
+  //   },
+  // },
 };
 </script>
 
