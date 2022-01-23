@@ -168,21 +168,49 @@
 </template>
 
 <script>
-//import Overlaybtns from "../includes/btns/Overlaybtns.vue";
+import formBuider from "@/api/formbuilder.js";
 export default {
   components: {
     //Overlaybtns
   },
   data() {
     return {
-      formData: null,
       formInputData: null,
-      configuration: {},
+      configuration: {
+        formTitle: "",
+        isPrivate: true,
+        formName: "",
+      },
+      formData: null,
     };
   },
   methods: {
     saveData() {
-      console.log(JSON.stringify(this.formData));
+      console.log(this.formData);
+      const dataPayload = this.createRequestData;
+      //post dataPayload to the server
+      formBuider
+        .postForm(dataPayload)
+        .then((response) => {
+          console.log(response.data.data);
+        })
+        .catch((error) => {
+          console.log(
+            "an error occured while trying to post form:",
+            error.response
+          );
+        });
+    },
+  },
+
+  computed: {
+    //return full object to send to
+    createRequestData() {
+      return {
+        form_title: this.configuration.formTitle,
+        data: this.formData,
+        is_private: this.configuration.isPrivate,
+      };
     },
   },
 };
