@@ -187,49 +187,28 @@ export default {
   methods: {
     saveData() {
       console.log(this.formData);
-      const dataPayload = this.createRequestData;
-
-      //post dataPayload to the server
-      formBuider
-        .postForm(dataPayload)
-        .then((response) => {
-          console.log(response.data.data);
-        })
-        .catch((error) => {
-          console.log(
-            "an error occured while trying to post form:",
-            error.response
-          );
-        });
     },
   },
 
+  mounted() {
+    //get dataPayload from the server
+    const id = parseInt(this.$route.params.id) + 1;
+    console.log(id);
+    formBuider
+      .getForm(id)
+      .then((response) => {
+        console.log(response.data.data);
+        this.formData = response.data.data
+      })
+      .catch((error) => {
+        console.log(
+          "an error occured while trying to get form:",
+          error.response
+        );
+      });
+  },
   computed: {
-    //return full object to send to
-    createRequestData() {
-      return {
-        form_title: this.fmName,
-        data: this.formData,
-        is_private: this.configuration.isPrivate,
-      };
-    },
-
-    getFormName() {
-      if (this.formData == null && this.formData == undefined) return;
-      console.log(JSON.stringify(this.formData, null, 2));
-
-      //declaring a variable and trying to get the form title name from the formData Object....
-      var fmName = "";
-      try {
-        fmName =
-          this.formData.sections[Object.keys(this.formData.sections)].headline;
-
-        console.log(fmName);
-        return fmName;
-      } catch (error) {
-        return "";
-      }
-    },
+    //
   },
 };
 </script>

@@ -159,6 +159,7 @@
 
 <script>
 import formBuider from "@/api/formbuilder.js";
+
 export default {
   props: {
     createdAt: {
@@ -186,8 +187,10 @@ export default {
       console.log({ icon, index });
       if (index === 0) {
         this.$emit("edit-form");
+        console.log(this.formData);
+
         this.$router.push({
-          name: "Create-form",
+          path: `/edit-form/${parentIndex}`,
         });
       } else if (index === 1) {
         this.$emit("entries");
@@ -210,21 +213,21 @@ export default {
     formBuider
       .getAllForms()
       .then((response) => {
-        console.log(JSON.stringify(response.data, null, 2));
+        //console.log(JSON.stringify(response.data, null, 2));
         this.formCards = response.data;
         this.numFormEntries = this.formEntries.length;
-        console.log(this.formEntries.length);
-        console.log(JSON.stringify(this.formCards, null, 2));
+        //console.log(this.formEntries.length);
+        //console.log(JSON.stringify(this.formCards, null, 2));
       })
       .catch((error) => {
         console.log("There was an errror:", error.response);
       });
   },
-  // computed: {
-  //   totalEntriesNum() {
-  //     return this.formEntries.length;
-  //   },
-  // },
+  computed: {
+    totalEntriesNum() {
+      return this.formEntries.length;
+    },
+  },
 };
 </script>
 

@@ -1,7 +1,14 @@
 <template>
   <v-container>
     <div
-      class="mx-14 my-0 pt-10 d-flex justify-sm-space-between"
+      class="
+        mx-10 mx-sm-12 mx-md-14
+        px-md-0
+        my-0
+        pt-10
+        d-flex
+        justify-sm-space-between
+      "
       v-if="$vuetify.breakpoint.mdAndUp"
     >
       <h3
