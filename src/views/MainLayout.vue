@@ -23,22 +23,7 @@
           absolute
           temporary
         >
-          <template v-slot:prepend>
-            <!-- <v-list-item two-line class="pl-10 justify-center">
-              <v-list-item-avatar color="primary" size="46">
-                <img :src="require('@/assets/Shape.svg')" class="logo" />
-              </v-list-item-avatar>
-
-              <v-list-item-content>
-                <v-list-item-title style="padding-top: 6px"
-                  ><img :src="require('@/assets/pBot.svg')"
-                /></v-list-item-title>
-                <v-list-item-subtitle class="ml-6"
-                  >on pBot</v-list-item-subtitle
-                >
-              </v-list-item-content>
-            </v-list-item> -->
-
+         <template v-slot:prepend>  
             <div>
               <img class="logo" :src="require('@/assets/hyphen-logo.png')" />
             </div>
@@ -200,19 +185,6 @@
       class="px-0"
     >
       <template v-slot:prepend>
-        <!-- <v-list-item two-line class="pl-10 justify-center">
-          <v-list-item-avatar color="primary" size="46">
-            <img :src="require('@/assets/Shape.svg')" class="logo" />
-          </v-list-item-avatar>
-
-          <v-list-item-content>
-            <v-list-item-title style="padding-top: 6px"
-              ><img :src="require('@/assets/pBot.svg')"
-            /></v-list-item-title>
-            <v-list-item-subtitle class="ml-6">on pBot</v-list-item-subtitle>
-          </v-list-item-content>
-        </v-list-item> -->
-
         <div>
           <img class="logo" :src="require('@/assets/hyphen-logo.png')" />
         </div>
@@ -369,10 +341,10 @@ export default {
   justify-content: center;
 }
 .logo {
-  width: 65%;
+  width: 50%;
   display: block;
   object-fit: contain;
-  margin: 30px auto;
+  margin: 30px 0 30px 30px;
 }
 
 .navIcon {
