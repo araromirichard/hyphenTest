@@ -9,9 +9,9 @@
         offset-md="3"
         style="min-height: 100vh"
       >
-        <v-card class="pb-10 mt-16 ma-25" elevation="1">
+        <v-card  color="transparent" elevation="0">
           <p
-            class="display-1 font-weight-bold pb-7 mt-10 text--secondary"
+            class="display-1 font-weight-bold  text--secondary"
             :style="{
               paddingLeft: `${$vuetify.breakpoint.smAndUp ? '84px' : '36px'}`,
               paddingTop: `${$vuetify.breakpoint.smAndUp ? '90px' : '34px'}`,
@@ -257,10 +257,10 @@
 
         <div
           v-if="$vuetify.breakpoint.mdAndUp"
-          class="align-center mt-12 text-center text-break"
+          class="align-center mt-0 text-center text-break"
         >
           <span
-            class="pt-12"
+            
             style="
               font-family: Inter;
               font-style: normal;

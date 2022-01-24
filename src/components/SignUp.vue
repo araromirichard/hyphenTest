@@ -9,15 +9,15 @@
         offset-md="2"
         style="min-height: 100vh"
       >
-        <v-card class="pb-10 mt-16" elevation="4" v-if="pageOne">
+        <v-card  elevation="0" color="transparent" v-if="pageOne">
           <v-row class="pa-0 ma-0 d-flex flex-row">
             <v-col cols="12" md="8" class="pa-0">
               <p
                 class="
                   text-md-h4 text-h5
                   font-weight-bold
-                  pb-md-7
-                  mt-10
+             
+                  mt-2
                   mb-0
                   text--secondary
                 "
@@ -33,11 +33,11 @@
                 Create your account
               </p>
             </v-col>
-            <v-col cols="12" md="4" class="pl-9 pl-md-6">
+            <v-col cols="12" md="4" class="">
               <p
-                class="text-caption pt-16 text--disabled pb-md-7 mt-md-10"
+                class="text-caption pt-16 text--disabled pb-md-2 mt-md-2"
                 :style="{
-                  paddingTop: `${$vuetify.breakpoint.smAndUp ? '52px' : '3px'}`,
+                  paddingTop: `${$vuetify.breakpoint.smAndUp ? '40px' : '3px'}`,
                 }"
               >
                 Step 1 of 2
@@ -146,7 +146,7 @@
                 ></v-text-field>
               </v-card-text>
 
-              <v-card-actions class="justify-center pt-md-8 px-0">
+              <v-card-actions class="justify-center  px-0">
                 <v-btn
                   block
                   width="88px"
@@ -178,7 +178,7 @@
 
             <v-card-actions
               class="justify-center mx-auto"
-              style="margin-top: 29px"
+              style="margin-top: 15px"
               :style="{
                 marginBottom: `${$vuetify.breakpoint.xs ? '16px' : '73px'}`,
               }"
