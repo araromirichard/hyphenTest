@@ -190,14 +190,26 @@ export default {
         console.log(this.formData);
 
         this.$router.push({
-          path: `/edit-form/${parentIndex}`,
+          path: `/edit-form/${parentIndex + 1}`,
         });
       } else if (index === 1) {
         this.$emit("entries");
         //console.log(index);
       } else if (index === 2) {
-        this.formCards.splice(parentIndex, 1);
-        console.log(this.formCards);
+        const id = parentIndex + 1;
+        formBuider
+          .deleteForm(id)
+          .then((response) => {
+            response.data.splice(id, 1);
+            //console.log(JSON.stringify(response.data, null, 2));
+           this.formCards = this.response.data;
+          })
+          .catch((error) => {
+            console.log(
+              "an error occurred while trying to delete the form template: ",
+              error.response
+            );
+          });
       }
     },
     // openEntries(icon, index) {

@@ -169,6 +169,7 @@
 
 <script>
 import formBuider from "@/api/formbuilder.js";
+import { mapActions } from "vuex";
 export default {
   components: {
     //Overlaybtns
@@ -185,6 +186,7 @@ export default {
     };
   },
   methods: {
+    ...mapActions({ showToast: "ui/showToast" }),
     saveData() {
       console.log(this.formData);
       const dataPayload = this.createRequestData;
@@ -194,12 +196,26 @@ export default {
         .postForm(dataPayload)
         .then((response) => {
           console.log(response.data.data);
+          this.showToast({
+            sclass: "success",
+            show: true,
+            message: "Form Template Created",
+            timeout: 3000,
+          });
+          //refresh page to prevent double submition
+          location.reload();
         })
         .catch((error) => {
           console.log(
             "an error occured while trying to post form:",
             error.response
           );
+          this.showToast({
+            sclass: "error",
+            show: true,
+            message: "An error occured while trying to create form template",
+            timeout: 3000,
+          });
         });
     },
   },

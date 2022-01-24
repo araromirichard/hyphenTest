@@ -22,7 +22,7 @@ export default {
     updateForm(id, dataPayload) {
         return apiClient.put(`/organID/${id}`, dataPayload);
     },
-    //     deleteForm(id) {
-    // return apiClient.delete
-    //     }
+    deleteForm(id) {
+        return apiClient.delete(`/organID/${id}`);
+    },
 };
