@@ -1,6 +1,5 @@
 <template>
   <div class="pa-0 ma-0">
-    <v-item-group @change="selectedDataSource" v-model="selectedData">
       <v-row>
         <v-col>
           <v-card flat color="white" class="d-flex" height="200px">
@@ -9,11 +8,11 @@
               v-for="(dataItem, i) in dataSource"
               :key="i"
             >
-              <v-item :value="dataItem" v-slot:default="{ active, toggle }">
+            
                 <v-card
-                  @click="toggle"
+                  @click="selectedDataSource(dataItem)"
                   :class="
-                    active ? 'border-color: #301F78' : 'border-color: #D5DCEC'
+                   JSON.stringify(selectedData) === JSON.stringify(dataItem)  ? 'border-color: #301F78' : 'border-color: #D5DCEC'
                   "
                   class="justify-center notActive"
                   flat
@@ -35,7 +34,7 @@
                   >
                   </v-img>
                 </v-card>
-              </v-item>
+       
               <div class="mt-1">
                 <h5 class="cardTitle">
                   {{ dataItem.title }}
@@ -48,10 +47,9 @@
           </v-card>
         </v-col>
       </v-row>
-    </v-item-group>
     <div>
       <template class="my-7">
-        <v-select
+        <v-select v-if="selectedData.title != 'Form'"
           :menu-props="{ bottom: true, offsetY: true }"
           :items="formSelectDropdown"
           style="
@@ -92,9 +90,9 @@ export default {
   data() {
     return {
       dataSource: [
+          { title: "Email", text: "Process bank transactions" },
         { title: "Form", text: "Process form submissions" },
-        { title: "Bank", text: " Process emailed invoice" },
-        { title: "Email", text: "Process bank transactions" },
+        { title: "Bank", text: " Process emailed invoice" }
       ],
       formSelectDropdown: [
         "Expense reinbursement ",
@@ -102,7 +100,10 @@ export default {
         "Payment request",
         "Petty cash request",
       ],
-      selectedData: null,
+      selectedData: {
+        title: "Email",
+        text: "Process bank transactions"
+      },
       ShowFormSelect: false,
     };
   },
@@ -111,6 +112,7 @@ export default {
   },
   methods: {
     selectedDataSource(e) {
+      this.selectedData = e;
       console.table({
         e,
         selectedData: this.selectedData,
