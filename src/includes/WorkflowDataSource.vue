@@ -1,55 +1,57 @@
 <template>
   <div class="pa-0 ma-0">
-      <v-row>
-        <v-col>
-          <v-card flat color="white" class="d-flex" height="200px">
-            <div
-              class="flex-column pr-5"
-              v-for="(dataItem, i) in dataSource"
-              :key="i"
+    <v-row>
+      <v-col>
+        <v-card flat color="white" class="d-flex" height="200px">
+          <div
+            class="flex-column pr-5"
+            v-for="(dataItem, i) in dataSource"
+            :key="i"
+          >
+            <v-card
+              @click="selectedDataSource(dataItem)"
+              :class="
+                JSON.stringify(selectedData) === JSON.stringify(dataItem)
+                  ? 'border-color: #301F78'
+                  : 'border-color: #D5DCEC'
+              "
+              class="justify-center notActive"
+              flat
+              width="110"
+              height="100"
+              style="
+                border: 1px solid rgba(48, 31, 120, 0.07);
+                border-radius: 8px;
+                cursor: pointer;
+              "
             >
-            
-                <v-card
-                  @click="selectedDataSource(dataItem)"
-                  :class="
-                   JSON.stringify(selectedData) === JSON.stringify(dataItem)  ? 'border-color: #301F78' : 'border-color: #D5DCEC'
-                  "
-                  class="justify-center notActive"
-                  flat
-                  width="110"
-                  height="100"
-                  style="
-                    border: 1px solid rgba(48, 31, 120, 0.07);
-                    border-radius: 8px;
-                    cursor: pointer;
-                  "
-                >
-                  <v-img
-                    class="mx-auto"
-                    contain
-                    width="22px"
-                    height="22px"
-                    style="margin-top: 32%"
-                    src="@/assets/pbot_icons/wFlowTrigger1.png"
-                  >
-                  </v-img>
-                </v-card>
-       
-              <div class="mt-1">
-                <h5 class="cardTitle">
-                  {{ dataItem.title }}
-                </h5>
-                <h6 class="spanText text-break" style="max-width: 8rem">
-                  {{ dataItem.text }}
-                </h6>
-              </div>
+              <v-img
+                class="mx-auto"
+                contain
+                width="22px"
+                height="22px"
+                style="margin-top: 32%"
+                src="@/assets/pbot_icons/wFlowTrigger1.png"
+              >
+              </v-img>
+            </v-card>
+
+            <div class="mt-1">
+              <h5 class="cardTitle">
+                {{ dataItem.title }}
+              </h5>
+              <h6 class="spanText text-break" style="max-width: 8rem">
+                {{ dataItem.text }}
+              </h6>
             </div>
-          </v-card>
-        </v-col>
-      </v-row>
+          </div>
+        </v-card>
+      </v-col>
+    </v-row>
     <div>
       <template class="my-7">
-        <v-select v-if="selectedData.title != 'Form'"
+        <v-select
+          v-if="selectedData.title != 'Form'"
           :menu-props="{ bottom: true, offsetY: true }"
           :items="formSelectDropdown"
           style="
@@ -90,9 +92,9 @@ export default {
   data() {
     return {
       dataSource: [
-          { title: "Email", text: "Process bank transactions" },
+        { title: "Email", text: "Process bank transactions" },
         { title: "Form", text: "Process form submissions" },
-        { title: "Bank", text: " Process emailed invoice" }
+        { title: "Bank", text: " Process emailed invoice" },
       ],
       formSelectDropdown: [
         "Expense reinbursement ",
@@ -102,7 +104,7 @@ export default {
       ],
       selectedData: {
         title: "Email",
-        text: "Process bank transactions"
+        text: "Process bank transactions",
       },
       ShowFormSelect: false,
     };

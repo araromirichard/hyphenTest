@@ -23,7 +23,7 @@
           absolute
           temporary
         >
-         <template v-slot:prepend>  
+          <template v-slot:prepend>
             <div>
               <img class="logo" :src="require('@/assets/hyphen-logo.png')" />
             </div>
@@ -303,7 +303,7 @@
       <template v-slot:append absolute v-if="$vuetify.breakpoint.mdAndUp">
         <div class="pa-14">
           <v-avatar class="mx-auto" color="primary" size="60">
-            <span class="white--text text-h5">{{getUserInitials}}</span>
+            <span class="white--text text-h5">{{ getUserInitials }}</span>
           </v-avatar>
         </div>
       </template>
@@ -331,11 +331,21 @@ export default {
 
   computed: {
     getUserInitials() {
-      if(this.$store.state.auth.user !== null){
-         const firstName = this.$store.state.auth.user.firstName && this.$store.state.auth.user.firstName.charAt(0) || "";
-      const lastName = this.$store.state.auth.user.lastName && this.$store.state.auth.user.lastName.charAt(0) || "";
-      return (firstName + lastName || this.$store.state.auth.user.username && this.$store.state.auth.user.username.charAt(0) || "").toUpperCase();
-      
+      if (this.$store.state.auth.user !== null) {
+        const firstName =
+          (this.$store.state.auth.user.firstName &&
+            this.$store.state.auth.user.firstName.charAt(0)) ||
+          "";
+        const lastName =
+          (this.$store.state.auth.user.lastName &&
+            this.$store.state.auth.user.lastName.charAt(0)) ||
+          "";
+        return (
+          firstName + lastName ||
+          (this.$store.state.auth.user.username &&
+            this.$store.state.auth.user.username.charAt(0)) ||
+          ""
+        ).toUpperCase();
       }
       return "";
     },
