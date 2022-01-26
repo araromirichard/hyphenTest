@@ -24,7 +24,7 @@
           />
           <v-card-title
             class="ml-2 pa-4 justify-center align-center flow-page-title"
-            style="font-weight:700"
+            style="font-weight: 700"
           >
             {{ workflowName }}
           </v-card-title>

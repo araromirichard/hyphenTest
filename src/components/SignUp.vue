@@ -9,14 +9,13 @@
         offset-md="2"
         style="min-height: 100vh"
       >
-        <v-card  elevation="0" color="transparent" v-if="pageOne">
+        <v-card elevation="0" color="transparent" v-if="pageOne">
           <v-row class="pa-0 ma-0 d-flex flex-row">
             <v-col cols="12" md="8" class="pa-0">
               <p
                 class="
                   text-md-h4 text-h5
                   font-weight-bold
-             
                   mt-2
                   mb-0
                   text--secondary
@@ -146,7 +145,7 @@
                 ></v-text-field>
               </v-card-text>
 
-              <v-card-actions class="justify-center  px-0">
+              <v-card-actions class="justify-center px-0">
                 <v-btn
                   block
                   width="88px"
