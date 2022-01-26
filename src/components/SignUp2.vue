@@ -1,5 +1,5 @@
 <template>
-  <v-card class="pb-10 mt-16" elevation="4">
+  <v-card class="pb-3 mt-10" color="transparent" elevation="0">
     <v-row class="pa-0 ma-0 d-flex flex-row">
       <v-col cols="12" md="8" class="pa-0">
         <p
@@ -7,7 +7,7 @@
             text-md-h4 text-h5
             font-weight-bold
             pb-md-4
-            mt-8
+         
             mb-0
             text--secondary
           "

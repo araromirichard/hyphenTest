@@ -251,7 +251,7 @@ export default {
       }
 
       this.groupConditions.splice(i, 1);
-      this.$emit("remove-condition", this.groupConditions.length);
+      this.$emit("remove-condition", i);
     },
 
     collectGroupType(type) {

@@ -23,22 +23,7 @@
           absolute
           temporary
         >
-          <template v-slot:prepend>
-            <!-- <v-list-item two-line class="pl-10 justify-center">
-              <v-list-item-avatar color="primary" size="46">
-                <img :src="require('@/assets/Shape.svg')" class="logo" />
-              </v-list-item-avatar>
-
-              <v-list-item-content>
-                <v-list-item-title style="padding-top: 6px"
-                  ><img :src="require('@/assets/pBot.svg')"
-                /></v-list-item-title>
-                <v-list-item-subtitle class="ml-6"
-                  >on pBot</v-list-item-subtitle
-                >
-              </v-list-item-content>
-            </v-list-item> -->
-
+         <template v-slot:prepend>  
             <div>
               <img class="logo" :src="require('@/assets/hyphen-logo.png')" />
             </div>
@@ -200,19 +185,6 @@
       class="px-0"
     >
       <template v-slot:prepend>
-        <!-- <v-list-item two-line class="pl-10 justify-center">
-          <v-list-item-avatar color="primary" size="46">
-            <img :src="require('@/assets/Shape.svg')" class="logo" />
-          </v-list-item-avatar>
-
-          <v-list-item-content>
-            <v-list-item-title style="padding-top: 6px"
-              ><img :src="require('@/assets/pBot.svg')"
-            /></v-list-item-title>
-            <v-list-item-subtitle class="ml-6">on pBot</v-list-item-subtitle>
-          </v-list-item-content>
-        </v-list-item> -->
-
         <div>
           <img class="logo" :src="require('@/assets/hyphen-logo.png')" />
         </div>
@@ -331,7 +303,7 @@
       <template v-slot:append absolute v-if="$vuetify.breakpoint.mdAndUp">
         <div class="pa-14">
           <v-avatar class="mx-auto" color="primary" size="60">
-            <span class="white--text text-h5">MA</span>
+            <span class="white--text text-h5">{{getUserInitials}}</span>
           </v-avatar>
         </div>
       </template>
@@ -357,8 +329,16 @@ export default {
     };
   },
 
-  components: {
-    //
+  computed: {
+    getUserInitials() {
+      if(this.$store.state.auth.user !== null){
+         const firstName = this.$store.state.auth.user.firstName && this.$store.state.auth.user.firstName.charAt(0) || "";
+      const lastName = this.$store.state.auth.user.lastName && this.$store.state.auth.user.lastName.charAt(0) || "";
+      return (firstName + lastName || this.$store.state.auth.user.username && this.$store.state.auth.user.username.charAt(0) || "").toUpperCase();
+      
+      }
+      return "";
+    },
   },
 };
 </script>
@@ -369,10 +349,10 @@ export default {
   justify-content: center;
 }
 .logo {
-  width: 65%;
+  width: 50%;
   display: block;
   object-fit: contain;
-  margin: 30px auto;
+  margin: 30px 0 30px 30px;
 }
 
 .navIcon {
