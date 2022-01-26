@@ -191,6 +191,16 @@ export default {
       console.log(this.formData);
       const dataPayload = this.createRequestData;
 
+      // if (this.formData.sections[Object.keys(this.formData.sections)]) {
+      //   this.showToast({
+      //     sclass: "error",
+      //     show: true,
+      //     message: "You need to add a section and Form Fields",
+      //     timeout: 3000,
+      //   });
+      //   return;
+      // }
+
       //post dataPayload to the server
       formBuider
         .postForm(dataPayload)
@@ -203,7 +213,7 @@ export default {
             timeout: 3000,
           });
           //refresh page to prevent double submition
-          location.reload();
+          //location.reload();
         })
         .catch((error) => {
           console.log(
@@ -238,7 +248,8 @@ export default {
       var fmName = "";
       try {
         fmName =
-          this.formData.sections[Object.keys(this.formData.sections)].headline;
+          //this.formData.sections[Object.keys(this.formData.sections)].headline;
+          this.formData.sections[Object.keys(this.formData.sections)];
 
         console.log(fmName);
         return fmName;

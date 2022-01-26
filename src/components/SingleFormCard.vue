@@ -11,112 +11,120 @@
             md="4"
           >
             <v-item v-slot:default="{ active, toggle }">
-              <v-card
-                width="100%"
-                @click="toggle"
-                :elevation="active ? 4 : 0"
-                class="d-flex align-text-center flex-column rounded elevation-0"
-                tile
-                style="
-                  width: auto;
-                  height: 200px;
-                  background: #ffffff;
-                  border: 1px solid rgba(49, 27, 146, 0.2);
-                  box-sizing: border-box;
-                  border-radius: 8px;
-                "
-              >
-                <v-card-title
-                  class="mx-2 mt-4 text-break"
-                  style="
-                    max-width: 90%;
-                    font-family: Inter;
-                    font-style: normal;
-                    font-weight: 400;
-                    font-size: 14px;
-                    line-height: 24px;
-                    color: #596a73;
+              <v-skeleton-loader width="100%" type="card" :loading="loading">
+                <v-card
+                  width="100%"
+                  @click="toggle"
+                  :elevation="active ? 4 : 0"
+                  class="
+                    d-flex
+                    align-text-center
+                    flex-column
+                    rounded
+                    elevation-0
                   "
-                  >{{ card.form_title }}</v-card-title
-                >
-                <div class="d-flex justify-space-between my-4">
-                  <div class="mx-4 mx-md-1">
-                    <v-chip
-                      label
-                      small
-                      dark
-                      color="#636b70"
-                      class="mt-4 mx-md-5"
-                      >{{ numFormEntries }}</v-chip
-                    >
-                    <h5 class="mx-md-5 text--disabled">entries</h5>
-                  </div>
-                  <v-switch
-                    class="pt-0"
-                    hide-details="true"
-                    dense
-                    :value="card.switchValue"
-                    v-model="switch1"
-                    color="#16BE98"
-                  ></v-switch>
-                </div>
-                <div
-                  class="d-flex"
+                  tile
                   style="
-                    margin-top: 30px;
-                    width: 100%;
-                    height: 48px;
-                    position: absolute;
-                    bottom: 0;
-                    border-top: 1px solid rgba(49, 27, 146, 0.2);
+                    width: auto;
+                    height: 200px;
+                    background: #ffffff;
+                    border: 1px solid rgba(49, 27, 146, 0.2);
                     box-sizing: border-box;
+                    border-radius: 8px;
                   "
                 >
-                  <p
-                    class="ml-4"
+                  <v-card-title
+                    class="mx-2 mt-4 text-break"
                     style="
+                      max-width: 90%;
                       font-family: Inter;
                       font-style: normal;
-                      font-weight: normal;
-                      font-size: 12px;
-                      line-height: 18px;
-                      letter-spacing: 0.45px;
-                      color: #301f78;
-                      mix-blend-mode: normal;
-                      opacity: 0.5;
+                      font-weight: 400;
+                      font-size: 14px;
+                      line-height: 24px;
+                      color: #596a73;
                     "
-                    :style="{
-                      marginTop: `${
-                        $vuetify.breakpoint.md ? '0.7em' : '1.2em'
-                      }`,
-                    }"
+                    >{{ card.form_title }}</v-card-title
                   >
-                    Created {{ createdAt }}
-                  </p>
-                  <v-spacer></v-spacer>
-                  <v-btn
-                    v-model="selectedIcon"
-                    @click="showForm(icon, index, j)"
-                    target="_blank"
-                    class="px-0 mx-0"
-                    style="margin-top: 4px"
-                    icon
-                    id="no-background-hover"
-                    v-for="(icon, index) in icons"
-                    :key="icon.title"
+                  <div class="d-flex justify-space-between my-4">
+                    <div class="mx-4 mx-md-1">
+                      <v-chip
+                        label
+                        small
+                        dark
+                        color="#636b70"
+                        class="mt-4 mx-md-5"
+                        >{{ numFormEntries }}</v-chip
+                      >
+                      <h5 class="mx-md-5 text--disabled">entries</h5>
+                    </div>
+                    <v-switch
+                      class="pt-0"
+                      hide-details="true"
+                      dense
+                      :value="card.switchValue"
+                      v-model="switch1"
+                      color="#16BE98"
+                    ></v-switch>
+                  </div>
+                  <div
+                    class="d-flex"
+                    style="
+                      margin-top: 30px;
+                      width: 100%;
+                      height: 48px;
+                      position: absolute;
+                      bottom: 0;
+                      border-top: 1px solid rgba(49, 27, 146, 0.2);
+                      box-sizing: border-box;
+                    "
                   >
-                    <v-icon
-                      v-bind:class="{ last: index === icons.length - 1 }"
-                      color="#7F919B"
-                      small
-                      class="pl-1"
-                      to="icon.path"
+                    <p
+                      class="ml-4"
+                      style="
+                        font-family: Inter;
+                        font-style: normal;
+                        font-weight: normal;
+                        font-size: 12px;
+                        line-height: 18px;
+                        letter-spacing: 0.45px;
+                        color: #301f78;
+                        mix-blend-mode: normal;
+                        opacity: 0.5;
+                      "
+                      :style="{
+                        marginTop: `${
+                          $vuetify.breakpoint.md ? '0.7em' : '1.2em'
+                        }`,
+                      }"
                     >
-                      {{ icon.title }}
-                    </v-icon>
-                  </v-btn>
-                </div>
-              </v-card>
+                      Created {{ createdAt }}
+                    </p>
+                    <v-spacer></v-spacer>
+                    <v-btn
+                      v-model="selectedIcon"
+                      @click="showForm(icon, index, j)"
+                      target="_blank"
+                      class="px-0 mx-0"
+                      style="margin-top: 4px"
+                      icon
+                      id="no-background-hover"
+                      v-for="(icon, index) in icons"
+                      :key="icon.title"
+                    >
+                      <v-icon
+                        v-bind:class="{ last: index === icons.length - 1 }"
+                        color="#7F919B"
+                        small
+                        class="pl-1"
+                        to="icon.path"
+                      >
+                        {{ icon.title }}
+                      </v-icon>
+                    </v-btn>
+                  </div>
+                </v-card>
+              </v-skeleton-loader>
             </v-item>
           </v-col>
           <v-col cols="12" sm="6" md="4">
@@ -179,6 +187,7 @@ export default {
         { title: "mdi-delete", path: "#" },
       ],
       formCards: [],
+      loading: true,
     };
   },
   methods: {
@@ -196,46 +205,50 @@ export default {
         this.$emit("entries");
         //console.log(index);
       } else if (index === 2) {
-        const id = parentIndex + 1;
+        //get the index of the particula form card
+        //pass this index to a variable
+        const id = this.formCards[parentIndex].id;
+
+        //delete card from vue data object to reflect on UI
+        this.formCards.splice(parentIndex, 1);
+
+        //delete from server....
         formBuider
           .deleteForm(id)
           .then((response) => {
-            response.data.splice(id, 1);
-            //console.log(JSON.stringify(response.data, null, 2));
-           this.formCards = this.response.data;
+            console.log(response.data);
           })
           .catch((error) => {
-            console.log(
-              "an error occurred while trying to delete the form template: ",
-              error.response
-            );
+            console.log("an error occurred: ", error.response);
           });
       }
     },
-    // openEntries(icon, index) {
-    //   if (index === 1 && icon.title === "mdi-format-indent-increase") {
-    //     this.$emit("entries-form");
-    //   }
-    // },
+
     newForm() {
       this.$emit("create-form", this.formCards);
     },
   },
   mounted() {
+    //make skeleton loader stop
+    this.loading = true;
+    setTimeout(() => {
+      this.loading = false;
+    }, 5000);
+    //get all the forms from the server
     formBuider
       .getAllForms()
       .then((response) => {
-        //console.log(JSON.stringify(response.data, null, 2));
         this.formCards = response.data;
+
+        console.log(this.formCards);
         this.numFormEntries = this.formEntries.length;
-        //console.log(this.formEntries.length);
-        //console.log(JSON.stringify(this.formCards, null, 2));
       })
       .catch((error) => {
         console.log("There was an errror:", error.response);
       });
   },
   computed: {
+    //total entries suppose to come from the form input endpoint
     totalEntriesNum() {
       return this.formEntries.length;
     },
