@@ -50,6 +50,7 @@
               elevation="3"
               ><span class="material-icons pr-1"> import_export </span
               ><span
+                class="primary--text"
                 style="
                   font-family: Inter;
                   font-style: normal;
@@ -58,7 +59,6 @@
                   line-height: 12px;
                   text-align: center;
                   letter-spacing: 0.636364px;
-                  color: #301f78;
                 "
                 >Export</span
               >

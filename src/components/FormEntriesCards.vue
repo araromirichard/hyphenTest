@@ -45,6 +45,7 @@
       <v-container class="pt-8">
         <SingleFormCard
           v-if="showFormCards"
+          @send-entries="loadEntries"
           @create-form="buildForm"
           @entries="showFormCards = false"
           class="mx-md-10"
@@ -52,7 +53,18 @@
         />
 
         <div class="ma-0 pa-0" v-else>
-          <v-layout row wrap class="align-center my-2 px-6">
+          <template>
+            <v-data-table
+              height="100%"
+              ref="myTable"
+              :headers="headers"
+              :items="dataEntries"
+              :items-per-page="10"
+              class="elevation-0"
+            >
+            </v-data-table>
+          </template>
+          <!-- <v-layout row wrap class="align-center my-2 px-6">
             <v-flex md2>
               <div class="d-flex align-center">
                 <p class="mb-0 mr-4 primary--text font-weight-bold">ID</p>
@@ -103,8 +115,8 @@
                 </p>
               </div>
             </v-flex>
-          </v-layout>
-          <v-row>
+          </v-layout> -->
+          <!-- <v-row>
             <v-col
               cols="12"
               v-for="form in filteredForms"
@@ -122,7 +134,7 @@
                 :bankState="form.bankState"
               />
             </v-col>
-          </v-row>
+          </v-row> -->
         </div>
       </v-container>
     </template>
@@ -130,13 +142,15 @@
 </template>
 
 <script>
-import FormEntiresTable from "./FormEntiresTable.vue";
+//import FormEntiresTable from "./FormEntiresTable.vue";
 import SingleFormCard from "./SingleFormCard.vue";
+import formBuider from "@/api/formbuilder.js";
 
 export default {
   components: {
     SingleFormCard,
-    FormEntiresTable,
+    //FormEntiresTable,
+    //Vuetable,
   },
   name: "InboxForm",
 
@@ -145,50 +159,11 @@ export default {
       newForm: false,
       formDisplay: false,
       showFormCards: true,
+      headers: [],
+      dataEntries: [],
+      loading: true,
 
       formName: "New Form 1",
-      forms: [
-        {
-          id: 1,
-          bankName: "City Pay Bank",
-          bankAccountNumber: 123364487,
-          bankAccountRoutingNumber: 300000.0,
-          bankAddress: "Ojo Bello",
-          bankCountry: "Nigeria",
-          bankCity: "Ikeja",
-          bankState: "Lagos",
-        },
-        {
-          id: 2,
-          bankName: "First Bank",
-          bankAccountNumber: 11233644,
-          bankAccountRoutingNumber: 300000.0,
-          bankAddress: "John Peter",
-          bankCountry: "Angola",
-          bankCity: "Ikeja",
-          bankState: "Benin",
-        },
-        {
-          id: 3,
-          bankName: "UBA",
-          bankAccountNumber: 102336447,
-          bankAccountRoutingNumber: 300000.0,
-          bankAddress: "John Bello",
-          bankCountry: "Nigeria",
-          bankCity: "Ikeja",
-          bankState: "Lagos",
-        },
-        {
-          id: 4,
-          bankName: "City Pay Bank",
-          bankAccountNumber: 123364487,
-          bankAccountRoutingNumber: 300000.0,
-          bankAddress: "John Bello",
-          bankCountry: "Nigeria",
-          bankCity: "Ikeja",
-          bankState: "Lagos",
-        },
-      ],
     };
   },
   methods: {
@@ -212,6 +187,35 @@ export default {
     setSearchText(value) {
       this.search = value;
     },
+    loadEntries(value) {
+      const newValueArray = [];
+      for (const key in value) {
+        const newValue = {};
+        newValue.text = value[key]["name"];
+        newValue.value = value[key]["name"];
+        newValueArray.push(newValue);
+      }
+      this.headers = newValueArray;
+      console.log(newValueArray);
+
+      formBuider
+        .getEntriesData()
+        .then((response) => {
+          this.loading = false;
+
+          //console.log(response.data);
+          this.dataEntries = response.data;
+          //console.log(JSON.stringify(this.dataEntries, null, 2));
+
+          //console.log(JSON.stringify(response.data, null, 2));
+        })
+        .catch((error) => {
+          console.log("an Error occured:", error.response);
+        });
+    },
+  },
+  mounted() {
+    //
   },
   computed: {
     filteredForms() {

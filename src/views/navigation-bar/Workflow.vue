@@ -1,7 +1,7 @@
 <template>
   <v-container class="pa-0">
     <div>
-      <v-row class="mx-14">
+      <v-row class="mx-14 primary--text">
         <span
           style="
             margin-top: 35px;
@@ -10,7 +10,6 @@
             font-weight: bold;
             font-size: 32px;
             line-height: 39px;
-            color: #301f78;
           "
           >Workflow</span
         >

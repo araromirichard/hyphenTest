@@ -54,15 +54,18 @@
     margin: 30px 0;
 }
 
-.vue-form-builder .copyright-text, .vue-form-builder h4 {
+.vue-form-builder .copyright-text,
+.vue-form-builder h4 {
     padding-top: 20px;
     color: rgba(0, 0, 0, 0.4);
     font-size: 13px;
     text-align: center;
 }
-.vue-form-builder .copyright-text, .vue-form-builder hr{
+
+.vue-form-builder .copyright-text,
+.vue-form-builder hr {
     content: ".";
-    display:none;
+    display: none;
 }
 
 .vue-form-builder .add-section-container {
@@ -77,7 +80,7 @@
 }
 
 .vue-form-builder .add-section-container:hover {
-    border-color: rgb(49, 27, 146);
+    border-color: #19283D;
     cursor: pointer;
 }
 
@@ -90,17 +93,22 @@
     font-weight: bold;
 }
 
-.vue-form-builder .add-section-container>p svg, .vue-form-builder .add-control-container span:nth-child(1){
+.vue-form-builder .add-section-container>p svg,
+.vue-form-builder .add-control-container span:nth-child(1) {
     display: none;
 }
-.vue-form-builder .add-section-container>p span:nth-child(2)::before, .vue-form-builder .add-control-container span:nth-child(2)::before{
+
+.vue-form-builder .add-section-container>p span:nth-child(2)::before,
+.vue-form-builder .add-control-container span:nth-child(2)::before {
     content: "+";
     padding-right: 5px;
     font-size: 18px;
-  }
-.add-section-container .list-group .list-group-item-action:nth-child(n+2){
+}
+
+.add-section-container .list-group .list-group-item-action:nth-child(n+2) {
     display: none;
 }
+
 .vue-form-builder .add-container-list {
     margin-top: 15px;
 }
@@ -165,15 +173,16 @@
 .vue-form-builder .sidebar-form-configuration .headline-block h5 {
     font-size: 16px;
 }
-.vue-form-builder .sidebar-form-configuration .type-headline::before{
+
+.vue-form-builder .sidebar-form-configuration .type-headline::before {
     content: "⬒";
     padding-right: 5px;
     font-size: 18px;
-  }
+}
 
-  .vue-form-builder .sidebar-form-configuration .toggleable-section:nth-child(3){
+.vue-form-builder .sidebar-form-configuration .toggleable-section:nth-child(3) {
     display: none;
-  }
+}
 
 .vue-form-builder .row-block {
     background-color: rgba(0, 0, 0, 0.2);
@@ -198,7 +207,7 @@
     text-align: center;
     border-width: none;
     border-radius: 4px;
-    background-color: rgb(49, 27, 146);
+    background-color: #19283D;
     color: #fff;
 }
 
@@ -257,10 +266,12 @@
     font-size: 14px;
     text-align: center;
     border-radius: 4px;
-    background-color:#fff;
+    background-color: #fff;
 }
-.vue-form-builder .control-view-wrapper.col-md-4, .vue-form-renderer .control-view-wrapper.col-md-4  {
-    width:100%;
+
+.vue-form-builder .control-view-wrapper.col-md-4,
+.vue-form-renderer .control-view-wrapper.col-md-4 {
+    width: 100%;
 }
 
 .vue-form-builder .control-list-container.empty p {
@@ -306,11 +317,13 @@
 .vue-form-builder .control-option-container .option-control.drag-item:active {
     cursor: grabbing;
 }
-.vue-form-builder .control-option-container .option-control svg{ 
+
+.vue-form-builder .control-option-container .option-control svg {
     width: 18px;
     height: 18px;
     fill: rgb(49, 27, 146);
 }
+
 .ghost {
     opacity: 0.5;
     background: #c8ebfb;
@@ -999,7 +1012,7 @@ html.md-theme-default .vue-form-builder .section-container {
 .open>.md-button.md-success.dropdown-toggle,
 .open>.md-button.md-success.dropdown-toggle:focus,
 .open>.md-button.md-success.dropdown-toggle:hover {
-    background-color: #4caf50 !important;
+    background-color: #16be98 !important;
     color: #fff !important;
 }
 

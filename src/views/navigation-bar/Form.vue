@@ -12,13 +12,12 @@
       v-if="$vuetify.breakpoint.mdAndUp"
     >
       <h3
-        class="text-bold"
+        class="text-bold primary--text"
         style="
           font-style: normal;
           font-weight: bold;
           font-size: 32px;
           line-height: 39px;
-          color: #301f78;
         "
       >
         Forms
@@ -65,7 +64,7 @@
           letter-spacing: -0.73px;
         "
       >
-        Form
+        Forms
       </p>
       <v-spacer></v-spacer>
       <v-icon v-if="isClicked" @click="toggleSearch" class="pr-4 pt-7">

@@ -80,7 +80,7 @@
                     "
                   >
                     <p
-                      class="ml-4"
+                      class="ml-4 primary--text"
                       style="
                         font-family: Inter;
                         font-style: normal;
@@ -88,7 +88,6 @@
                         font-size: 12px;
                         line-height: 18px;
                         letter-spacing: 0.45px;
-                        color: #301f78;
                         mix-blend-mode: normal;
                         opacity: 0.5;
                       "
@@ -193,7 +192,7 @@ export default {
   methods: {
     showForm(icon, index, parentIndex) {
       // i = this.selectedIcon;
-      console.log({ icon, index });
+      // console.log({ icon, index });
       if (index === 0) {
         this.$emit("edit-form");
         console.log(this.formData);
@@ -203,7 +202,24 @@ export default {
         });
       } else if (index === 1) {
         this.$emit("entries");
-        //console.log(index);
+        // iterate over the formCards controls and get the name and label of each  field
+        const controlsObject = this.formCards[parentIndex].data.controls;
+        const nameLabelsArray = [];
+        const nameArray = [];
+        for (const key in controlsObject) {
+          const newNameLabel = {};
+          newNameLabel.name = controlsObject[key]["name"];
+          newNameLabel.label = controlsObject[key]["label"];
+          //push it into a new array
+          nameLabelsArray.push(newNameLabel);
+          nameArray.push(newNameLabel.name);
+        }
+        var filteredNameLabelArray = nameLabelsArray.filter(
+          (item) => item.label !== "Submit" || item.name !== ""
+        );
+        this.$emit("send-entries", filteredNameLabelArray);
+        //console.log(nameArray);
+        //console.log(filteredNameLabelArray);
       } else if (index === 2) {
         //get the index of the particula form card
         //pass this index to a variable
@@ -225,7 +241,7 @@ export default {
     },
 
     newForm() {
-      this.$emit("create-form", this.formCards);
+      this.$emit("formBuilder/create-form", this.formCards);
     },
   },
   mounted() {
@@ -234,18 +250,9 @@ export default {
     setTimeout(() => {
       this.loading = false;
     }, 5000);
-    //get all the forms from the server
-    formBuider
-      .getAllForms()
-      .then((response) => {
-        this.formCards = response.data;
 
-        console.log(this.formCards);
-        this.numFormEntries = this.formEntries.length;
-      })
-      .catch((error) => {
-        console.log("There was an errror:", error.response);
-      });
+    this.$store.dispatch("formBuilder/FetchAllForms");
+    //console.log(this.$store);
   },
   computed: {
     //total entries suppose to come from the form input endpoint

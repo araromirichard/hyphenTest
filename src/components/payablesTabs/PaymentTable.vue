@@ -155,13 +155,13 @@
               style="background: #ffffff; border-radius: 8px 8px 0px 0px"
             >
               <span
+                class="primary--text"
                 style="
                   font-family: Inter;
                   font-style: normal;
                   font-weight: 600;
                   font-size: 16px;
                   line-height: 19px;
-                  color: #301f78;
                 "
                 >PAYABLE: Details</span
               >
@@ -196,8 +196,8 @@
                     font-weight: bold;
                     font-size: 18px;
                     line-height: 22px;
-                    color: #301f78;
                   "
+                  class="primary--text"
                 >
                   {{ pAmount }}
                 </p>

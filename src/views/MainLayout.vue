@@ -53,7 +53,7 @@
               <v-list-item nav link to="/inbox" class="mx-auto">
                 <v-list-item-icon class="mr-4">
                   <img
-                    :src="require('@/assets/pbot_icons/download_import.svg')"
+                    :src="require('@/assets/icons/Vector.svg')"
                     class="navIcon"
                   />
                 </v-list-item-icon>
@@ -66,7 +66,7 @@
               <v-list-item nav link to="/form" class="mx-auto">
                 <v-list-item-icon class="mr-4">
                   <img
-                    :src="require('@/assets/pbot_icons/form.svg')"
+                    :src="require('@/assets/icons/forms.svg')"
                     class="navIcon"
                   />
                 </v-list-item-icon>
@@ -76,35 +76,59 @@
                   >
                 </v-list-item-content>
               </v-list-item>
-              <v-list-item
-                nav
-                link
-                to="/workflow"
-                class="mx-auto"
-                v-if="version1"
-              >
+              <v-list-item nav link to="/workflow" class="mx-auto">
                 <v-list-item-icon class="mr-4">
                   <img
-                    :src="require('@/assets/pbot_icons/workflow_recycle.svg')"
+                    :src="require('@/assets/icons/forms.svg')"
                     class="navIcon #7F919B"
                   />
                 </v-list-item-icon>
                 <v-list-item-content>
-                  <v-list-item-title class="navTxt"
+                  <v-list-item-title class="text-subtitle-1"
                     >Workflows</v-list-item-title
                   >
                 </v-list-item-content>
               </v-list-item>
+              <v-divider
+                class="pt-4 mx-md-10"
+                v-if="$vuetify.breakpoint.mdAndUp"
+              ></v-divider>
               <v-list-item nav link to="/payable" class="mx-auto">
                 <v-list-item-icon class="mr-4">
                   <img
-                    :src="require('@/assets/pbot_icons/cash.svg')"
+                    :src="require('@/assets/icons/Vector1.svg')"
                     class="navIcon"
                   />
                 </v-list-item-icon>
                 <v-list-item-content>
                   <v-list-item-title class="text-subtitle-1"
                     >Payables</v-list-item-title
+                  >
+                </v-list-item-content>
+              </v-list-item>
+              <v-list-item nav link to="/receivables" class="mx-auto">
+                <v-list-item-icon class="mr-4">
+                  <img
+                    :src="require('@/assets/icons/outline/Vector.svg')"
+                    class="navIcon"
+                  />
+                </v-list-item-icon>
+                <v-list-item-content>
+                  <v-list-item-title class="text-subtitle-1"
+                    >Receivables</v-list-item-title
+                  >
+                </v-list-item-content>
+              </v-list-item>
+              <v-list-item nav link to="/contacts" class="mx-auto">
+                <v-list-item-icon class="mr-4">
+                  <img
+                    :src="require('@/assets/icons/User_box_light.svg')"
+                    class="navIcon"
+                  />
+                </v-list-item-icon>
+                <v-list-item-content>
+                  <v-list-item-title class="text-subtitle-1"
+                    >Contacts</v-list-item-title
                   >
                 </v-list-item-content>
               </v-list-item>
@@ -135,33 +159,38 @@
             v-if="$vuetify.breakpoint.mdAndUp"
           ></v-divider>
           <div class="pt-2">
-            <v-list class="pl-10" dense>
-              <v-list-item nav link to="#" class="mx-auto">
-                <v-list-item-icon class="mr-1">
-                  <img
-                    :src="require('@/assets/pbot_icons/settings.svg')"
-                    class="navIcon"
-                  />
-                </v-list-item-icon>
-                <v-list-item-content>
-                  <v-list-item-title class="text-subtitle-1"
-                    >Settings</v-list-item-title
-                  >
-                </v-list-item-content>
-              </v-list-item>
-              <v-list-item nav link to="#" class="mx-auto">
-                <v-list-item-icon class="mr-1">
-                  <img
-                    :src="require('@/assets/pbot_icons/agree_help.svg')"
-                    class="navIcon"
-                  />
-                </v-list-item-icon>
-                <v-list-item-content>
-                  <v-list-item-title class="text-subtitle-1"
-                    >Help</v-list-item-title
-                  >
-                </v-list-item-content>
-              </v-list-item>
+            <v-list class="pl-10" nav flat dense>
+              <v-list-item-group
+                v-model="model"
+                active-class="primary--text text--accent-4"
+              >
+                <v-list-item v-if="version1" nav link to="#" class="mx-auto">
+                  <v-list-item-icon class="mr-1">
+                    <img
+                      :src="require('@/assets/pbot_icons/settings.svg')"
+                      class="navIcon"
+                    />
+                  </v-list-item-icon>
+                  <v-list-item-content>
+                    <v-list-item-title class="text-subtitle-1"
+                      >Settings</v-list-item-title
+                    >
+                  </v-list-item-content>
+                </v-list-item>
+                <v-list-item nav link to="#" class="mx-auto">
+                  <v-list-item-icon class="mr-4">
+                    <img
+                      :src="require('@/assets/icons/outline/Path.svg')"
+                      class="navIcon"
+                    />
+                  </v-list-item-icon>
+                  <v-list-item-content>
+                    <v-list-item-title class="text-subtitle-1"
+                      >Help</v-list-item-title
+                    >
+                  </v-list-item-content>
+                </v-list-item>
+              </v-list-item-group>
             </v-list>
           </div>
           <template v-slot:append absolute v-if="$vuetify.breakpoint.mdAndDown">
@@ -189,7 +218,7 @@
           <img class="logo" :src="require('@/assets/hyphen-logo.png')" />
         </div>
       </template>
-      <v-list flat class="py-4 pl-10">
+      <v-list flat class="pt-4 pb-2 pl-10">
         <v-list-item-group
           v-model="model"
           color="primary"
@@ -209,7 +238,7 @@
           <v-list-item nav link to="/inbox" class="mx-auto">
             <v-list-item-icon class="mr-4">
               <img
-                :src="require('@/assets/pbot_icons/download_import.svg')"
+                :src="require('@/assets/icons/Vector.svg')"
                 class="navIcon"
               />
             </v-list-item-icon>
@@ -219,19 +248,16 @@
           </v-list-item>
           <v-list-item nav link to="/form" class="mx-auto">
             <v-list-item-icon class="mr-4">
-              <img
-                :src="require('@/assets/pbot_icons/form.svg')"
-                class="navIcon"
-              />
+              <img :src="require('@/assets/icons/forms.svg')" class="navIcon" />
             </v-list-item-icon>
             <v-list-item-content>
               <v-list-item-title class="navTxt">Forms</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
-          <v-list-item nav link to="/workflow" class="mx-auto" v-if="version1">
+          <v-list-item nav link to="/workflow" class="mx-auto">
             <v-list-item-icon class="mr-4">
               <img
-                :src="require('@/assets/pbot_icons/workflow_recycle.svg')"
+                :src="require('@/assets/icons/forms.svg')"
                 class="navIcon #7F919B"
               />
             </v-list-item-icon>
@@ -239,15 +265,49 @@
               <v-list-item-title class="navTxt">Workflows</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
+        </v-list-item-group>
+      </v-list>
+      <v-divider
+        class="pt-4 mx-md-10"
+        v-if="$vuetify.breakpoint.mdAndUp"
+      ></v-divider>
+      <v-list flat class="py-2 pl-10">
+        <v-list-item-group
+          v-model="model"
+          color="primary"
+          active-class="primary--text text--accent-4"
+        >
           <v-list-item nav link to="/payable" class="mx-auto">
             <v-list-item-icon class="mr-4">
               <img
-                :src="require('@/assets/pbot_icons/cash.svg')"
+                :src="require('@/assets/icons/Vector1.svg')"
                 class="navIcon"
               />
             </v-list-item-icon>
             <v-list-item-content>
               <v-list-item-title class="navTxt">Payables</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item nav link to="/receivables" class="mx-auto">
+            <v-list-item-icon class="mr-4">
+              <img
+                :src="require('@/assets/icons/outline/Vector.svg')"
+                class="navIcon"
+              />
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title class="navTxt">Receivables</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item nav link to="/contacts" class="mx-auto">
+            <v-list-item-icon class="mr-4">
+              <img
+                :src="require('@/assets/icons/User_box_light.svg')"
+                class="navIcon"
+              />
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title class="navTxt">Contacts</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
           <v-list-item
@@ -276,7 +336,7 @@
       ></v-divider>
       <div class="pt-2">
         <v-list class="pl-10" dense>
-          <v-list-item nav link to="#" class="mx-auto">
+          <v-list-item v-if="version1" nav link to="#" class="mx-auto">
             <v-list-item-icon class="mr-4">
               <img
                 :src="require('@/assets/pbot_icons/settings.svg')"
@@ -290,7 +350,7 @@
           <v-list-item nav link to="#" class="mx-auto">
             <v-list-item-icon class="mr-4">
               <img
-                :src="require('@/assets/pbot_icons/agree_help.svg')"
+                :src="require('@/assets/icons/outline/Path.svg')"
                 class="navIcon"
               />
             </v-list-item-icon>

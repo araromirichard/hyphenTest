@@ -52,8 +52,8 @@
                   font-weight: 600;
                   font-size: 16px;
                   line-height: 19px;
-                  color: #301f78;
                 "
+                class="primary--text"
                 >PAYABLE: New Budget</span
               >
               <v-spacer></v-spacer>
@@ -85,14 +85,13 @@
                     </h5>
 
                     <span
-                      class="pb-5"
+                      class="pb-5 primary--text"
                       style="
                         font-family: Inter;
                         font-style: normal;
                         font-weight: bold;
                         font-size: 24px;
                         line-height: 29px;
-                        color: #301f78;
                         mix-blend-mode: normal;
                         opacity: 0.5;
                       "

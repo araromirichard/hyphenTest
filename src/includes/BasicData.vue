@@ -24,93 +24,153 @@
                 Basic Data
               </v-subheader>
 
-              <v-list-item>
-                <v-list-item-title
-                  style="
-                    margin-left: 84px;
-                    font-family: Inter;
-                    font-style: normal;
-                    font-weight: 500;
-                    font-size: 14px;
-                    line-height: 15px;
-                    color: #301f78;
-                  "
-                  :style="{
-                    marginLeft: `${
-                      $vuetify.breakpoint.mdAndDown ? '8px' : '84px'
-                    }`,
-                  }"
-                  >Invoice no.</v-list-item-title
-                >
-                <v-spacer></v-spacer>
-                <validation-provider
-                  v-slot="{ errors }"
-                  name="Invoice Number"
-                  rules="required"
-                >
-                  <v-text-field
-                    :error-messages="errors"
-                    v-model="basicDataInput.invoiceNumber"
-                    hide-details="auto"
-                    :disabled="changeState"
-                    :background-color="backgroundColor"
-                    solo
-                    flat
-                    dense
-                    :class="!changeState ? changeState : ''"
-                    reverse
+              <div>
+                <v-list-item>
+                  <v-list-item-title
+                    class="text--primary"
                     style="
+                      margin-left: 84px;
                       font-family: Inter;
                       font-style: normal;
-                      font-weight: normal;
-                      font-size: 15px;
+                      font-weight: 500;
+                      font-size: 14px;
                       line-height: 15px;
-                      color: #7f919b;
                     "
-                    placeholder="Enter Invoice"
-                  ></v-text-field>
-                </validation-provider>
-              </v-list-item>
-              <v-divider
-                inset
-                style="
-                  border: 1px dashed rgba(48, 31, 120, 0.1);
-                  transform: rotate(-0.65deg);
-                "
-              ></v-divider>
-              <v-list-item>
-                <v-list-item-title
-                  style="
-                    padding-left: 84px;
-                    font-family: Inter;
-                    font-style: normal;
-                    font-weight: 500;
-                    font-size: 14px;
-                    line-height: 15px;
-                    color: #301f78;
-                  "
-                  >Date</v-list-item-title
-                >
-
-                <v-spacer></v-spacer>
-                <v-menu
-                  v-model="menu"
-                  :close-on-content-click="false"
-                  transition="scale-transition"
-                  offset-y
-                  min-width="auto"
-                >
-                  <template v-slot:activator="{ on, attrs }">
+                    :style="{
+                      marginLeft: `${
+                        $vuetify.breakpoint.mdAndDown ? '8px' : '84px'
+                      }`,
+                    }"
+                    >Invoice no.</v-list-item-title
+                  >
+                  <v-spacer></v-spacer>
+                  <validation-provider
+                    v-slot="{ errors }"
+                    name="Invoice Number"
+                    rules="required"
+                  >
                     <v-text-field
-                      v-model="basicDataInput.date"
+                      :error-messages="errors"
+                      v-model="basicDataInput.invoiceNumber"
                       hide-details="auto"
                       :disabled="changeState"
                       :background-color="backgroundColor"
                       solo
                       flat
                       dense
-                      v-bind="attrs"
-                      v-on="on"
+                      :class="!changeState ? changeState : ''"
+                      reverse
+                      style="
+                        font-family: Inter;
+                        font-style: normal;
+                        font-weight: normal;
+                        font-size: 15px;
+                        line-height: 15px;
+                        color: #7f919b;
+                      "
+                      placeholder="Enter Invoice"
+                    ></v-text-field>
+                  </validation-provider>
+                </v-list-item>
+                <v-divider
+                  inset
+                  style="
+                    border: 1px dashed rgba(48, 31, 120, 0.1);
+                    transform: rotate(-0.65deg);
+                  "
+                ></v-divider>
+                <v-list-item>
+                  <v-list-item-title
+                    style="
+                      padding-left: 84px;
+                      font-family: Inter;
+                      font-style: normal;
+                      font-weight: 500;
+                      font-size: 14px;
+                      line-height: 15px;
+                      color: #301f78;
+                    "
+                    >Date</v-list-item-title
+                  >
+
+                  <v-spacer></v-spacer>
+                  <v-menu
+                    v-model="menu"
+                    :close-on-content-click="false"
+                    transition="scale-transition"
+                    offset-y
+                    min-width="auto"
+                  >
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-text-field
+                        v-model="basicDataInput.date"
+                        hide-details="auto"
+                        :disabled="changeState"
+                        :background-color="backgroundColor"
+                        solo
+                        flat
+                        dense
+                        v-bind="attrs"
+                        v-on="on"
+                        :class="[!changeState ? changeState : '']"
+                        reverse
+                        style="
+                          font-family: Inter;
+                          font-style: normal;
+                          font-weight: normal;
+                          font-size: 15px;
+                          line-height: 15px;
+                          color: #7f919b;
+                        "
+                        placeholder="Enter Date"
+                      ></v-text-field>
+                    </template>
+                    <v-date-picker
+                      v-model="basicDataInput.date"
+                      @input="menu = false"
+                      no-title
+                      scrollable
+                      :min="new Date() | date"
+                    >
+                    </v-date-picker>
+                  </v-menu>
+                </v-list-item>
+                <v-divider
+                  inset
+                  style="
+                    border: 1px dashed rgba(48, 31, 120, 0.1);
+                    transform: rotate(-0.65deg);
+                  "
+                ></v-divider>
+                <v-list-item>
+                  <v-list-item-title
+                    style="
+                      padding-left: 84px;
+                      font-family: Inter;
+                      font-style: normal;
+                      font-weight: 500;
+                      font-size: 14px;
+                      line-height: 15px;
+                      color: #301f78;
+                    "
+                    >VAT</v-list-item-title
+                  >
+
+                  <v-spacer></v-spacer>
+                  <validation-provider
+                    v-slot="{ errors }"
+                    name="VAT"
+                    rules="required"
+                  >
+                    <v-text-field
+                      :error-messages="errors"
+                      v-model="basicDataInput.vat"
+                      hide-details="auto"
+                      :disabled="changeState"
+                      :background-color="backgroundColor"
+                      solo
+                      flat
+                      dense
                       :class="[!changeState ? changeState : '']"
                       reverse
                       style="
@@ -121,109 +181,283 @@
                         line-height: 15px;
                         color: #7f919b;
                       "
-                      placeholder="Enter Date"
+                      placeholder="VAT Amount"
                     ></v-text-field>
-                  </template>
-                  <v-date-picker
-                    v-model="basicDataInput.date"
-                    @input="menu = false"
-                    no-title
-                    scrollable
-                    :min="new Date() | date"
-                  >
-                  </v-date-picker>
-                </v-menu>
-              </v-list-item>
-              <v-divider
-                inset
-                style="
-                  border: 1px dashed rgba(48, 31, 120, 0.1);
-                  transform: rotate(-0.65deg);
-                "
-              ></v-divider>
-              <v-list-item>
-                <v-list-item-title
+                  </validation-provider>
+                </v-list-item>
+                <v-divider
+                  inset
                   style="
-                    padding-left: 84px;
-                    font-family: Inter;
-                    font-style: normal;
-                    font-weight: 500;
-                    font-size: 14px;
-                    line-height: 15px;
-                    color: #301f78;
+                    border: 1px dashed rgba(48, 31, 120, 0.1);
+                    transform: rotate(-0.65deg);
                   "
-                  >VAT</v-list-item-title
-                >
-
-                <v-spacer></v-spacer>
-                <validation-provider
-                  v-slot="{ errors }"
-                  name="VAT"
-                  rules="required"
-                >
-                  <v-text-field
-                    :error-messages="errors"
-                    v-model="basicDataInput.vat"
-                    hide-details="auto"
-                    :disabled="changeState"
-                    :background-color="backgroundColor"
-                    solo
-                    flat
-                    dense
-                    :class="[!changeState ? changeState : '']"
-                    reverse
+                ></v-divider>
+                <v-list-item>
+                  <v-list-item-title
                     style="
+                      padding-left: 84px;
                       font-family: Inter;
                       font-style: normal;
-                      font-weight: normal;
-                      font-size: 15px;
+                      font-weight: 500;
+                      font-size: 14px;
                       line-height: 15px;
-                      color: #7f919b;
+                      color: #301f78;
                     "
-                    placeholder="VAT Amount"
-                  ></v-text-field>
-                </validation-provider>
-              </v-list-item>
-              <v-divider
-                inset
-                style="
-                  border: 1px dashed rgba(48, 31, 120, 0.1);
-                  transform: rotate(-0.65deg);
-                "
-              ></v-divider>
-              <v-list-item>
-                <v-list-item-title
+                    >Due Date</v-list-item-title
+                  >
+
+                  <v-spacer></v-spacer>
+                  <v-menu
+                    v-model="menu2"
+                    :close-on-content-click="true"
+                    transition="scale-transition"
+                    offset-y
+                    min-width="auto"
+                  >
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-text-field
+                        v-model="basicDataInput.dueDate"
+                        hide-details="auto"
+                        :disabled="changeState"
+                        :background-color="backgroundColor"
+                        solo
+                        flat
+                        dense
+                        v-bind="attrs"
+                        v-on="on"
+                        :class="[!changeState ? changeState : '']"
+                        reverse
+                        style="
+                          text-align: right;
+                          font-family: Inter;
+                          font-style: normal;
+                          font-weight: normal;
+                          font-size: 15px;
+                          line-height: 15px;
+                          color: #7f919b;
+                        "
+                        placeholder="Enter Due Date"
+                      >
+                      </v-text-field>
+                    </template>
+                    <v-date-picker
+                      v-model="basicDataInput.dueDate"
+                      @input="menu = false"
+                      no-title
+                      scrollable
+                      :min="new Date() | date"
+                    >
+                    </v-date-picker>
+                  </v-menu>
+                </v-list-item>
+                <v-divider
+                  inset
                   style="
-                    padding-left: 84px;
+                    border: 1px dashed rgba(48, 31, 120, 0.1);
+                    transform: rotate(-0.65deg);
+                  "
+                ></v-divider>
+                <v-divider
+                  class="mt-8"
+                  style="
+                    border: 1px solid rgba(127, 145, 155, 0.107845);
+                    transform: rotate(-0.65deg);
+                  "
+                ></v-divider>
+                <v-subheader
+                  class="mt-8 pb-10"
+                  style="
+                    margin-left: 48px;
                     font-family: Inter;
                     font-style: normal;
-                    font-weight: 500;
-                    font-size: 14px;
-                    line-height: 15px;
-                    color: #301f78;
+                    font-weight: bold;
+                    font-size: 16px;
+                    line-height: 19px;
+                    color: #7f919b;
                   "
-                  >Due Date</v-list-item-title
                 >
+                  Vendor
+                </v-subheader>
 
-                <v-spacer></v-spacer>
-                <v-menu
-                  v-model="menu2"
-                  :close-on-content-click="true"
-                  transition="scale-transition"
-                  offset-y
-                  min-width="auto"
-                >
-                  <template v-slot:activator="{ on, attrs }">
+                <v-list-item>
+                  <v-list-item-title
+                    style="
+                      padding-left: 84px;
+                      font-family: Inter;
+                      font-style: normal;
+                      font-weight: 500;
+                      font-size: 14px;
+                      line-height: 15px;
+                      color: #301f78;
+                    "
+                    >Name</v-list-item-title
+                  >
+
+                  <v-spacer></v-spacer>
+                  <validation-provider
+                    v-slot="{ errors }"
+                    name="Vendor Name"
+                    rules="required|alpha"
+                  >
                     <v-text-field
-                      v-model="basicDataInput.dueDate"
+                      :error-messages="errors"
+                      v-model="vendorData.name"
                       hide-details="auto"
                       :disabled="changeState"
                       :background-color="backgroundColor"
                       solo
                       flat
                       dense
-                      v-bind="attrs"
-                      v-on="on"
+                      :class="[!changeState ? changeState : '']"
+                      reverse
+                      style="
+                        font-family: Inter;
+                        font-style: normal;
+                        font-weight: normal;
+                        font-size: 15px;
+                        line-height: 15px;
+                        color: #7f919b;
+                      "
+                      placeholder="Enter Name"
+                    ></v-text-field>
+                  </validation-provider>
+                </v-list-item>
+                <v-divider
+                  inset
+                  style="
+                    border: 1px dashed rgba(48, 31, 120, 0.1);
+                    transform: rotate(-0.65deg);
+                  "
+                ></v-divider>
+                <v-list-item>
+                  <v-list-item-title
+                    style="
+                      padding-left: 84px;
+                      font-family: Inter;
+                      font-style: normal;
+                      font-weight: 500;
+                      font-size: 14px;
+                      line-height: 15px;
+                      color: #301f78;
+                    "
+                    >Address</v-list-item-title
+                  >
+
+                  <v-spacer></v-spacer>
+                  <validation-provider
+                    v-slot="{ errors }"
+                    name="Vendor Address"
+                    rules="required"
+                  >
+                    <v-text-field
+                      :error-messages="errors"
+                      v-model="vendorData.address"
+                      hide-details="auto"
+                      :disabled="changeState"
+                      :background-color="backgroundColor"
+                      solo
+                      flat
+                      dense
+                      :class="[!changeState ? changeState : '']"
+                      reverse
+                      style="
+                        font-family: Inter;
+                        font-style: normal;
+                        font-weight: normal;
+                        font-size: 15px;
+                        line-height: 15px;
+                        color: #7f919b;
+                      "
+                      placeholder="Enter Address"
+                    ></v-text-field>
+                  </validation-provider>
+                </v-list-item>
+                <v-divider
+                  inset
+                  style="
+                    border: 1px dashed rgba(48, 31, 120, 0.1);
+                    transform: rotate(-0.65deg);
+                  "
+                ></v-divider>
+                <v-list-item>
+                  <v-list-item-title
+                    style="
+                      padding-left: 84px;
+                      font-family: Inter;
+                      font-style: normal;
+                      font-weight: 500;
+                      font-size: 14px;
+                      line-height: 15px;
+                      color: #301f78;
+                    "
+                    >Tax Id.</v-list-item-title
+                  >
+
+                  <v-spacer></v-spacer>
+                  <validation-provider
+                    v-slot="{ errors }"
+                    name="Tax ID"
+                    rules="required"
+                  >
+                    <v-text-field
+                      :error-messages="errors"
+                      v-model="vendorData.taxId"
+                      hide-details="auto"
+                      :disabled="changeState"
+                      :background-color="backgroundColor"
+                      solo
+                      flat
+                      dense
+                      :class="[!changeState ? changeState : '']"
+                      reverse
+                      style="
+                        font-family: Inter;
+                        font-style: normal;
+                        font-weight: normal;
+                        font-size: 15px;
+                        line-height: 15px;
+                        color: #7f919b;
+                      "
+                      placeholder="Enter Tax Id."
+                    ></v-text-field>
+                  </validation-provider>
+                </v-list-item>
+                <v-divider
+                  inset
+                  style="
+                    border: 1px dashed rgba(48, 31, 120, 0.1);
+                    transform: rotate(-0.65deg);
+                  "
+                ></v-divider>
+                <v-list-item>
+                  <v-list-item-title
+                    style="
+                      padding-left: 84px;
+                      font-family: Inter;
+                      font-style: normal;
+                      font-weight: 500;
+                      font-size: 14px;
+                      line-height: 15px;
+                      color: #301f78;
+                    "
+                    >Email</v-list-item-title
+                  >
+
+                  <v-spacer></v-spacer>
+                  <validation-provider
+                    v-slot="{ errors }"
+                    name="Vendor Email"
+                    rules="required|email"
+                  >
+                    <v-text-field
+                      :error-messages="errors"
+                      v-model="vendorData.email"
+                      hide-details="auto"
+                      :disabled="changeState"
+                      :background-color="backgroundColor"
+                      solo
+                      flat
+                      dense
                       :class="[!changeState ? changeState : '']"
                       reverse
                       style="
@@ -235,342 +469,91 @@
                         line-height: 15px;
                         color: #7f919b;
                       "
-                      placeholder="Enter Due Date"
-                    >
-                    </v-text-field>
-                  </template>
-                  <v-date-picker
-                    v-model="basicDataInput.dueDate"
-                    @input="menu = false"
-                    no-title
-                    scrollable
-                    :min="new Date() | date"
+                      placeholder="Enter your Email"
+                    ></v-text-field>
+                  </validation-provider>
+                </v-list-item>
+                <v-divider
+                  inset
+                  style="
+                    border: 1px dashed rgba(48, 31, 120, 0.1);
+                    transform: rotate(-0.65deg);
+                  "
+                ></v-divider>
+                <v-list-item>
+                  <v-list-item-title
+                    style="
+                      padding-left: 84px;
+                      font-family: Inter;
+                      font-style: normal;
+                      font-weight: 500;
+                      font-size: 14px;
+                      line-height: 15px;
+                      color: #301f78;
+                    "
+                    >Phone</v-list-item-title
                   >
-                  </v-date-picker>
-                </v-menu>
-              </v-list-item>
-              <v-divider
-                inset
-                style="
-                  border: 1px dashed rgba(48, 31, 120, 0.1);
-                  transform: rotate(-0.65deg);
-                "
-              ></v-divider>
-              <v-divider
-                class="mt-8"
-                style="
-                  border: 1px solid rgba(127, 145, 155, 0.107845);
-                  transform: rotate(-0.65deg);
-                "
-              ></v-divider>
-              <v-subheader
-                class="mt-8 pb-10"
-                style="
-                  margin-left: 48px;
-                  font-family: Inter;
-                  font-style: normal;
-                  font-weight: bold;
-                  font-size: 16px;
-                  line-height: 19px;
-                  color: #7f919b;
-                "
-              >
-                Vendor
-              </v-subheader>
 
-              <v-list-item>
-                <v-list-item-title
+                  <v-spacer></v-spacer>
+                  <validation-provider
+                    v-slot="{ errors }"
+                    name="Phone Number"
+                    :rules="{
+                      required: true,
+                      regex: `^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$`,
+                    }"
+                  >
+                    <v-text-field
+                      :error-messages="errors"
+                      v-model="vendorData.phone"
+                      hide-details="auto"
+                      :disabled="changeState"
+                      :background-color="backgroundColor"
+                      solo
+                      flat
+                      dense
+                      :class="[!changeState ? changeState : '']"
+                      reverse
+                      style="
+                        text-align: right;
+                        font-family: Inter;
+                        font-style: normal;
+                        font-weight: normal;
+                        font-size: 15px;
+                        line-height: 15px;
+                        color: #7f919b;
+                      "
+                      placeholder="Enter Phone"
+                    ></v-text-field>
+                  </validation-provider>
+                </v-list-item>
+                <v-divider
+                  inset
                   style="
-                    padding-left: 84px;
-                    font-family: Inter;
-                    font-style: normal;
-                    font-weight: 500;
-                    font-size: 14px;
-                    line-height: 15px;
-                    color: #301f78;
+                    border: 1px dashed rgba(48, 31, 120, 0.1);
+                    transform: rotate(-0.65deg);
                   "
-                  >Name</v-list-item-title
-                >
+                ></v-divider>
+              </div>
 
-                <v-spacer></v-spacer>
-                <validation-provider
-                  v-slot="{ errors }"
-                  name="Vendor Name"
-                  rules="required|alpha"
+              <div class="text-center pt-14" style="padding-bottom: 20px">
+                <v-btn
+                  @click="submitInput"
+                  large
+                  elevation="10"
+                  color="primary"
                 >
-                  <v-text-field
-                    :error-messages="errors"
-                    v-model="vendorData.name"
-                    hide-details="auto"
-                    :disabled="changeState"
-                    :background-color="backgroundColor"
-                    solo
-                    flat
-                    dense
-                    :class="[!changeState ? changeState : '']"
-                    reverse
-                    style="
-                      font-family: Inter;
-                      font-style: normal;
-                      font-weight: normal;
-                      font-size: 15px;
-                      line-height: 15px;
-                      color: #7f919b;
-                    "
-                    placeholder="Enter Name"
-                  ></v-text-field>
-                </validation-provider>
-              </v-list-item>
-              <v-divider
-                inset
-                style="
-                  border: 1px dashed rgba(48, 31, 120, 0.1);
-                  transform: rotate(-0.65deg);
-                "
-              ></v-divider>
-              <v-list-item>
-                <v-list-item-title
-                  style="
-                    padding-left: 84px;
-                    font-family: Inter;
-                    font-style: normal;
-                    font-weight: 500;
-                    font-size: 14px;
-                    line-height: 15px;
-                    color: #301f78;
-                  "
-                  >Address</v-list-item-title
-                >
-
-                <v-spacer></v-spacer>
-                <validation-provider
-                  v-slot="{ errors }"
-                  name="Vendor Address"
-                  rules="required"
-                >
-                  <v-text-field
-                    :error-messages="errors"
-                    v-model="vendorData.address"
-                    hide-details="auto"
-                    :disabled="changeState"
-                    :background-color="backgroundColor"
-                    solo
-                    flat
-                    dense
-                    :class="[!changeState ? changeState : '']"
-                    reverse
-                    style="
-                      font-family: Inter;
-                      font-style: normal;
-                      font-weight: normal;
-                      font-size: 15px;
-                      line-height: 15px;
-                      color: #7f919b;
-                    "
-                    placeholder="Enter Address"
-                  ></v-text-field>
-                </validation-provider>
-              </v-list-item>
-              <v-divider
-                inset
-                style="
-                  border: 1px dashed rgba(48, 31, 120, 0.1);
-                  transform: rotate(-0.65deg);
-                "
-              ></v-divider>
-              <v-list-item>
-                <v-list-item-title
-                  style="
-                    padding-left: 84px;
-                    font-family: Inter;
-                    font-style: normal;
-                    font-weight: 500;
-                    font-size: 14px;
-                    line-height: 15px;
-                    color: #301f78;
-                  "
-                  >Tax Id.</v-list-item-title
-                >
-
-                <v-spacer></v-spacer>
-                <validation-provider
-                  v-slot="{ errors }"
-                  name="Tax ID"
-                  rules="required"
-                >
-                  <v-text-field
-                    :error-messages="errors"
-                    v-model="vendorData.taxId"
-                    hide-details="auto"
-                    :disabled="changeState"
-                    :background-color="backgroundColor"
-                    solo
-                    flat
-                    dense
-                    :class="[!changeState ? changeState : '']"
-                    reverse
-                    style="
-                      font-family: Inter;
-                      font-style: normal;
-                      font-weight: normal;
-                      font-size: 15px;
-                      line-height: 15px;
-                      color: #7f919b;
-                    "
-                    placeholder="Enter Tax Id."
-                  ></v-text-field>
-                </validation-provider>
-              </v-list-item>
-              <v-divider
-                inset
-                style="
-                  border: 1px dashed rgba(48, 31, 120, 0.1);
-                  transform: rotate(-0.65deg);
-                "
-              ></v-divider>
-              <v-list-item>
-                <v-list-item-title
-                  style="
-                    padding-left: 84px;
-                    font-family: Inter;
-                    font-style: normal;
-                    font-weight: 500;
-                    font-size: 14px;
-                    line-height: 15px;
-                    color: #301f78;
-                  "
-                  >Email</v-list-item-title
-                >
-
-                <v-spacer></v-spacer>
-                <validation-provider
-                  v-slot="{ errors }"
-                  name="Vendor Email"
-                  rules="required|email"
-                >
-                  <v-text-field
-                    :error-messages="errors"
-                    v-model="vendorData.email"
-                    hide-details="auto"
-                    :disabled="changeState"
-                    :background-color="backgroundColor"
-                    solo
-                    flat
-                    dense
-                    :class="[!changeState ? changeState : '']"
-                    reverse
-                    style="
-                      text-align: right;
-                      font-family: Inter;
-                      font-style: normal;
-                      font-weight: normal;
-                      font-size: 15px;
-                      line-height: 15px;
-                      color: #7f919b;
-                    "
-                    placeholder="Enter your Email"
-                  ></v-text-field>
-                </validation-provider>
-              </v-list-item>
-              <v-divider
-                inset
-                style="
-                  border: 1px dashed rgba(48, 31, 120, 0.1);
-                  transform: rotate(-0.65deg);
-                "
-              ></v-divider>
-              <v-list-item>
-                <v-list-item-title
-                  style="
-                    padding-left: 84px;
-                    font-family: Inter;
-                    font-style: normal;
-                    font-weight: 500;
-                    font-size: 14px;
-                    line-height: 15px;
-                    color: #301f78;
-                  "
-                  >Phone</v-list-item-title
-                >
-
-                <v-spacer></v-spacer>
-                <validation-provider
-                  v-slot="{ errors }"
-                  name="Phone Number"
-                  :rules="{
-                    required: true,
-                    regex: `^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$`,
-                  }"
-                >
-                  <v-text-field
-                    :error-messages="errors"
-                    v-model="vendorData.phone"
-                    hide-details="auto"
-                    :disabled="changeState"
-                    :background-color="backgroundColor"
-                    solo
-                    flat
-                    dense
-                    :class="[!changeState ? changeState : '']"
-                    reverse
-                    style="
-                      text-align: right;
-                      font-family: Inter;
-                      font-style: normal;
-                      font-weight: normal;
-                      font-size: 15px;
-                      line-height: 15px;
-                      color: #7f919b;
-                    "
-                    placeholder="Enter Phone"
-                  ></v-text-field>
-                </validation-provider>
-              </v-list-item>
-              <v-divider
-                inset
-                style="
-                  border: 1px dashed rgba(48, 31, 120, 0.1);
-                  transform: rotate(-0.65deg);
-                "
-              ></v-divider>
-              <v-btn
-                @click="submitInput"
-                width="300"
-                dark
-                block
-                color="primary"
-                class="mt-16"
-                style="
-                  margin-left: 76px;
-                  width: 350px;
-                  height: 54px;
-                  box-shadow: 0px 12px 22px rgba(0, 0, 0, 0.24);
-                  border-radius: 4px;
-                "
-              >
-                <simple-line-icons
-                  style="width: 15.98px; height: 15.97px"
-                  class="m-0 text--white"
-                  icon="cursor"
-                  no-svg
-                />
-                <span
-                  class="pl-3 text-capitalize"
-                  style="
-                    font-family: Inter;
-                    font-style: normal;
-                    font-weight: 500;
-                    font-size: 14px;
-                    line-height: 17px;
-                    text-align: center;
-                    letter-spacing: 0.636364px;
-                  "
-                  >Send to Payables</span
-                >
-              </v-btn>
-
-              <div class="d-flex justify-left mt-12 ml-14">
-                <InvoiceBtn @activate="activateField" />
+                  <simple-line-icons
+                    style="width: 15.98px; height: 15.97px"
+                    class="m-0 text--white pl-14"
+                    icon="cursor"
+                    no-svg
+                  />
+                  <span class="pl-6 pr-14 text-capitalize"
+                    >Send to Payables</span
+                  >
+                </v-btn>
+                <InvoiceBtn @activate="activateField" class="pt-8" />
               </div>
             </div>
           </form>
@@ -906,37 +889,17 @@
               ></v-text-field>
             </validation-provider>
 
-            <div class="d-flex justify-center">
-              <v-btn
-                @click="submitInput"
-                width="200px"
-                dark
-                color="primary"
-                class="mt-8"
-              >
+            <div class="text-center pt-14" style="padding-bottom: 20px">
+              <v-btn @click="submitInput" large elevation="10" color="primary">
                 <simple-line-icons
                   style="width: 15.98px; height: 15.97px"
-                  class="m-0 text--white"
+                  class="m-0 text--white pl-14"
                   icon="cursor"
                   no-svg
                 />
-                <span
-                  class="pl-3 text-capitalize"
-                  style="
-                    font-family: Inter;
-                    font-style: normal;
-                    font-weight: 500;
-                    font-size: 14px;
-                    line-height: 17px;
-                    text-align: center;
-                    letter-spacing: 0.636364px;
-                  "
-                  >Send to Payables</span
-                >
+                <span class="pl-6 pr-14 text-capitalize">Send to Payables</span>
               </v-btn>
-            </div>
-            <div class="mt-8">
-              <InvoiceBtn @activate="activateField" />
+              <InvoiceBtn @activate="activateField" class="pt-8" />
             </div>
           </form>
         </validation-observer>

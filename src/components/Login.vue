@@ -61,7 +61,7 @@
                   <v-btn
                     text
                     x-small
-                    class="text-capitalize align-center"
+                    class="primary--text text-capitalize align-center"
                     @click.prevent="dialog = true"
                   >
                     <p
@@ -74,7 +74,7 @@
                         font-weight: normal;
                         line-height: 16px;
                         letter-spacing: 0.278409px;
-                        color: #301f78;
+                       
                       "
                     >
                       Forgot Password?
@@ -154,13 +154,13 @@
                       "
                     >
                       <span
+                      class="primary--text"
                         style="
                           font-family: Inter;
                           font-style: normal;
                           font-weight: 600;
                           font-size: 16px;
                           line-height: 19px;
-                          color: #301f78;
                         "
                         >Recover Password</span
                       >

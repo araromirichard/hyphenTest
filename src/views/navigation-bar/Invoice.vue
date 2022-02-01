@@ -122,14 +122,21 @@
     </v-col>
     <v-col cols="12" md="8" v-if="$vuetify.breakpoint.mdAndUp">
       <v-layout class="d-flex flex-column">
-        <v-row>
-          <v-col cols="12" class="d-flex justify-md-space-between">
-            <v-breadcrumbs :items="breadcrumbs" style="margin-left: 70px">
+        <v-row class="mx-md-9">
+          <v-col
+            cols="12"
+            class="
+              d-flex
+              justify-md-space-between justify-sm-space-end
+              px-md-16 px-sm-12
+            "
+          >
+            <v-breadcrumbs :items="breadcrumbs" class="px-md-2">
               <template v-slot:divider>
                 <v-icon class="px-0">mdi-chevron-right</v-icon>
               </template>
             </v-breadcrumbs>
-            <v-btn plain to="/inbox" class="mt-14 mr-15">
+            <v-btn plain to="/inbox" class="mt-md-14">
               <v-icon large color="primary">mdi-chevron-left</v-icon>
               <span
                 style="
