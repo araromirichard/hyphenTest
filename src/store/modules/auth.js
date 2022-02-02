@@ -25,6 +25,8 @@ const mutations = {
   emptyUser(state) {
     state.user = null;
     state.isLoggedIn = false;
+    localStorage.removeItem("token");
+    localStorage.removeItem("userId");
   },
 };
 

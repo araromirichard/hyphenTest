@@ -190,6 +190,19 @@
                     >
                   </v-list-item-content>
                 </v-list-item>
+                   <v-list-item @click="logout" class="mx-auto">
+                  <v-list-item-icon class="mr-4">
+                    <img
+                      :src="require('@/assets/icons/outline/Path.svg')"
+                      class="navIcon"
+                    />
+                  </v-list-item-icon>
+                  <v-list-item-content>
+                    <v-list-item-title class="text-subtitle-1"
+                      >Logout</v-list-item-title
+                    >
+                  </v-list-item-content>
+                </v-list-item>
               </v-list-item-group>
             </v-list>
           </div>
@@ -358,6 +371,17 @@
               <v-list-item-title class="navTxt">Help</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
+             <v-list-item @click="logout" class="mx-auto">
+            <v-list-item-icon class="mr-4">
+              <img
+                :src="require('@/assets/icons/outline/Path.svg')"
+                class="navIcon"
+              />
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title class="navTxt">Logout</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
         </v-list>
       </div>
       <template v-slot:append absolute v-if="$vuetify.breakpoint.mdAndUp">
@@ -387,6 +411,12 @@ export default {
         "Render-form",
       ],
     };
+  },
+  methods:{
+    logout(){
+      this.$store.dispatch("auth/logout");
+      this.$router.push("/login");
+    },
   },
 
   computed: {
