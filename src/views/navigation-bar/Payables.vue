@@ -83,7 +83,7 @@
             align="center"
             v-if="$vuetify.breakpoint.mdAndUp"
           >
-            <v-col class="pa-0" cols="12" sm="12" md="6">
+            <v-col class="pa-0 ma-0" cols="12" sm="12" md="6">
               <v-card
                 flat
                 height="180px"
