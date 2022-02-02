@@ -102,7 +102,7 @@
               "
             >
               To capture invoices sent to email, forward attachements to
-              mtn@process.finance or ask your vendors to send directly
+              yourbusiness@process.finance or ask your vendors to send directly
             </v-card-text>
           </v-card>
         </v-row>
@@ -118,14 +118,14 @@
           max-width="630px"
         >
           <v-row class="mx-0" style="width: 100%; height: 100%">
-            <v-col class="mx-0 pa-0" cols="4">
+            <v-col class="mx-0 pa-0" cols="3">
               <div
                 class="d-flex align-center justify-center"
                 style="width: 100%; height: 100%"
               >
                 <v-avatar
                   style="background: #d5f7ef"
-                  :size="avatarSizes[$vuetify.breakpoint.name]"
+                  :size="56"
                 >
                   <v-icon :size="iconSizes[$vuetify.breakpoint.name]">
                     mdi-email-outline
@@ -133,51 +133,23 @@
                 >
               </div>
             </v-col>
-            <v-col class="pa-0 mx-0" cols="8">
-              <div style="width: 100%; height: 100%">
-                <p
-                  class="pt-8 my-0"
-                  style="
-                    font-family: Inter;
-                    font-style: normal;
-                    font-weight: bold;
-                    font-size: 22px;
-                    line-height: 22px;
-                    color: rgba(0, 35, 56, 0.5);
-                  "
-                >
-                  Incoming invoice/bill
-                </p>
-                <p
-                  class="pt-2 pr-1 my-md-1 text-wrap"
-                  style="
-                    max-width: 16rem;
-                    font-family: Inter;
-                    font-style: normal;
-                    font-weight: bold;
-                    font-size: 0.8rem;
-                    line-height: 14px;
-                    letter-spacing: 0.545455px;
-                    color: #19283d;
-                  "
-                >
-                  yourCompany@process.finance
-                </p>
-                <p
-                  class="pt-2 text-wrap"
-                  style="
-                    max-width: 260px;
-                    font-family: Inter;
-                    font-style: normal;
-                    font-weight: normal;
-                    font-size: 12px;
-                    line-height: 20px;
-                    letter-spacing: 0.545455px;
-                    color: rgba(0, 35, 56, 0.5);
-                  "
-                >
-                  Forward your incoming invoices/bills to this email address
-                </p>
+            <v-col class="pa-0 mx-0" cols="9">
+              <div style="width: 100%; height: 100%;">
+                <div class="pr-8 pl-4">
+                  <p
+                    class="pt-8 my-0 h-card-title">
+                    Incoming invoice/bill
+                  </p>
+                  <p
+                    class="pt-2 pr-1 my-md-1 text-wrap h-card-body-bold">
+                    mtn-demo@process.finance
+                  </p>
+                  <p
+                    class="pt-2 text-wrap h-card-body"
+                  >
+                    Forward your incoming invoices/bills to this address
+                  </p>
+                </div>
               </div>
             </v-col>
           </v-row>
@@ -192,21 +164,21 @@
           max-width="630px"
         >
           <v-row class="mx-0" style="width: 100%; height: 100%">
-            <v-col class="mx-0 pa-0" cols="4">
+            <v-col class="mx-0 pa-0" cols="3">
               <div
                 class="d-flex align-center justify-center"
                 style="width: 100%; height: 100%"
               >
                 <v-avatar
                   style="background: #eef3fb"
-                  :size="avatarSizes[$vuetify.breakpoint.name]"
+                  :size="56"
                 >
                   <span
                     style="
                       font-family: Inter;
                       font-style: normal;
                       font-weight: bold;
-                      font-size: 1.6em;
+                      font-size: 1.2em;
                       line-height: 24px;
                       color: #19283d;
                     "
@@ -215,35 +187,21 @@
                 </v-avatar>
               </div>
             </v-col>
-            <v-col class="pa-0 mx-0" cols="8">
+            <v-col class="pa-0 mx-0" cols="9">
               <div style="width: 100%; height: 100%">
+                <div class="pr-8 pl-4">
                 <p
-                  class="pt-8 my-0"
-                  style="
-                    font-family: Inter;
-                    font-style: normal;
-                    font-weight: bold;
-                    font-size: 22px;
-                    line-height: 22px;
-                    color: rgba(0, 35, 56, 0.5);
-                  "
+                  class="pt-8 my-0 h-card-title"
                 >
                   Volume this month
                 </p>
                 <p
-                  class="pt-6"
-                  style="
-                    font-family: Inter;
-                    font-style: normal;
-                    font-weight: normal;
-                    font-size: 12px;
-                    line-height: 26px;
-                    letter-spacing: 0.545455px;
-                    color: rgba(0, 35, 56, 0.5);
-                  "
+                  class="pt-6 h-card-body"
+                 
                 >
                   Total invoices/bills received in the last 30days
                 </p>
+                </div>
               </div>
             </v-col>
           </v-row>
@@ -258,21 +216,21 @@
           max-width="630px"
         >
           <v-row class="mx-0" style="width: 100%; height: 100%">
-            <v-col class="mx-0 pa-0" cols="4">
+            <v-col class="mx-0 pa-0" cols="3">
               <div
                 class="d-flex align-center justify-center"
                 style="width: 100%; height: 100%"
               >
                 <v-avatar
                   style="background: #fefcf8"
-                  :size="avatarSizes[$vuetify.breakpoint.name]"
+                  :size="56"
                 >
                   <span
                     style="
                       font-family: Inter;
                       font-style: normal;
                       font-weight: bold;
-                      font-size: 1.6em;
+                      font-size: 1.2em;
                       line-height: 24px;
                       color: #19283d;
                     "
@@ -281,36 +239,22 @@
                 </v-avatar>
               </div>
             </v-col>
-            <v-col class="pa-0 mx-0" cols="8">
+            <v-col class="pa-0 mx-0" cols="9">
               <div style="width: 100%; height: 100%">
+                <div class="pr-8 pl-4">
                 <p
-                  class="pt-8 my-0"
-                  style="
-                    font-family: Inter;
-                    font-style: normal;
-                    font-weight: bold;
-                    font-size: 22px;
-                    line-height: 22px;
-                    color: rgba(0, 35, 56, 0.5);
-                  "
+                  class="pt-8 my-0 h-card-title"
+                  
                 >
                   Exceptions
                 </p>
                 <p
-                  class="pt-6 text-wrap"
-                  style="
-                    max-width: 300px;
-                    font-family: Inter;
-                    font-style: normal;
-                    font-weight: normal;
-                    font-size: 12px;
-                    line-height: 26px;
-                    letter-spacing: 0.545455px;
-                    color: rgba(0, 35, 56, 0.5);
-                  "
+                  class="pt-6 text-wrap h-card-body"
+                  
                 >
                   Total number of invoices/bills that require manual oversight
                 </p>
+                </div>
               </div>
             </v-col>
           </v-row>
@@ -734,6 +678,34 @@ export default {
 </script>
 
 <style scoped>
+.h-card-title{
+  font-family: Inter;
+                    font-style: normal;
+                    font-weight: bold;
+                    font-size: 18px;
+                    line-height: 22px;
+                    color: rgba(0, 35, 56, 0.5);
+}
+.h-card-body-bold{
+max-width: 16rem;
+                    font-family: Inter;
+                    font-style: normal;
+                    font-weight: bold;
+                    font-size: 0.8rem;
+                    line-height: 14px;
+                    letter-spacing: 0.545455px;
+                    color: #19283d;
+}
+.h-card-body{
+  max-width: 260px;
+                    font-family: Inter;
+                    font-style: normal;
+                    font-weight: normal;
+                    font-size: 12px;
+                    line-height: 20px;
+                    letter-spacing: 0.545455px;
+                    color: rgba(0, 35, 56, 0.5);
+}
 .v-input .search-field .v-input__slot:before,
 .v-input .search-field .v-input__slot:after {
   border: none !important;
