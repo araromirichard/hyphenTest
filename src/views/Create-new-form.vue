@@ -41,30 +41,6 @@
                   collect finance related data from your co-workers, suppliers,
                   advisors, auditors, etc
                 </p>
-                <v-sheet
-                  outlined
-                  rounded="lg"
-                  width="273px"
-                  height="48px"
-                  style=""
-                  class="d-flex align-center"
-                >
-                  <v-icon small color="disabled" class="px-2"
-                    >mdi-clipboard-text-outline</v-icon
-                  >
-                  <span
-                    class="text-center text-truncate"
-                    style="
-                      font-family: Inter;
-                      font-style: normal;
-                      font-weight: bold;
-                      font-size: 10px;
-                      line-height: 20px;
-                      color: #596a73;
-                    "
-                    >https://forms.onpbot.com/your-form-name-h</span
-                  >
-                </v-sheet>
               </div>
               <div
                 class="d-flex flex-column justify-center align-center"
@@ -98,24 +74,57 @@
         md="9"
       >
         <div>
-          <h6
-            class="pl-5 pt-md-5"
-            style="
-              font-family: Inter;
-              font-style: normal;
-              font-weight: bold;
-              font-size: 24px;
-              line-height: 29px;
-              letter-spacing: -0.73px;
-              color: var(--v-primary-base);
-            "
-            :style="{
-              paddingTop: `${$vuetify.breakpoint.mdAndDown ? '10px' : '16px'}`,
-              paddingLeft: `${$vuetify.breakpoint.mdAndDown ? '8px' : '16px'}`,
-            }"
-          >
-            Form Builder
-          </h6>
+          <div class="d-flex justify-center align-center">
+            <h6
+              class="pl-5 pt-md-5"
+              style="
+                font-family: Inter;
+                font-style: normal;
+                font-weight: bold;
+                font-size: 24px;
+                line-height: 29px;
+                letter-spacing: -0.73px;
+                color: var(--v-primary-base);
+              "
+              :style="{
+                paddingTop: `${
+                  $vuetify.breakpoint.mdAndDown ? '10px' : '16px'
+                }`,
+                paddingLeft: `${
+                  $vuetify.breakpoint.mdAndDown ? '8px' : '16px'
+                }`,
+              }"
+            >
+              Form Builder
+            </h6>
+            <v-spacer></v-spacer>
+            <div class="px-8 pt-6">
+              <v-sheet
+                outlined
+                rounded="lg"
+                width="273px"
+                height="48px"
+                style=""
+                class="d-flex align-center"
+              >
+                <v-icon small color="disabled" class="px-2"
+                  >mdi-clipboard-text-outline</v-icon
+                >
+                <span
+                  class="text-center text-truncate"
+                  style="
+                    font-family: Inter;
+                    font-style: normal;
+                    font-weight: bold;
+                    font-size: 10px;
+                    line-height: 20px;
+                    color: #596a73;
+                  "
+                  >https://forms.onpbot.com/your-form-name-h</span
+                >
+              </v-sheet>
+            </div>
+          </div>
 
           <FormBuilder style="" v-model="formData"></FormBuilder>
         </div>

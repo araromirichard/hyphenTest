@@ -25,7 +25,7 @@
         >
           <template v-slot:prepend>
             <div>
-              <img class="logo" :src="require('@/assets/hyphen-logo.png')" />
+              <img class="logo" :src="require('@/assets/icons/newLogo.svg')" />
             </div>
           </template>
           <v-list nav dense flat class="py-4 pl-10">
@@ -215,7 +215,7 @@
     >
       <template v-slot:prepend>
         <div>
-          <img class="logo" :src="require('@/assets/hyphen-logo.png')" />
+          <img class="logo" :src="require('@/assets/icons/newLogo.svg')" />
         </div>
       </template>
       <v-list flat class="pt-4 pb-2 pl-10">

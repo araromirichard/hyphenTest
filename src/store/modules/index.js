@@ -5,9 +5,9 @@ import organizations from "./organizations";
 import formBuilder from "./formBuilder";
 
 export default {
-    ui,
-    workflow,
-    auth,
-    organizations,
-    formBuilder,
+  ui,
+  workflow,
+  auth,
+  organizations,
+  formBuilder,
 };

@@ -77,111 +77,117 @@
             </div>
           </v-col>
         </v-row>
-        <v-row align="center" v-if="$vuetify.breakpoint.mdAndUp">
-          <v-col class="pa-0" cols="12" sm="12" md="5" offset-md="1">
-            <v-card
-              flat
-              height="180px"
-              max-width="630px"
-              class="d-flex flex-row"
-              style="margin-left: 65px; margin-top: 35px"
-            >
-              <v-row>
-                <v-col cols="3">
-                  <v-avatar
-                    color="#FDF9EF"
-                    size="90"
-                    style="margin-left: 30px; margin-top: 44px"
-                  >
-                    <v-icon dark color="primary"> mdi-check </v-icon>
-                  </v-avatar>
-                </v-col>
-                <v-col cols="8">
-                  <h5 class="cardTitle pa-0">Total Payables</h5>
-                  <h6 class="cardSubTitle pa-0">
-                    <span>Total unpaid bills </span> {{ totalUnpaidBills }}
-                  </h6>
-                  <v-progress-linear
-                    rounded
-                    style="margin-left: 15px; margin-top: 8px"
-                    v-model="currentBillPercentage"
-                    color="#96EAD7"
-                    height="12"
-                    background-color="#E3AA1C"
-                  ></v-progress-linear>
-                  <p
-                    class="text-break mt-2 d-inline float-start"
-                    style="
-                      margin-left: 15px;
-                      max-width: 5rem;
-                      font-family: Inter;
-                      font-style: normal;
-                      font-weight: normal;
-                      font-size: 12px;
-                      line-height: 16px;
-                      letter-spacing: 0.545455px;
-                      color: rgba(0, 35, 56, 0.5);
-                    "
-                  >
-                    current
-                    <span class="font-weight-bold">{{ currentBill }}</span>
-                  </p>
-                  <p
-                    class="text-break mt-2 d-inline float-end text-md-right"
-                    style="
-                      margin-left: 15px;
-                      max-width: 5rem;
-                      font-family: Inter;
-                      font-style: normal;
-                      font-weight: normal;
-                      font-size: 12px;
-                      line-height: 16px;
-                      letter-spacing: 0.545455px;
-                      color: rgba(0, 35, 56, 0.5);
-                    "
-                  >
-                    overdue
-                    <span class="font-weight-bold">{{ overDueBill }}</span>
-                  </p>
-                </v-col>
-              </v-row>
-            </v-card>
-          </v-col>
-          <v-col class="pa-0" cols="12" sm="12" md="5">
-            <v-card
-              flat
-              height="180px"
-              max-width="630px"
-              class="d-flex flex-row"
-              style="margin-left: 65px; margin-top: 35px"
-            >
-              <v-row>
-                <v-col cols="3">
-                  <v-avatar
-                    color="#FDF9EF"
-                    size="90"
-                    style="margin-left: 30px; margin-top: 44px"
-                  >
-                    <v-icon dark color="primary"> mdi-check </v-icon>
-                  </v-avatar>
-                </v-col>
-                <v-col cols="8">
-                  <h5 class="cardTitle pa-0">Histogram</h5>
-                  <h6 class="cardSubTitle pa-0">
-                    <span>Bills of the last </span> {{ billPeriod }} months
-                  </h6>
-                  <pure-vue-chart
-                    :points="[1, 3, 2, 3, 4, 2, 0]"
-                    :width="250"
-                    :height="60"
-                    bar-color="#96ead7"
-                    style="margin-left: 15px; margin-top: 5px"
-                  />
-                </v-col>
-              </v-row>
-            </v-card>
-          </v-col>
-        </v-row>
+        <v-container fluid>
+          <v-row
+            class="ma-0 pa-0"
+            align="center"
+            v-if="$vuetify.breakpoint.mdAndUp"
+          >
+            <v-col class="pa-0" cols="12" sm="12" md="6">
+              <v-card
+                flat
+                height="180px"
+                max-width="630px"
+                class="d-flex flex-row"
+                style="margin-left: 60px; margin-top: 35px"
+              >
+                <v-row>
+                  <v-col cols="3">
+                    <v-avatar
+                      color="#FDF9EF"
+                      size="90"
+                      style="margin-left: 30px; margin-top: 44px"
+                    >
+                      <v-icon dark color="primary"> mdi-check </v-icon>
+                    </v-avatar>
+                  </v-col>
+                  <v-col cols="8">
+                    <h5 class="cardTitle pa-0">Total Payables</h5>
+                    <h6 class="cardSubTitle pa-0">
+                      <span>Total unpaid bills </span> {{ totalUnpaidBills }}
+                    </h6>
+                    <v-progress-linear
+                      rounded
+                      style="margin-left: 15px; margin-top: 8px"
+                      v-model="currentBillPercentage"
+                      color="#96EAD7"
+                      height="12"
+                      background-color="#E3AA1C"
+                    ></v-progress-linear>
+                    <p
+                      class="text-break mt-2 d-inline float-start"
+                      style="
+                        margin-left: 15px;
+                        max-width: 5rem;
+                        font-family: Inter;
+                        font-style: normal;
+                        font-weight: normal;
+                        font-size: 12px;
+                        line-height: 16px;
+                        letter-spacing: 0.545455px;
+                        color: rgba(0, 35, 56, 0.5);
+                      "
+                    >
+                      current
+                      <span class="font-weight-bold">{{ currentBill }}</span>
+                    </p>
+                    <p
+                      class="text-break mt-2 d-inline float-end text-md-right"
+                      style="
+                        margin-left: 15px;
+                        max-width: 5rem;
+                        font-family: Inter;
+                        font-style: normal;
+                        font-weight: normal;
+                        font-size: 12px;
+                        line-height: 16px;
+                        letter-spacing: 0.545455px;
+                        color: rgba(0, 35, 56, 0.5);
+                      "
+                    >
+                      overdue
+                      <span class="font-weight-bold">{{ overDueBill }}</span>
+                    </p>
+                  </v-col>
+                </v-row>
+              </v-card>
+            </v-col>
+            <v-col class="pa-0 ma-0" cols="12" sm="12" md="6">
+              <v-card
+                flat
+                height="180px"
+                max-width="78%"
+                class="d-flex flex-row"
+                style="margin-left: 78px; margin-top: 35px"
+              >
+                <v-row>
+                  <v-col cols="3">
+                    <v-avatar
+                      color="#FDF9EF"
+                      size="90"
+                      style="margin-left: 30px; margin-top: 44px"
+                    >
+                      <v-icon dark color="primary"> mdi-check </v-icon>
+                    </v-avatar>
+                  </v-col>
+                  <v-col cols="8">
+                    <h5 class="cardTitle pa-0">Histogram</h5>
+                    <h6 class="cardSubTitle pa-0">
+                      <span>Bills of the last </span> {{ billPeriod }} months
+                    </h6>
+                    <pure-vue-chart
+                      :points="[1, 3, 2, 3, 4, 2, 0]"
+                      :width="250"
+                      :height="60"
+                      bar-color="#96ead7"
+                      style="margin-left: 15px; margin-top: 5px"
+                    />
+                  </v-col>
+                </v-row>
+              </v-card>
+            </v-col>
+          </v-row>
+        </v-container>
         <v-container class="mt-md-12">
           <v-row class="mx-md-10 pa-0">
             <v-col

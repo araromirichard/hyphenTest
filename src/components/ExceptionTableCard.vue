@@ -9,6 +9,7 @@
         $router.push({
           name: 'inbox.invoice',
           params: { id: id },
+          query: { exception: true },
         })
       "
     >
@@ -78,6 +79,7 @@
                       $router.push({
                         name: 'inbox.invoice',
                         params: { id: '123' },
+                        query: { exception: true },
                       })
                     "
                     exact-path
@@ -92,6 +94,12 @@
                     view
                   </v-btn>
                   <v-btn
+                    @click="
+                      $router.push({
+                        name: 'inbox.invoice',
+                        query: { review: false },
+                      })
+                    "
                     rounded
                     depressed
                     dark

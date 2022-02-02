@@ -74,7 +74,6 @@
                         font-weight: normal;
                         line-height: 16px;
                         letter-spacing: 0.278409px;
-                       
                       "
                     >
                       Forgot Password?
@@ -154,7 +153,7 @@
                       "
                     >
                       <span
-                      class="primary--text"
+                        class="primary--text"
                         style="
                           font-family: Inter;
                           font-style: normal;

@@ -140,7 +140,7 @@
                 @click="
                   $router.push({
                     name: 'inbox.invoice',
-                    params: { id: '123' },
+                    params: { id: id },
                   })
                 "
                 exact-path
@@ -155,6 +155,7 @@
                 view
               </v-btn>
               <v-btn
+                @click="reviewInv"
                 rounded
                 depressed
                 dark
@@ -213,6 +214,14 @@ export default {
   },
   data() {
     return {};
+  },
+  methods: {
+    reviewInv() {
+      this.$router.push({
+        name: "inbox.invoice",
+        query: { review: false },
+      });
+    },
   },
 };
 </script>

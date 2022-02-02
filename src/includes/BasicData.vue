@@ -1,49 +1,32 @@
 <template>
-  <v-container>
-    <v-row v-if="$vuetify.breakpoint.mdAndUp">
-      <v-col cols="12">
-        <validation-observer v-slot="{ handleSubmit }">
-          <form @submit.prevent="handleSubmit(submitInput)">
-            <div>
-              <v-subheader
-                class="py-md-10 py-5"
-                style="
-                  font-family: Inter;
-                  font-style: normal;
-                  font-weight: bold;
-                  font-size: 16px;
-                  line-height: 19px;
-                  color: #7f919b;
-                "
-                :style="{
-                  marginLeft: `${
-                    $vuetify.breakpoint.mdAndDown ? '8px' : '48px'
-                  }`,
-                }"
-              >
-                Basic Data
-              </v-subheader>
+  <div>
+    <div v-if="$vuetify.breakpoint.mdAndUp">
+      <validation-observer v-slot="{ handleSubmit }">
+        <form @submit.prevent="handleSubmit(submitInput)">
+          <div>
+            <p
+              class="py-md-10 py-5"
+              style="
+                font-family: Inter;
+                font-style: normal;
+                font-weight: bold;
+                font-size: 16px;
+                line-height: 19px;
+                color: #7f919b;
+              "
+              :style="{
+                marginLeft: `${$vuetify.breakpoint.mdAndDown ? '8px' : '48px'}`,
+              }"
+            >
+              Basic Data
+            </p>
 
-              <div>
-                <v-list-item>
-                  <v-list-item-title
-                    class="text--primary"
-                    style="
-                      margin-left: 84px;
-                      font-family: Inter;
-                      font-style: normal;
-                      font-weight: 500;
-                      font-size: 14px;
-                      line-height: 15px;
-                    "
-                    :style="{
-                      marginLeft: `${
-                        $vuetify.breakpoint.mdAndDown ? '8px' : '84px'
-                      }`,
-                    }"
-                    >Invoice no.</v-list-item-title
-                  >
-                  <v-spacer></v-spacer>
+            <div>
+              <v-row class="px-sm-8 py-0 mx-sm-0">
+                <v-col cols="4" class="pl-10 py-1 ma-0">
+                  <v-subheader class="primary--text">Invoice no.</v-subheader>
+                </v-col>
+                <v-col cols="8" class="py-1 ma-0">
                   <validation-provider
                     v-slot="{ errors }"
                     name="Invoice Number"
@@ -60,18 +43,11 @@
                       dense
                       :class="!changeState ? changeState : ''"
                       reverse
-                      style="
-                        font-family: Inter;
-                        font-style: normal;
-                        font-weight: normal;
-                        font-size: 15px;
-                        line-height: 15px;
-                        color: #7f919b;
-                      "
+                      class="ma-0 pa-0"
                       placeholder="Enter Invoice"
                     ></v-text-field>
                   </validation-provider>
-                </v-list-item>
+                </v-col>
                 <v-divider
                   inset
                   style="
@@ -79,21 +55,12 @@
                     transform: rotate(-0.65deg);
                   "
                 ></v-divider>
-                <v-list-item>
-                  <v-list-item-title
-                    style="
-                      padding-left: 84px;
-                      font-family: Inter;
-                      font-style: normal;
-                      font-weight: 500;
-                      font-size: 14px;
-                      line-height: 15px;
-                      color: #301f78;
-                    "
-                    >Date</v-list-item-title
-                  >
-
-                  <v-spacer></v-spacer>
+              </v-row>
+              <v-row class="px-sm-8 py-0 mx-sm-0">
+                <v-col cols="4" class="pl-10 py-1 ma-0">
+                  <v-subheader class="primary--text">Date</v-subheader>
+                </v-col>
+                <v-col cols="8" class="py-1 ma-0">
                   <v-menu
                     v-model="menu"
                     :close-on-content-click="false"
@@ -134,7 +101,7 @@
                     >
                     </v-date-picker>
                   </v-menu>
-                </v-list-item>
+                </v-col>
                 <v-divider
                   inset
                   style="
@@ -142,21 +109,12 @@
                     transform: rotate(-0.65deg);
                   "
                 ></v-divider>
-                <v-list-item>
-                  <v-list-item-title
-                    style="
-                      padding-left: 84px;
-                      font-family: Inter;
-                      font-style: normal;
-                      font-weight: 500;
-                      font-size: 14px;
-                      line-height: 15px;
-                      color: #301f78;
-                    "
-                    >VAT</v-list-item-title
-                  >
-
-                  <v-spacer></v-spacer>
+              </v-row>
+              <v-row class="px-sm-8 py-0 mx-sm-0">
+                <v-col cols="4" class="pl-10 py-1 ma-0">
+                  <v-subheader class="primary--text">VAT</v-subheader>
+                </v-col>
+                <v-col cols="8" class="py-1 ma-0">
                   <validation-provider
                     v-slot="{ errors }"
                     name="VAT"
@@ -184,7 +142,7 @@
                       placeholder="VAT Amount"
                     ></v-text-field>
                   </validation-provider>
-                </v-list-item>
+                </v-col>
                 <v-divider
                   inset
                   style="
@@ -192,21 +150,12 @@
                     transform: rotate(-0.65deg);
                   "
                 ></v-divider>
-                <v-list-item>
-                  <v-list-item-title
-                    style="
-                      padding-left: 84px;
-                      font-family: Inter;
-                      font-style: normal;
-                      font-weight: 500;
-                      font-size: 14px;
-                      line-height: 15px;
-                      color: #301f78;
-                    "
-                    >Due Date</v-list-item-title
-                  >
-
-                  <v-spacer></v-spacer>
+              </v-row>
+              <v-row class="px-sm-8 py-0 mx-sm-0">
+                <v-col cols="4" class="pl-10 py-1 ma-0">
+                  <v-subheader class="primary--text">Due Date</v-subheader>
+                </v-col>
+                <v-col cols="8" class="py-1 ma-0">
                   <v-menu
                     v-model="menu2"
                     :close-on-content-click="true"
@@ -249,7 +198,7 @@
                     >
                     </v-date-picker>
                   </v-menu>
-                </v-list-item>
+                </v-col>
                 <v-divider
                   inset
                   style="
@@ -257,43 +206,39 @@
                     transform: rotate(-0.65deg);
                   "
                 ></v-divider>
-                <v-divider
-                  class="mt-8"
-                  style="
-                    border: 1px solid rgba(127, 145, 155, 0.107845);
-                    transform: rotate(-0.65deg);
-                  "
-                ></v-divider>
-                <v-subheader
-                  class="mt-8 pb-10"
-                  style="
-                    margin-left: 48px;
-                    font-family: Inter;
-                    font-style: normal;
-                    font-weight: bold;
-                    font-size: 16px;
-                    line-height: 19px;
-                    color: #7f919b;
-                  "
-                >
-                  Vendor
-                </v-subheader>
+              </v-row>
 
-                <v-list-item>
-                  <v-list-item-title
-                    style="
-                      padding-left: 84px;
-                      font-family: Inter;
-                      font-style: normal;
-                      font-weight: 500;
-                      font-size: 14px;
-                      line-height: 15px;
-                      color: #301f78;
-                    "
-                    >Name</v-list-item-title
-                  >
+              <v-divider
+                class="mt-12"
+                style="
+                  border: 1px solid rgba(127, 145, 155, 0.107845);
+                  transform: rotate(-0.65deg);
+                "
+              ></v-divider>
+              <p
+                class="py-md-10 py-5"
+                style="
+                  font-family: Inter;
+                  font-style: normal;
+                  font-weight: bold;
+                  font-size: 16px;
+                  line-height: 19px;
+                  color: #7f919b;
+                "
+                :style="{
+                  marginLeft: `${
+                    $vuetify.breakpoint.mdAndDown ? '8px' : '48px'
+                  }`,
+                }"
+              >
+                Vendor
+              </p>
 
-                  <v-spacer></v-spacer>
+              <v-row class="px-sm-8 py-0 mx-sm-0">
+                <v-col cols="4" class="pl-10 py-1 ma-0">
+                  <v-subheader class="primary--text">Name</v-subheader>
+                </v-col>
+                <v-col cols="8" class="py-1 ma-0">
                   <validation-provider
                     v-slot="{ errors }"
                     name="Vendor Name"
@@ -321,7 +266,7 @@
                       placeholder="Enter Name"
                     ></v-text-field>
                   </validation-provider>
-                </v-list-item>
+                </v-col>
                 <v-divider
                   inset
                   style="
@@ -329,21 +274,12 @@
                     transform: rotate(-0.65deg);
                   "
                 ></v-divider>
-                <v-list-item>
-                  <v-list-item-title
-                    style="
-                      padding-left: 84px;
-                      font-family: Inter;
-                      font-style: normal;
-                      font-weight: 500;
-                      font-size: 14px;
-                      line-height: 15px;
-                      color: #301f78;
-                    "
-                    >Address</v-list-item-title
-                  >
-
-                  <v-spacer></v-spacer>
+              </v-row>
+              <v-row class="px-sm-8 py-0 mx-sm-0">
+                <v-col cols="4" class="pl-10 py-1 ma-0">
+                  <v-subheader class="primary--text">Address</v-subheader>
+                </v-col>
+                <v-col cols="8" class="py-1 ma-0">
                   <validation-provider
                     v-slot="{ errors }"
                     name="Vendor Address"
@@ -371,7 +307,7 @@
                       placeholder="Enter Address"
                     ></v-text-field>
                   </validation-provider>
-                </v-list-item>
+                </v-col>
                 <v-divider
                   inset
                   style="
@@ -379,21 +315,12 @@
                     transform: rotate(-0.65deg);
                   "
                 ></v-divider>
-                <v-list-item>
-                  <v-list-item-title
-                    style="
-                      padding-left: 84px;
-                      font-family: Inter;
-                      font-style: normal;
-                      font-weight: 500;
-                      font-size: 14px;
-                      line-height: 15px;
-                      color: #301f78;
-                    "
-                    >Tax Id.</v-list-item-title
-                  >
-
-                  <v-spacer></v-spacer>
+              </v-row>
+              <v-row class="px-sm-8 py-0 mx-sm-0">
+                <v-col cols="4" class="pl-10 py-1 ma-0">
+                  <v-subheader class="primary--text">Tax Id.</v-subheader>
+                </v-col>
+                <v-col cols="8" class="py-1 ma-0">
                   <validation-provider
                     v-slot="{ errors }"
                     name="Tax ID"
@@ -421,7 +348,7 @@
                       placeholder="Enter Tax Id."
                     ></v-text-field>
                   </validation-provider>
-                </v-list-item>
+                </v-col>
                 <v-divider
                   inset
                   style="
@@ -429,21 +356,12 @@
                     transform: rotate(-0.65deg);
                   "
                 ></v-divider>
-                <v-list-item>
-                  <v-list-item-title
-                    style="
-                      padding-left: 84px;
-                      font-family: Inter;
-                      font-style: normal;
-                      font-weight: 500;
-                      font-size: 14px;
-                      line-height: 15px;
-                      color: #301f78;
-                    "
-                    >Email</v-list-item-title
-                  >
-
-                  <v-spacer></v-spacer>
+              </v-row>
+              <v-row class="px-sm-8 py-0 mx-sm-0">
+                <v-col cols="4" class="pl-10 py-1 ma-0">
+                  <v-subheader class="primary--text">Email</v-subheader>
+                </v-col>
+                <v-col cols="8" class="py-1 ma-0">
                   <validation-provider
                     v-slot="{ errors }"
                     name="Vendor Email"
@@ -472,7 +390,7 @@
                       placeholder="Enter your Email"
                     ></v-text-field>
                   </validation-provider>
-                </v-list-item>
+                </v-col>
                 <v-divider
                   inset
                   style="
@@ -480,21 +398,12 @@
                     transform: rotate(-0.65deg);
                   "
                 ></v-divider>
-                <v-list-item>
-                  <v-list-item-title
-                    style="
-                      padding-left: 84px;
-                      font-family: Inter;
-                      font-style: normal;
-                      font-weight: 500;
-                      font-size: 14px;
-                      line-height: 15px;
-                      color: #301f78;
-                    "
-                    >Phone</v-list-item-title
-                  >
-
-                  <v-spacer></v-spacer>
+              </v-row>
+              <v-row class="px-sm-8 py-0 mx-sm-0">
+                <v-col cols="4" class="pl-10 py-1 ma-0">
+                  <v-subheader class="primary--text">Phone</v-subheader>
+                </v-col>
+                <v-col cols="8" class="py-1 ma-0">
                   <validation-provider
                     v-slot="{ errors }"
                     name="Phone Number"
@@ -526,7 +435,7 @@
                       placeholder="Enter Phone"
                     ></v-text-field>
                   </validation-provider>
-                </v-list-item>
+                </v-col>
                 <v-divider
                   inset
                   style="
@@ -534,32 +443,25 @@
                     transform: rotate(-0.65deg);
                   "
                 ></v-divider>
-              </div>
-
-              <div class="text-center pt-14" style="padding-bottom: 20px">
-                <v-btn
-                  @click="submitInput"
-                  large
-                  elevation="10"
-                  color="primary"
-                >
-                  <simple-line-icons
-                    style="width: 15.98px; height: 15.97px"
-                    class="m-0 text--white pl-14"
-                    icon="cursor"
-                    no-svg
-                  />
-                  <span class="pl-6 pr-14 text-capitalize"
-                    >Send to Payables</span
-                  >
-                </v-btn>
-                <InvoiceBtn @activate="activateField" class="pt-8" />
-              </div>
+              </v-row>
             </div>
-          </form>
-        </validation-observer>
-      </v-col>
-    </v-row>
+
+            <div class="text-center pt-14" style="padding-bottom: 20px">
+              <v-btn @click="submitInput" large elevation="10" color="primary">
+                <simple-line-icons
+                  style="width: 15.98px; height: 15.97px"
+                  class="m-0 text--white pl-14"
+                  icon="cursor"
+                  no-svg
+                />
+                <span class="pl-6 pr-14 text-capitalize">Send to Payables</span>
+              </v-btn>
+              <InvoiceBtn @activate="activateField" class="pt-8" />
+            </div>
+          </div>
+        </form>
+      </validation-observer>
+    </div>
     <v-row v-if="$vuetify.breakpoint.mdAndDown">
       <v-col cols="10" offset="1" class="d-flex flex-column align-center">
         <validation-observer v-slot="{ handleSubmit }">
@@ -905,7 +807,7 @@
         </validation-observer>
       </v-col>
     </v-row>
-  </v-container>
+  </div>
 </template>
 
 <script>
@@ -969,6 +871,14 @@ export default {
 </script>
 
 <style scoped>
+.v-subheader {
+  align-items: center;
+  display: flex;
+  height: 48px;
+  font-size: 0.9rem !important;
+  font-weight: 400;
+  padding: 0 16px 0 16px;
+}
 .v-text-field {
   width: 260px;
 }

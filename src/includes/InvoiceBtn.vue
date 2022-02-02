@@ -319,6 +319,9 @@ export default {
         }
       }
     },
+    mounted() {
+      this.showReview = this.$route.query.review || true;
+    },
     // uploadFile(e) {
     //   let files = e.target.files || e.dataTransfer.files;
     //   if (!files.length) return;
