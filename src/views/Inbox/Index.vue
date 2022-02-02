@@ -112,7 +112,7 @@
       <v-col class="pa-0" cols="12" md="4">
         <v-card
           elevation="3"
-          class="ml-sm-16 mr-sm-5"
+          class="ml-sm-16"
           flat
           height="180px"
           max-width="630px"
@@ -186,7 +186,7 @@
       <v-col class="pa-0" cols="12" sm="4">
         <v-card
           elevation="3"
-          class="mx-sm-5"
+          class="mr-sm-6 ml-sm-10"
           flat
           height="180px"
           max-width="630px"
@@ -252,7 +252,7 @@
       <v-col class="pa-0" cols="12" sm="4">
         <v-card
           elevation="3"
-          class="ml-sm-5 mr-sm-16"
+          class="ml-sm-4 mr-sm-16"
           flat
           height="180px"
           max-width="630px"

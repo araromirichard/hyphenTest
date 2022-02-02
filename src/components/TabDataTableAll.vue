@@ -43,26 +43,33 @@
           </v-chip>
           <v-spacer></v-spacer>
           <download-csv class="btn btn-default" :data="filteredInvoices">
-            <v-btn
-              @click="alertCSVDownload"
-              color="#2BD5AE"
-              class="my-4 export-btn mr-9"
-              elevation="3"
-              ><span class="material-icons pr-1"> import_export </span
-              ><span
-                class="primary--text"
-                style="
-                  font-family: Inter;
-                  font-style: normal;
-                  font-weight: 500;
-                  font-size: 11px;
-                  line-height: 12px;
-                  text-align: center;
-                  letter-spacing: 0.636364px;
-                "
-                >Export</span
-              >
-            </v-btn>
+            <v-hover v-slot="{ hover }">
+              <v-btn
+                outlined
+                @click="alertCSVDownload"
+                color="primary"
+                class="my-4 export-btn mr-9 hover-btn"
+                :style="{
+                  'background-color': hover ? '#2bd5ae' : '',
+                  border: hover ? 'none' : '',
+                }"
+                elevation="2"
+                ><span class="material-icons pr-1"> import_export </span
+                ><span
+                  class="primary--text"
+                  style="
+                    font-family: Inter;
+                    font-style: normal;
+                    font-weight: 500;
+                    font-size: 11px;
+                    line-height: 12px;
+                    text-align: center;
+                    letter-spacing: 0.636364px;
+                  "
+                  >Export</span
+                >
+              </v-btn>
+            </v-hover>
           </download-csv>
         </v-card>
         <div
@@ -341,6 +348,10 @@ export default {
   height: 15.28px;
 }
 
+hover-btn:hover {
+  background-color: lightseagreen;
+  color: midnightblue;
+}
 .export-btn {
   font-family: "Inter" sans-serif;
   font-style: normal;

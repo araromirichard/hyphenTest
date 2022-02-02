@@ -222,7 +222,7 @@
         <v-list-item-group
           v-model="model"
           color="primary"
-          active-class="primary--text text--accent-4"
+          active-class="primary--text text--accent-4 link-text"
         >
           <v-list-item nav link to="/insight" class="mx-auto" v-if="version1">
             <v-list-item-icon class="mr-4">
@@ -442,5 +442,8 @@ export default {
 
 .navlink {
   color: var(--v-primary-base);
+}
+.link-text {
+  text-decoration: underline solid lightseagreen 2px;
 }
 </style>

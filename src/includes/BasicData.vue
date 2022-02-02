@@ -447,7 +447,13 @@
             </div>
 
             <div class="text-center pt-14" style="padding-bottom: 20px">
-              <v-btn @click="submitInput" large elevation="10" color="primary">
+              <v-btn
+                :disabled="$route.query.exception"
+                @click="submitInput"
+                large
+                elevation="10"
+                color="primary"
+              >
                 <simple-line-icons
                   style="width: 15.98px; height: 15.97px"
                   class="m-0 text--white pl-14"

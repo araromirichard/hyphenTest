@@ -36,7 +36,7 @@
           <v-col cols="10" offset="1">
             <v-card
               width="100%"
-              height="128"
+              min-height="128"
               flat
               elevation="0"
               style="
@@ -62,37 +62,37 @@
                   class="mx-8"
                   style="border: 1px solid rgba(212, 216, 223, 0.377431)"
                 ></v-divider>
-                <v-col cols="12" class="d-flex justify-center pl-8">
+                <v-col cols="12" class="d-flex flex-wrap py-8 pl-8">
                   <v-chip
-                    class="px-2 mx-1"
+                    class="px-2 my-1 mx-1"
                     small
                     color="#ffc3c3"
                     text-color="#B33900"
-                    >Invoice number</v-chip
+                    ><span>Invoice number</span></v-chip
                   >
                   <v-chip
-                    class="px-2 mx-1"
+                    class="px-2 my-1 mx-1"
                     small
                     color="#ffc3c3"
                     text-color="#B33900"
                     >VAT</v-chip
                   >
                   <v-chip
-                    class="px-2 mx-1"
+                    class="px-2 my-1 mx-1"
                     small
                     color="#ffc3c3"
                     text-color="#B33900"
                     >Bank Name</v-chip
                   >
                   <v-chip
-                    class="px-2 mx-1"
+                    class="px-2 my-1 mx-1"
                     small
                     color="#ffc3c3"
                     text-color="#B33900"
                     >Total</v-chip
                   >
                   <v-chip
-                    class="px-2 mx-1"
+                    class="px-2 my-1 mx-1"
                     small
                     color="#ffc3c3"
                     text-color="#B33900"
@@ -103,11 +103,19 @@
             </v-card>
             <v-row>
               <v-col class="d-flex justify-end mt-2">
-                <v-btn depressed class="text-capitalize primary--text mr-2">
+                <v-btn
+                  depressed
+                  text
+                  class="text-capitalize amber--text text--accent-4 mr-2"
+                >
                   <v-icon class="px-2" small> mdi-pencil-outline </v-icon>
                   Notify Vendor
                 </v-btn>
-                <v-btn depressed class="text-capitalize primary--text">
+                <v-btn
+                  text
+                  depressed
+                  class="text-capitalize amber--text text--accent-4"
+                >
                   <v-icon class="px-2" small> mdi-pencil-outline </v-icon>
                   Review
                 </v-btn>
