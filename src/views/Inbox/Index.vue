@@ -123,10 +123,7 @@
                 class="d-flex align-center justify-center"
                 style="width: 100%; height: 100%"
               >
-                <v-avatar
-                  style="background: #d5f7ef"
-                  :size="56"
-                >
+                <v-avatar style="background: #d5f7ef" :size="56">
                   <v-icon :size="iconSizes[$vuetify.breakpoint.name]">
                     mdi-email-outline
                   </v-icon></v-avatar
@@ -134,19 +131,13 @@
               </div>
             </v-col>
             <v-col class="pa-0 mx-0" cols="9">
-              <div style="width: 100%; height: 100%;">
+              <div style="width: 100%; height: 100%">
                 <div class="pr-8 pl-4">
-                  <p
-                    class="pt-8 my-0 h-card-title">
-                    Incoming invoice/bill
-                  </p>
-                  <p
-                    class="pt-2 pr-1 my-md-1 text-wrap h-card-body-bold">
+                  <p class="pt-8 my-0 h-card-title">Incoming invoice/bill</p>
+                  <p class="pt-2 pr-1 my-md-1 text-wrap h-card-body-bold">
                     mtn-demo@process.finance
                   </p>
-                  <p
-                    class="pt-2 text-wrap h-card-body"
-                  >
+                  <p class="pt-2 text-wrap h-card-body">
                     Forward your incoming invoices/bills to this address
                   </p>
                 </div>
@@ -169,10 +160,7 @@
                 class="d-flex align-center justify-center"
                 style="width: 100%; height: 100%"
               >
-                <v-avatar
-                  style="background: #eef3fb"
-                  :size="56"
-                >
+                <v-avatar style="background: #eef3fb" :size="56">
                   <span
                     style="
                       font-family: Inter;
@@ -190,17 +178,10 @@
             <v-col class="pa-0 mx-0" cols="9">
               <div style="width: 100%; height: 100%">
                 <div class="pr-8 pl-4">
-                <p
-                  class="pt-8 my-0 h-card-title"
-                >
-                  Volume this month
-                </p>
-                <p
-                  class="pt-6 h-card-body"
-                 
-                >
-                  Total invoices/bills received in the last 30days
-                </p>
+                  <p class="pt-8 my-0 h-card-title">Volume this month</p>
+                  <p class="pt-6 h-card-body">
+                    Total invoices/bills received in the last 30days
+                  </p>
                 </div>
               </div>
             </v-col>
@@ -221,10 +202,7 @@
                 class="d-flex align-center justify-center"
                 style="width: 100%; height: 100%"
               >
-                <v-avatar
-                  style="background: #fefcf8"
-                  :size="56"
-                >
+                <v-avatar style="background: #fefcf8" :size="56">
                   <span
                     style="
                       font-family: Inter;
@@ -242,18 +220,10 @@
             <v-col class="pa-0 mx-0" cols="9">
               <div style="width: 100%; height: 100%">
                 <div class="pr-8 pl-4">
-                <p
-                  class="pt-8 my-0 h-card-title"
-                  
-                >
-                  Exceptions
-                </p>
-                <p
-                  class="pt-6 text-wrap h-card-body"
-                  
-                >
-                  Total number of invoices/bills that require manual oversight
-                </p>
+                  <p class="pt-8 my-0 h-card-title">Exceptions</p>
+                  <p class="pt-6 text-wrap h-card-body">
+                    Total number of invoices/bills that require manual oversight
+                  </p>
                 </div>
               </div>
             </v-col>
@@ -678,33 +648,33 @@ export default {
 </script>
 
 <style scoped>
-.h-card-title{
+.h-card-title {
   font-family: Inter;
-                    font-style: normal;
-                    font-weight: bold;
-                    font-size: 18px;
-                    line-height: 22px;
-                    color: rgba(0, 35, 56, 0.5);
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 22px;
+  color: rgba(0, 35, 56, 0.5);
 }
-.h-card-body-bold{
-max-width: 16rem;
-                    font-family: Inter;
-                    font-style: normal;
-                    font-weight: bold;
-                    font-size: 0.8rem;
-                    line-height: 14px;
-                    letter-spacing: 0.545455px;
-                    color: #19283d;
+.h-card-body-bold {
+  max-width: 16rem;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 0.8rem;
+  line-height: 14px;
+  letter-spacing: 0.545455px;
+  color: #19283d;
 }
-.h-card-body{
+.h-card-body {
   max-width: 260px;
-                    font-family: Inter;
-                    font-style: normal;
-                    font-weight: normal;
-                    font-size: 12px;
-                    line-height: 20px;
-                    letter-spacing: 0.545455px;
-                    color: rgba(0, 35, 56, 0.5);
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 20px;
+  letter-spacing: 0.545455px;
+  color: rgba(0, 35, 56, 0.5);
 }
 .v-input .search-field .v-input__slot:before,
 .v-input .search-field .v-input__slot:after {
