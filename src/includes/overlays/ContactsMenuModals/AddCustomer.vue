@@ -38,7 +38,7 @@
           <v-tab-item>
             <v-card style="background-color: transparent" flat>
               <div class="my-7 mx-10">
-                <p class="pa-0 ma-0 text--disabled text-caption">
+                <p class="pa-0 ma-0 text--disabled text-subtitle-2">
                   Include details about this customer, contact person, business
                   address, default payment terms, etc
                 </p>
@@ -54,7 +54,7 @@
                       placeholder="Company Street Address"
                     ></v-text-field
                   ></v-col>
-                  <v-col cols="6"
+                  <v-col cols="6" class="pl-0"
                     ><v-text-field
                       v-model="contactDetails.firstName"
                       background-color="#ffffff"
@@ -72,7 +72,7 @@
                       placeholder="Last Name"
                     ></v-text-field
                   ></v-col>
-                  <v-col cols="6"
+                  <v-col cols="6" class="pl-0"
                     ><v-text-field
                       v-model="contactDetails.email"
                       background-color="#ffffff"
@@ -91,7 +91,7 @@
                       placeholder="Phone"
                     ></v-text-field
                   ></v-col>
-                  <v-col cols="6"
+                  <v-col cols="6" class="pl-0"
                     ><v-select
                       v-model="contactDetails.role"
                       :items="role"
@@ -104,12 +104,12 @@
                 </v-row>
                 <v-card-actions class="justify-end pa-8">
                   <v-btn
+                    class="mr-5"
                     @click="saveAction"
                     dark
                     width="121"
                     height="45"
                     style="
-                      margin-right: 57px;
                       background: var(--v-primary-base);
                       box-shadow: 0px 12px 22px rgba(0, 0, 0, 0.24);
                       border-radius: 4px;
@@ -161,7 +161,7 @@
                       placeholder="Company Street Address"
                     ></v-text-field
                   ></v-col>
-                  <v-col cols="6"
+                  <v-col cols="6" class="pl-0"
                     ><v-select
                       v-model="businessDetails.selectedAccountingCode"
                       :items="accountingCode"
@@ -181,7 +181,7 @@
                       placeholder="Payment Terms"
                     ></v-select
                   ></v-col>
-                  <v-col cols="6"
+                  <v-col cols="6" class="pl-0"
                     ><v-text-field
                       v-model="businessDetails.firstAddress"
                       background-color="#ffffff"
@@ -199,7 +199,7 @@
                       placeholder="Address 2"
                     ></v-text-field
                   ></v-col>
-                  <v-col cols="6"
+                  <v-col cols="6" class="pl-0"
                     ><v-text-field
                       v-model="businessDetails.city"
                       background-color="#ffffff"
@@ -218,7 +218,7 @@
                       placeholder="State"
                     ></v-text-field
                   ></v-col>
-                  <v-col cols="6"
+                  <v-col cols="6" class="pl-0"
                     ><v-select
                       v-model="businessDetails.selectedCountry"
                       :items="country"
@@ -245,8 +245,8 @@
                     dark
                     width="121"
                     height="45"
+                    class="mr-5"
                     style="
-                      margin-right: 57px;
                       background: var(--v-primary-base);
                       box-shadow: 0px 12px 22px rgba(0, 0, 0, 0.24);
                       border-radius: 4px;
@@ -276,7 +276,7 @@
                         letter-spacing: 0.636364px;
                         color: #ffffff;
                       "
-                      >next</span
+                      >Save</span
                     >
                   </v-btn>
                 </v-card-actions>
@@ -368,5 +368,10 @@ i.sli-font {
 }
 .theme--light.v-tabs-items {
   background-color: transparent !important;
+}
+.col-12 {
+  flex: 0 0 100%;
+  max-width: 100%;
+  padding-left: 0;
 }
 </style>

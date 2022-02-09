@@ -90,11 +90,14 @@
                 width="100%"
                 style="border-bottom: 1px solid rgba(127, 145, 155, 0.3)"
               >
-                <v-tabs v-model="tab">
+                <v-tabs :slider-color="sliderColor" v-model="tab">
                   <v-tab
                     class="mt-2"
                     v-for="item in items"
                     :key="item.tab"
+                    :style="{
+                      color: `${item.tab == 'Pending' ? '#ff6a6a' : ''}`,
+                    }"
                     style="
                       font-family: Inter;
                       font-style: normal;
@@ -191,7 +194,7 @@
 <script>
 import CustomersContact from "@/components/Contacts/CustomersContact.vue";
 import ContactDropDown from "@/includes/ContactDropdown";
- import VendorsContact from "@/components/Contacts/VendorsContact.vue";
+import VendorsContact from "@/components/Contacts/VendorsContact.vue";
 // import Pending from "../../components/Contacts/Pending.vue";
 
 export default {
@@ -213,7 +216,7 @@ export default {
   components: {
     CustomersContact,
     ContactDropDown,
-     VendorsContact,
+    VendorsContact,
     // Pending,
   },
   methods: {
@@ -222,6 +225,13 @@ export default {
     },
     searchDataTable(e) {
       this.$refs.dataTable.setSearchText(e);
+    },
+  },
+  computed: {
+    sliderColor() {
+      if (this.items.tab === "Pending") {
+        return "#FF6A6A";
+      } else return "#19283D";
     },
   },
 };

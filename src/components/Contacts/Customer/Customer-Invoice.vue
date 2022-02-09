@@ -12,7 +12,6 @@
     </div>
     <v-layout
       row
-      wrap
       class="align-center my-2 px-8"
       v-if="$vuetify.breakpoint.mdAndUp"
     >
@@ -23,7 +22,7 @@
       </v-flex>
       <v-flex md3 class="d-flex flex-row">
         <div class="d-flex align-center">
-          <p class="mb-0 ml-4 primary--text font-weight-bold">Reference No.</p>
+          <p class="mb-0 ml-2 primary--text font-weight-bold">Ref. No.</p>
           <v-btn class="" color="grey lighten-1" icon>
             <v-icon>mdi-chevron-down</v-icon>
           </v-btn>
@@ -31,22 +30,20 @@
       </v-flex>
       <v-flex md2>
         <div class="d-flex align-center">
-          <p class="mb-0 primary--text font-weight-bold">Status</p>
+          <p class="mb-0 ml-3 primary--text font-weight-bold">Status</p>
         </div>
       </v-flex>
       <v-flex md2>
         <div class="d-flex align-center">
-          <p class="mb-0 primary--text font-weight-bold">Due Date</p>
+          <p class="mb-0 ml-2 primary--text font-weight-bold">Due Date</p>
           <v-btn class="" color="grey lighten-1" icon>
             <v-icon>mdi-chevron-down</v-icon>
           </v-btn>
         </div>
       </v-flex>
       <v-flex md4>
-        <div class="d-flex justify-center">
-          <p class="mb-0 pl-md-4 primary--text font-weight-bold">
-            Amount Outstanding (N)
-          </p>
+        <div class="d-flex ms-6">
+          <p class="mb-0 primary--text font-weight-bold">Outstanding (N)</p>
         </div>
       </v-flex>
     </v-layout>
@@ -155,7 +152,6 @@ export default {
       ],
     };
   },
-  
 };
 </script>
 

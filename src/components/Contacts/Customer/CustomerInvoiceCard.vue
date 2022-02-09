@@ -7,10 +7,10 @@
         :elevation="hover ? 2 : 0"
         :color="id % 2 ? '#f6f6f6' : ''"
       >
-        <v-layout row wrap class="align-center">
-          <v-flex md1 class="d-flex justify-start">
+        <v-layout row wrap class="align-center ml-1">
+          <v-flex md1 class="d-flex justify-start px-0">
             <span
-              class="mb-0 ml-3 mr-1 pa-0"
+              class="mb-0 mr-1 pa-0"
               style="
                 font-family: Lato;
                 font-style: normal;
@@ -25,7 +25,7 @@
           <v-flex md3>
             <div class="d-flex justify-start align-center">
               <div
-                class="ms-6"
+                class=""
                 style="
                   font-family: Lato;
                   font-style: normal;
@@ -58,7 +58,7 @@
             </div>
           </v-flex>
           <v-flex md2>
-            <div class="d-flex align-center">
+            <div class="d-flex">
               <span
                 class="text-truncate"
                 style="
@@ -76,7 +76,7 @@
           </v-flex>
 
           <v-flex md4>
-            <div class="ms-14 d-flex justify-start">
+            <div class="ms-4 d-flex justify-start">
               <span
                 style="
                   font-family: Lato;

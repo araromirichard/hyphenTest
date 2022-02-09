@@ -332,10 +332,11 @@
                     <v-col class="pa-0" cols="4">
                       <v-subheader class="primary--text px-0">Tags</v-subheader>
                     </v-col>
-                    <v-col cols="8" class="pa-0">
-                      <v-chip-group>
+                    <v-col cols="8" class="pa-0 d-flex justify-end">
+                      <v-chip-group >
                         <v-chip
-                          x-small
+                          class="float-right"
+                          small
                           v-for="tag in tags"
                           :key="tag"
                           style="
@@ -404,7 +405,7 @@
       <!-- for Vendors -->
 
       <v-container v-else class="mt-10">
-        <v-row class="mx-12">
+        <v-row class="mx-14">
           <v-col cols="12" sm="12" md="5">
             <v-card min-height="789px" elevation="3">
               <v-card
@@ -682,7 +683,7 @@
                     <v-col class="pa-0" cols="4">
                       <v-subheader class="primary--text px-0">Tags</v-subheader>
                     </v-col>
-                    <v-col cols="8" class="pa-0">
+                    <v-col cols="8" class="pa-0 d-flex justify-end">
                       <v-chip-group>
                         <v-chip
                           x-small
@@ -781,13 +782,13 @@
                       "
                     ></v-divider>
                   </v-row>
-                   <v-row class="mx-8 mt-6">
+                  <v-row class="mx-8 mt-6">
                     <v-col class="pa-0" cols="4">
                       <v-subheader class="primary--text px-0"
                         >Date Added</v-subheader
                       >
                     </v-col>
-                     <v-col cols="8" class="pa-0">
+                    <v-col cols="8" class="pa-0">
                       <v-menu
                         v-model="menu"
                         :close-on-content-click="false"
@@ -1048,5 +1049,13 @@ v-chip.v-size--x-small[data-v-2900d98a] {
 .v-application .elevation-3 {
   box-shadow: 0px 3px 5px -1px rgb(0 0 0 / 3%), 0px 6px 10px 0px rgb(0 0 0 / 3%),
     0px 1px 18px 0px rgb(0 0 0 / 3%) !important;
+}
+.v-subheader {
+  align-items: center;
+  display: flex;
+  height: 48px;
+  font-size: 1rem;
+  font-weight: 400;
+  padding: 0 16px 0 16px;
 }
 </style>
