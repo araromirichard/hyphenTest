@@ -95,7 +95,6 @@
                 color="primary"
                 hide-details="auto"
                 :rules="rules.cac"
-                :error-messages="errors"
                 placeholder="CAC Reg Number/Tax ID"
                 single-line
                 outlined
@@ -218,8 +217,10 @@ export default {
       });
 
       if (this.canCompleOrgCreation) {
+
         const payload = {
           orgname: this.companyDetails.orgname,
+          members:[this.user.id],
           company: {
             company_name: this.companyDetails.orgname,
             registration_number: this.companyDetails.cac,
@@ -228,12 +229,11 @@ export default {
         };
 
         try {
-          this.isCreating;
+          this.isCreating = true;
           await this.$store.dispatch(
             "organizations/createOrganization",
             payload
           );
-          // console.log(JSON.stringify(req, null, 2));
 
           //sucess creating org
           this.$router.push("/welcome");

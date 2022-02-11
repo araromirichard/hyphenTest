@@ -2,9 +2,10 @@ import api from "./Api";
 
 export default {
   create(organization) {
+    
     return api().post("/organizations", organization, {
       headers: {
-        Authorization: "Bearer " + JSON.parse(localStorage.getItem("user")).jwt,
+        Authorization: "Bearer " + localStorage.getItem("token"),
       },
     });
 
