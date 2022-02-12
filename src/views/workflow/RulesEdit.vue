@@ -33,7 +33,7 @@
                   <span
                     class="mt-4 d-block font-weight-bold"
                     style="color: var(--v-primary-base); font-size: 24px"
-                    >231</span
+                    >{{runs}}</span
                   >
                 </div>
 
@@ -61,7 +61,7 @@
                 "
               >
                 <span>Trigger</span>
-                <span class="px-3" style="font-weight: 600">Email</span>
+                <span class="px-3" style="font-weight: 600">{{trigger}}</span>
               </div>
 
               <div v-if="conditions != null">
@@ -288,7 +288,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters("workflow", ["workflow", "conditions"]),
+    ...mapGetters("workflow", ["workflow", "conditions","trigger","runs"]),
   },
 };
 </script>

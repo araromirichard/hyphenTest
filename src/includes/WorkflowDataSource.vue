@@ -115,15 +115,10 @@ export default {
   methods: {
     selectedDataSource(e) {
       this.selectedData = e;
-      console.table({
-        e,
-        selectedData: this.selectedData,
-      });
+      this.$store.dispatch("workflow/setTrigger",this.selectedData.title)
     },
   },
-  // computed: {
-  //   DisplaySelectedInput() {},
-  // },
+
 };
 </script>
 
