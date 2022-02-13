@@ -73,7 +73,7 @@
 
           <v-stepper-content step="1">
             <!-- select Data source for the workflow process -->
-            <WorkflowDataSource />
+            <WorkFlowTrigger />
             <v-btn
               @click="e6 = 2"
               dark
@@ -325,7 +325,7 @@
 
 <script>
 import ExecuteActions from "./ExecuteActions.vue";
-import WorkflowDataSource from "./WorkflowDataSource.vue";
+import WorkFlowTrigger from "./WorkFlowTrigger.vue";
 import SimpleLineIcons from "vue-simple-line";
 import ComposeWorkflow from "../components/pages/workflow/compose/compose-workflow.vue";
 
@@ -342,7 +342,7 @@ export default {
   },
   components: {
     ExecuteActions,
-    WorkflowDataSource,
+    WorkFlowTrigger,
     SimpleLineIcons,
     ComposeWorkflow,
   },

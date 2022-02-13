@@ -51,7 +51,7 @@
     <div>
       <template class="my-7">
         <v-select
-          v-if="selectedData.title != 'Form'"
+          v-if="selectedData.title == 'Form'"
           :menu-props="{ bottom: true, offsetY: true }"
           :items="formSelectDropdown"
           style="
@@ -94,7 +94,7 @@ export default {
       dataSource: [
         { title: "Email", text: "Process bank transactions" },
         { title: "Form", text: "Process form submissions" },
-        { title: "Bank", text: " Process emailed invoice" },
+        // { title: "Bank", text: " Process emailed invoice" },
       ],
       formSelectDropdown: [
         "Expense reinbursement ",
