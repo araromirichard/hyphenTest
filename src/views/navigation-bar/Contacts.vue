@@ -8,7 +8,7 @@
               class="font-weight-bold text-md-h4 primary--text pl-md-14"
               style="line-height: 39px"
             >
-              Payables
+              Contacts
               <span
                 class="pl-5 text-md-subtitle-1"
                 style="
@@ -21,15 +21,15 @@
                   mix-blend-mode: normal;
                   opacity: 0.5;
                 "
-                >{{ payableRecord }}</span
+                >{{ contactRecord }}</span
               >
             </h3>
 
             <v-spacer></v-spacer>
 
-            <PaymentDropDown
+            <ContactDropDown
               btnText="Add New"
-              icon="uploadIcon"
+              icon="contact"
               width="148"
               height="54px"
               style="margin-right: 88px"
@@ -51,7 +51,7 @@
                   letter-spacing: -0.73px;
                 "
               >
-                Payables
+                Contacts
               </p>
               <v-spacer></v-spacer>
               <v-icon v-if="isClicked" @click="toggleSearch" class="pr-4 pt-7">
@@ -77,117 +77,7 @@
             </div>
           </v-col>
         </v-row>
-        <v-container fluid>
-          <v-row
-            class="ma-0 pa-0"
-            align="center"
-            v-if="$vuetify.breakpoint.mdAndUp"
-          >
-            <v-col class="pa-0 ma-0" cols="12" sm="12" md="6">
-              <v-card
-                flat
-                height="180px"
-                max-width="630px"
-                class="d-flex flex-row"
-                style="margin-left: 60px; margin-top: 35px"
-              >
-                <v-row>
-                  <v-col cols="3">
-                    <v-avatar
-                      color="#FDF9EF"
-                      size="90"
-                      style="margin-left: 30px; margin-top: 44px"
-                    >
-                      <v-icon dark color="primary"> mdi-check </v-icon>
-                    </v-avatar>
-                  </v-col>
-                  <v-col cols="8">
-                    <h5 class="cardTitle pa-0">Total Payables</h5>
-                    <h6 class="cardSubTitle pa-0">
-                      <span>Total unpaid bills </span> {{ totalUnpaidBills }}
-                    </h6>
-                    <v-progress-linear
-                      rounded
-                      style="margin-left: 15px; margin-top: 8px"
-                      v-model="currentBillPercentage"
-                      color="#96EAD7"
-                      height="12"
-                      background-color="#E3AA1C"
-                    ></v-progress-linear>
-                    <p
-                      class="text-break mt-2 d-inline float-start"
-                      style="
-                        margin-left: 15px;
-                        max-width: 5rem;
-                        font-family: Inter;
-                        font-style: normal;
-                        font-weight: normal;
-                        font-size: 12px;
-                        line-height: 16px;
-                        letter-spacing: 0.545455px;
-                        color: rgba(0, 35, 56, 0.5);
-                      "
-                    >
-                      current
-                      <span class="font-weight-bold">{{ currentBill }}</span>
-                    </p>
-                    <p
-                      class="text-break mt-2 d-inline float-end text-md-right"
-                      style="
-                        margin-left: 15px;
-                        max-width: 5rem;
-                        font-family: Inter;
-                        font-style: normal;
-                        font-weight: normal;
-                        font-size: 12px;
-                        line-height: 16px;
-                        letter-spacing: 0.545455px;
-                        color: rgba(0, 35, 56, 0.5);
-                      "
-                    >
-                      overdue
-                      <span class="font-weight-bold">{{ overDueBill }}</span>
-                    </p>
-                  </v-col>
-                </v-row>
-              </v-card>
-            </v-col>
-            <v-col class="pa-0 ma-0" cols="12" sm="12" md="6">
-              <v-card
-                flat
-                height="180px"
-                max-width="78%"
-                class="d-flex flex-row"
-                style="margin-left: 78px; margin-top: 35px"
-              >
-                <v-row>
-                  <v-col cols="3">
-                    <v-avatar
-                      color="#FDF9EF"
-                      size="90"
-                      style="margin-left: 30px; margin-top: 44px"
-                    >
-                      <v-icon dark color="primary"> mdi-check </v-icon>
-                    </v-avatar>
-                  </v-col>
-                  <v-col cols="8">
-                    <h5 class="cardTitle pa-0">Histogram</h5>
-                    <h6 class="cardSubTitle pa-0">
-                      <span>Bills of the last </span> {{ billPeriod }} months
-                    </h6>
-                    <pure-vue-chart
-                      :points="[1, 3, 2, 3, 4, 2, 0]"
-                      :width="250"
-                      :height="60"
-                      bar-color="#96ead7"
-                      style="margin-left: 15px; margin-top: 5px"
-                    />
-                  </v-col>
-                </v-row>
-              </v-card>
-            </v-col>
-          </v-row>
-        </v-container>
+
         <v-container class="mt-md-12">
           <v-row class="mx-md-10 pa-0">
             <v-col
@@ -200,11 +90,14 @@
                 width="100%"
                 style="border-bottom: 1px solid rgba(127, 145, 155, 0.3)"
               >
-                <v-tabs v-model="tab">
+                <v-tabs :slider-color="sliderColor" v-model="tab">
                   <v-tab
                     class="mt-2"
                     v-for="item in items"
                     :key="item.tab"
+                    :style="{
+                      color: `${item.tab == 'Pending' ? '#ff6a6a' : ''}`,
+                    }"
                     style="
                       font-family: Inter;
                       font-style: normal;
@@ -299,67 +192,32 @@
 </template>
 
 <script>
-import PureVueChart from "pure-vue-chart";
-
-import Allpayables from "@/components/payablesTabs/AllPayables.vue";
-import ScheduledPayables from "@/components/payablesTabs/ScheduledPayables.vue";
-import PendingPayables from "../../components/payablesTabs/PendingPaybles.vue";
-import PaidPayables from "../../components/payablesTabs/PaidPayables.vue";
-import BudgetPayables from "../../components/payablesTabs/BudgetPayables.vue";
-import PaymentDropDown from "@/includes/PaymentDropdown.vue";
+import CustomersContact from "@/components/Contacts/CustomersContact.vue";
+import ContactDropDown from "@/includes/ContactDropdown";
+import VendorsContact from "@/components/Contacts/VendorsContact.vue";
+// import Pending from "../../components/Contacts/Pending.vue";
 
 export default {
-  name: "payables",
+  name: "contacts",
   data() {
     return {
-      payableRecord: "234 Records",
-      currentBill: "N234,560",
-      overDueBill: "N234,560",
-      billPeriod: "6",
-      currentBillPercentage: 65,
-      totalUnpaidBills: "N1,234,560",
+      contactRecord: "234 Records",
+
       isClicked: true,
       tab: 0,
       search: "",
       items: [
-        { tab: "All", content: "Allpayables" },
-        { tab: "Scheduled", content: "ScheduledPayables" },
-        { tab: "Pending", content: "PendingPayables" },
-        { tab: "Paid", content: "PaidPayables" },
-        //{ tab: "Budgets", content: "BudgetPayables" },
-      ],
-      inboxMenus: [
-        {
-          title: "Upload",
-          subtitle: "pdf or jpg invoice",
-          icon: "mdi-tray-arrowDown",
-        },
-        {
-          title: "Form",
-          subtitle: "create form",
-          icon: "mdi-tray-arrow-down ",
-        },
-        {
-          title: "Bank Account",
-          subtitle: "connect your bank account",
-          icon: "mdi-tray-arrowDown",
-        },
-        {
-          title: "EMAIL TO:",
-          subtitle: "brandname0923@process.finance",
-          icon: "",
-        },
+        { tab: "Customers", content: "CustomersContact" },
+        { tab: "Vendors", content: "VendorsContact" },
+        { tab: "Pending", content: "PendingContact" },
       ],
     };
   },
   components: {
-    Allpayables,
-    ScheduledPayables,
-    PendingPayables,
-    PaidPayables,
-    BudgetPayables,
-    PureVueChart,
-    PaymentDropDown,
+    CustomersContact,
+    ContactDropDown,
+    VendorsContact,
+    // Pending,
   },
   methods: {
     toggleSearch() {
@@ -367,6 +225,13 @@ export default {
     },
     searchDataTable(e) {
       this.$refs.dataTable.setSearchText(e);
+    },
+  },
+  computed: {
+    sliderColor() {
+      if (this.items.tab === "Pending") {
+        return "#FF6A6A";
+      } else return "#19283D";
     },
   },
 };

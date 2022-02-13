@@ -146,7 +146,7 @@ const routes = [
     path: "/contacts",
     name: "Contacts",
     components: {
-      default: () => import("@/views/navigation-bar/Payables.vue"),
+      default: () => import("@/views/navigation-bar/Contacts.vue"),
       MainLayout,
     },
     meta: { middleware: ["auth"] },
@@ -156,6 +156,16 @@ const routes = [
     name: "Form",
     components: {
       default: () => import("@/views/navigation-bar/Form.vue"),
+      MainLayout,
+    },
+    meta: { middleware: ["auth"] },
+  },
+  {
+    path: "/contact/:id",
+    name: "contact.customer",
+    props: true,
+    components: {
+      default: () => import("@/components/Contacts/SingleContactPage.vue"),
       MainLayout,
     },
     meta: { middleware: ["auth"] },

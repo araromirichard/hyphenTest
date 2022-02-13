@@ -46,7 +46,7 @@
       </v-flex>
       <v-flex md1>
         <div class="d-flex align-center">
-          <p class="mb-0 primary--text font-weight-bold">Staus</p>
+          <p class="mb-0 primary--text font-weight-bold">Status</p>
           <v-btn class="ml-1" color="grey lighten-1" icon>
             <v-icon>mdi-chevron-down</v-icon>
           </v-btn>

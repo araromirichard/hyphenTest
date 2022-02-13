@@ -83,7 +83,7 @@
           :key="i"
           class="py-0 ma-0"
         >
-          <PaymentTable
+          <ContactTable
             v-if="$vuetify.breakpoint.mdAndUp"
             :index="i"
             :id="i + 1"
@@ -97,7 +97,7 @@
           />
 
           <!-- Data table for mobile -->
-          <PayableTableCard
+          <ContactTableCard
             v-if="$vuetify.breakpoint.mdAndDown"
             :index="i"
             :id="i + 1"
@@ -119,12 +119,12 @@
 </template>
 
 <script>
-import PaymentTable from "./PaymentTable.vue";
-import PayableTableCard from "./PayableTableCard.vue";
+import ContactTable from "./PaymentTable.vue";
+import ContactTableCard from "./PayableTableCard.vue";
 export default {
   components: {
-    PaymentTable,
-    PayableTableCard,
+    ContactTable,
+    ContactTableCard,
   },
   data() {
     return {
@@ -230,7 +230,7 @@ export default {
         });
       } else
         return this.payments.filter(function (payment) {
-          return payment.status.match("scheduled");
+          return payment.status.match("pending");
         });
     },
   },
