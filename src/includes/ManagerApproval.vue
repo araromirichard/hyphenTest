@@ -72,7 +72,7 @@
           </v-stepper-step>
 
           <v-stepper-content step="1">
-            <WorkFlowTrigger v-model="trigger" @completed="e6 = 2" />
+            <trigger-workflow v-model="trigger" @completed="e6 = 2" />
           </v-stepper-content>
 
           <v-stepper-step non-linear :editable="e6 > 2" step="2">
@@ -282,7 +282,7 @@
 
 <script>
 import ExecuteActions from "./ExecuteActions.vue";
-import WorkFlowTrigger from "./WorkFlowTrigger.vue";
+import TriggerWorkflow from "../components/pages/workflow/trigger/trigger-workflow.vue";
 import SimpleLineIcons from "vue-simple-line";
 import ComposeWorkflow from "../components/pages/workflow/compose/compose-workflow.vue";
 
@@ -300,7 +300,7 @@ export default {
   },
   components: {
     ExecuteActions,
-    WorkFlowTrigger,
+    TriggerWorkflow,
     SimpleLineIcons,
     ComposeWorkflow,
   },
