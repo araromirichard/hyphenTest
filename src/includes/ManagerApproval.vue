@@ -72,50 +72,7 @@
           </v-stepper-step>
 
           <v-stepper-content step="1">
-            <!-- select Data source for the workflow process -->
-            <WorkFlowTrigger />
-            <v-btn
-              @click="e6 = 2"
-              dark
-              text
-              elevation="0"
-              width="125"
-              height="55"
-              style="
-                margin-top: 26px;
-                margin-bottom: 72px;
-                background: var(--v-primary-base);
-                box-shadow: 0px 12px 22px rgba(0, 0, 0, 0.24);
-                border-radius: 4px;
-              "
-            >
-              <simple-line-icons
-                icon="arrow-right"
-                color="#FFFFFF"
-                style="
-                  font-family: simple-line-icons;
-                  font-style: normal;
-                  font-weight: normal;
-                  font-size: 16px;
-                  line-height: 16px;
-                "
-                no-svg
-              />
-              <span
-                class="text-capitalize pl-3 py-4"
-                style="
-                  font-family: Inter;
-                  font-style: normal;
-                  font-weight: 500;
-                  font-size: 14px;
-                  line-height: 17px;
-                  text-align: center;
-                  letter-spacing: 0.636364px;
-                  color: #ffffff;
-                "
-                >next</span
-              >
-            </v-btn>
+            <WorkFlowTrigger v-model="trigger" @completed="e6 = 2" />
           </v-stepper-content>
 
           <v-stepper-step non-linear :editable="e6 > 2" step="2">
@@ -335,6 +292,7 @@ export default {
       e6: 1,
       workflowName: this.$route.query.name,
       id: null,
+      trigger: null,
       schema: null,
       actions: null,
       completed: false,
@@ -367,6 +325,8 @@ export default {
     payload() {
       return {
         id: this.id, // rand it by time stamp for now
+        name: this.workflowName,
+        trigger: this.trigger,
         schema: this.schema, // data gotten from workflow component
         actions: this.actions, // data gotten from workflo actions component
       };
@@ -380,7 +340,7 @@ export default {
       handler(val) {
         // this sets the whole workflow actions to vuex store
         this.$store.dispatch("workflow/setWorkflow", val);
-        // console.log(JSON.stringify(val, null, 2));
+        console.log(JSON.stringify(val, null, 2));
       },
     },
   },
