@@ -9,9 +9,9 @@
             :key="i"
           >
             <v-card
-              @click="selectedDataSource(dataItem)"
+              @click="selectedTriggerSource(dataItem)"
               :class="
-                JSON.stringify(selectedData) === JSON.stringify(dataItem)
+                JSON.stringify(selectedTrigger) === JSON.stringify(dataItem)
                   ? 'border-color: #301F78'
                   : 'border-color: #D5DCEC'
               "
@@ -51,9 +51,10 @@
     <div>
       <template class="my-7">
         <v-select
-          v-if="selectedData.title == 'Form'"
+          v-if="selectedTrigger.title == 'Form'"
           :menu-props="{ bottom: true, offsetY: true }"
-          :items="formSelectDropdown"
+          :items="availableForms"
+          v-model="selectedForm"
           style="
             background: #ffffff;
             box-sizing: border-box;
@@ -83,6 +84,23 @@
         </v-select>
       </template>
     </div>
+
+    <v-btn
+      @click="$emit('completed')"
+      dark
+      :disabled="!isCompleted"
+      text
+      elevation="1"
+      x-large
+      style="
+        margin-top: 35px;
+        margin-bottom: 50px;
+        background: var(--v-primary-base);
+      
+      "
+    >
+      <v-icon size="27" left>mdi-chevron-right</v-icon> Next
+    </v-btn>
   </div>
 </template>
 
@@ -96,29 +114,53 @@ export default {
         { title: "Form", text: "Process form submissions" },
         // { title: "Bank", text: " Process emailed invoice" },
       ],
-      formSelectDropdown: [
+      availableForms: [
         "Expense reinbursement ",
         "Vendor onboarding",
         "Payment request",
         "Petty cash request",
       ],
-      selectedData: {
+      selectedTrigger: {
         title: "Email",
         text: "Process bank transactions",
       },
-      ShowFormSelect: false,
+      selectedForm: "",
     };
   },
-  components: {
-    //
-  },
-  methods: {
-    selectedDataSource(e) {
-      this.selectedData = e;
-      this.$store.dispatch("workflow/setTrigger",this.selectedData.title)
+  computed: {
+    isCompleted() {
+      return this.selectedTrigger.title == "Form"
+        ? this.selectedForm !== ""
+        : this.selectedTrigger.title == "Email";
     },
   },
+  methods: {
+    selectedTriggerSource(e) {
+      this.selectedTrigger = e;
+      this.$store.dispatch("workflow/setTrigger", this.selectedTrigger.title);
+    },
 
+    sendOutTrigger() {
+      console.log("send out trigger");
+
+      this.$emit("input", {
+        type: this.selectedTrigger.title,
+        value: this.selectedTrigger.title == "Form" ? this.selectedForm : null,
+      });
+    },
+  },
+  watch: {
+    selectedForm() {
+      this.sendOutTrigger();
+    },
+    selectedTrigger: {
+      deep: true,
+      immediate: true,
+      handler() {
+        this.sendOutTrigger();
+      },
+    },
+  },
 };
 </script>
 
