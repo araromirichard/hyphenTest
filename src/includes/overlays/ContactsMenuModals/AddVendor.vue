@@ -460,6 +460,8 @@ export default {
         state: "",
         selectedCountry: "",
         selectedBusinessCategory: "",
+        selectedTaxCategory: "",
+        selectedApplyWithhoding: "",
       },
       vendorBankDetails: {
         bankName: "",
@@ -475,6 +477,8 @@ export default {
       paymentTerms: [],
       country: [],
       businessCategory: [],
+      taxCategory: [],
+      applyWithholding: [],
       tab: null,
 
       CustomerType: ["Contact", "Business", "Bank"],

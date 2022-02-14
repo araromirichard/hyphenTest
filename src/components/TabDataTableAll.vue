@@ -98,6 +98,8 @@
           </div>
         </div>
       </div>
+
+      <!-- inbox tabs for desktop screens -->
       <v-layout
         row
         wrap
@@ -165,12 +167,12 @@
           </div>
         </v-flex>
       </v-layout>
-      <v-row>
+      <v-row class="mx-4">
         <v-col
           cols="12"
           v-for="(invoice, i) in filteredInvoices"
           :key="i"
-          class="py-0 ma-0"
+          class="py-0 ma-md-0"
         >
           <DataTable
             v-if="$vuetify.breakpoint.mdAndUp"
@@ -190,7 +192,7 @@
 
           <!-- Data table for mobile -->
           <DataTableCard
-            v-if="$vuetify.breakpoint.mdAndDown"
+            v-if="$vuetify.breakpoint.smAndDown"
             :index="i"
             :id="i + 1"
             :invoiceRef="invoice.ref"

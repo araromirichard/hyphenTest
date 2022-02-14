@@ -478,12 +478,12 @@
                 font-family: Inter;
                 font-style: normal;
                 font-weight: bold;
-                font-size: 16px;
+                font-size: 24px;
                 line-height: 19px;
                 color: #7f919b;
               "
               :style="{
-                marginLeft: `${$vuetify.breakpoint.mdAndDown ? '8px' : '48px'}`,
+                marginLeft: `${$vuetify.breakpoint.mdAndDown ? '' : '48px'}`,
               }"
             >
               Basic Data
@@ -635,7 +635,6 @@
             <v-subheader
               class="mt-8 pb-10"
               style="
-                margin-left: 48px;
                 font-family: Inter;
                 font-style: normal;
                 font-weight: bold;

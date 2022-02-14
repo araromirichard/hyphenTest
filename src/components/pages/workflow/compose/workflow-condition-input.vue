@@ -6,7 +6,7 @@
         :menu-props="{ bottom: true, offsetY: true }"
         :items="formItems"
         style="background: #ffffff; box-sizing: border-box; border-radius: 3px"
-        class="justify-center mr-2"
+        class="justify-center my-2 mr-2"
         flat
         outlined
         hide-details="auto"
@@ -28,7 +28,7 @@
         :items="operators"
         item-text="string"
         style="border-radius: 3px"
-        class="justify-center highlight mr-2"
+        class="justify-center highlight my-2 mr-2"
         flat
         outlined
         hide-details="auto"
@@ -44,7 +44,7 @@
         v-model="form.target"
         :value="rule.inputField"
         hide-details="auto"
-        class="mr-2"
+        class="mr-2 my-2"
         outlined
       >
       </v-text-field>

@@ -2,6 +2,7 @@
   <v-container>
     <v-row>
       <v-col cols="12">
+        <!-- inbox title bar and action btn in desktop screens -->
         <v-row
           v-if="$vuetify.breakpoint.mdAndUp"
           align="center"
@@ -22,6 +23,7 @@
                 <span class="transTotal align-center">234 Transactions</span>
               </h3>
             </div>
+
             <v-spacer></v-spacer>
             <DropDownMenu
               btnText="New"
@@ -32,6 +34,58 @@
             />
           </v-col>
         </v-row>
+
+        <!-- inbox title bar and action btn in mobile screens -->
+
+        <v-row
+          v-if="$vuetify.breakpoint.mdAndDown"
+          align="center"
+          class="d-flex justify-md-space-between mx-1 mx-md-14 pt-md-10"
+        >
+          <v-col class="pa-sm-0 d-flex align-center">
+            <!-- when there are invocies -->
+
+            <div class="pa-0 ma-0" v-if="!noInvoice">
+              <h3
+                class="px-0 pt-5 pt-md-0 text-bold primary--text"
+                style="
+                  font-style: normal;
+                  font-weight: bold;
+                  font-size: 32px;
+                  line-height: 39px;
+                "
+              >
+                Inbox
+                <span class="transTotal align-center">234 Transactions</span>
+              </h3>
+            </div>
+            <div class="mt-6 pa-0" v-if="noInvoice">
+              <h3
+                class="text-bold primary--text"
+                style="
+                  font-style: normal;
+                  font-weight: bold;
+                  font-size: 32px;
+                  line-height: 39px;
+                "
+              >
+                Inbox
+              </h3>
+            </div>
+            <v-spacer></v-spacer>
+            <DropDownMenu
+              class="mt-6"
+              btnText="New"
+              icon="file"
+              width="121px"
+              height="54px"
+              justify="right"
+            />
+          </v-col>
+        </v-row>
+
+        <!-- instructions when there is no invoice -->
+
         <v-row
           class="justify-center"
           style="padding-top: 105px"
@@ -39,8 +93,11 @@
         >
           <img :src="require('@/assets/folder.svg')" alt="folder svg" />
         </v-row>
+
+        <!-- instructions when there is no invoice -->
+
         <v-row
-          class="justify-center"
+          class="justify-center mx-2 text-h5 text-md-h4"
           style="padding-top: 40px"
           v-if="noInvoice"
         >
@@ -49,7 +106,6 @@
               font-family: Inter;
               font-style: normal;
               font-weight: bold;
-              font-size: 24px;
               line-height: 29px;
               color: var(--v-primary-base);
             "
@@ -57,6 +113,8 @@
             No invoice/transaction is awaiting action
           </p>
         </v-row>
+
+        <!-- instructions when there is no invoice -->
         <v-row class="justify-center pt-0" v-if="noInvoice">
           <p
             style="
@@ -108,11 +166,13 @@
         </v-row>
       </v-col>
     </v-row>
-    <v-row class="mt-16" align="center" v-if="$vuetify.breakpoint.mdAndUp">
-      <v-col class="pa-0" cols="12" md="4">
+
+    <!-- inbox summary Info cards -->
+    <v-row class="mt-16 mx-2 mx-md-0" align="center" v-if="!noInvoice">
+      <v-col class="pa-0 my-4 my-md-0" cols="12" md="4">
         <v-card
           elevation="3"
-          class="ml-sm-16"
+          class="ml-md-16 mr-6 ml-10"
           flat
           height="180px"
           max-width="630px"
@@ -146,10 +206,10 @@
           </v-row>
         </v-card>
       </v-col>
-      <v-col class="pa-0" cols="12" sm="4">
+      <v-col class="pa-0 my-4 my-md-0" cols="12" md="4">
         <v-card
           elevation="3"
-          class="mr-sm-6 ml-sm-10"
+          class="mr-6 ml-10"
           flat
           height="180px"
           max-width="630px"
@@ -188,10 +248,10 @@
           </v-row>
         </v-card>
       </v-col>
-      <v-col class="pa-0" cols="12" sm="4">
+      <v-col class="pa-0 my-4 my-md-0" cols="12" md="4">
         <v-card
           elevation="3"
-          class="ml-sm-4 mr-sm-16"
+          class="ml-md-4 mr-md-16 mr-6 ml-10"
           flat
           height="180px"
           max-width="630px"
@@ -231,6 +291,8 @@
         </v-card>
       </v-col>
     </v-row>
+
+    <!-- inbox table for desktop screen -->
     <v-row v-if="!noInvoice">
       <v-col cols="12">
         <v-card
@@ -248,6 +310,7 @@
               style="border-bottom: 1px solid rgba(127, 145, 155, 0.3)"
             >
               <v-tabs
+                align-with-title
                 slider-size="3"
                 v-model="tab"
                 mobile-breakpoint="5"
@@ -347,7 +410,7 @@
         </v-card>
       </v-col>
     </v-row>
-
+    <!-- inbox dialog starts here -->
     <template>
       <div>
         <v-dialog v-model="dialog2" max-width="516">
@@ -496,6 +559,7 @@
         </v-dialog>
       </div>
     </template>
+    <!-- inbox dialog ends here -->
 
     <!-- tabs for mobile devices -->
     <v-container class="pa-0" v-if="$vuetify.breakpoint.mdAndDown">

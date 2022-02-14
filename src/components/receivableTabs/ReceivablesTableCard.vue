@@ -15,7 +15,7 @@
           primary--text
         "
       >
-        Payment {{ paymentRef }}
+        Receivable {{ receivableRef }}
       </h5>
       <template>
         <v-simple-table dense>
@@ -26,10 +26,10 @@
                   Amount
                 </th>
                 <th class="px-0 text-center primary--text text-subtitle-2">
-                  Approved By
+                  Customer
                 </th>
                 <th class="px-0 text-center primary--text text-subtitle-2">
-                  Payee
+                  tag
                 </th>
               </tr>
             </thead>
@@ -38,8 +38,8 @@
                 <td class="px-2 text-center">
                   {{ amount }}
                 </td>
-                <td class="px-2 text-center">{{ approvedBy }}</td>
-                <td class="px-2 text-center">{{ payee }}</td>
+                <td class="px-2 text-center">{{ customer }}</td>
+                <td class="px-2 text-center">{{ tag }}</td>
               </tr>
             </tbody>
           </template>
@@ -108,16 +108,16 @@ export default {
     id: {
       type: Number,
     },
-    approvedBy: {
+    customer: {
       type: String,
     },
     amount: {
       type: String,
     },
-    paymentRef: {
+    receivableRef: {
       type: String,
     },
-    payee: {
+    tag: {
       type: String,
     },
     date: {
@@ -126,20 +126,14 @@ export default {
     status: {
       type: String,
     },
-    iconColor: {
-      type: String,
-    },
-    
   },
   data() {
     return {};
   },
-   computed: {
+  computed: {
     stausIcon() {
       if (this.status === "pending") {
         return "#FF6A6A";
-      } else if (this.status === "scheduled") {
-        return "#F7CA40";
       } else return "#2BD5AE";
     },
   },

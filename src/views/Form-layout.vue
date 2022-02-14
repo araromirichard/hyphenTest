@@ -137,6 +137,6 @@ export default {
 <style>
 .full-height {
   min-height: 100%;
-  max-height: 100vh;
+  /* max-height: 100vh; */
 }
 </style>

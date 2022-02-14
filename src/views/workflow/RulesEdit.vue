@@ -1,6 +1,6 @@
 <template>
   <v-row>
-    <v-col class="" cols="4" style="max-width: 450px">
+    <v-col class="" cols="12" md="4" style="max-width: 450px">
       <div class="" style="background-color: #fffbf1">
         <v-tabs
           grow
@@ -207,8 +207,8 @@
         </v-tabs>
       </div>
     </v-col>
-    <v-col class="full-height" cols="8">
-      <v-row>
+    <v-col class="full-height" cols="12" md="8">
+      <v-row v-if="$vuetify.breakpoint.mdAndUp">
         <v-breadcrumbs
           :items="breadcrumbs"
           style="margin-top: 42px; font-weight: 700"

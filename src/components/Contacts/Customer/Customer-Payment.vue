@@ -55,7 +55,7 @@
           :key="i"
           class="py-0 ma-0"
         >
-          <customerInvoiceCard
+          <customerPaymentCard
             v-if="$vuetify.breakpoint.mdAndUp"
             :index="i"
             :id="i + 1"
@@ -65,13 +65,15 @@
             :dueDate="invoice.date | date"
             :iconColor="invoice.iconColor"
           />
+          <!-- card for thhe mobile screens -->
+
           <MobileTableCard
             v-if="$vuetify.breakpoint.smAndDown"
+            :cardTitle="cardTitle"
             :index="i"
             :id="i + 1"
             :outstanding="invoice.outstanding"
             :refNumber="invoice.ref"
-            :cardTitle="cardTitle"
             :status="invoice.status"
             :dueDate="invoice.date | date"
           />
@@ -82,21 +84,20 @@
 </template>
 
 <script>
-import CustomerInvoiceCard from "./CustomerInvoiceCard.vue";
+import CustomerPaymentCard from "./CustomerPaymentCard.vue";
+
 import MobileTableCard from "./MobileTableCard.vue";
-//import ContactTableCard from "./PayableTableCard.vue";
 //import { mapActions } from "vuex";
 export default {
-  name: "Customer-Invoice",
+  name: "Customer-Payment",
   components: {
-    CustomerInvoiceCard,
+    CustomerPaymentCard,
     MobileTableCard,
-    //ContactTableCard,
   },
   data() {
     return {
       dialog: false,
-      cardTitle: "Invoices",
+      cardTitle: "Payments",
       customerInvoices: [
         {
           id: 1,

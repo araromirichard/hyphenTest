@@ -29,12 +29,41 @@
             />
           </v-col>
         </v-row>
+
+        <!-- page title for mobile screens -->
+        <v-row align="center" v-if="$vuetify.breakpoint.mdAndDown">
+          <v-col class="d-flex justify-center align-center" cols="12">
+            <h3
+              class="mt-6 font-weight-bold text-h5 primary--text pl-2"
+              style="line-height: 18px"
+            >
+              Contacts
+              <span
+                ><v-icon class="text--disabled">mdi-chevron-right</v-icon></span
+              >
+              <span v-if="!isVendor" class="ms-2 ms-md-1 text-h6"
+                >customer</span
+              >
+              <span v-else class="ms-2 ms-md-1 text-h6">vendor</span>
+            </h3>
+
+            <v-spacer></v-spacer>
+
+            <ContactDropDown
+              btnText="Add New"
+              icon="contact"
+              width="148"
+              height="54px"
+              style="margin-right: 88px"
+            />
+          </v-col>
+        </v-row>
       </v-col>
 
       <!-- for customers -->
 
       <v-container class="mt-10" v-if="!isVendor">
-        <v-row class="mx-12">
+        <v-row class="mx-2 mx-md-12">
           <v-col cols="12" sm="12" md="5">
             <v-card min-height="627px" elevation="3">
               <v-card
@@ -52,7 +81,7 @@
                     outlined
                     small
                     color="#2BD5AE"
-                    class="text-capitalize px-6 mt-3 mr-2 rounded"
+                    class="text-capitalize px-3 px-md-6 mt-3 mr-2 rounded"
                     style="color: var(--v-primary-base)"
                   >
                     Block
@@ -63,7 +92,7 @@
                     depressed
                     small
                     color="primary"
-                    class="text-capitalize px-4 mt-3 mr-7 rounded"
+                    class="text-capitalize px-4 mt-3 mr-2 mr-md-7 rounded"
                     >Edit</v-btn
                   >
                 </v-tabs>
@@ -72,15 +101,18 @@
                 tile
                 flat
                 width="100%"
-                height="100px"
+                min-height="100px"
                 color="seperate-div"
               >
                 <v-row>
-                  <v-col>
+                  <v-col class="ps-3">
                     <p
                       class="
                         text-caption
-                        pa-0
+                        px-2
+                        mt-4
+                        mb-1
+                        pa-md-0
                         mt-sm-1 mt-md-3
                         mb-sm-0 mb-md-0
                         ml-sm-6 ml-md-8
@@ -93,7 +125,8 @@
                     <p
                       class="
                         text-h5
-                        pa-0
+                        px-2
+                        pa-md-0
                         mt-sm-0 mt-md-0
                         mb-sm-0 mb-md-0
                         ml-sm-6 ml-md-8
@@ -103,7 +136,10 @@
                     >
                       {{ totalOutstanding }}
                     </p>
-                    <v-chip x-small class="my-0 small-chip ml-sm-6 ml-md-8">
+                    <v-chip
+                      x-small
+                      class="ms-2 py-2 small-chip ml-sm-6 ml-md-8"
+                    >
                       receivable
                     </v-chip>
                   </v-col>
@@ -111,7 +147,10 @@
                     <p
                       class="
                         text-right text-caption
-                        pa-0
+                        mt-4
+                        px-2
+                        mb-1
+                        pa-md-0
                         mt-sm-1 mt-md-3
                         mb-sm-0 mb-md-0
                         mr-sm-6 mr-md-8
@@ -124,6 +163,7 @@
                     <p
                       class="
                         text-right text-caption
+                        px-2
                         pa-0
                         mt-1
                         mb-sm-0 mb-md-0
@@ -136,16 +176,15 @@
 
                     <v-chip
                       x-small
-                      class="mt-1 mr-sm-6 mr-md-8 float-right"
+                      class="mr-4 py-2 mt-1 mr-sm-6 mr-md-8 float-right"
                       style="
                         font-family: Lato;
                         font-style: normal;
                         font-weight: normal;
                         font-size: 10px;
-                        line-height: 10px;
+                        line-height: 5px;
                         color: #596a73;
                         background: #d8d8d8;
-                        border-radius: 6px;
                       "
                     >
                       {{ bankName }}
@@ -154,12 +193,18 @@
                 </v-row>
                 <div>
                   <v-row class="mx-8 mt-6">
-                    <v-col class="pa-0" cols="4">
-                      <v-subheader class="primary--text px-0"
+                    <v-col class="pa-0" cols="12" md="4">
+                      <v-subheader
+                        class="primary--text px-0"
+                        :style="{
+                          fontSize: `${
+                            $vuetify.breakpoint.smAndDown ? '0.86rem' : '1rem'
+                          }`,
+                        }"
                         >Company Name</v-subheader
                       >
                     </v-col>
-                    <v-col cols="8" class="pa-0">
+                    <v-col cols="12" md="8" class="pa-0">
                       <validation-provider
                         v-slot="{ errors }"
                         name="companyName"
@@ -189,12 +234,18 @@
                     ></v-divider>
                   </v-row>
                   <v-row class="mx-8 mt-6">
-                    <v-col class="pa-0" cols="4">
-                      <v-subheader class="primary--text px-0"
+                    <v-col class="pa-0" cols="12" md="4">
+                      <v-subheader
+                        class="primary--text px-0"
+                        :style="{
+                          fontSize: `${
+                            $vuetify.breakpoint.smAndDown ? '0.86rem' : '1rem'
+                          }`,
+                        }"
                         >Contact Email</v-subheader
                       >
                     </v-col>
-                    <v-col cols="8" class="pa-0">
+                    <v-col cols="12" md="8" class="pa-0">
                       <validation-provider
                         v-slot="{ errors }"
                         name="contactEmail"
@@ -224,12 +275,18 @@
                     ></v-divider>
                   </v-row>
                   <v-row class="mx-8 mt-6">
-                    <v-col class="pa-0" cols="4">
-                      <v-subheader class="primary--text px-0"
+                    <v-col class="pa-0" cols="12" md="4">
+                      <v-subheader
+                        class="primary--text px-0"
+                        :style="{
+                          fontSize: `${
+                            $vuetify.breakpoint.smAndDown ? '0.86rem' : '1rem'
+                          }`,
+                        }"
                         >Contact Phone</v-subheader
                       >
                     </v-col>
-                    <v-col cols="8" class="pa-0">
+                    <v-col cols="12" md="8" class="pa-0">
                       <validation-provider
                         v-slot="{ errors }"
                         name="contactPhone"
@@ -259,12 +316,18 @@
                     ></v-divider>
                   </v-row>
                   <v-row class="mx-8 mt-6">
-                    <v-col class="pa-0" cols="4">
-                      <v-subheader class="primary--text px-0"
+                    <v-col class="pa-0" cols="12" md="4">
+                      <v-subheader
+                        class="primary--text px-0"
+                        :style="{
+                          fontSize: `${
+                            $vuetify.breakpoint.smAndDown ? '0.86rem' : '1rem'
+                          }`,
+                        }"
                         >Accounting Code</v-subheader
                       >
                     </v-col>
-                    <v-col cols="8" class="pa-0">
+                    <v-col cols="12" md="8" class="pa-0">
                       <validation-provider
                         v-slot="{ errors }"
                         name="accountingCode"
@@ -294,12 +357,18 @@
                     ></v-divider>
                   </v-row>
                   <v-row class="mx-8 mt-6">
-                    <v-col class="pa-0" cols="4">
-                      <v-subheader class="primary--text px-0"
+                    <v-col class="pa-0" cols="12" md="4">
+                      <v-subheader
+                        class="primary--text px-0"
+                        :style="{
+                          fontSize: `${
+                            $vuetify.breakpoint.smAndDown ? '0.86rem' : '1rem'
+                          }`,
+                        }"
                         >Default Payment Terms</v-subheader
                       >
                     </v-col>
-                    <v-col cols="8" class="pa-0">
+                    <v-col cols="12" md="8" class="pa-0">
                       <validation-provider
                         v-slot="{ errors }"
                         name="paymentTerms"
@@ -329,14 +398,22 @@
                     ></v-divider>
                   </v-row>
                   <v-row class="mx-8 mt-6">
-                    <v-col class="pa-0" cols="4">
-                      <v-subheader class="primary--text px-0">Tags</v-subheader>
+                    <v-col class="pa-0" cols="12" md="4">
+                      <v-subheader
+                        class="primary--text px-0"
+                        :style="{
+                          fontSize: `${
+                            $vuetify.breakpoint.smAndDown ? '0.86rem' : '1rem'
+                          }`,
+                        }"
+                        >Tags</v-subheader
+                      >
                     </v-col>
-                    <v-col cols="8" class="pa-0 d-flex justify-end">
-                      <v-chip-group >
+                    <v-col cols="12" md="8" class="pa-0 d-flex justify-end">
+                      <v-chip-group>
                         <v-chip
-                          class="float-right"
-                          small
+                          class="float-right py-2"
+                          x-small
                           v-for="tag in tags"
                           :key="tag"
                           style="
@@ -344,7 +421,7 @@
                             font-style: normal;
                             font-weight: normal;
                             font-size: 10px;
-                            line-height: 10px;
+                            line-height: 5px;
                             color: #2bd5ae;
                             background: #d5f7ef;
                             border-radius: 6px;
@@ -366,19 +443,19 @@
               </v-card>
             </v-card>
           </v-col>
-          <v-col cols="12" sm="12" md="7" class=""
-            ><v-card min-height="494px" elevation="3">
+          <v-col cols="12" sm="12" md="7" class="">
+            <v-card min-height="494px" elevation="3">
               <v-card
                 v-if="$vuetify.breakpoint.mdAndUp"
                 flat
                 width="100%"
                 style="border-bottom: 1px solid rgba(127, 145, 155, 0.3)"
               >
-                <v-tabs v-model="tab" align-with-title>
+                <v-tabs v-model="tab1" align-with-title>
                   <v-tab
                     class="mt-2"
                     v-for="item in items"
-                    :key="item.tab"
+                    :key="item.tab1"
                     style="
                       font-family: Inter;
                       font-style: normal;
@@ -387,17 +464,45 @@
                       line-height: 15px;
                       text-transform: uppercase;
                     "
-                    >{{ item.tab }}</v-tab
+                    >{{ item.tab1 }}</v-tab
                   >
                 </v-tabs>
               </v-card>
               <v-card width="100%" class="pb-12" flat>
                 <component
-                  v-bind:is="items[tab].content"
+                  v-bind:is="items[tab1].content"
                   class="ml-0"
                 ></component>
               </v-card>
             </v-card>
+            <!-- tabs for customer mobile devices -->
+            <v-row class="px-0 mx-0" v-if="$vuetify.breakpoint.mdAndDown">
+              <v-col class="ma-0 pa-0" cols="12">
+                <v-bottom-navigation fixed class="pa-0 mx-0" dark>
+                  <v-tabs
+                    center-active
+                    class="ma-0"
+                    background-color="primary"
+                    v-model="tab1"
+                  >
+                    <v-tab
+                      class="mt-2"
+                      v-for="item in items"
+                      :key="item.tab1"
+                      style="
+                        font-family: Inter;
+                        font-style: normal;
+                        font-weight: 700;
+                        font-size: 12px;
+                        line-height: 15px;
+                        text-transform: uppercase;
+                      "
+                      >{{ item.tab1 }}</v-tab
+                    >
+                  </v-tabs>
+                </v-bottom-navigation>
+              </v-col>
+            </v-row>
           </v-col>
         </v-row>
       </v-container>
@@ -405,9 +510,14 @@
       <!-- for Vendors -->
 
       <v-container v-else class="mt-10">
-        <v-row class="mx-14">
+        <v-row class="mx-2 mx-md-12">
           <v-col cols="12" sm="12" md="5">
-            <v-card min-height="789px" elevation="3">
+            <v-card
+              :min-height="`${
+                $vuetify.breakpoint.smAndDown ? '1100px' : '789px'
+              }`"
+              elevation="3"
+            >
               <v-card
                 flat
                 width="100%"
@@ -423,7 +533,7 @@
                     outlined
                     small
                     color="#2BD5AE"
-                    class="text-capitalize px-6 mt-3 mr-2 rounded"
+                    class="text-capitalize px-3 px-md-6 mt-3 mr-2 rounded"
                     style="color: var(--v-primary-base)"
                   >
                     Block
@@ -434,7 +544,7 @@
                     depressed
                     small
                     color="primary"
-                    class="text-capitalize px-4 mt-3 mr-7 rounded"
+                    class="text-capitalize px-4 mt-3 mr-2 mr-md-7 rounded"
                     >Edit</v-btn
                   >
                 </v-tabs>
@@ -447,11 +557,14 @@
                 color="seperate-div"
               >
                 <v-row>
-                  <v-col>
+                  <v-col class="ps-3">
                     <p
                       class="
                         text-caption
-                        pa-0
+                        px-2
+                        mt-4
+                        mb-1
+                        pa-md-0
                         mt-sm-1 mt-md-3
                         mb-sm-0 mb-md-0
                         ml-sm-6 ml-md-8
@@ -464,7 +577,8 @@
                     <p
                       class="
                         text-h5
-                        pa-0
+                        px-2
+                        pa-md-0
                         mt-sm-0 mt-md-0
                         mb-sm-0 mb-md-0
                         ml-sm-6 ml-md-8
@@ -479,6 +593,8 @@
                     <p
                       class="
                         text-right text-caption
+                        pt-4
+                        px-2
                         pa-0
                         mt-sm-1 mt-md-3
                         mb-sm-0 mb-md-0
@@ -492,6 +608,7 @@
                     <p
                       class="
                         text-right text-caption
+                        px-2
                         pa-0
                         mt-1
                         mb-sm-0 mb-md-0
@@ -505,12 +622,18 @@
                 </v-row>
                 <div>
                   <v-row class="mx-8 mt-6">
-                    <v-col class="pa-0" cols="4">
-                      <v-subheader class="primary--text px-0"
+                    <v-col class="pa-0" cols="12" md="4">
+                      <v-subheader
+                        class="primary--text px-0"
+                        :style="{
+                          fontSize: `${
+                            $vuetify.breakpoint.smAndDown ? '0.86rem' : '1rem'
+                          }`,
+                        }"
                         >Company Name</v-subheader
                       >
                     </v-col>
-                    <v-col cols="8" class="pa-0">
+                    <v-col cols="12" md="8" class="pa-0">
                       <validation-provider
                         v-slot="{ errors }"
                         name="companyName"
@@ -540,12 +663,18 @@
                     ></v-divider>
                   </v-row>
                   <v-row class="mx-8 mt-6">
-                    <v-col class="pa-0" cols="4">
-                      <v-subheader class="primary--text px-0"
+                    <v-col class="pa-0" cols="12" md="4">
+                      <v-subheader
+                        class="primary--text px-0"
+                        :style="{
+                          fontSize: `${
+                            $vuetify.breakpoint.smAndDown ? '0.86rem' : '1rem'
+                          }`,
+                        }"
                         >Contact Email</v-subheader
                       >
                     </v-col>
-                    <v-col cols="8" class="pa-0">
+                    <v-col cols="12" md="8" class="pa-0">
                       <validation-provider
                         v-slot="{ errors }"
                         name="contactEmail"
@@ -575,12 +704,18 @@
                     ></v-divider>
                   </v-row>
                   <v-row class="mx-8 mt-6">
-                    <v-col class="pa-0" cols="4">
-                      <v-subheader class="primary--text px-0"
+                    <v-col class="pa-0" cols="12" md="4">
+                      <v-subheader
+                        class="primary--text px-0"
+                        :style="{
+                          fontSize: `${
+                            $vuetify.breakpoint.smAndDown ? '0.86rem' : '1rem'
+                          }`,
+                        }"
                         >Contact Phone</v-subheader
                       >
                     </v-col>
-                    <v-col cols="8" class="pa-0">
+                    <v-col cols="12" md="8" class="pa-0">
                       <validation-provider
                         v-slot="{ errors }"
                         name="contactPhone"
@@ -610,12 +745,18 @@
                     ></v-divider>
                   </v-row>
                   <v-row class="mx-8 mt-6">
-                    <v-col class="pa-0" cols="4">
-                      <v-subheader class="primary--text px-0"
+                    <v-col class="pa-0" cols="12" md="4">
+                      <v-subheader
+                        class="primary--text px-0"
+                        :style="{
+                          fontSize: `${
+                            $vuetify.breakpoint.smAndDown ? '0.86rem' : '1rem'
+                          }`,
+                        }"
                         >Accounting Code</v-subheader
                       >
                     </v-col>
-                    <v-col cols="8" class="pa-0">
+                    <v-col cols="12" md="8" class="pa-0">
                       <validation-provider
                         v-slot="{ errors }"
                         name="accountingCode"
@@ -645,12 +786,18 @@
                     ></v-divider>
                   </v-row>
                   <v-row class="mx-8 mt-6">
-                    <v-col class="pa-0" cols="4">
-                      <v-subheader class="primary--text px-0"
+                    <v-col class="pa-0" cols="12" md="4">
+                      <v-subheader
+                        class="primary--text px-0"
+                        :style="{
+                          fontSize: `${
+                            $vuetify.breakpoint.smAndDown ? '0.86rem' : '1rem'
+                          }`,
+                        }"
                         >Default Payment Terms</v-subheader
                       >
                     </v-col>
-                    <v-col cols="8" class="pa-0">
+                    <v-col cols="12" md="8" class="pa-0">
                       <validation-provider
                         v-slot="{ errors }"
                         name="paymentTerms"
@@ -680,12 +827,21 @@
                     ></v-divider>
                   </v-row>
                   <v-row class="mx-8 mt-6">
-                    <v-col class="pa-0" cols="4">
-                      <v-subheader class="primary--text px-0">Tags</v-subheader>
+                    <v-col class="pa-0" cols="12" md="4">
+                      <v-subheader
+                        class="primary--text px-0"
+                        :style="{
+                          fontSize: `${
+                            $vuetify.breakpoint.smAndDown ? '0.86rem' : '1rem'
+                          }`,
+                        }"
+                        >Tags</v-subheader
+                      >
                     </v-col>
-                    <v-col cols="8" class="pa-0 d-flex justify-end">
+                    <v-col cols="12" md="8" class="pa-0 d-flex justify-end">
                       <v-chip-group>
                         <v-chip
+                          class="py-1"
                           x-small
                           v-for="tag in tags"
                           :key="tag"
@@ -694,7 +850,7 @@
                             font-style: normal;
                             font-weight: normal;
                             font-size: 10px;
-                            line-height: 10px;
+                            line-height: 5px;
                             color: #2bd5ae;
                             background: #d5f7ef;
                             border-radius: 6px;
@@ -713,12 +869,18 @@
                     ></v-divider>
                   </v-row>
                   <v-row class="mx-8 mt-6">
-                    <v-col class="pa-0" cols="4">
-                      <v-subheader class="primary--text px-0"
+                    <v-col class="pa-0" cols="12" md="4">
+                      <v-subheader
+                        class="primary--text px-0"
+                        :style="{
+                          fontSize: `${
+                            $vuetify.breakpoint.smAndDown ? '0.86rem' : '1rem'
+                          }`,
+                        }"
                         >Bank Name</v-subheader
                       >
                     </v-col>
-                    <v-col cols="8" class="pa-0">
+                    <v-col cols="12" md="8" class="pa-0">
                       <validation-provider
                         v-slot="{ errors }"
                         name="bankName"
@@ -748,12 +910,18 @@
                     ></v-divider>
                   </v-row>
                   <v-row class="mx-8 mt-6">
-                    <v-col class="pa-0" cols="4">
-                      <v-subheader class="primary--text px-0"
+                    <v-col class="pa-0" cols="12" md="4">
+                      <v-subheader
+                        class="primary--text px-0"
+                        :style="{
+                          fontSize: `${
+                            $vuetify.breakpoint.smAndDown ? '0.86rem' : '1rem'
+                          }`,
+                        }"
                         >Bank Account</v-subheader
                       >
                     </v-col>
-                    <v-col cols="8" class="pa-0">
+                    <v-col cols="12" md="8" class="pa-0">
                       <validation-provider
                         v-slot="{ errors }"
                         name="bankAccount"
@@ -783,12 +951,18 @@
                     ></v-divider>
                   </v-row>
                   <v-row class="mx-8 mt-6">
-                    <v-col class="pa-0" cols="4">
-                      <v-subheader class="primary--text px-0"
+                    <v-col class="pa-0" cols="12" md="4">
+                      <v-subheader
+                        class="primary--text px-0"
+                        :style="{
+                          fontSize: `${
+                            $vuetify.breakpoint.smAndDown ? '0.86rem' : '1rem'
+                          }`,
+                        }"
                         >Date Added</v-subheader
                       >
                     </v-col>
-                    <v-col cols="8" class="pa-0">
+                    <v-col cols="12" md="8" class="pa-0">
                       <v-menu
                         v-model="menu"
                         :close-on-content-click="false"
@@ -841,19 +1015,19 @@
               </v-card>
             </v-card>
           </v-col>
-          <v-col cols="12" sm="12" md="7" class=""
-            ><v-card min-height="494px" elevation="3">
+          <v-col cols="12" sm="12" md="7" class="">
+            <v-card min-height="494px" elevation="3">
               <v-card
-                v-if="$vuetify.breakpoint.mdAndUp"
+               v-if="$vuetify.breakpoint.mdAndUp"
                 flat
                 width="100%"
                 style="border-bottom: 1px solid rgba(127, 145, 155, 0.3)"
               >
-                <v-tabs v-model="tab" align-with-title>
+                <v-tabs v-model="tab1" align-with-title>
                   <v-tab
                     class="mt-2"
                     v-for="item in items"
-                    :key="item.tab"
+                    :key="item.tab1"
                     style="
                       font-family: Inter;
                       font-style: normal;
@@ -862,70 +1036,71 @@
                       line-height: 15px;
                       text-transform: uppercase;
                     "
-                    >{{ item.tab }}</v-tab
+                    >{{ item.tab1 }}</v-tab
                   >
                 </v-tabs>
               </v-card>
               <v-card width="100%" class="pb-12" flat>
                 <component
-                  v-bind:is="items[tab].content"
+                  v-bind:is="items[tab1].content"
                   class="ml-0"
                 ></component>
               </v-card>
             </v-card>
+            <!-- tabs for vendor mobile devices -->
+            <v-row class="px-0 mx-0" v-if="$vuetify.breakpoint.mdAndDown">
+              <v-col class="ma-0 pa-0" cols="12">
+                <v-bottom-navigation fixed class="pa-0 mx-0" dark>
+                  <v-tabs
+                    center-active
+                    class="ma-0"
+                    background-color="primary"
+                    v-model="tab1"
+                  >
+                    <v-tab
+                      class="mt-2"
+                      v-for="item in items"
+                      :key="item.tab1"
+                      style="
+                        font-family: Inter;
+                        font-style: normal;
+                        font-weight: 700;
+                        font-size: 12px;
+                        line-height: 15px;
+                        text-transform: uppercase;
+                      "
+                      >{{ item.tab1 }}</v-tab
+                    >
+                  </v-tabs>
+                </v-bottom-navigation>
+              </v-col>
+            </v-row>
           </v-col>
         </v-row>
       </v-container>
     </v-row>
-    <!-- tabs for mobile devices -->
-    <!-- <v-row class="px-0 mx-0" v-if="$vuetify.breakpoint.mdAndDown">
-      <v-col class="ma-0 pa-0" cols="12">
-        <v-bottom-navigation fixed class="pa-0 mx-0" dark>
-          <v-tabs
-            center-active
-            class="ma-0"
-            background-color="primary"
-            v-model="tab"
-          >
-            <v-tab
-              class="mt-2"
-              v-for="item in items"
-              :key="item.tab"
-              style="
-                font-family: Inter;
-                font-style: normal;
-                font-weight: 700;
-                font-size: 12px;
-                line-height: 15px;
-                text-transform: uppercase;
-              "
-              >{{ item.tab }}</v-tab
-            >
-          </v-tabs>
-        </v-bottom-navigation>
-      </v-col>
-    </v-row> -->
   </v-container>
 </template>
 
 <script>
 import ContactDropDown from "@/includes/ContactDropdown";
 import CustomerInvoice from "@/components/Contacts/Customer/Customer-Invoice.vue";
-// import Vendors from "@/components/Contacts/Ven.vue";
-// import Pending from "../../components/Contacts/Pending.vue";
+import CustomerPayment from "@/components/Contacts/Customer/Customer-Payment.vue";
+import CustomerMandate from "@/components/Contacts/Customer/Customer-Mandate.vue";
 
 export default {
   name: "singleContact",
   data() {
     return {
       menu: false,
+      tab1: 0,
       tab: 0,
       earliestDueDate: new Date(),
       isVendor: true,
       disabledField: true,
       contactRecord: "234 Records",
       totalOutstanding: "460,000.00",
-      bankName: "Bank Name",
+      bankName: "bank name",
       CustomerWalletNumber: "30928292023",
       singleCustomerDetails: {
         companyName: "",
@@ -950,17 +1125,17 @@ export default {
       },
       tags: ["logistic", "Energy"],
       items: [
-        { tab: "Invoices", content: "CustomerInvoice" },
-        { tab: "Payments", content: "Customer-Payment" },
-        { tab: "Mandates", content: "Customer-Mandate" },
+        { tab1: "Invoices", content: "CustomerInvoice" },
+        { tab1: "Payments", content: "CustomerPayment" },
+        { tab1: "Mandates", content: "CustomerMandate" },
       ],
     };
   },
   components: {
     ContactDropDown,
     CustomerInvoice,
-    // Vendors,
-    // Pending,
+    CustomerPayment,
+    CustomerMandate,
   },
   methods: {
     editForm() {
@@ -1006,7 +1181,7 @@ export default {
   font-style: normal;
   font-weight: normal;
   font-size: 10px;
-  line-height: 10px;
+  line-height: 3px;
   background: #f9eed2;
 
   color: #e3aa1c;
@@ -1050,6 +1225,13 @@ v-chip.v-size--x-small[data-v-2900d98a] {
   box-shadow: 0px 3px 5px -1px rgb(0 0 0 / 3%), 0px 6px 10px 0px rgb(0 0 0 / 3%),
     0px 1px 18px 0px rgb(0 0 0 / 3%) !important;
 }
+.v-tabs:not(.v-tabs--vertical):not(.v-tabs--right)
+  > .v-slide-group--is-overflowing.v-tabs-bar--is-mobile:not(.v-slide-group--has-affixes)
+  .v-slide-group__prev {
+  /* display: initial; */
+  visibility: hidden;
+}
+
 .v-subheader {
   align-items: center;
   display: flex;

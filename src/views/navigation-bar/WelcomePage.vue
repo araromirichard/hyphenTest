@@ -14,7 +14,7 @@
         Let’s get you started on pbot
       </p>
       <v-container class="pa-0 ma-0 justify-center mx-auto">
-        <v-row class="d-flex justify-center">
+        <v-row class="d-flex justify-center px-10 px-md-0">
           <v-col
             cols="12"
             md="3"

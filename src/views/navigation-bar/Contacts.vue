@@ -2,6 +2,7 @@
   <v-container>
     <v-row>
       <v-col cols="12">
+        <!-- contact title for desktop screens -->
         <v-row align="center" v-if="$vuetify.breakpoint.mdAndUp">
           <v-col class="d-flex justify-center align-center" cols="12">
             <h3
@@ -38,10 +39,11 @@
         </v-row>
         <v-row>
           <v-col cols="12">
+            <!-- contact tilte for Mobile screens -->
             <div class="d-flex" v-if="$vuetify.breakpoint.mdAndDown">
               <p
                 :style="{ display: `${isClicked != true ? 'none' : ''}` }"
-                class="pt-7 pl-5 primary--text"
+                class="pt-7 pl-2 primary--text"
                 style="
                   font-family: Inter;
                   font-style: normal;
@@ -53,6 +55,19 @@
               >
                 Contacts
               </p>
+              <span
+                class="pl-2 pt-8 text-subtitle-2 text-md-subtitle-1"
+                style="
+                  font-family: Inter;
+                  font-style: normal;
+                  font-weight: normal;
+                  line-height: 19px;
+                  color: #7f919b;
+                  mix-blend-mode: normal;
+                  opacity: 0.5;
+                "
+                >{{ contactRecord }}</span
+              >
               <v-spacer></v-spacer>
               <v-icon v-if="isClicked" @click="toggleSearch" class="pr-4 pt-7">
                 mdi-magnify
@@ -74,6 +89,12 @@
                 >
                 </v-text-field>
               </v-expand-x-transition>
+              <ContactDropDown
+                btnText="Add New"
+                icon="contact"
+                width="100px"
+                height="48px"
+              />
             </div>
           </v-col>
         </v-row>

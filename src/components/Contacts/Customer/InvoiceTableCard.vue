@@ -51,7 +51,7 @@
             class="mx-2 pa-1 text-center"
             outlined
             x-small
-            :color="stausIcon"
+            :color="statusColor"
             ><span class="text-caption px-0 ma-0">{{ status }}</span></v-chip
           >
           <v-chip class="mx-2" x-small
@@ -129,19 +129,12 @@ export default {
     iconColor: {
       type: String,
     },
-    
+    statusColor: {
+      type: String,
+    },
   },
   data() {
     return {};
-  },
-   computed: {
-    stausIcon() {
-      if (this.status === "pending") {
-        return "#FF6A6A";
-      } else if (this.status === "scheduled") {
-        return "#F7CA40";
-      } else return "#2BD5AE";
-    },
   },
 };
 </script>

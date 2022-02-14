@@ -34,7 +34,7 @@
                 line-height: 14px;
                 color: #596a73;
               "
-              >{{ approvedBy }}</span
+              >{{ customer }}</span
             >
           </v-flex>
 
@@ -66,7 +66,7 @@
                   line-height: 14px;
                   color: #596a73;
                 "
-                >{{ paymentRef }}</span
+                >{{ receivableRef }}</span
               >
             </div>
           </v-flex>
@@ -98,7 +98,7 @@
                   line-height: 14px;
                   color: #596a73;
                 "
-                >{{ payee }}</span
+                >{{ tag }}</span
               >
             </div>
           </v-flex>
@@ -276,7 +276,7 @@
                     color: #7f919b;
                   "
                 >
-                  Payee
+                  Tag
                 </h5>
                 <p
                   style="
@@ -288,7 +288,7 @@
                     color: #7f919b;
                   "
                 >
-                  {{ Payee }}
+                  {{ Tag }}
                 </p>
               </div>
               <v-divider
@@ -441,16 +441,16 @@ export default {
     id: {
       type: Number,
     },
-    approvedBy: {
+    customer: {
       type: String,
     },
     amount: {
       type: String,
     },
-    paymentRef: {
+    receivableRef: {
       type: String,
     },
-    payee: {
+    tag: {
       type: String,
     },
     date: {
@@ -459,23 +459,24 @@ export default {
     status: {
       type: String,
     },
+    iconColor: {
+      type: String,
+    },
   },
   data() {
     return {
       pAmount: "N2,300,000",
       Ref: "#EXP084492",
-      Payee: "Emmanuel John",
+      Tag: "Emmanuel John",
       Subtotal: "172500",
       dragging: false,
       dialog: false,
     };
   },
-   computed: {
+  computed: {
     stausIcon() {
-      if (this.status === "scheduled") {
+      if (this.status === "pending") {
         return "#FF6A6A";
-      } else if (this.status === "pending") {
-        return "#F7CA40";
       } else return "#2BD5AE";
     },
   },

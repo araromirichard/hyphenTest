@@ -9,7 +9,7 @@
               class="font-weight-bold text-md-h4 primary--text pl-md-14"
               style="line-height: 39px"
             >
-              Payables
+              Receivables
               <span
                 class="pl-5 text-md-subtitle-1"
                 style="
@@ -22,13 +22,13 @@
                   mix-blend-mode: normal;
                   opacity: 0.5;
                 "
-                >{{ payableRecord }}</span
+                >{{ ReceivableRecord }}</span
               >
             </h3>
 
             <v-spacer></v-spacer>
 
-            <PaymentDropDown
+            <ReceivableDropdown
               btnText="Add New"
               icon="uploadIcon"
               width="148"
@@ -53,7 +53,7 @@
                   letter-spacing: -0.73px;
                 "
               >
-                Payables
+                Receivables
               </p>
               <v-spacer></v-spacer>
               <v-icon v-if="isClicked" @click="toggleSearch" class="pr-4 pt-7">
@@ -76,7 +76,7 @@
                 >
                 </v-text-field>
               </v-expand-x-transition>
-              <PaymentDropDown
+              <ReceivableDropdown
                 btnText="Add New"
                 icon="uploadIcon"
                 width="100px"
@@ -116,9 +116,10 @@
                     </v-avatar>
                   </v-col>
                   <v-col cols="8">
-                    <h5 class="cardTitle pa-0">Total Payables</h5>
+                    <h5 class="cardTitle pa-0">Total Receivables</h5>
                     <h6 class="cardSubTitle pa-0">
-                      <span>Total unpaid bills </span> {{ totalUnpaidBills }}
+                      <span>Total unpaid invoices </span>
+                      {{ totalUnpaidInvoices }}
                     </h6>
                     <v-progress-linear
                       rounded
@@ -143,7 +144,7 @@
                       "
                     >
                       current
-                      <span class="font-weight-bold">{{ currentBill }}</span>
+                      <span class="font-weight-bold">{{ currentInvoice }}</span>
                     </p>
                     <p
                       class="text-break mt-2 d-inline float-end text-md-right"
@@ -160,7 +161,7 @@
                       "
                     >
                       overdue
-                      <span class="font-weight-bold">{{ overDueBill }}</span>
+                      <span class="font-weight-bold">{{ overdueInvoice }}</span>
                     </p>
                   </v-col>
                 </v-row>
@@ -175,7 +176,7 @@
                 style="margin-top: 35px"
                 :style="{
                   marginLeft: `${
-                    $vuetify.breakpoint.mdAndUp ? '60px' : '12px'
+                    $vuetify.breakpoint.mdAndUp ? '78px' : '12px'
                   }`,
                 }"
               >
@@ -191,11 +192,11 @@
                         }`,
                       }"
                     >
-                      <v-icon dark color="primary"> mdi-check </v-icon>
+                      <span class="total-Customers">{{ totalCustomers }}</span>
                     </v-avatar>
                   </v-col>
                   <v-col cols="8">
-                    <h5 class="cardTitle pa-0">Total Payees</h5>
+                    <h5 class="cardTitle pa-0">Total Customers</h5>
                     <h6 class="cardSubTitle pa-0">
                       <span>onboarded in the last </span>
                       {{ billPeriod }} months
@@ -334,33 +335,27 @@
 
 <script>
 import PureVueChart from "pure-vue-chart";
-
-import Allpayables from "@/components/payablesTabs/AllPayables.vue";
-import ScheduledPayables from "@/components/payablesTabs/ScheduledPayables.vue";
-import PendingPayables from "../../components/payablesTabs/PendingPaybles.vue";
-import PaidPayables from "../../components/payablesTabs/PaidPayables.vue";
-import BudgetPayables from "../../components/payablesTabs/BudgetPayables.vue";
-import PaymentDropDown from "@/includes/PaymentDropdown.vue";
+import AllReceivables from "@/components/receivableTabs/AllReceivables.vue";
+import PaidReceivables from "../../components/receivableTabs/PaidReceivables.vue";
+import ReceivableDropdown from "../../includes/ReceivableDropdown.vue";
 
 export default {
-  name: "payables",
+  name: "Receivables",
   data() {
     return {
-      payableRecord: "234 Records",
-      currentBill: "N234,560",
-      overDueBill: "N234,560",
+      ReceivableRecord: "234 Records",
+      totalCustomers: 54,
+      currentInvoice: "N234,560",
+      overdueInvoice: "N234,560",
       billPeriod: "6",
       currentBillPercentage: 65,
-      totalUnpaidBills: "N1,234,560",
+      totalUnpaidInvoices: "N1,234,560",
       isClicked: true,
       tab: 0,
       search: "",
       items: [
-        { tab: "All", content: "Allpayables" },
-        { tab: "Scheduled", content: "ScheduledPayables" },
-        { tab: "Pending", content: "PendingPayables" },
-        { tab: "Paid", content: "PaidPayables" },
-        //{ tab: "Budgets", content: "BudgetPayables" },
+        { tab: "All", content: "AllReceivables" },
+        { tab: "Paid", content: "PaidReceivables" },
       ],
       inboxMenus: [
         {
@@ -387,13 +382,12 @@ export default {
     };
   },
   components: {
-    Allpayables,
-    ScheduledPayables,
-    PendingPayables,
-    PaidPayables,
-    BudgetPayables,
+    AllReceivables,
+
+    PaidReceivables,
+
     PureVueChart,
-    PaymentDropDown,
+    ReceivableDropdown,
   },
   methods: {
     toggleSearch() {
@@ -473,5 +467,14 @@ th {
 }
 #histogram {
   fill: #96ead7 !important;
+}
+
+.total-Customers {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: bold;
+  font-size: 28px;
+  line-height: 29px;
+  color: #311b92;
 }
 </style>

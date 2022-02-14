@@ -5,7 +5,7 @@
         height="60px"
         width="100%"
         flat
-        class="d-flex"
+        class="d-flex mb-8 mb-md-0"
         style="background: rgba(127, 145, 155, 0.052607)"
       >
         <v-spacer></v-spacer>
@@ -15,7 +15,7 @@
               outlined
               @click="alertCSVDownload"
               color="primary"
-              class="my-4 export-btn mr-9 hover-btn"
+              class="my-4 export-btn mr-5 mr-md-9 hover-btn"
               :style="{
                 'background-color': hover ? '#2bd5ae' : '',
                 border: hover ? 'none' : '',
@@ -28,11 +28,15 @@
                   font-family: Inter;
                   font-style: normal;
                   font-weight: 500;
-                  font-size: 11px;
                   line-height: 12px;
                   text-align: center;
                   letter-spacing: 0.636364px;
                 "
+                :style="{
+                  fontSize: `${
+                    $vuetify.breakpoint.mdAndDown ? '9  px' : '11px'
+                  }`,
+                }"
                 >Export</span
               >
             </v-btn>
@@ -125,37 +129,18 @@
           />
 
           <!-- Data table for mobile -->
-          <!-- <ContactTableCard
-            v-if="$vuetify.breakpoint.mdAndDown"
+          <ContactTableCard
+            v-if="$vuetify.breakpoint.smAndDown"
             :index="i"
             :id="i + 1"
-            :paymentRef="payment.ref"
-            :approvedBy="payment.approvedBy"
-            :payee="payment.payee"
-            :date="payment.date | date"
-            :amount="payment.amount"
-            :status="payment.status"
-            :iconColor="payment.status === 'scheduled' ? '#2BD5AE' : '#E3AA1C'"
-            :statusColor="
-              payment.status === 'scheduled' ? '#2BD5AE' : '#E3AA1C'
-            "
-          /> -->
-          <!-- Data table for mobile -->
-          <!-- <ContactTableCard
-            v-if="$vuetify.breakpoint.mdAndDown"
-            :index="i"
-            :id="i + 1"
-            :paymentRef="payment.ref"
-            :approvedBy="payment.approvedBy"
-            :payee="payment.payee"
-            :date="payment.date | date"
-            :amount="payment.amount"
-            :status="payment.status"
-            :iconColor="payment.status === 'scheduled' ? '#2BD5AE' : '#E3AA1C'"
-            :statusColor="
-              payment.status === 'scheduled' ? '#2BD5AE' : '#E3AA1C'
-            "
-          /> -->
+            :company="customer.company"
+            :firstName="customer.firstName"
+            :lastName="customer.lastName"
+            :due="customer.due"
+            :email="customer.email"
+            :phone="customer.phone"
+            :outstanding="customer.outstanding"
+          />
         </v-col>
       </v-row>
     </v-layout>
@@ -165,12 +150,13 @@
 <script>
 import ContactTable from "./ContactTable.vue";
 
-//import ContactTableCard from "./PayableTableCard.vue";
 import { mapActions } from "vuex";
+import ContactTableCard from "./ContactTableCard.vue";
 export default {
   name: "CustomersContact",
   components: {
     ContactTable,
+    ContactTableCard,
     //ContactTableCard,
   },
   data() {

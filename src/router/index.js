@@ -137,7 +137,7 @@ const routes = [
     path: "/receivables",
     name: "Receivables",
     components: {
-      default: () => import("@/views/navigation-bar/Payables.vue"),
+      default: () => import("@/views/navigation-bar/Receivable.vue"),
       MainLayout,
     },
     meta: { middleware: ["auth"] },

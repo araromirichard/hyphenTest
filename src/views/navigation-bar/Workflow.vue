@@ -8,9 +8,12 @@
             font-family: Inter;
             font-style: normal;
             font-weight: bold;
-            font-size: 32px;
             line-height: 39px;
           "
+          :style="{
+            fontSize: `${$vuetify.breakpoint.mdAndDown ? '24px' : '32px'}`,
+            marginTop: `${$vuetify.breakpoint.mdAndDown ? '58px' : '48px'}`,
+          }"
           >Workflow</span
         >
         <v-spacer></v-spacer>
@@ -35,6 +38,10 @@
                 box-shadow: 0px 12px 22px rgba(0, 0, 0, 0.24);
                 border-radius: 4px;
               "
+              :style="{
+                width: `${$vuetify.breakpoint.mdAndDown ? '150px' : '209px'}`,
+                marginTop: `${$vuetify.breakpoint.mdAndDown ? '58px' : '48px'}`,
+              }"
             >
               <img :src="require('@/assets/pbot_icons/workflow_btn.svg')" />
               <span
@@ -49,6 +56,11 @@
                   letter-spacing: 0.636364px;
                   color: #ffffff;
                 "
+                :style="{
+                  fontSize: `${
+                    $vuetify.breakpoint.mdAndDown ? '12px' : '14px'
+                  }`,
+                }"
               >
                 New Workflow
               </span>
@@ -150,7 +162,7 @@
           elevation="4"
           style="margin-top: 40px"
         >
-          <template>
+          <template v-if="$vuetify.breakpoint.mdAndUp">
             <v-card width="100%" height="46">
               <template>
                 <v-tabs slider-size="4">
@@ -200,6 +212,7 @@
             </v-card>
           </template>
           <div
+            v-if="$vuetify.breakpoint.mdAndUp"
             style="
               width: 100%;
               height: 53px;
@@ -228,12 +241,12 @@
           <!-- -----------------------expansion-panel ends ------------------------------->
 
           <span
-            class="noWorkFlowTitle px-12"
+            class="noWorkFlowTitle pl-3 px-md-14"
             style="font-weight: 700; font-size: 24px"
           >
             {{ Rules ? `Your rules` : `Your workflow(s)` }}
           </span>
-          <span class="noWorkFlowText px-12 mt-4">
+          <span class="pl-3 px-md-14 mt-4">
             Build your custom finance process rules
           </span>
           <v-card
@@ -241,7 +254,7 @@
             elevation="0"
             class="mx-auto"
             style="
-              width: 93%;
+              width: 96%;
               height: 361px;
               margin-top: 27px;
               background: #ffffff;
@@ -348,7 +361,7 @@
 
           <template v-else>
             <SingleRule
-              class="px-10"
+              class="px-md-10 px-4"
               style="margin-left: 0px; margin-top: 16px"
               :createdAt="dateValue() | date"
             />

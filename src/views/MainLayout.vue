@@ -31,7 +31,7 @@
           <v-list nav dense flat class="py-4 pl-10">
             <v-list-item-group
               v-model="model"
-              active-class="primary--text text--accent-4"
+              active-class="primary--text text--accent-4 link-text"
             >
               <v-list-item
                 nav
@@ -162,7 +162,7 @@
             <v-list class="pl-10" nav flat dense>
               <v-list-item-group
                 v-model="model"
-                active-class="primary--text text--accent-4"
+                active-class="primary--text text--accent-4 link-text"
               >
                 <v-list-item v-if="version1" nav link to="#" class="mx-auto">
                   <v-list-item-icon class="mr-1">
@@ -275,7 +275,7 @@
         <v-list-item-group
           v-model="model"
           color="primary"
-          active-class="primary--text text--accent-4"
+          active-class="primary--text text--accent-4 link-text"
         >
           <v-list-item nav link to="/payable" class="mx-auto">
             <v-list-item-icon class="mr-4">

@@ -65,13 +65,14 @@
             :dueDate="invoice.date | date"
             :iconColor="invoice.iconColor"
           />
+
           <MobileTableCard
+            :cardTitle="cardTitle"
             v-if="$vuetify.breakpoint.smAndDown"
             :index="i"
             :id="i + 1"
             :outstanding="invoice.outstanding"
             :refNumber="invoice.ref"
-            :cardTitle="cardTitle"
             :status="invoice.status"
             :dueDate="invoice.date | date"
           />
@@ -82,12 +83,12 @@
 </template>
 
 <script>
-import CustomerInvoiceCard from "./CustomerInvoiceCard.vue";
+import CustomerInvoiceCard from "./CustomerMandateCard.vue";
 import MobileTableCard from "./MobileTableCard.vue";
 //import ContactTableCard from "./PayableTableCard.vue";
 //import { mapActions } from "vuex";
 export default {
-  name: "Customer-Invoice",
+  name: "Customer-Mandate",
   components: {
     CustomerInvoiceCard,
     MobileTableCard,
@@ -96,7 +97,7 @@ export default {
   data() {
     return {
       dialog: false,
-      cardTitle: "Invoices",
+      cardTitle: "Mandates",
       customerInvoices: [
         {
           id: 1,

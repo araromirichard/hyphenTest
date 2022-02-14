@@ -95,10 +95,10 @@
 </template>
 
 <script>
-import CSVfile from "./overlays/PayablesMenuModals/CSVfile.vue";
-import UploadModal from "./overlays/PayablesMenuModals/UploadModal.vue";
+import CSVfile from "./overlays/ReceivableMenuModals/CSVfile.vue";
+import UploadModal from "./overlays/ReceivableMenuModals/UploadModal.vue";
 export default {
-  name: "DropDown",
+  name: "ReceivableDropdown",
   components: {
     CSVfile,
     UploadModal,

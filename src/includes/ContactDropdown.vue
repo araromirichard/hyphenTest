@@ -7,7 +7,7 @@
           dark
           v-bind="attrs"
           v-on="on"
-          class="mr-16"
+          class="mr-md-16"
           color="primary"
           :width="width"
           :height="height"
@@ -32,6 +32,9 @@
               text-align: center;
               letter-spacing: 0.636364px;
             "
+            :style="{
+              fontSize: `${$vuetify.breakpoint.mdAndDown ? '11px' : '17px'}`,
+            }"
             class="text-capitalize"
           >
             {{ btnText }}
@@ -134,7 +137,7 @@ export default {
       this.dialog = true;
     },
     showDialog(ref) {
-      this.$refs[ref].show(true)
+      this.$refs[ref].show(true);
       //console.log(this.$refs[ref]);
     },
   },

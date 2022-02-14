@@ -2,6 +2,7 @@
   <v-container fluid>
     <v-row class="d-flex justify-center">
       <v-col cols="12" md="4" class="#faf2df" style="background-color: #fffbf1">
+        <!-- title for mobile screen starts -->
         <div
           :style="{
             display: `${$vuetify.breakpoint.mdAndDown ? 'flex' : 'block'}`,
@@ -10,7 +11,7 @@
           <p
             class="
               pt-8
-              pl-md-10
+              pl-12 pl-md-10
               pt-md-13
               disabled--text
               font-weight-regular
@@ -31,7 +32,9 @@
             N2,300,000
           </p>
         </div>
+        <!-- title for mobile screen ends -->
 
+        <!-- Exception summary card starts here -->
         <v-row v-if="isAnException">
           <v-col cols="10" offset="1">
             <v-card
@@ -123,10 +126,14 @@
             </v-row>
           </v-col>
         </v-row>
-        <!-- BasicData component added here... -->
+        <!-- Exception summary card starts here -->
 
+        <!-- BasicData component added here... -->
         <BasicData />
+        <!-- End of BasicData -->
       </v-col>
+
+      <!-- section for uploaded invoice image starts here  also not shown in mobile -->
       <v-col cols="12" md="8" v-if="$vuetify.breakpoint.mdAndUp">
         <v-layout class="d-flex flex-column">
           <div class="mx-md-9 d-flex flex-row">

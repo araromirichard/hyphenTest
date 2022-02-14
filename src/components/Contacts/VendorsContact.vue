@@ -28,11 +28,15 @@
                   font-family: Inter;
                   font-style: normal;
                   font-weight: 500;
-                  font-size: 11px;
                   line-height: 12px;
                   text-align: center;
                   letter-spacing: 0.636364px;
                 "
+                :style="{
+                  fontSize: `${
+                    $vuetify.breakpoint.mdAndDown ? '9  px' : '11px'
+                  }`,
+                }"
                 >Export</span
               >
             </v-btn>
@@ -123,39 +127,19 @@
             :phone="vendor.phone"
             :outstanding="vendor.outstanding"
           />
-
           <!-- Data table for mobile -->
-          <!-- <ContactTableCard
-            v-if="$vuetify.breakpoint.mdAndDown"
+          <vendorTableCard
+            v-if="$vuetify.breakpoint.smAndDown"
             :index="i"
             :id="i + 1"
-            :paymentRef="payment.ref"
-            :approvedBy="payment.approvedBy"
-            :payee="payment.payee"
-            :date="payment.date | date"
-            :amount="payment.amount"
-            :status="payment.status"
-            :iconColor="payment.status === 'scheduled' ? '#2BD5AE' : '#E3AA1C'"
-            :statusColor="
-              payment.status === 'scheduled' ? '#2BD5AE' : '#E3AA1C'
-            "
-          /> -->
-          <!-- Data table for mobile -->
-          <!-- <ContactTableCard
-            v-if="$vuetify.breakpoint.mdAndDown"
-            :index="i"
-            :id="i + 1"
-            :paymentRef="payment.ref"
-            :approvedBy="payment.approvedBy"
-            :payee="payment.payee"
-            :date="payment.date | date"
-            :amount="payment.amount"
-            :status="payment.status"
-            :iconColor="payment.status === 'scheduled' ? '#2BD5AE' : '#E3AA1C'"
-            :statusColor="
-              payment.status === 'scheduled' ? '#2BD5AE' : '#E3AA1C'
-            "
-          /> -->
+            :company="vendor.company"
+            :firstName="vendor.firstName"
+            :lastName="vendor.lastName"
+            :due="vendor.due"
+            :email="vendor.email"
+            :phone="vendor.phone"
+            :outstanding="vendor.outstanding"
+          />
         </v-col>
       </v-row>
     </v-layout>
@@ -164,14 +148,14 @@
 
 <script>
 import VendorTable from "./VendorTable.vue";
+import vendorTableCard from "./vendorTableCard.vue";
 
-//import ContactTableCard from "./PayableTableCard.vue";
 import { mapActions } from "vuex";
 export default {
   name: "vendorsContact",
   components: {
     VendorTable,
-    //ContactTableCard,
+    vendorTableCard,
   },
   data() {
     return {

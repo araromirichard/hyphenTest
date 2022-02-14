@@ -79,11 +79,11 @@
       <v-row>
         <v-col
           cols="12"
-          v-for="(payment, i) in filteredPayments"
+          v-for="(payment, i) in filteredReceivables"
           :key="i"
           class="py-0 ma-0"
         >
-          <PaymentTable
+          <ReceivableTable
             v-if="$vuetify.breakpoint.mdAndUp"
             :index="i"
             :id="i + 1"
@@ -93,10 +93,12 @@
             :date="payment.date | date"
             :amount="payment.amount"
             :status="payment.status"
+            :iconColor="payment.status === 'scheduled' ? '#2BD5AE' : '#E3AA1C'"
           />
+
           <!-- Data table for mobile -->
-          <PayableTableCard
-            v-if="$vuetify.breakpoint.smAndDown"
+          <ReceivablesTableCard
+            v-if="$vuetify.breakpoint.mdAndDown"
             :index="i"
             :id="i + 1"
             :paymentRef="payment.ref"
@@ -105,6 +107,10 @@
             :date="payment.date | date"
             :amount="payment.amount"
             :status="payment.status"
+            :iconColor="payment.status === 'scheduled' ? '#2BD5AE' : '#E3AA1C'"
+            :statusColor="
+              payment.status === 'scheduled' ? '#2BD5AE' : '#E3AA1C'
+            "
           />
         </v-col>
       </v-row>
@@ -113,12 +119,12 @@
 </template>
 
 <script>
-import PayableTableCard from "./PayableTableCard.vue";
-import PaymentTable from "./PaymentTable.vue";
+import ReceivableTable from "./ReceivableTable.vue";
+import ReceivablesTableCard from "./ReceivablesTableCard.vue";
 export default {
   components: {
-    PaymentTable,
-    PayableTableCard,
+    ReceivableTable,
+    ReceivablesTableCard,
   },
   data() {
     return {
@@ -212,7 +218,7 @@ export default {
     },
   },
   computed: {
-    filteredPayments() {
+    filteredReceivables() {
       if (this.search) {
         return this.payments.filter((payment) => {
           return (
@@ -222,7 +228,10 @@ export default {
             payment.id.toString().match(this.search)
           );
         });
-      } else return this.payments;
+      } else
+        return this.payments.filter(function (payment) {
+          return payment.status.match("paid");
+        });
     },
   },
 };
@@ -251,8 +260,8 @@ export default {
   color: #301f78;
 }
 i.sli-font {
-  font-size: 12px !important;
-  display: inline-block !important;
+  font-size: 12px;
+  display: inline-block;
 }
 .material-icons {
   font-family: "Material Icons";

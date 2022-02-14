@@ -124,11 +124,13 @@
           font-family: Inter;
           font-style: normal;
           font-weight: bold;
-          font-size: 15px;
           line-height: 15px;
           text-transform: uppercase;
           color: #96a9cf;
         "
+        :style="{
+          fontSize: `${$vuetify.breakpoint.smAndUp ? '15px' : '10px'}`,
+        }"
       >
         <v-btn
           @click="$emit('add-new-group', newGroup)"
@@ -136,6 +138,9 @@
           text
           class="font-weight-bold ml-6 pl-0"
           style="text-transform: lowercase; font-size: 16px"
+          :style="{
+            fontSize: `${$vuetify.breakpoint.smAndUp ? '16px' : '10px'}`,
+          }"
         >
           <v-icon>mdi-plus</v-icon> add new group</v-btn
         >

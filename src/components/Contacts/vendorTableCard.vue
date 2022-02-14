@@ -5,6 +5,7 @@
         $router.push({
           name: 'contact.customer',
           params: { id: id },
+          query: { vendor: true },
         })
       "
       max-height="40vh"
@@ -121,6 +122,7 @@
                         $router.push({
                           name: 'contact.customer',
                           params: { id: id },
+                          query: { vendor: true },
                         })
                       "
                       dark
