@@ -18,6 +18,22 @@
         />
       </div>
     </workflow-parent-group>
+
+    <v-btn
+      @click="$emit('completed')"
+      dark
+      :disabled="!isCompleted"
+      text
+      elevation="1"
+      x-large
+      style="
+        margin-top: 35px;
+        margin-bottom: 50px;
+        background: var(--v-primary-base);
+      "
+    >
+      <v-icon size="27" left>mdi-chevron-right</v-icon> Next
+    </v-btn>
   </div>
 </template>
 
@@ -78,9 +94,15 @@ export default {
       immediate: true,
       deep: true,
       handler(val) {
+        console.log("schema changed", JSON.stringify(val, null, 2));
         // push out the latest changes
         this.$emit("input", val);
       },
+    },
+  },
+  computed: {
+    isCompleted() {
+      return true;
     },
   },
 };

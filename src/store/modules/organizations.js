@@ -1,4 +1,4 @@
-import Organization from "../../api/organizations";
+import Organization from "../../api/organization"; 
 
 const state = {};
 
@@ -17,7 +17,6 @@ const actions = {
       commit("commitOrganization", response.data);
       return response;
     } catch (error) {
-      console.log(JSON.stringify(error, null, 2));
       return Promise.reject(error);
     }
   },

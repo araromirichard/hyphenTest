@@ -4,7 +4,7 @@ export default {
   create(form) {
     return api().post("/forms", form, {
       headers: {
-        authorization: localStorage.getItem("token"),
+        Authorization: "Bearer" + localStorage.getItem("token"),
       },
     });
   },
@@ -12,8 +12,9 @@ export default {
   getAllForms() {
     return api().get("/forms", {
       headers: {
-        authorization: localStorage.getItem("token"),
+        authorizAuthorizationation: "Bearer" + localStorage.getItem("token")
       },
     });
   },
 };
+

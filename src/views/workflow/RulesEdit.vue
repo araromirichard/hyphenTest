@@ -18,7 +18,7 @@
               class="pa-4"
               style="background-color: #fffbf1; width: 100%; padding: 10px"
             >
-              <div
+              <div v-if="runs > 0"
                 class="d-flex mx-auto"
                 style="
                   border-radius: 5px;
@@ -26,14 +26,14 @@
                   padding: 15px;
                 "
               >
-                <div style="flex: 1">
+                <div  style="flex: 1">
                   <span class="d-block" style="color: #7f919b"
                     >Workflow Runs</span
                   >
                   <span
                     class="mt-4 d-block font-weight-bold"
                     style="color: var(--v-primary-base); font-size: 24px"
-                    >231</span
+                    >{{runs}}</span
                   >
                 </div>
 
@@ -61,7 +61,7 @@
                 "
               >
                 <span>Trigger</span>
-                <span class="px-3" style="font-weight: 600">Email</span>
+                <span class="px-3" style="font-weight: 600">{{trigger}}</span>
               </div>
 
               <div v-if="conditions != null">
@@ -288,7 +288,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters("workflow", ["workflow", "conditions"]),
+    ...mapGetters("workflow", ["workflow", "conditions","trigger","runs"]),
   },
 };
 </script>
