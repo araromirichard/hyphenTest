@@ -54,7 +54,7 @@
                 <v-row class="pt-2 mb-0">
                   <v-col cols="12" md="6">
                     <v-text-field
-                      ref="Firstname"
+                      ref="first_name"
                       color="primary"
                       hide-details="auto"
                       placeholder="First Name"
@@ -63,14 +63,14 @@
                       type="text"
                       prepend-inner-icon="mdi-account-outline"
                       class="font-weight-regular"
-                      v-model="signUpDetails.Firstname"
-                      :rules="rules.Firstname"
+                      v-model="signUpDetails.first_name"
+                      :rules="rules.first_name"
                     >
                     </v-text-field>
                   </v-col>
                   <v-col cols="12" md="6">
                     <v-text-field
-                      ref="Lastname"
+                      ref="last_name"
                       color="primary"
                       hide-details="auto"
                       placeholder="Last Name"
@@ -79,8 +79,8 @@
                       outlined
                       type="text"
                       class="font-weight-regular"
-                      v-model="signUpDetails.Lastname"
-                      :rules="rules.Lastname"
+                      v-model="signUpDetails.last_name"
+                      :rules="rules.last_name"
                     >
                     </v-text-field>
                   </v-col>
@@ -233,16 +233,16 @@ export default {
     return {
       showPass: false,
       signUpDetails: {
-        Firstname: "",
-        Lastname: "",
+        first_name: "",
+        last_name: "",
         username: "",
         email: "",
         phoneNumber: "",
         password: "",
       },
       rules: {
-        Firstname: [(v) => !!v || "This field is required "],
-        Lastname: [(v) => !!v || "This field is required "],
+        first_name: [(v) => !!v || "This field is required "],
+        last_name: [(v) => !!v || "This field is required "],
         username: [(v) => !!v || "This field is required "],
         email: [
           (v) => !!v || "E-mail is ",
@@ -313,8 +313,8 @@ export default {
   computed: {
     form() {
       return {
-        Firstname: this.signUpDetails.Firstname,
-        Lastname: this.signUpDetails.Lastname,
+        first_name: this.signUpDetails.first_name,
+        last_name: this.signUpDetails.last_name,
         username: this.signUpDetails.username,
         email: this.signUpDetails.email,
         phoneNumber: this.signUpDetails.phoneNumber,

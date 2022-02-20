@@ -422,16 +422,16 @@ export default {
   computed: {
     getUserInitials() {
       if (this.$store.state.auth.user !== null) {
-        const firstName =
-          (this.$store.state.auth.user.firstName &&
-            this.$store.state.auth.user.firstName.charAt(0)) ||
+        const first_name =
+          (this.$store.state.auth.user.first_name &&
+            this.$store.state.auth.user.first_name.charAt(0)) ||
           "";
-        const lastName =
-          (this.$store.state.auth.user.lastName &&
-            this.$store.state.auth.user.lastName.charAt(0)) ||
+        const last_name =
+          (this.$store.state.auth.user.last_name &&
+            this.$store.state.auth.user.last_name.charAt(0)) ||
           "";
         return (
-          firstName + lastName ||
+          first_name +'.'+ last_name ||
           (this.$store.state.auth.user.username &&
             this.$store.state.auth.user.username.charAt(0)) ||
           ""
