@@ -1,4 +1,4 @@
-import Organization from "../../api/organization"; 
+import Organization from "../../api/organization";
 
 const state = {};
 

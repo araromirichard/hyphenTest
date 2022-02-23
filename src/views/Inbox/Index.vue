@@ -722,7 +722,7 @@ export default {
 }
 .h-card-body-bold {
   max-width: 16rem;
-  font-family: Inter;
+  font-family: "Inter";
   font-style: normal;
   font-weight: bold;
   font-size: 0.8rem;
@@ -732,7 +732,7 @@ export default {
 }
 .h-card-body {
   max-width: 260px;
-  font-family: Inter;
+  font-family: "Inter";
   font-style: normal;
   font-weight: normal;
   font-size: 12px;

@@ -217,10 +217,9 @@ export default {
       });
 
       if (this.canCompleOrgCreation) {
-
         const payload = {
           orgname: this.companyDetails.orgname,
-          members:[this.user.id],
+          members: [this.user.id],
           company: {
             company_name: this.companyDetails.orgname,
             registration_number: this.companyDetails.cac,

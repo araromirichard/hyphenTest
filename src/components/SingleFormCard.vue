@@ -166,6 +166,7 @@
 
 <script>
 import formBuider from "@/api/formbuilder.js";
+import { mapState } from "vuex";
 
 export default {
   props: {
@@ -185,7 +186,7 @@ export default {
         { title: "mdi-format-indent-increase", path: "#" },
         { title: "mdi-delete", path: "#" },
       ],
-      formCards: [],
+
       loading: true,
     };
   },
@@ -244,7 +245,7 @@ export default {
       this.$emit("formBuilder/create-form", this.formCards);
     },
   },
-  mounted() {
+  created() {
     //make skeleton loader stop
     this.loading = true;
     setTimeout(() => {
@@ -252,9 +253,11 @@ export default {
     }, 5000);
 
     this.$store.dispatch("formBuilder/FetchAllForms");
+    console.log(this.$store.dispatch("formBuilder/FetchAllForms"));
     //console.log(this.$store);
   },
   computed: {
+    ...mapState("formBuilder", ["formCards"]),
     //total entries suppose to come from the form input endpoint
     totalEntriesNum() {
       return this.formEntries.length;

@@ -32,7 +32,7 @@
           </v-flex>
           <v-flex md1>
             <div class="d-flex align-center justify-center">
-              <v-chip :color="chipColor" :text-color="textColor" x-small>{{
+              <v-chip :color="chipcolor" :text-color="textColor" x-small>{{
                 type
               }}</v-chip>
             </div>
@@ -88,7 +88,7 @@
           </v-flex>
           <v-flex md1>
             <div class="d-flex align-center">
-              <v-icon small :color="iconColor"> mdi-circle-medium </v-icon>
+              <v-icon small :color="statusIcon"> mdi-circle-medium </v-icon>
               <span
                 style="
                   font-family: Lato;
@@ -202,12 +202,6 @@ export default {
     status: {
       type: String,
     },
-    iconColor: {
-      type: String,
-    },
-    chipColor: {
-      type: String,
-    },
     textColor: {
       type: String,
     },
@@ -221,6 +215,22 @@ export default {
         name: "inbox.invoice",
         query: { review: false },
       });
+    },
+  },
+  computed: {
+    statusIcon() {
+      if (this.status === "pending") {
+        return "#FF6A6A";
+      } else if (this.status === "processing") {
+        return "#F7CA40";
+      } else if (this.status === "in review") {
+        return "#2B99D5";
+      } else return "#2BD5AE";
+    },
+    chipcolor() {
+      if (this.type === "expense") {
+        return "#F9EED2";
+      } else return "#D5F7EF";
     },
   },
 };

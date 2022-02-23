@@ -1,6 +1,6 @@
 const state = {
   workflow: null,
-  trigger: 'Email',
+  trigger: "Email",
   runs: 0,
 };
 
@@ -34,7 +34,7 @@ const getters = {
 
   runs(state) {
     return state.runs;
-  }
+  },
 };
 
 const mutations = {
@@ -44,7 +44,7 @@ const mutations = {
 
   SET_TRIGGER(state, payload) {
     state.trigger = payload;
-  }
+  },
 };
 
 const actions = {
@@ -54,7 +54,7 @@ const actions = {
 
   setTrigger({ commit }, payload) {
     commit("SET_TRIGGER", payload);
-  }
+  },
 };
 
 export default {

@@ -31,7 +31,7 @@
               >
               <v-chip
                 class="mx-4"
-                :color="chipColor"
+                :color="chipcolor"
                 :text-color="textColor"
                 x-small
                 >{{ type }}</v-chip
@@ -89,7 +89,7 @@
           </v-flex>
           <v-flex md1>
             <div class="d-flex align-center">
-              <v-icon small :color="iconColor"> mdi-circle-medium </v-icon>
+              <v-icon small :color="statusIcon"> mdi-circle-medium </v-icon>
               <span
                 style="
                   font-family: Lato;
@@ -209,18 +209,31 @@ export default {
     status: {
       type: String,
     },
-    iconColor: {
-      type: String,
-    },
-    chipColor: {
-      type: String,
-    },
+
     textColor: {
       type: String,
     },
   },
   data() {
     return {};
+  },
+  computed: {
+    statusIcon() {
+      if (this.status === "pending") {
+        return "#FF6A6A";
+      } else if (this.status === "processing") {
+        return "#F7CA40";
+      } else if (this.status === "In review") {
+        return "#FF6A6A";
+      } else if (this.status === "review needed") {
+        return "#2B99D5";
+      } else return "#2BD5AE";
+    },
+    chipcolor() {
+      if (this.type === "expense") {
+        return "#F9EED2";
+      } else return "#D5F7EF";
+    },
   },
 };
 </script>

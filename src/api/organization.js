@@ -2,7 +2,6 @@ import api from "./Api";
 
 export default {
   create(organization) {
-    
     return api().post("/organizations", organization, {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("token"),

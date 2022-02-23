@@ -51,14 +51,14 @@
             class="mx-2 pa-1 text-center"
             outlined
             x-small
-            :color="chipColor"
+            :color="chipcolor"
             ><span class="text-caption">{{ type }}</span></v-chip
           >
           <v-chip
             class="mx-2 pa-1 text-center"
             outlined
             x-small
-            :color="statusColor"
+            :color="statusIcon"
             ><span class="text-caption px-0 ma-0">{{ status }}</span></v-chip
           >
           <v-chip class="mx-2" x-small
@@ -148,18 +148,25 @@ export default {
     status: {
       type: String,
     },
-    statusColor: {
-      type: String,
-    },
-    chipColor: {
-      type: String,
-    },
-    textColor: {
-      type: String,
-    },
   },
   data() {
     return {};
+  },
+  computed: {
+    statusIcon() {
+      if (this.status === "pending") {
+        return "#FF6A6A";
+      } else if (this.status === "processing") {
+        return "#F7CA40";
+      } else if (this.status === "in review") {
+        return "#2B99D5";
+      } else return "#2BD5AE";
+    },
+    chipcolor() {
+      if (this.type === "invoice") {
+        return "#F9EED2";
+      } else return "#D5F7EF";
+    },
   },
 };
 </script>

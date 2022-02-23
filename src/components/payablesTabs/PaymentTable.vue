@@ -470,7 +470,7 @@ export default {
       dialog: false,
     };
   },
-   computed: {
+  computed: {
     stausIcon() {
       if (this.status === "scheduled") {
         return "#FF6A6A";

@@ -185,8 +185,6 @@
             :amount="invoice.amount"
             :status="invoice.status"
             :category="invoice.category"
-            :iconColor="invoice.status === 'processed' ? '#2BD5AE' : '#E3AA1C'"
-            :chipColor="invoice.type === 'expense' ? '#F9EED2' : '#D5F7EF'"
             :textColor="invoice.type === 'expense' ? '#E3AA1C' : '#2BD5AE'"
           />
 
@@ -203,9 +201,6 @@
             :status="invoice.status"
             :category="invoice.category"
             :chipColor="invoice.type === 'expense' ? '#2BD5AE' : '#E3AA1C'"
-            :statusColor="
-              invoice.status === 'processed' ? '#2BD5AE' : '#E3AA1C'
-            "
           />
         </v-col>
       </v-row>

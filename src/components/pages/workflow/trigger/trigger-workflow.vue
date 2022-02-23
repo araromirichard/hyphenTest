@@ -96,7 +96,6 @@
         margin-top: 35px;
         margin-bottom: 50px;
         background: var(--v-primary-base);
-      
       "
     >
       <v-icon size="27" left>mdi-chevron-right</v-icon> Next

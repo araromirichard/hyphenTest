@@ -89,8 +89,6 @@
           :date="invoice.date | date"
           :amount="invoice.amount"
           :status="invoice.status"
-          :iconColor="invoice.status === 'processed' ? '#2BD5AE' : '#E3AA1C'"
-          :chipColor="invoice.type === 'expense' ? '#F9EED2' : '#D5F7EF'"
           :textColor="invoice.type === 'expense' ? '#E3AA1C' : '#2BD5AE'"
         />
 

@@ -1018,7 +1018,7 @@
           <v-col cols="12" sm="12" md="7" class="">
             <v-card min-height="494px" elevation="3">
               <v-card
-               v-if="$vuetify.breakpoint.mdAndUp"
+                v-if="$vuetify.breakpoint.mdAndUp"
                 flat
                 width="100%"
                 style="border-bottom: 1px solid rgba(127, 145, 155, 0.3)"

@@ -164,7 +164,7 @@
                 v-model="model"
                 active-class="primary--text text--accent-4 link-text"
               >
-                <v-list-item v-if="version1" nav link to="#" class="mx-auto">
+                <v-list-item nav link to="/settings" class="mx-auto">
                   <v-list-item-icon class="mr-1">
                     <img
                       :src="require('@/assets/pbot_icons/settings.svg')"
@@ -190,7 +190,7 @@
                     >
                   </v-list-item-content>
                 </v-list-item>
-                   <v-list-item @click="logout" class="mx-auto">
+                <v-list-item @click="logout" class="mx-auto">
                   <v-list-item-icon class="mr-4">
                     <img
                       :src="require('@/assets/icons/outline/Path.svg')"
@@ -349,39 +349,45 @@
       ></v-divider>
       <div class="pt-2">
         <v-list class="pl-10" dense>
-          <v-list-item v-if="version1" nav link to="#" class="mx-auto">
-            <v-list-item-icon class="mr-4">
-              <img
-                :src="require('@/assets/pbot_icons/settings.svg')"
-                class="navIcon"
-              />
-            </v-list-item-icon>
-            <v-list-item-content>
-              <v-list-item-title class="navTxt">Settings</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-          <v-list-item nav link to="#" class="mx-auto">
-            <v-list-item-icon class="mr-4">
-              <img
-                :src="require('@/assets/icons/outline/Path.svg')"
-                class="navIcon"
-              />
-            </v-list-item-icon>
-            <v-list-item-content>
-              <v-list-item-title class="navTxt">Help</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-             <v-list-item @click="logout" class="mx-auto">
-            <v-list-item-icon class="mr-4">
-              <img
-                :src="require('@/assets/icons/outline/Path.svg')"
-                class="navIcon"
-              />
-            </v-list-item-icon>
-            <v-list-item-content>
-              <v-list-item-title class="navTxt">Logout</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
+          <v-list-item-group
+            v-model="model"
+            color="primary"
+            active-class="primary--text text--accent-4 link-text"
+          >
+            <v-list-item nav link to="/settings" class="mx-auto">
+              <v-list-item-icon class="mr-4">
+                <img
+                  :src="require('@/assets/pbot_icons/settings.svg')"
+                  class="navIcon"
+                />
+              </v-list-item-icon>
+              <v-list-item-content>
+                <v-list-item-title class="navTxt">Settings</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+            <v-list-item nav link to="#" class="mx-auto">
+              <v-list-item-icon class="mr-4">
+                <img
+                  :src="require('@/assets/icons/outline/Path.svg')"
+                  class="navIcon"
+                />
+              </v-list-item-icon>
+              <v-list-item-content>
+                <v-list-item-title class="navTxt">Help</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+            <v-list-item @click="logout" class="mx-auto">
+              <v-list-item-icon class="mr-4">
+                <img
+                  :src="require('@/assets/icons/outline/Path.svg')"
+                  class="navIcon"
+                />
+              </v-list-item-icon>
+              <v-list-item-content>
+                <v-list-item-title class="navTxt">Logout</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list-item-group>
         </v-list>
       </div>
       <template v-slot:append absolute v-if="$vuetify.breakpoint.mdAndUp">
@@ -412,8 +418,8 @@ export default {
       ],
     };
   },
-  methods:{
-    logout(){
+  methods: {
+    logout() {
       this.$store.dispatch("auth/logout");
       this.$router.push("/login");
     },

@@ -129,12 +129,11 @@ export default {
     iconColor: {
       type: String,
     },
-    
   },
   data() {
     return {};
   },
-   computed: {
+  computed: {
     stausIcon() {
       if (this.status === "pending") {
         return "#FF6A6A";
