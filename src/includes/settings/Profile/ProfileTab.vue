@@ -61,10 +61,10 @@
             </v-row>
             <v-card-actions class="justify-end pa-md-8">
               <v-btn
-                class="submit-btn "
+                class="submit-btn"
                 :loading="isSaving"
                 dark
-                 :width="$vuetify.breakpoint.smAndDown ? '100%' : '121'"
+                :width="$vuetify.breakpoint.smAndDown ? '100%' : '121'"
                 height="45"
               >
                 <simple-line-icons

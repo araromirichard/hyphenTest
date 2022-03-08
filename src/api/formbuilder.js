@@ -16,4 +16,26 @@ export default {
       },
     });
   },
+  getForm(id) {
+    return api().get("/forms/" + id, {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    });
+  },
+
+  updateForm(id, form) {
+    return api().put("/forms/" + id, form, {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    });
+  },
+  deleteForm(id) {
+    return api().delete("/forms/" + id, {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    });
+  },
 };

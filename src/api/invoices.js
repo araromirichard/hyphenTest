@@ -59,11 +59,11 @@ export default {
     return api().get("/invoices/org/" + orgId);
   },
 
-  delete(id) {
-    return api().delete("/invoices/" + id, data, {
-      headers: {
-        authorization: localStorage.getItem("token"),
-      },
-    });
-  },
+  // delete(id) {
+  //   return api().delete("/invoices/" + id, data, {
+  //     headers: {
+  //       authorization: localStorage.getItem("token"),
+  //     },
+  //   });
+  // },
 };

@@ -165,8 +165,7 @@
 </template>
 
 <script>
-import formBuider from "@/api/formbuilder.js";
-import { mapState } from "vuex";
+import { mapActions, mapState } from "vuex";
 
 export default {
   props: {
@@ -191,12 +190,12 @@ export default {
     };
   },
   methods: {
+    ...mapActions("formBuilder", ["formCards", "deleteForm"]),
     showForm(icon, index, parentIndex) {
       // i = this.selectedIcon;
       // console.log({ icon, index });
       if (index === 0) {
         this.$emit("edit-form");
-        console.log(this.formData);
 
         this.$router.push({
           path: `/edit-form/${parentIndex + 1}`,
@@ -224,20 +223,26 @@ export default {
       } else if (index === 2) {
         //get the index of the particula form card
         //pass this index to a variable
-        const id = this.formCards[parentIndex].id;
+        const id = this.$store.state.formBuilder.formCards[parentIndex].id;
+
+        console.log(this.$store.state.formBuilder.formCards[parentIndex].id);
+        this.$store.state.formBuilder.formCards.splice(parentIndex, 1);
+        console.log(this.$store.state.formBuilder.formCards);
 
         //delete card from vue data object to reflect on UI
-        this.formCards.splice(parentIndex, 1);
+        // this.formCards.splice(parentIndex, 1);
+
+        this.deleteForm(id);
 
         //delete from server....
-        formBuider
-          .deleteForm(id)
-          .then((response) => {
-            console.log(response.data);
-          })
-          .catch((error) => {
-            console.log("an error occurred: ", error.response);
-          });
+        // formBuider
+        //   .deleteForm(id)
+        //   .then((response) => {
+        //     console.log(response.data);
+        //   })
+        //   .catch((error) => {
+        //     console.log("an error occurred: ", error.response);
+        //   });
       }
     },
 
@@ -253,11 +258,16 @@ export default {
     }, 5000);
 
     this.$store.dispatch("formBuilder/FetchAllForms");
-    console.log(this.$store.dispatch("formBuilder/FetchAllForms"));
+    //console.log(this.$store.dispatch("formBuilder/FetchAllForms"));
     //console.log(this.$store);
   },
   computed: {
     ...mapState("formBuilder", ["formCards"]),
+
+    getFormById() {
+      return this.forms.find((form) => form.id == this.$route.params.id).id;
+    },
+
     //total entries suppose to come from the form input endpoint
     totalEntriesNum() {
       return this.formEntries.length;

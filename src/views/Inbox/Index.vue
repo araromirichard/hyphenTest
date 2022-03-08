@@ -9,7 +9,7 @@
           class="d-flex justify-md-space-between mx-14 pt-md-10"
         >
           <v-col class="pa-sm-0 d-flex align-center">
-            <div class="pa-0" v-if="!noInvoice">
+            <div class="pa-0" v-if="invoiceArrayStatus">
               <h3
                 class="text-bold primary--text"
                 style="
@@ -45,7 +45,7 @@
           <v-col class="pa-sm-0 d-flex align-center">
             <!-- when there are invocies -->
 
-            <div class="pa-0 ma-0" v-if="!noInvoice">
+            <div class="pa-0 ma-0" v-if="invoiceArrayStatus">
               <h3
                 class="px-0 pt-5 pt-md-0 text-bold primary--text"
                 style="
@@ -59,7 +59,7 @@
                 <span class="transTotal align-center">234 Transactions</span>
               </h3>
             </div>
-            <div class="mt-6 pa-0" v-if="noInvoice">
+            <div class="mt-6 pa-0" v-if="!invoiceArrayStatus">
               <h3
                 class="text-bold primary--text"
                 style="
@@ -89,7 +89,7 @@
         <v-row
           class="justify-center"
           style="padding-top: 105px"
-          v-if="noInvoice"
+          v-if="!invoiceArrayStatus"
         >
           <img :src="require('@/assets/folder.svg')" alt="folder svg" />
         </v-row>
@@ -99,7 +99,7 @@
         <v-row
           class="justify-center mx-2 text-h5 text-md-h4"
           style="padding-top: 40px"
-          v-if="noInvoice"
+          v-if="!invoiceArrayStatus"
         >
           <p
             style="
@@ -115,7 +115,7 @@
         </v-row>
 
         <!-- instructions when there is no invoice -->
-        <v-row class="justify-center pt-0" v-if="noInvoice">
+        <v-row class="justify-center pt-0" v-if="!invoiceArrayStatus">
           <p
             style="
               font-family: Inter;
@@ -129,7 +129,7 @@
             Click here to upload an invoice or generate an expense request form
           </p>
         </v-row>
-        <v-row class="d-flex justify-center pt-8" v-if="noInvoice">
+        <v-row class="d-flex justify-center pt-8" v-if="!invoiceArrayStatus">
           <v-card
             class="d-flex flex-row"
             elevation="0"
@@ -168,7 +168,7 @@
     </v-row>
 
     <!-- inbox summary Info cards -->
-    <v-row class="mt-16 mx-2 mx-md-0" align="center" v-if="!noInvoice">
+    <v-row class="mt-16 mx-2 mx-md-0" align="center" v-if="invoiceArrayStatus">
       <v-col class="pa-0 my-4 my-md-0" cols="12" md="4">
         <v-card
           elevation="3"
@@ -230,7 +230,7 @@
                       line-height: 24px;
                       color: #19283d;
                     "
-                    >{{ totatInvoice }}</span
+                    >{{ totalInvoice }}</span
                   >
                 </v-avatar>
               </div>
@@ -293,7 +293,8 @@
     </v-row>
 
     <!-- inbox table for desktop screen -->
-    <v-row v-if="!noInvoice">
+    <v-row v-if="invoiceArrayStatus">
+      <!-- {{$store.state.auth.user.organization}} -->
       <v-col cols="12">
         <v-card
           flat
@@ -563,7 +564,7 @@
 
     <!-- tabs for mobile devices -->
     <v-container class="pa-0" v-if="$vuetify.breakpoint.mdAndDown">
-      <v-row v-if="!noInvoice">
+      <v-row v-if="invoiceArrayStatus">
         <v-col cols="12">
           <v-bottom-navigation fixed class="pa-0" dark>
             <v-tabs
@@ -595,6 +596,7 @@
 </template>
 
 <script>
+import { mapGetters, mapState } from "vuex";
 import { required, email } from "vee-validate/dist/rules";
 import {
   extend,
@@ -625,12 +627,11 @@ export default {
     return {
       dialog: false,
       dialog2: false,
-      noInvoice: false,
       isClicked: true,
       tab: 0,
       tab1: 0,
       search: "",
-      totatInvoice: 340,
+      totalInvoice: 340,
       NumOfExceptions: 14,
       stakeholder: {
         fullNames: "",
@@ -702,18 +703,48 @@ export default {
       console.table(this.stakeholder);
     },
   },
-  mounted() {
-    console.log({
-      breakpoints: this.$vuetify.breakpoint,
-      avatarSizes: this.avatarSizes,
-    });
+  // mounted() {
+  //   console.log(this.getOrgId);
+  //   console.log({
+  //     breakpoints: this.$vuetify.breakpoint,
+  //     avatarSizes: this.avatarSizes,
+  //   });
+  // },
+
+  computed: {
+    ...mapGetters({
+      user: "auth/user",
+      token: "auth/token",
+      invoiceArrayStatus: "invoices/checkInvoiceArray"
+    }),
+    ...mapState({
+      organization: "organization",
+    }),
+    
+
+    getOrgId() {
+      return this.$store.state.auth.user;
+    },
+  },
+
+  watch: {
+    getOrgId: {
+      deep: true,
+      immediate: true,
+      handler(val) {
+        if (val != null) {
+          //console.log(JSON.stringify(val, null, 2));
+          this.$store.dispatch("invoices/FetchAllInvoices", val.organization);
+        }
+      },
+    },
   },
 };
 </script>
 
 <style scoped>
 .h-card-title {
-  font-family: Inter;
+  font-family: "Inter";
   font-style: normal;
   font-weight: bold;
   font-size: 18px;

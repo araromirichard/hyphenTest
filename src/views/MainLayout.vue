@@ -90,7 +90,7 @@
                 </v-list-item-content>
               </v-list-item>
               <v-divider
-                class="pt-4 mx-md-10"
+                class="mx-md-10"
                 v-if="$vuetify.breakpoint.mdAndUp"
               ></v-divider>
               <v-list-item nav link to="/payable" class="mx-auto">
@@ -155,7 +155,7 @@
             </v-list-item-group>
           </v-list>
           <v-divider
-            class="pt-4 mx-md-10"
+            class="mx-md-10"
             v-if="$vuetify.breakpoint.mdAndUp"
           ></v-divider>
           <div class="pt-2">
@@ -281,7 +281,7 @@
         </v-list-item-group>
       </v-list>
       <v-divider
-        class="pt-4 mx-md-10"
+        class="mx-md-10"
         v-if="$vuetify.breakpoint.mdAndUp"
       ></v-divider>
       <v-list flat class="py-2 pl-10">
@@ -344,7 +344,7 @@
         </v-list-item-group>
       </v-list>
       <v-divider
-        class="pt-4 mx-md-10"
+        class="mx-md-10"
         v-if="$vuetify.breakpoint.mdAndUp"
       ></v-divider>
       <div class="pt-2">
@@ -437,7 +437,7 @@ export default {
             this.$store.state.auth.user.last_name.charAt(0)) ||
           "";
         return (
-          first_name +'.'+ last_name ||
+          first_name + "." + last_name ||
           (this.$store.state.auth.user.username &&
             this.$store.state.auth.user.username.charAt(0)) ||
           ""

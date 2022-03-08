@@ -169,7 +169,7 @@
 
 <script>
 //import formBuider from "@/api/formbuilder.js";
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 export default {
   components: {
     //Overlaybtns
@@ -186,75 +186,66 @@ export default {
     };
   },
   methods: {
-    ...mapActions({ showToast: "ui/showToast" }),
-    // saveData() {
-    //   //get id from $route.params to access the particular form template...
-    //   const id = parseInt(this.$route.params.id);
-    //   const dataPayload = this.createRequestData;
-    //   formBuider
-    //     .updateForm(id, dataPayload)
-    //     .then((response) => {
-    //       console.log(response.data.data);
-    //     })
-    //     .catch((error) => {
-    //       console.log(
-    //         "an error occured while trying to update form Template:",
-    //         error.response
-    //       );
-    //     });
+    ...mapActions(
+      { showToast: "ui/showToast" }
+      //{ getForm: "formBuilder/GetForm" }
+    ),
+    ...mapGetters("formBuilder", ["forms"]),
 
-    //   this.showToast({
-    //     sclass: "success",
-    //     show: true,
-    //     message: "Form Template Updated",
-    //     timeout: 3000,
-    //   });
-    // },
+    async saveData() {
+      try {
+        if (this.formData == null) {
+          this.$store.dispatch("formBuilder/getForm", this.$route.params.id);
+        } else {
+          await console.log(JSON.stringify(this.formData, null, 2));
+          this.$store.dispatch("formBuilder/updateForm", {
+            id: this.$route.params.id,
+            payload: this.formData,
+          });
+          //console.log(JSON.stringify(payload, null, 2));
+        }
+      } catch (error) {
+        console.log(error);
+      }
+
+      this.showToast({
+        sclass: "success",
+        show: true,
+        message: "Form Template Updated",
+        timeout: 3000,
+      });
+    },
   },
 
   mounted() {
-    //get id from $route.params to access the particular form template...
-    //const id = parseInt(this.$route.params.id);
-    //get formData
-    // formBuider
-    //   .getForm(id)
-    //   .then((response) => {
-    //     this.formData = response.data.data;
-    //   })
-    //   .catch((error) => {
-    //     console.log(
-    //       "an error occured while trying to get form:",
-    //       error.response
-    //     );
-    //   });
+    // this.getFormById = this.formData
   },
-  // computed: {
-  //   //return full object to send to
-  //   createRequestData() {
-  //     return {
-  //       form_title: this.fmName,
-  //       data: this.formData,
-  //       is_private: this.configuration.isPrivate,
-  //     };
-  //   },
+  computed: {
+    ...mapGetters("formBuilder", ["forms"]),
 
-  // getFormName() {
-  //   if (this.formData == null && this.formData == undefined) return;
-  //   console.log(JSON.stringify(this.formData, null, 2));
+    getFormById() {
+      const formResponse = this.forms.find(
+        (form) => form.id == this.$route.params.id
+      );
+      console.log(JSON.stringify(formResponse, null, 2));
+      return formResponse.form_fields;
+    },
 
-  //   //declaring a variable and trying to get the form title name from the formData Object....
-  //   var fmName = "";
-  //   try {
-  //     fmName =
-  //       this.formData.sections[Object.keys(this.formData.sections)].headline;
+    // updatedFormData() {
+    //   return {
 
-  //     console.log(fmName);
-  //     return fmName;
-  //   } catch (error) {
-  //     return "";
-  //   }
-  // },
-  // },
+    //   }
+    // }
+  },
+  watch: {
+    getFormById: {
+      deep: true,
+      immediate: true,
+      handler(val) {
+        this.formData = val;
+      },
+    },
+  },
 };
 </script>
 

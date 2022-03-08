@@ -70,7 +70,7 @@
                 </v-text-field>
               </v-col>
             </v-row>
-           <v-row class="mr-md-4 mx-md-10 mb-8">
+            <v-row class="mr-md-4 mx-md-10 mb-8">
               <v-subheader class="my-4 section-title">
                 Office/Location
               </v-subheader>
@@ -128,9 +128,11 @@
               </v-col>
             </v-row>
             <div class="pa-0 mx-md-10">
-              <v-subheader class="px-0 px-md-4 my-4 section-title"> Leadership </v-subheader>
+              <v-subheader class="px-0 px-md-4 my-4 section-title">
+                Leadership
+              </v-subheader>
             </div>
-           <v-row class="mr-md-4 mx-md-10 mb-8">
+            <v-row class="mr-md-4 mx-md-10 mb-8">
               <v-col cols="12" md="6">
                 <v-text-field
                   v-model="companyDetails.leadership.firstName"

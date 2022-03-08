@@ -98,7 +98,13 @@
               Form Builder
             </h6>
             <v-spacer></v-spacer>
+
             <div class="px-8 pt-6">
+              <v-switch
+                color="#16be98"
+                v-model="configuration.isPrivate"
+                :label="`Private Form?: ${configuration.isPrivate.toString()}`"
+              ></v-switch>
               <v-sheet
                 outlined
                 rounded="lg"
@@ -178,13 +184,14 @@
 
 <script>
 //import formBuider from "@/api/formbuilder.js";
-import { mapActions, mapGetters } from "vuex";
+import { mapActions, mapGetters, mapState } from "vuex";
 export default {
   components: {
     //Overlaybtns
   },
   data() {
     return {
+      switch1: true,
       formInputData: null,
       configuration: {
         formTitle: "",
@@ -192,7 +199,6 @@ export default {
         formName: "",
         formId: 2,
       },
-
       formData: null,
     };
   },
@@ -202,19 +208,39 @@ export default {
       const formPayload = this.createRequestData;
       console.log(formPayload);
       //console.log(this.formData);
+      if (this.checkGridClassAndFormActions()) {
+        try {
+          await this.$store.dispatch("formBuilder/createForm", formPayload);
+        } catch (error) {
+          console.log(error);
+        }
 
-      try {
-        await this.$store.dispatch("formBuilder/createForm", formPayload);
-      } catch (error) {
-        console.log(error);
+        this.showToast({
+          sclass: "success",
+          show: true,
+          message: "Form Template Created",
+          timeout: 3000,
+        });
       }
+    },
+    checkGridClassAndFormActions() {
+      //check that the formData array is not empty...
+      if (this.formData == null && this.formData == undefined) return;
+      //declare and assign the value of organization to a variable
+      var organId = this.user.organization;
 
-      this.showToast({
-        sclass: "success",
-        show: true,
-        message: "Form Template Created",
-        timeout: 3000,
-      });
+      this.formData.formConfig.formActionURL =
+        "api.onpbot.com/v1/forms/" + organId + "/submit";
+      console.log(this.formData.formConfig.formActionURL);
+
+      //set the grid class of all fields to always be cols-12 and md-size-100
+      for (const key in this.formData.controls) {
+        this.formData.controls[key].containerClass =
+          "col-md-12 md-layout-item md-size-100";
+      }
+      console.log(this.formData.controls);
+
+      return true;
     },
   },
 
@@ -222,6 +248,9 @@ export default {
     ...mapGetters({
       user: "auth/user",
       token: "auth/token",
+    }),
+    ...mapState({
+      organization: "organization",
     }),
 
     getFormName() {
@@ -266,14 +295,6 @@ export default {
       };
     },
   },
-  // mounted() {
-  //   // console.log({store: this.$store, data: this.$data, user: this.user})
-  //   console.log({
-  //     user: this.user,
-  //     token: this.token,
-  //     organization: this.user.organization.toString(),
-  //   });
-  // },
 };
 </script>
 

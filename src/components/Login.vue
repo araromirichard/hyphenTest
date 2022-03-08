@@ -201,7 +201,7 @@
                           type="email"
                           required
                           class="font-weight-regular label--text"
-                          v-model="loginData.email"
+                          v-model="forgotPasswordMail"
                           :rules="rules.email"
                         ></v-text-field>
                       </div>
@@ -296,6 +296,7 @@ export default {
         email: "",
         password: "",
       },
+      forgotPasswordMail: "",
       isLoginin: false,
       forgotPassword: "",
       errorMsg: "",

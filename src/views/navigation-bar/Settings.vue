@@ -50,7 +50,6 @@ export default {
   margin: 0%;
 }
 #settings-page-mobile {
-
   padding: 0%;
   margin: 0%;
 }
