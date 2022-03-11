@@ -139,11 +139,11 @@
       <v-col cols="12" md="8" v-if="$vuetify.breakpoint.mdAndUp">
         <v-layout class="d-flex flex-column">
           <div class="mx-md-9 d-flex flex-row">
-            <v-breadcrumbs :items="breadcrumbs" class="px-md-2">
+            <v-breadcrumbs :items="breadcrumbsInvoice" class="px-md-2">
               <template v-slot:divider>
                 <v-icon class="px-0">mdi-chevron-right</v-icon>
-              </template> </v-breadcrumbs
-            >
+              </template>
+            </v-breadcrumbs>
             <v-spacer></v-spacer>
             <v-btn plain to="/inbox" class="mt-md-14">
               <v-icon large color="primary">mdi-chevron-left</v-icon>
@@ -168,13 +168,21 @@
                 color="white"
                 min-width="750px"
               >
-                <v-img
-                  class="mx-auto align-center"
-                  max-width="90%"
-                  contain
-                  src="@/assets/Simple-Invoice-Template-with-Shipping.png"
+                <v-skeleton-loader
+                  width="100%"
+                  height="80vh"
+                  type="image"
+                  :loading="loading"
                 >
-                </v-img>
+                  <v-img
+                    class="mx-auto align-center"
+                    max-width="90%"
+                    max-height="80vh"
+                    contain
+                    :src="invoiceImage"
+                  >
+                  </v-img>
+                </v-skeleton-loader>
               </v-card>
             </v-container>
           </div>
@@ -195,23 +203,8 @@ export default {
       isAnException: false,
       Exceptions: [],
       isDisabled: false,
-      breadcrumbs: [
-        {
-          text: "Inbox",
-          to: "/inbox/",
-          disabled: true,
-        },
-        {
-          text: "Invoice",
-          to: "#",
-          disabled: true,
-        },
-        {
-          text: "",
-          to: "/inbox/:id",
-          disabled: false,
-        },
-      ],
+
+      loading: true,
     };
   },
 
@@ -237,6 +230,13 @@ export default {
     this.getInvoiceData();
     console.log(this.singleInvoice.invoicenumber);
   },
+  created() {
+    //make skeleton loader stop
+    this.loading = true;
+    setTimeout(() => {
+      this.loading = false;
+    }, 5000);
+  },
   components: {
     BasicData,
   },
@@ -256,14 +256,35 @@ export default {
     }),
 
     breadcrumbsInvoice() {
-      const arr = this.breadcrumbs;
+      const arr = [
+        {
+          text: "Inbox",
+          to: "/inbox/",
+          disabled: true,
+        },
+        {
+          text: "Invoice",
+          to: "#",
+          disabled: true,
+        },
+        {
+          text: "",
+          to: "/inbox/:id",
+          disabled: false,
+        },
+      ];
       for (const obj of arr) {
         if (obj.disabled == false) {
           obj.text = this.singleInvoice.invoicenumber;
           break;
         }
       }
-      return console.log(JSON.stringify(arr, null, 2));
+      return arr;
+    },
+
+    invoiceImage() {
+      const value = this.singleInvoice.invoiceimage;
+      return "data:image/png;base64," + value;
     },
   },
 };

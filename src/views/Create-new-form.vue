@@ -126,7 +126,7 @@
                     line-height: 20px;
                     color: #596a73;
                   "
-                  >https://forms.onpbot.com/your-form-name-h</span
+                  >https://hypn.so/{id}</span
                 >
               </v-sheet>
             </div>
@@ -215,7 +215,7 @@ export default {
           console.log(error);
         }
 
-        this.showToast({
+       this.showToast({
           sclass: "success",
           show: true,
           message: "Form Template Created",
@@ -294,6 +294,9 @@ export default {
         hash: "",
       };
     },
+
+  
+    
   },
 };
 </script>
