@@ -5,14 +5,14 @@
         @click="
           $router.push({
             name: 'inbox.invoice',
-            params: { id: id },
+            params: { id: index },
             query: { exception: true },
           })
         "
         class="px-6 py-4 my-1"
         style="cursor: pointer; transition: all 0.3s ease"
         :elevation="hover ? 2 : 0"
-        :color="id % 2 ? '#f6f6f6' : ''"
+        :color="index % 2 ? '#f6f6f6' : ''"
       >
         <v-layout row wrap class="align-center">
           <v-flex md2>
@@ -27,7 +27,7 @@
                   line-height: 14px;
                   color: #596a73;
                 "
-                >{{ id }}</span
+                >{{ index }}</span
               >
               <v-chip
                 class="mx-4"
@@ -141,7 +141,7 @@
                 @click="
                   $router.push({
                     name: 'inbox.invoice',
-                    params: { id: id },
+                    params: { id: index },
                     query: { exception: true },
                   })
                 "
@@ -183,9 +183,6 @@
 export default {
   props: {
     index: {
-      type: Number,
-    },
-    id: {
       type: Number,
     },
     type: {

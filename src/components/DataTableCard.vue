@@ -124,9 +124,7 @@ export default {
     index: {
       type: Number,
     },
-    id: {
-      type: Number,
-    },
+
     type: {
       type: String,
     },

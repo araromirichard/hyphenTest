@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!-- for desktop screen -->
     <div v-if="$vuetify.breakpoint.mdAndUp">
       <validation-observer v-slot="{ handleSubmit }">
         <form @submit.prevent="handleSubmit(submitInput)">
@@ -34,7 +35,7 @@
                   >
                     <v-text-field
                       :error-messages="errors"
-                      v-model="basicDataInput.invoiceNumber"
+                      v-model="singleInvoice.invoicenumber"
                       hide-details="auto"
                       :disabled="changeState"
                       :background-color="backgroundColor"
@@ -70,7 +71,7 @@
                   >
                     <template v-slot:activator="{ on, attrs }">
                       <v-text-field
-                        v-model="basicDataInput.date"
+                        v-model="formatedDate"
                         hide-details="auto"
                         :disabled="changeState"
                         :background-color="backgroundColor"
@@ -93,7 +94,7 @@
                       ></v-text-field>
                     </template>
                     <v-date-picker
-                      v-model="basicDataInput.date"
+                      v-model="basicDataInput.dueDate"
                       @input="menu = false"
                       no-title
                       scrollable
@@ -122,7 +123,7 @@
                   >
                     <v-text-field
                       :error-messages="errors"
-                      v-model="basicDataInput.vat"
+                      v-model="singleInvoice.vat"
                       hide-details="auto"
                       :disabled="changeState"
                       :background-color="backgroundColor"
@@ -246,7 +247,7 @@
                   >
                     <v-text-field
                       :error-messages="errors"
-                      v-model="vendorData.name"
+                      v-model="singleInvoice.vendor.vendorname"
                       hide-details="auto"
                       :disabled="changeState"
                       :background-color="backgroundColor"
@@ -287,7 +288,7 @@
                   >
                     <v-text-field
                       :error-messages="errors"
-                      v-model="vendorData.address"
+                      v-model="singleInvoice.vendor.address"
                       hide-details="auto"
                       :disabled="changeState"
                       :background-color="backgroundColor"
@@ -328,7 +329,7 @@
                   >
                     <v-text-field
                       :error-messages="errors"
-                      v-model="vendorData.taxId"
+                      v-model="singleInvoice.vendor.taxid"
                       hide-details="auto"
                       :disabled="changeState"
                       :background-color="backgroundColor"
@@ -369,7 +370,7 @@
                   >
                     <v-text-field
                       :error-messages="errors"
-                      v-model="vendorData.email"
+                      v-model="singleInvoice.vendor.email"
                       hide-details="auto"
                       :disabled="changeState"
                       :background-color="backgroundColor"
@@ -414,7 +415,7 @@
                   >
                     <v-text-field
                       :error-messages="errors"
-                      v-model="vendorData.phone"
+                      v-model="singleInvoice.vendor.phone"
                       hide-details="auto"
                       :disabled="changeState"
                       :background-color="backgroundColor"
@@ -468,6 +469,7 @@
         </form>
       </validation-observer>
     </div>
+    <!-- for mobile screen -->
     <v-row v-if="$vuetify.breakpoint.mdAndDown">
       <v-col cols="10" offset="1" class="d-flex flex-column align-center">
         <validation-observer v-slot="{ handleSubmit }">
@@ -818,7 +820,7 @@
 <script>
 import SimpleLineIcons from "vue-simple-line";
 import InvoiceBtn from "./InvoiceBtn.vue";
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "BasicData",
@@ -855,8 +857,9 @@ export default {
     },
     submitInput(e) {
       e.preventDefault();
-      console.log("Basic Data", JSON.stringify(this.basicDataInput));
-      console.log("Vendor Data", JSON.stringify(this.vendorData));
+      console.log(JSON.stringify(this.completeInvoiceData, null, 2));
+      // console.log("Basic Data", JSON.stringify(this.basicDataInput));
+      // console.log("Vendor Data", JSON.stringify(this.vendorData));
       this.showToast({
         sclass: "success",
         show: true,
@@ -868,8 +871,28 @@ export default {
   },
 
   computed: {
+    ...mapGetters({
+      singleInvoice: "invoices/getSingleInvoice",
+    }),
+
     backgroundColor() {
       return this.changeState ? "transparent" : "#ffffff";
+    },
+
+    formatedDate() {
+      const date = new Date(this.singleInvoice.created_at);
+
+      let year = date.getFullYear();
+      let month = date.getMonth() + 1;
+      let day = date.getDate();
+
+      if (day < 10) {
+        day = "0" + day;
+      }
+      if (month < 10) {
+        month = "0" + month;
+      }
+      return day + "/" + month + "/" + year;
     },
   },
 };

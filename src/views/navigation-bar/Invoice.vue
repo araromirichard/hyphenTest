@@ -2,8 +2,9 @@
   <v-container fluid>
     <v-row class="d-flex justify-center">
       <v-col cols="12" md="4" class="#faf2df" style="background-color: #fffbf1">
-        <!-- title for mobile screen starts -->
+        <!-- title for mobile and desktop screen starts -->
         <div
+          v-if="Object.keys(singleInvoice).length"
           :style="{
             display: `${$vuetify.breakpoint.mdAndDown ? 'flex' : 'block'}`,
           }"
@@ -29,10 +30,11 @@
               font-weight-black
             "
           >
-            N2,300,000
+            &#8358;{{ singleInvoice.total }}
           </p>
+          <!-- {{ allInvoices.allInvoices }} -->
         </div>
-        <!-- title for mobile screen ends -->
+        <!-- title for mobile and desktop screen ends -->
 
         <!-- Exception summary card starts here -->
         <v-row v-if="isAnException">
@@ -57,7 +59,7 @@
                   <p class="error--text font-weight-bold">Exception(s)</p>
                   <v-avatar color="#FF6A6A" size="22">
                     <span class="white--text text-caption">{{
-                      numOfExceptions
+                      NumOfExceptions
                     }}</span>
                   </v-avatar>
                 </v-col>
@@ -140,8 +142,8 @@
             <v-breadcrumbs :items="breadcrumbs" class="px-md-2">
               <template v-slot:divider>
                 <v-icon class="px-0">mdi-chevron-right</v-icon>
-              </template>
-            </v-breadcrumbs>
+              </template> </v-breadcrumbs
+            >
             <v-spacer></v-spacer>
             <v-btn plain to="/inbox" class="mt-md-14">
               <v-icon large color="primary">mdi-chevron-left</v-icon>
@@ -184,6 +186,7 @@
 
 <script>
 import BasicData from "../../includes/BasicData.vue";
+import { mapState, mapGetters, mapActions } from "vuex";
 
 export default {
   name: "Invoice",
@@ -204,7 +207,7 @@ export default {
           disabled: true,
         },
         {
-          text: "#Invoice_Id",
+          text: "",
           to: "/inbox/:id",
           disabled: false,
         },
@@ -212,20 +215,55 @@ export default {
     };
   },
 
+  methods: {
+    ...mapActions({
+      singleInvoiceObj: "invoices/getInvoiceById",
+    }),
+
+    async getInvoiceData() {
+      try {
+        await this.$store.dispatch(
+          "invoices/getInvoiceById",
+          this.$route.params.id
+        );
+        console.log(this.singleInvoice.invoicenumber);
+      } catch (error) {
+        console.log(JSON.stringify(error, null, 2));
+      }
+    },
+  },
   mounted() {
     this.isAnException = this.$route.query.exception || false;
+    this.getInvoiceData();
+    console.log(this.singleInvoice.invoicenumber);
   },
   components: {
     BasicData,
   },
 
   computed: {
-    numOfExceptions() {
-      if (this.Exceptions) {
-        return this.Exceptions.length;
-      } else {
-        return 0;
+    ...mapGetters({
+      user: "auth/user",
+      token: "auth/token",
+      invoiceArrayStatus: "invoices/checkInvoiceArray",
+      totalInvoice: "invoices/numOfInvoices",
+      NumOfExceptions: "invoices/checkNumberOfExceptions",
+      singleInvoice: "invoices/getSingleInvoice",
+    }),
+    ...mapState({
+      organization: "organization",
+      formCards: "formBuilder",
+    }),
+
+    breadcrumbsInvoice() {
+      const arr = this.breadcrumbs;
+      for (const obj of arr) {
+        if (obj.disabled == false) {
+          obj.text = this.singleInvoice.invoicenumber;
+          break;
+        }
       }
+      return console.log(JSON.stringify(arr, null, 2));
     },
   },
 };

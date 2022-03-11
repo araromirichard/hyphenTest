@@ -5,13 +5,13 @@
         @click="
           $router.push({
             name: 'inbox.invoice',
-            params: { id: id },
+            params: { id: index },
           })
         "
         class="px-6 py-4 my-1"
         style="cursor: pointer; transition: all 0.3s ease"
         :elevation="hover ? 2 : 0"
-        :color="id % 2 ? '#f6f6f6' : ''"
+        :color="index % 2 ? '#f6f6f6' : ''"
       >
         <v-layout row wrap class="align-center">
           <v-flex md1>
@@ -26,7 +26,7 @@
                   line-height: 14px;
                   color: #596a73;
                 "
-                >{{ id }}</span
+                >{{ index }}</span
               >
             </div>
           </v-flex>
@@ -73,7 +73,7 @@
           <v-flex md1>
             <div class="d-flex align-center">
               <span
-                class="mb-0"
+                class="mb-0 pr-2 text-truncate"
                 style="
                   font-family: Lato;
                   font-style: normal;
@@ -140,7 +140,7 @@
                 @click="
                   $router.push({
                     name: 'inbox.invoice',
-                    params: { id: id },
+                    params: { id: index },
                   })
                 "
                 exact-path
@@ -178,14 +178,12 @@ export default {
     index: {
       type: Number,
     },
-    id: {
-      type: Number,
-    },
+
     type: {
       type: String,
     },
     amount: {
-      type: Number,
+      type: String,
     },
     category: {
       type: String,

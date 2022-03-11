@@ -80,32 +80,30 @@
       >
         <ExceptionTable
           v-if="$vuetify.breakpoint.mdAndUp"
-          :index="i"
-          :id="i + 1"
-          :invoiceRef="invoice.ref"
-          :type="invoice.type"
-          :requester="invoice.requester"
+          :index="invoice.id"
+          :invoiceRef="invoice.invoicenumber"
+          :type="invoice.invoicetype"
+          :requester="invoice.vendor.vendorname"
           :exception="invoice.exception"
-          :date="invoice.date | date"
-          :amount="invoice.amount"
+          :date="invoice.created_at | date"
+          :amount="invoice.total"
           :status="invoice.status"
-          :textColor="invoice.type === 'expense' ? '#E3AA1C' : '#2BD5AE'"
+          :textColor="invoice.invoicetype === 'expense' ? '#E3AA1C' : '#2BD5AE'"
         />
 
         <!-- Data table for mobile -->
 
         <ExceptionTableCard
           v-else
-          :index="i"
-          :id="i + 1"
-          :invoiceRef="invoice.ref"
-          :type="invoice.type"
-          :requester="invoice.requester"
-          :date="invoice.date | date"
-          :amount="invoice.amount"
+          :index="invoice.id"
+          :invoiceRef="invoice.invoicenumber"
+          :type="invoice.invoicetype"
+          :requester="invoice.vendor.vendorname"
+          :date="invoice.created_at | date"
+          :amount="invoice.total"
           :status="invoice.status"
           :exception="invoice.exception"
-          :chipColor="invoice.type === 'expense' ? '#2BD5AE' : '#E3AA1C'"
+          :chipColor="invoice.invoicetype === 'expense' ? '#2BD5AE' : '#E3AA1C'"
           :statusColor="invoice.status === 'processed' ? '#2BD5AE' : '#E3AA1C'"
         />
       </v-col>
@@ -117,6 +115,7 @@
 //import DataTable from "./DataTable.vue";
 import ExceptionTable from "./ExceptionTable.vue";
 import ExceptionTableCard from "./ExceptionTableCard.vue";
+import { mapState } from "vuex";
 export default {
   components: {
     //DataTable,
@@ -130,68 +129,6 @@ export default {
       selectedRows: [],
       sendToWorkflow: true,
       workflowName: "workflow name…",
-      invoices: [
-        {
-          id: 1,
-          type: "expense",
-          amount: 300000.0,
-          ref: "#EXP084492",
-          requester: "John Bello",
-          date: new Date(),
-          status: "processing",
-          exception: "2",
-        },
-        {
-          id: 2,
-          type: "invoice",
-          amount: 400000.0,
-          ref: "#EXP084492",
-          requester: "Emma Thomas",
-          date: new Date(),
-          status: "processed",
-          exception: "4",
-        },
-        {
-          id: 3,
-          type: "expense",
-          amount: 100000.0,
-          ref: "#EXP084492",
-          requester: "Sussan Boma",
-          date: new Date(),
-          status: "processed",
-          exception: "2",
-        },
-        {
-          id: 4,
-          type: "invoice",
-          amount: 250000.0,
-          ref: "#EXP084492",
-          requester: "John Bello",
-          date: new Date(),
-          status: "In review",
-          exception: "3",
-        },
-        {
-          id: 5,
-          type: "expense",
-          amount: 150000.0,
-          ref: "#EXP084492",
-          requester: "Pat Ede",
-          date: new Date(),
-          status: "review needed",
-          exception: "1",
-        },
-        {
-          id: 6,
-          type: "invoice",
-          amount: 3000.0,
-          ref: "#EXP084492",
-          requester: "Obinna Nwafor",
-          date: new Date(),
-          status: "pending",
-          exception: "3",
-        },
-      ],
     };
   },
   methods: {
@@ -201,23 +138,31 @@ export default {
       console.log(e);
     },
 
-    alert(item) {
-      alert("Hello " + item.name);
-    },
+    // alert(item) {
+    //   alert("Hello " + item.name);
+    // },
     setSearchText(value) {
       this.search = value;
     },
   },
   computed: {
+    ...mapState({
+      allInvoices: "invoices",
+    }),
     filteredInvoices() {
       if (this.search) {
-        return this.invoices.filter((invoice) => {
+        return this.allInvoices.allInvoices.filter((invoice) => {
           invoice.requester.toLowerCase().match(this.search.toLowerCase()) ||
             invoice.status.toLowerCase().match(this.search.toLowerCase) ||
             invoice.amount.toString().match(this.search) ||
             invoice.exception.toString().match(this.search);
         });
-      } else return this.invoices;
+      } else
+        return this.allInvoices.allInvoices.filter((invoice) => {
+          if (invoice.exception == 1) {
+            return invoice;
+          }
+        });
     },
   },
 };

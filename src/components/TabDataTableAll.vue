@@ -167,7 +167,7 @@
           </div>
         </v-flex>
       </v-layout>
-      <v-row class="mx-4">
+      <v-row>
         <v-col
           cols="12"
           v-for="(invoice, i) in filteredInvoices"
@@ -176,28 +176,26 @@
         >
           <DataTable
             v-if="$vuetify.breakpoint.mdAndUp"
-            :index="i"
-            :id="i + 1"
-            :invoiceRef="invoice.ref"
-            :type="invoice.type"
-            :requester="invoice.requester"
-            :date="invoice.date | date"
-            :amount="invoice.amount"
+            :index="invoice.id"
+            :invoiceRef="invoice.invoicenumber"
+            :type="invoice.invoicetype"
+            :requester="invoice.vendor.vendorname"
+            :date="invoice.created_at | date"
+            :amount="invoice.total"
             :status="invoice.status"
             :category="invoice.category"
-            :textColor="invoice.type === 'expense' ? '#E3AA1C' : '#2BD5AE'"
+            :textColor="invoice.invoicetype === 'expense' ? '#E3AA1C' : '#2BD5AE'"
           />
 
           <!-- Data table for mobile -->
           <DataTableCard
             v-if="$vuetify.breakpoint.smAndDown"
-            :index="i"
-            :id="i + 1"
-            :invoiceRef="invoice.ref"
-            :type="invoice.type"
-            :requester="invoice.requester"
-            :date="invoice.date | date"
-            :amount="invoice.amount"
+            :index="invoice.id"
+            :invoiceRef="invoice.invoicenumber"
+            :type="invoice.invoicetype"
+            :requester="invoice.vendor.vendorname"
+            :date="invoice.created_at | date"
+            :amount="invoice.total"
             :status="invoice.status"
             :category="invoice.category"
             :chipColor="invoice.type === 'expense' ? '#2BD5AE' : '#E3AA1C'"
@@ -212,7 +210,7 @@
 import SendToWorkflowDialog from "../includes/overlays/SendToWorkflowDialog.vue";
 import DataTable from "./DataTable.vue";
 import DataTableCard from "./DataTableCard.vue";
-import { mapActions } from "vuex";
+import { mapActions, mapState } from "vuex";
 
 export default {
   components: {
@@ -228,68 +226,7 @@ export default {
       sendToWorkflow: true,
       workflowName: "workflow name…",
       switchState: false,
-      invoices: [
-        {
-          id: 1,
-          type: "expense",
-          amount: 300000.0,
-          ref: "#EXP084492",
-          requester: "John Bello",
-          date: new Date(),
-          status: "processing",
-          category: "N",
-        },
-        // {
-        //   id: 2,
-        //   type: "invoice",
-        //   amount: 400000.0,
-        //   ref: "#EXP084492",
-        //   requester: "Emma Thomas",
-        //   date: new Date(),
-        //   status: "processed",
-        //   category: "$",
-        // },
-        // {
-        //   id: 3,
-        //   type: "expense",
-        //   amount: 100000.0,
-        //   ref: "#EXP084492",
-        //   requester: "Sussan Boma",
-        //   date: new Date(),
-        //   status: "processed",
-        //   category: "N",
-        // },
-        // {
-        //   id: 4,
-        //   type: "invoice",
-        //   amount: 250000.0,
-        //   ref: "#EXP084492",
-        //   requester: "John Bello",
-        //   date: new Date(),
-        //   status: "In review",
-        //   category: "$",
-        // },
-        // {
-        //   id: 5,
-        //   type: "expense",
-        //   amount: 150000.0,
-        //   ref: "#EXP084492",
-        //   requester: "Pat Ede",
-        //   date: new Date(),
-        //   status: "review needed",
-        //   category: "N",
-        // },
-        // {
-        //   id: 6,
-        //   type: "invoice",
-        //   amount: 3000.0,
-        //   ref: "#EXP084492",
-        //   requester: "Obinna Nwafor",
-        //   date: new Date(),
-        //   status: "pending",
-        //   category: "$",
-        // },
-      ],
+      
     };
   },
   methods: {
@@ -316,16 +253,25 @@ export default {
     },
   },
   computed: {
+    ...mapState({
+      organization: "organization",
+      formCards: "formBuilder",
+      allInvoices: "invoices",
+    }),
+    // ...mapGetters({
+    // }),
     filteredInvoices() {
       if (this.search) {
-        return this.invoices.filter((invoice) => {
+        return this.allInvoices.allInvoices.filter((invoice) => {
           return (
             invoice.requester.toLowerCase().match(this.search.toLowerCase()) ||
             invoice.status.toLowerCase().match(this.search.toLowerCase) ||
             invoice.amount.toString().match(this.search)
           );
         });
-      } else return this.invoices;
+      } else {
+        return this.allInvoices.allInvoices;
+      }
     },
   },
 };

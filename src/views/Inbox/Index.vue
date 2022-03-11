@@ -20,7 +20,9 @@
                 "
               >
                 Inbox
-                <span class="transTotal align-center">234 Transactions</span>
+                <span class="transTotal align-center"
+                  >{{ totalInvoice }} Transaction(s)</span
+                >
               </h3>
             </div>
 
@@ -56,7 +58,9 @@
                 "
               >
                 Inbox
-                <span class="transTotal align-center">234 Transactions</span>
+                <span class="transTotal align-center"
+                  >{{ totalInvoice }} Transactions</span
+                >
               </h3>
             </div>
             <div class="mt-6 pa-0" v-if="!invoiceArrayStatus">
@@ -194,6 +198,7 @@
               <div style="width: 100%; height: 100%">
                 <div class="pr-8 pl-4">
                   <p class="pt-8 my-0 h-card-title">Incoming invoice/bill</p>
+
                   <p class="pt-2 pr-1 my-md-1 text-wrap h-card-body-bold">
                     mtn-demo@process.finance
                   </p>
@@ -295,6 +300,7 @@
     <!-- inbox table for desktop screen -->
     <v-row v-if="invoiceArrayStatus">
       <!-- {{$store.state.auth.user.organization}} -->
+      {{ organization }}
       <v-col cols="12">
         <v-card
           flat
@@ -631,8 +637,8 @@ export default {
       tab: 0,
       tab1: 0,
       search: "",
-      totalInvoice: 340,
-      NumOfExceptions: 14,
+      // totalInvoice: 340,
+      // NumOfExceptions: 14,
       stakeholder: {
         fullNames: "",
         email: "",
@@ -715,12 +721,15 @@ export default {
     ...mapGetters({
       user: "auth/user",
       token: "auth/token",
-      invoiceArrayStatus: "invoices/checkInvoiceArray"
+      invoiceArrayStatus: "invoices/checkInvoiceArray",
+      totalInvoice: "invoices/numOfInvoices",
+      NumOfExceptions: "invoices/checkNumberOfExceptions",
     }),
     ...mapState({
       organization: "organization",
+      allInvoices: "invoices",
+      formCards: "formBuilder",
     }),
-    
 
     getOrgId() {
       return this.$store.state.auth.user;
