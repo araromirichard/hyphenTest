@@ -62,7 +62,7 @@
                     text
                     x-small
                     class="primary--text text-capitalize align-center"
-                    @click.prevent="dialog = true"
+                    @click.prevent="goToRecovery()"
                   >
                     <p
                       :style="{
@@ -142,115 +142,7 @@
               </v-chip>
             </v-card-actions>
 
-            <template>
-              <div>
-                <v-dialog v-model="dialog" max-width="516">
-                  <v-card color="#FEFCF8" class="rounded-lg">
-                    <v-card-title
-                      style="
-                        background: #ffffff;
-                        border-radius: 8px 8px 0px 0px;
-                      "
-                    >
-                      <span
-                        class="primary--text"
-                        style="
-                          font-family: Inter;
-                          font-style: normal;
-                          font-weight: 600;
-                          font-size: 16px;
-                          line-height: 19px;
-                        "
-                        >Recover Password</span
-                      >
-                      <v-spacer></v-spacer>
-                      <v-icon
-                        tag="button"
-                        @click="dialog = false"
-                        class="text-bolder"
-                        color="#596A73"
-                      >
-                        mdi-close
-                      </v-icon>
-                    </v-card-title>
-                    <form>
-                      <div class="px-8 d-flex" style="background: #fdfaf2">
-                        <p
-                          style="
-                            padding-top: 34px;
-                            font-family: Inter;
-                            font-style: normal;
-                            font-weight: normal;
-                            font-size: 12px;
-                            line-height: 18px;
-                            letter-spacing: 0.45px;
-                            color: #7f919b;
-                          "
-                        >
-                          Send a <strong>password recovery mail</strong>
-                        </p>
-                      </div>
-                      <div>
-                        <v-text-field
-                          background-color="#ffffff"
-                          style="margin-left: 52px; margin-right: 45px"
-                          hide-details="auto"
-                          label="Please enter your email address"
-                          single-line
-                          outlined
-                          type="email"
-                          required
-                          class="font-weight-regular label--text"
-                          v-model="forgotPasswordMail"
-                          :rules="rules.email"
-                        ></v-text-field>
-                      </div>
-                      <template>
-                        <v-card-actions
-                          class="d-flex justify-end align-center mr-9"
-                        >
-                          <v-btn
-                            type="submit"
-                            dark
-                            width="121"
-                            height="45"
-                            style="
-                              margin-top: 24px;
-                              margin-bottom: 41px;
-                              background: #16be98;
-                              box-shadow: 0px 12px 22px rgba(0, 0, 0, 0.24);
-                              border-radius: 4px;
-                            "
-                          >
-                            <simple-line-icons
-                              icon="arrow-right"
-                              style="font-size: 16px"
-                              size="small"
-                              no-svg
-                            />
-                            <span
-                              class="pl-4 m-0 text-capitalize"
-                              style="
-                                font-family: Inter;
-                                font-style: normal;
-                                font-weight: 500;
-                                font-size: 14px;
-                                line-height: 17px;
-                                text-align: center;
-                                letter-spacing: 0.636364px;
-
-                                color: #ffffff;
-                              "
-                              >send</span
-                            >
-                          </v-btn>
-                        </v-card-actions>
-                      </template>
-                    </form>
-                  </v-card>
-                </v-dialog>
-              </div>
-            </template>
+            
           </div>
         </v-card>
 
@@ -290,7 +182,6 @@ export default {
 
   data() {
     return {
-      dialog: false,
       showPass: false,
       loginData: {
         email: "",
@@ -347,6 +238,10 @@ export default {
         }
       }
     },
+
+    goToRecovery() {
+      this.$router.push("/forgot-password")
+    }
   },
 
   computed: {

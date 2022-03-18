@@ -16,16 +16,20 @@
       class="align-center my-2 px-8"
       v-if="$vuetify.breakpoint.mdAndUp"
     >
-      <v-flex md2>
-        <div class="d-flex align-center">
-          <p class="mb-0 ml-2 mr-4 primary--text font-weight-bold">ID</p>
-          <p class="mb-0 mx-4 primary--text font-weight-bold">Type</p>
+      <v-flex md1>
+        <div class="d-flex align-center justify-center">
+          <p class="mb-0 primary--text font-weight-bold text-center">ID</p>
+        </div>
+      </v-flex>
+      <v-flex md1>
+        <div class="d-flex align-center justify-center">
+          <p class="mb-0 primary--text font-weight-bold text-center">Type</p>
         </div>
       </v-flex>
 
       <v-flex md1>
         <div class="d-flex align-center">
-          <p class="mb-0 primary--text font-weight-bold">Amount</p>
+          <p class="mb-0 pl-4 primary--text font-weight-bold">Amount</p>
           <v-btn class="ml-1" color="grey lighten-1" icon>
             <v-icon>mdi-chevron-down</v-icon>
           </v-btn>
@@ -39,7 +43,7 @@
           </v-btn>
         </div>
       </v-flex>
-      <v-flex md2>
+      <v-flex md1>
         <div class="d-flex align-center">
           <p class="mb-0 primary--text font-weight-bold">Ref No.</p>
         </div>
@@ -52,7 +56,7 @@
           </v-btn>
         </div>
       </v-flex>
-      <v-flex md1>
+      <v-flex md2>
         <div class="d-flex align-center">
           <p class="mb-0 primary--text font-weight-bold">Requester</p>
           <v-btn class="ml-1" color="grey lighten-1" icon>

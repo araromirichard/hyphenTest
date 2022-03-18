@@ -28,7 +28,7 @@ const getters = {
     },
     checkNumberOfExceptions(state) {
         let exceptionInvoiceArray = state.allInvoices.filter((obj) => {
-            return obj.exception != "";
+            return obj.exception == "1";
         });
 
         if (exceptionInvoiceArray.length === 0) {
@@ -44,7 +44,7 @@ const mutations = {
 
     setSingleInv(state, invoice) {
         state.singleInvoice = invoice;
-        console.log(invoice);
+        console.log(JSON.stringify(invoice, null, 2));
     },
 };
 const actions = {

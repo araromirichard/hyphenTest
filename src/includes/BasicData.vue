@@ -35,7 +35,7 @@
                   >
                     <v-text-field
                       :error-messages="errors"
-                      v-model="singleInvoice.invoicenumber"
+                      v-model="payableData.invoicenumber"
                       hide-details="auto"
                       :disabled="changeState"
                       :background-color="backgroundColor"
@@ -123,7 +123,7 @@
                   >
                     <v-text-field
                       :error-messages="errors"
-                      v-model="singleInvoice.vat"
+                      v-model="payableData.vat"
                       hide-details="auto"
                       :disabled="changeState"
                       :background-color="backgroundColor"
@@ -415,7 +415,7 @@
                   >
                     <v-text-field
                       :error-messages="errors"
-                      v-model="singleInvoice.vendor.phone"
+                      v-model="payableData.vendor.phone"
                       hide-details="auto"
                       :disabled="changeState"
                       :background-color="backgroundColor"
@@ -453,6 +453,7 @@
                 @click="submitInput"
                 large
                 elevation="10"
+                :loading="isSending"
                 color="primary"
               >
                 <simple-line-icons
@@ -828,7 +829,7 @@ export default {
     return {
       menu: false,
       menu2: false,
-
+      isSending: false,
       changeState: true,
       basicDataInput: {
         invoiceNumber: "",
@@ -843,6 +844,19 @@ export default {
         email: "",
         phone: "",
       },
+      payableData: {
+        vendor: {
+          vendorname: "",
+          address: "",
+          taxid: "",
+          email: "",
+          phone: "",
+        },
+        invoicenumber: "",
+        vat: "",
+        date: null,
+        dueDate: null,
+      },
     };
   },
   components: {
@@ -856,8 +870,9 @@ export default {
       return (this.changeState = !this.changeState);
     },
     submitInput(e) {
+      this.isSending = true;
       e.preventDefault();
-      console.log(JSON.stringify(this.completeInvoiceData, null, 2));
+      console.log(JSON.stringify(this.payableData, null, 2));
       // console.log("Basic Data", JSON.stringify(this.basicDataInput));
       // console.log("Vendor Data", JSON.stringify(this.vendorData));
       this.showToast({
@@ -866,7 +881,8 @@ export default {
         message: "Sign Up succesfully",
         timeout: 3000,
       });
-      return (this.changeState = true);
+      this.isSending = false;
+      this.changeState = true;
     },
   },
 
@@ -894,7 +910,25 @@ export default {
       }
       return day + "/" + month + "/" + year;
     },
+
+    completePayableData() {
+      let invoiceData = { ...this.basicDataInput, ...this.vendorData };
+      return console.log(JSON.stringify(invoiceData, null, 2));
+    },
   },
+
+  watch: {
+    singleInvoice : {
+      immediate: true,
+      deep: true,
+      handler(val) {
+        if (val  != null) {
+          this.payableData = val
+        }
+      }
+
+    }
+  }
 };
 </script>
 

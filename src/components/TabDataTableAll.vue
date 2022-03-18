@@ -12,6 +12,7 @@
           <v-switch
             flat
             dense
+            disabled
             class="pl-4 mb-2"
             color="#16be98"
             v-model="autoProcess"

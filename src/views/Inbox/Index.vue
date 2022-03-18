@@ -105,75 +105,98 @@
           style="padding-top: 40px"
           v-if="!invoiceArrayStatus"
         >
-          <p
-            style="
-              font-family: Inter;
-              font-style: normal;
-              font-weight: bold;
-              line-height: 29px;
-              color: var(--v-primary-base);
-            "
+          <v-skeleton-loader
+            class="mx-auto py-2 py-md-4"
+            width="50%"
+            type="table-heading"
+            :loading="loading"
           >
-            No invoice/transaction is awaiting action
-          </p>
+            <p
+              style="
+                font-family: Inter;
+                font-style: normal;
+                font-weight: bold;
+                line-height: 29px;
+                color: var(--v-primary-base);
+              "
+            >
+              No invoice/transaction is awaiting action
+            </p>
+          </v-skeleton-loader>
         </v-row>
 
         <!-- instructions when there is no invoice -->
         <v-row class="justify-center pt-0" v-if="!invoiceArrayStatus">
-          <p
-            style="
-              font-family: Inter;
-              font-style: normal;
-              font-weight: normal;
-              font-size: 12px;
-              line-height: 15px;
-              color: #596a73;
-            "
+          <v-skeleton-loader
+            class="mx-auto"
+            width="40%"
+            type="text"
+            :loading="loading"
           >
-            Click here to upload an invoice or generate an expense request form
-          </p>
+            <p
+              style="
+                font-family: Inter;
+                font-style: normal;
+                font-weight: normal;
+                font-size: 12px;
+                line-height: 15px;
+                color: #596a73;
+              "
+            >
+              Click here to upload an invoice or generate an expense request
+              form
+            </p>
+          </v-skeleton-loader>
         </v-row>
         <v-row class="d-flex justify-center pt-8" v-if="!invoiceArrayStatus">
           <v-card
+            width="414"
             class="d-flex flex-row"
             elevation="0"
             style="
-              width: 414px;
-              height: 94px;
               background: #ffffff;
               border: 1px solid #fbf4e4;
               box-sizing: border-box;
               border-radius: 4px;
             "
           >
-            <v-avatar
-              class="d-flex align-center mx-auto my-auto ml-6"
-              style="padding: 8px; margin: 8px"
-              color="#F9EED2"
-              size="20"
+            <v-skeleton-loader
+              class="mx-auto"
+              width="100%"
+              type="list-item-avatar-three-line"
+              :loading="loading"
             >
-              <img :src="require('@/assets/info.svg')" alt="" />
-            </v-avatar>
-            <v-card-text
-              style="
-                font-style: normal;
-                font-weight: normal;
-                font-size: 12px;
-                line-height: 20px;
-                color: #596a73;
-              "
-            >
-              To capture invoices sent to email, forward attachements to
-              yourbusiness@process.finance or ask your vendors to send directly
-            </v-card-text>
+              <v-avatar
+                class="d-flex align-center mx-auto mt-4 ml-6"
+                color="#F9EED2"
+                size="20"
+              >
+                <img :src="require('@/assets/info.svg')" alt="" />
+              </v-avatar>
+              <v-card-text
+                style="
+                  font-style: normal;
+                  font-weight: normal;
+                  font-size: 12px;
+                  line-height: 20px;
+                  color: #596a73;
+                "
+              >
+                To capture invoices sent to email, forward attachements to
+                {{ organizationToken.data.hypn_email }} or ask your vendors to
+                send directly
+              </v-card-text>
+            </v-skeleton-loader>
           </v-card>
         </v-row>
       </v-col>
     </v-row>
 
     <!-- inbox summary Info cards -->
+
     <v-row class="mt-16 mx-2 mx-md-0" align="center" v-if="invoiceArrayStatus">
       <v-col class="pa-0 my-4 my-md-0" cols="12" md="4">
+        <v-skeleton-loader :loading="loading" />
         <v-card
           elevation="3"
           class="ml-md-16 mr-6 ml-10"
@@ -200,7 +223,7 @@
                   <p class="pt-8 my-0 h-card-title">Incoming invoice/bill</p>
 
                   <p class="pt-2 pr-1 my-md-1 text-wrap h-card-body-bold">
-                    mtn-demo@process.finance
+                    {{ organizationToken.data.hypn_email }}
                   </p>
                   <p class="pt-2 text-wrap h-card-body">
                     Forward your incoming invoices/bills to this address
@@ -299,8 +322,6 @@
 
     <!-- inbox table for desktop screen -->
     <v-row v-if="invoiceArrayStatus">
-      <!-- {{$store.state.auth.user.organization}} -->
-      {{ organization }}
       <v-col cols="12">
         <v-card
           flat
@@ -467,18 +488,36 @@
                 <div>
                   <validation-provider
                     v-slot="{ errors }"
-                    name="Full Names"
+                    name="First Name"
                     rules="required"
                   >
                     <v-text-field
-                      v-model="stakeholder.fullNames"
+                      v-model="stakeholder.firstName"
                       hide-details="auto"
                       class="mb-4"
                       type="text"
                       background-color="#ffffff"
                       style="margin-left: 52px; margin-right: 45px"
                       outlined
-                      label="Full Names"
+                      label="First Name"
+                      :error-messages="errors"
+                    >
+                    </v-text-field>
+                  </validation-provider>
+                  <validation-provider
+                    v-slot="{ errors }"
+                    name="Last Name"
+                    rules="required"
+                  >
+                    <v-text-field
+                      v-model="stakeholder.lastName"
+                      hide-details="auto"
+                      class="mb-4"
+                      type="text"
+                      background-color="#ffffff"
+                      style="margin-left: 52px; margin-right: 45px"
+                      outlined
+                      label="Last Name"
                       :error-messages="errors"
                     >
                     </v-text-field>
@@ -525,7 +564,6 @@
                       @click="sendInvite"
                       :disabled="invalid"
                       type="submit"
-                      dark
                       width="121"
                       height="45"
                       style="
@@ -631,23 +669,22 @@ export default {
   name: "Inbox",
   data() {
     return {
+      loading: false,
       dialog: false,
       dialog2: false,
       isClicked: true,
       tab: 0,
       tab1: 0,
       search: "",
-      // totalInvoice: 340,
-      // NumOfExceptions: 14,
       stakeholder: {
-        fullNames: "",
+        firstName: "",
+        lastName: "",
         email: "",
         selectedType: null,
       },
       stakeholderTypes: ["Co-worker", "Payee"],
       items: [
         { tab: "All", content: "TabDataTableAll" },
-        //{ tab: "Email", content: "TabDataTableEmail" },
         { tab: "Reviews", content: "TabDataTableReviews" },
         { tab: "Exception", content: "TabDataTableException" },
       ],
@@ -708,14 +745,19 @@ export default {
     sendInvite() {
       console.table(this.stakeholder);
     },
+
+    async getOrganizationToken() {
+      try {
+        return await this.$store.dispatch("organizations/getOrganizationToken");
+      } catch (error) {
+        console.log(JSON.stringify(error, null, 2));
+      }
+    },
   },
-  // mounted() {
-  //   console.log(this.getOrgId);
-  //   console.log({
-  //     breakpoints: this.$vuetify.breakpoint,
-  //     avatarSizes: this.avatarSizes,
-  //   });
-  // },
+  async created() {
+    await this.getOrganizationToken();
+    console.log(JSON.stringify(this.organizationToken, null, 2));
+  },
 
   computed: {
     ...mapGetters({
@@ -724,6 +766,8 @@ export default {
       invoiceArrayStatus: "invoices/checkInvoiceArray",
       totalInvoice: "invoices/numOfInvoices",
       NumOfExceptions: "invoices/checkNumberOfExceptions",
+      organizationToken: "organizations/OrganToken",
+      //organizationEmail: "organizations/getOrganizationEmail",
     }),
     ...mapState({
       organization: "organization",
@@ -732,6 +776,7 @@ export default {
     }),
 
     getOrgId() {
+      //console.log(this.$store.state.auth.user);
       return this.$store.state.auth.user;
     },
   },

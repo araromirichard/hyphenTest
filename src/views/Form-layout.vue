@@ -17,6 +17,7 @@
           <v-scroll-y-transition leave-absolute mode="out-in">
             <SignUp v-if="isSignup" class="ma-auto" />
             <Login v-else-if="isLogin" />
+            <Recover-password v-else-if="isRecovery" />
           </v-scroll-y-transition>
         </v-col>
         <v-col
@@ -110,6 +111,7 @@
 
 <script>
 import Login from "../components/Login";
+import RecoverPassword from "../components/forgotPassword.vue";
 import SignUp from "../components/SignUp";
 
 export default {
@@ -121,6 +123,7 @@ export default {
   components: {
     Login,
     SignUp,
+    RecoverPassword,
   },
 
   computed: {
@@ -129,6 +132,9 @@ export default {
     },
     isLogin() {
       return this.$route.name === "Login";
+    },
+    isRecovery() {
+      return this.$route.name === "forgot-password";
     },
   },
 };

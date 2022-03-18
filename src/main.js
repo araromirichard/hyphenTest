@@ -10,6 +10,7 @@ import { VueFormBuilderPlugin } from "v-form-builder";
 import "../src/assets/styles/formbuilder.css";
 import "v-form-builder/dist/v-form-builder.css";
 import JsonCSV from "vue-json-csv";
+import VueSkeletonLoader from "skeleton-loader-vue";
 
 import SimpleLineIcons from "vue-simple-line";
 Vue.config.productionTip = false;
@@ -24,6 +25,9 @@ Vue.component("ValidationObserver", ValidationObserver);
 // export json to csv
 Vue.component("downloadCsv", JsonCSV);
 
+// Register the vue-skeleton-loader
+Vue.component("vue-skeleton-loader", VueSkeletonLoader);
+
 // install now
 Vue.use(VueFormBuilderPlugin);
 
@@ -31,8 +35,8 @@ Vue.use(VueFormBuilderPlugin);
 Vue.filter("date", DateFilter);
 
 new Vue({
-  router,
-  store,
-  vuetify,
-  render: (h) => h(App),
+    router,
+    store,
+    vuetify,
+    render: (h) => h(App),
 }).$mount("#app");

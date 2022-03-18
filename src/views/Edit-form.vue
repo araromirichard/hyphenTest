@@ -41,30 +41,6 @@
                   collect finance related data from your co-workers, suppliers,
                   advisors, auditors, etc
                 </p>
-                <v-sheet
-                  outlined
-                  rounded="lg"
-                  width="273px"
-                  height="48px"
-                  style=""
-                  class="d-flex align-center"
-                >
-                  <v-icon small color="disabled" class="px-2"
-                    >mdi-clipboard-text-outline</v-icon
-                  >
-                  <span
-                    class="text-center text-truncate"
-                    style="
-                      font-family: Inter;
-                      font-style: normal;
-                      font-weight: bold;
-                      font-size: 10px;
-                      line-height: 20px;
-                      color: #596a73;
-                    "
-                    >https://forms.onpbot.com/your-form-name-h</span
-                  >
-                </v-sheet>
               </div>
               <div
                 class="d-flex flex-column justify-center align-center"
@@ -98,31 +74,68 @@
         md="9"
       >
         <div>
-          <h6
-            class="pl-5 pt-md-5"
-            style="
-              font-family: Inter;
-              font-style: normal;
-              font-weight: bold;
-              font-size: 24px;
-              line-height: 29px;
-              letter-spacing: -0.73px;
-              color: var(--v-primary-base);
-            "
-            :style="{
-              paddingTop: `${$vuetify.breakpoint.mdAndDown ? '10px' : '16px'}`,
-              paddingLeft: `${$vuetify.breakpoint.mdAndDown ? '8px' : '16px'}`,
-            }"
-          >
-            Form Builder
-          </h6>
-
-          <FormBuilder style="" v-model="formData"></FormBuilder>
+          <div class="d-flex justify-center align-center">
+            <h6
+              class="pl-5 pt-md-5"
+              style="
+                font-family: Inter;
+                font-style: normal;
+                font-weight: bold;
+                font-size: 24px;
+                line-height: 29px;
+                letter-spacing: -0.73px;
+                color: var(--v-primary-base);
+              "
+              :style="{
+                paddingTop: `${
+                  $vuetify.breakpoint.mdAndDown ? '10px' : '16px'
+                }`,
+                paddingLeft: `${
+                  $vuetify.breakpoint.mdAndDown ? '8px' : '16px'
+                }`,
+              }"
+            >
+              Form Builder / {{ formData.form_title }}
+            </h6>
+            <v-spacer></v-spacer>
+            <div class="px-8 pt-6">
+              <v-switch
+                color="#16be98"
+                v-model="configuration.isPrivate"
+                :label="`Private Form?: ${configuration.isPrivate.toString()}`"
+              ></v-switch>
+              <v-sheet
+                outlined
+                rounded="lg"
+                width="273px"
+                height="48px"
+                style=""
+                class="d-flex align-center"
+              >
+                <v-icon small color="disabled" class="px-2"
+                  >mdi-clipboard-text-outline</v-icon
+                >
+                <span
+                  class="text-center text-truncate"
+                  style="
+                    font-family: Inter;
+                    font-style: normal;
+                    font-weight: bold;
+                    font-size: 10px;
+                    line-height: 20px;
+                    color: #596a73;
+                  "
+                  >https://hypn.so/{{ $route.params.id }}</span
+                >
+              </v-sheet>
+            </div>
+          </div>
+          <FormBuilder style="" v-model="formData.form_fields"></FormBuilder>
         </div>
         <v-row>
           <v-col class="my-2 mx-md-5 d-flex justify-end">
             <v-btn
-              @click="saveData"
+              @click="updateFormData"
               dark
               width="136"
               height="45"
@@ -177,12 +190,12 @@ export default {
   data() {
     return {
       formInputData: null,
+      formData: null,
       configuration: {
         formTitle: "",
         isPrivate: true,
         formName: "",
       },
-      formData: null,
     };
   },
   methods: {
@@ -190,61 +203,62 @@ export default {
       { showToast: "ui/showToast" }
       //{ getForm: "formBuilder/GetForm" }
     ),
-    ...mapGetters("formBuilder", ["forms"]),
-
-    async saveData() {
+    async fetchFormsById() {
+      let response = await this.$store.dispatch(
+        "formBuilder/getSingleForm",
+        this.$route.params.id
+      );
+      console.log(JSON.stringify(response.data.data.form_fields, null, 2));
+      this.formData = response.data.data;
+    },
+    async updateFormData() {
       try {
-        if (this.formData == null) {
-          this.$store.dispatch("formBuilder/getForm", this.$route.params.id);
-        } else {
-          await console.log(JSON.stringify(this.formData, null, 2));
-          this.$store.dispatch("formBuilder/updateForm", {
+        await this.$store
+          .dispatch("formBuilder/updateForm", {
             id: this.$route.params.id,
-            payload: this.formData,
-          });
-          //console.log(JSON.stringify(payload, null, 2));
-        }
+            payload: this.updateRequestData,
+          })
+          .then(
+            this.showToast({
+              sclass: "success",
+              show: true,
+              message: "Form " + this.formData.form_title + " Updated",
+              timeout: 3000,
+            })
+          );
+        //console.log(JSON.stringify(payload, null, 2));
       } catch (error) {
         console.log(error);
+        if (error) {
+          this.showToast({
+            sclass: "error",
+            show: true,
+            message: "Form " + this.formData.form_title + " could not Updated",
+            timeout: 3000,
+          });
+        }
       }
-
-      this.showToast({
-        sclass: "success",
-        show: true,
-        message: "Form Template Updated",
-        timeout: 3000,
-      });
     },
   },
 
-  mounted() {
-    // this.getFormById = this.formData
+  async mounted() {
+    await this.fetchFormsById();
   },
   computed: {
-    ...mapGetters("formBuilder", ["forms"]),
+    ...mapGetters({
+      forms: "formBuilder/forms",
+    }),
 
-    getFormById() {
-      const formResponse = this.forms.find(
-        (form) => form.id == this.$route.params.id
-      );
-      console.log(JSON.stringify(formResponse, null, 2));
-      return formResponse.form_fields;
+    //payload to send as update request
+    updateRequestData() {
+      return {
+        form_fields: this.formData,
+        is_private: this.configuration.isPrivate,
+      };
     },
-
-    // updatedFormData() {
-    //   return {
-
-    //   }
-    // }
   },
   watch: {
-    getFormById: {
-      deep: true,
-      immediate: true,
-      handler(val) {
-        this.formData = val;
-      },
-    },
+    //
   },
 };
 </script>
@@ -268,9 +282,9 @@ export default {
 .headline-block {
   display: none !important;
 }
-/* .section-config {
+.section-config {
   display: none !important;
-} */
+}
 .form-configuration-block {
   display: none !important;
 }

@@ -167,11 +167,12 @@
                 max-height="870px"
                 color="white"
                 min-width="750px"
+                max-width="1000px"
               >
                 <v-skeleton-loader
                   width="100%"
                   height="80vh"
-                  type="image"
+                  type="image,table"
                   :loading="loading"
                 >
                   <v-img
@@ -225,9 +226,9 @@ export default {
       }
     },
   },
-  mounted() {
+  async mounted() {
     this.isAnException = this.$route.query.exception || false;
-    this.getInvoiceData();
+    await this.getInvoiceData();
     console.log(this.singleInvoice.invoicenumber);
   },
   created() {

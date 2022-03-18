@@ -95,7 +95,7 @@
                 }`,
               }"
             >
-              Form Builder
+              Form Builder / {{ configuration.formName }}
             </h6>
             <v-spacer></v-spacer>
 
@@ -196,7 +196,7 @@ export default {
       configuration: {
         formTitle: "",
         isPrivate: true,
-        formName: "",
+        formName: this.$route.query.data,
         formId: 2,
       },
       formData: null,
@@ -210,17 +210,27 @@ export default {
       //console.log(this.formData);
       if (this.checkGridClassAndFormActions()) {
         try {
-          await this.$store.dispatch("formBuilder/createForm", formPayload);
+          await this.$store
+            .dispatch("formBuilder/createForm", formPayload)
+            .then(
+              this.showToast({
+                sclass: "success",
+                show: true,
+                message: "created Form " + this.formName + " successfully",
+                timeout: 3000,
+              })
+            );
         } catch (error) {
           console.log(error);
+          if (error) {
+            this.showToast({
+              sclass: "error",
+              show: true,
+              message: "Form " + this.formName + " could not Updated",
+              timeout: 3000,
+            });
+          }
         }
-
-       this.showToast({
-          sclass: "success",
-          show: true,
-          message: "Form Template Created",
-          timeout: 3000,
-        });
       }
     },
     checkGridClassAndFormActions() {
@@ -255,7 +265,7 @@ export default {
 
     getFormName() {
       if (this.formData == null && this.formData == undefined) return;
-      console.log(JSON.stringify(this.formData, null, 2));
+      // console.log(JSON.stringify(this.formData, null, 2));
 
       //declaring a variable and trying to get the form title name from the formData Object....
       var fmName = "";
@@ -269,34 +279,31 @@ export default {
         return "can not create fnName";
       }
     },
-    getFormId() {
-      if (this.formData == null && this.formData == undefined) return;
+    // getFormId() {
+    //   if (this.formData == null && this.formData == undefined) return;
 
-      //declaring a variable and trying to get the form title name from the formData Object to create the formId....
-      var formId = "";
-      try {
-        formId = this.getFormName.split(" ").join("").toLowerCase();
+    //   //declaring a variable and trying to get the form title name from the formData Object to create the formId....
+    //   var formId = "";
+    //   try {
+    //     formId = this.getFormName.split(" ").join("").toLowerCase();
 
-        console.log(formId);
-        return formId;
-      } catch (error) {
-        return "xx";
-      }
-    },
+    //     console.log(formId);
+    //     return formId;
+    //   } catch (error) {
+    //     return "xx";
+    //   }
+    // },
     //return full object to send to
     createRequestData() {
       return {
         organization: this.user.organization.toString(),
-        form_title: this.getFormName,
+        form_title: this.configuration.formName,
         form_fields: this.formData,
         is_private: this.configuration.isPrivate,
         form_id: this.getFormId,
         hash: "",
       };
     },
-
-  
-    
   },
 };
 </script>
@@ -320,9 +327,9 @@ export default {
 .headline-block {
   display: none !important;
 }
-/* .section-config {
+.section-config {
   display: none !important;
-} */
+}
 .form-configuration-block {
   display: none !important;
 }

@@ -115,7 +115,7 @@ export default {
 
         {
           title: "EMAIL TO:",
-          subtitle: "brandname0923@process.finance",
+          subtitle: "",
           icon: "",
           path: "#",
         },

@@ -415,6 +415,8 @@ export default {
         "OnBoarding",
         "Create-form",
         "Render-form",
+        "forgot-password",
+        "reset-password",
       ],
     };
   },

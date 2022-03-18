@@ -136,7 +136,7 @@
               style="border-color: rgba(49, 27, 146, 0.2)"
             >
               <v-card-actions class="ma-0 pa-0">
-                <v-btn plain fab to="/form/create-new-form" target="_blank">
+                <v-btn plain fab @click="activateModal">
                   <simple-line-icons
                     icon="plus"
                     color="#7f919b"
@@ -190,15 +190,24 @@ export default {
     };
   },
   methods: {
-    ...mapActions("formBuilder", ["formCards", "deleteForm"]),
+    ...mapActions("formBuilder", ["getFormCards", "deleteForm"]),
+    //method to emit event to open modal
+
+    activateModal() {
+      this.$parent.$emit("open-modal");
+    },
+
     showForm(icon, index, parentIndex) {
       // i = this.selectedIcon;
       // console.log({ icon, index });
       if (index === 0) {
+        console.log(
+          JSON.stringify(this.formCards[parentIndex].form_title, null, 2)
+        );
         this.$emit("edit-form");
 
         this.$router.push({
-          path: `/edit-form/${parentIndex + 1}`,
+          path: `/edit-form/${this.formCards[parentIndex].hypn_id}`,
         });
       } else if (index === 1) {
         this.$emit("entries");
@@ -256,8 +265,8 @@ export default {
     setTimeout(() => {
       this.loading = false;
     }, 5000);
-
     this.$store.dispatch("formBuilder/FetchAllForms");
+    console.log(JSON.stringify(this.formCards, null, 2));
     //console.log(this.$store.dispatch("formBuilder/FetchAllForms"));
     //console.log(this.$store);
   },
