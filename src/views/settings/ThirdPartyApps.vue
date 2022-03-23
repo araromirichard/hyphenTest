@@ -44,7 +44,7 @@
                 </v-card>
                 <div class="ma-0 pa-0">
                   <v-card
-                    height="60px"
+                    height="66px"
                     width="100%"
                     flat
                     class="d-flex my-auto"

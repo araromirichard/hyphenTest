@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid fill-height>
+  <v-container class="pa-0" fluid fill-height>
     <v-row
       :id="
         $vuetify.breakpoint.mdAndUp ? 'settings-page' : 'settings-page-mobile'

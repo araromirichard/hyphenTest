@@ -1,6 +1,6 @@
 <template>
   <v-card
-    height="48px"
+    height="66px"
     width="100%"
     flat
     class="d-flex"

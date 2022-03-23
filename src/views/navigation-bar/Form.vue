@@ -130,6 +130,13 @@
               v-model="formName"
             ></v-text-field>
           </template>
+          <template>
+            <v-switch
+              class="ml-9"
+              v-model="makePayment"
+              label="Make Payment"
+            ></v-switch>
+          </template>
           <template class="mt-6">
             <v-card-actions class="d-flex justify-end mt-2 mr-9">
               <v-btn
@@ -290,6 +297,16 @@ export default {
       items: [{ tab: "All", content: "FormEntriesCards" }],
     };
   },
+  computed: {
+    makePayment: {
+      get() {
+        return this.$store.state.formBuilder.makePayment;
+      },
+      set(value) {
+        this.$store.commit("formBuilder/SET_MAKEPAYMENT", value);
+      },
+    },
+  },
   methods: {
     ...mapActions({ showToast: "ui/showToast" }),
     closeFormDialog() {
@@ -310,6 +327,7 @@ export default {
           name: "Create-form",
           query: { data: this.formName },
         });
+        this.closeFormDialog();
         window.open(routeData.href, "_blank");
       } else {
         this.showToast({

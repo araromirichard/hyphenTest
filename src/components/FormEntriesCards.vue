@@ -2,7 +2,7 @@
   <v-container class="justify-center px-0 pt-0">
     <v-card
       width="100%"
-      height="48px"
+      height="58px"
       flat
       class="d-flex mx-sm-0 py-0 py-md-2"
       color="#f4f4f4"
@@ -39,17 +39,37 @@
         {{ formName }}
       </span>
       <v-spacer></v-spacer>
+      <div style="width = 10px">
+        <v-autocomplete
+          class="px-8"
+          dense
+          hide-details="true"
+          v-if="!showFormCards"
+          v-model="selectedHeaders"
+          :items="headers"
+          multiple
+          return-object
+        >
+          <template v-slot:selection="{ item, index }">
+            <v-chip small v-if="index < 2">
+              <span>{{ item.text }}</span>
+            </v-chip>
+            <span v-if="index === 2" class="grey--text caption"
+              >(+{{ selectedHeaders.length - 2 }} others)</span
+            >
+          </template>
+        </v-autocomplete>
+      </div>
     </v-card>
 
     <template>
-      <v-container class="pt-8">
+      <v-container class="pt-8 px-0">
         <SingleFormCard
           v-if="showFormCards"
           @send-entries="loadEntries"
           @create-form="buildForm"
           @entries="showFormCards = false"
           class="mx-md-10"
-          :createdAt="dateValue() | date"
         />
 
         <div class="ma-0 pa-0" v-else>
@@ -57,84 +77,13 @@
             <v-data-table
               height="100%"
               ref="myTable"
-              :headers="headers"
+              :headers="showHeaders"
               :items="dataEntries"
-              :items-per-page="10"
+              :items-per-page="8"
               class="elevation-0"
             >
             </v-data-table>
           </template>
-          <!-- <v-layout row wrap class="align-center my-2 px-6">
-            <v-flex md2>
-              <div class="d-flex align-center">
-                <p class="mb-0 mr-4 primary--text font-weight-bold">ID</p>
-                <p class="mb-0 mx-4 primary--text font-weight-bold">Name</p>
-              </div>
-            </v-flex>
-
-            <v-flex md2>
-              <div class="d-flex align-center">
-                <p class="mb-0 primary--text font-weight-bold">
-                  Account Number
-                </p>
-                <v-btn class="ml-1" color="grey lighten-1" icon>
-                  <v-icon>mdi-chevron-down</v-icon>
-                </v-btn>
-              </div>
-            </v-flex>
-            <v-flex md2>
-              <div class="d-flex align-center">
-                <p class="mb-0 primary--text font-weight-bold">Routing No.</p>
-              </div>
-            </v-flex>
-            <v-flex md3>
-              <div class="d-flex align-center">
-                <p class="mb-0 primary--text font-weight-bold">Address</p>
-                <v-btn class="ml-1" color="grey lighten-1" icon>
-                  <v-icon>mdi-chevron-down</v-icon>
-                </v-btn>
-              </div>
-            </v-flex>
-            <v-flex md1>
-              <div class="d-flex align-center">
-                <p class="mb-0 primary--text font-weight-bold">City</p>
-                <v-btn class="ml-1" color="grey lighten-1" icon>
-                  <v-icon>mdi-chevron-down</v-icon>
-                </v-btn>
-              </div>
-            </v-flex>
-            <v-flex md1>
-              <div>
-                <p class="mb-0 pl-md-4 primary--text font-weight-bold">State</p>
-              </div>
-            </v-flex>
-            <v-flex md1>
-              <div class="d-flex align-center">
-                <p class="mb-0 pl-md-8 primary--text font-weight-bold">
-                  Country
-                </p>
-              </div>
-            </v-flex>
-          </v-layout> -->
-          <!-- <v-row>
-            <v-col
-              cols="12"
-              v-for="form in filteredForms"
-              :key="form.id"
-              class="py-0 ma-0"
-            >
-              <FormEntiresTable
-                :id="form.id"
-                :bankName="form.bankName"
-                :bankAccountNumber="form.bankAccountNumber"
-                :bankAccountRoutingNumber="form.bankAccountRoutingNumber"
-                :bankAddress="form.bankAddress"
-                :bankCity="form.bankCity"
-                :bankCountry="form.bankCountry"
-                :bankState="form.bankState"
-              />
-            </v-col>
-          </v-row> -->
         </div>
       </v-container>
     </template>
@@ -142,15 +91,11 @@
 </template>
 
 <script>
-//import FormEntiresTable from "./FormEntiresTable.vue";
 import SingleFormCard from "./SingleFormCard.vue";
-import formBuider from "@/api/formbuilder.js";
 
 export default {
   components: {
     SingleFormCard,
-    //FormEntiresTable,
-    //Vuetable,
   },
   name: "InboxForm",
 
@@ -160,7 +105,22 @@ export default {
       formDisplay: false,
       showFormCards: true,
       headers: [],
-      dataEntries: [],
+      selectedHeaders: [],
+      dataEntries: [
+        {
+          vendorEmail: "richjohn@gmail.com",
+          contactPerson: "Emmanuel Peace",
+          vendorName: "Richard Johnson",
+          Date: "21/03/2022",
+          vendorPhoneNumber: "+234705647896",
+          vendorAddress: "plot 2, make way avenue, solid state, Nigeria",
+          courier: "DHL",
+          shipToAddress: "2, Ajayi street, Uwasota road, Benin city",
+          shipping: "Dispatch",
+          contactEmail: "emmapee@yahoo.com",
+          contactNumber: "+234804578965",
+        },
+      ],
       loading: true,
 
       formName: "New Form 1",
@@ -193,41 +153,28 @@ export default {
         const newValue = {};
         newValue.text = value[key]["name"];
         newValue.value = value[key]["name"];
+
         newValueArray.push(newValue);
       }
       this.headers = newValueArray;
-      console.log(newValueArray);
-
-      formBuider
-        .getEntriesData()
-        .then((response) => {
-          this.loading = false;
-
-          //console.log(response.data);
-          this.dataEntries = response.data;
-          //console.log(JSON.stringify(this.dataEntries, null, 2));
-
-          //console.log(JSON.stringify(response.data, null, 2));
-        })
-        .catch((error) => {
-          console.log("an Error occured:", error.response);
-        });
+      console.log(this.headers);
+    },
+    populateHeaders() {
+      let headers = JSON.parse(localStorage.getItem("headers"));
+      if (!headers) {
+        this.selectedHeaders = this.headers;
+      } else {
+        this.selectedHeaders = headers;
+      }
     },
   },
-  mounted() {
+  async mounted() {
     //
+    await this.populateHeaders();
   },
   computed: {
-    filteredForms() {
-      if (this.search) {
-        return this.forms.filter((form) => {
-          return (
-            form.bankName.toLowerCase().match(this.search.toLowerCase()) ||
-            form.id.toString().match(this.search) ||
-            form.bankAccountNumber.toString().includes(this.search)
-          );
-        });
-      } else return this.forms;
+    showHeaders() {
+      return this.headers.filter((s) => this.selectedHeaders.includes(s));
     },
   },
 };
@@ -300,5 +247,8 @@ table th {
   font-size: 14px;
   line-height: 15px;
   color: #7f919b;
+}
+.v-data-table-header th {
+  white-space: nowrap;
 }
 </style>

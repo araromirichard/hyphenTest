@@ -3,6 +3,7 @@ import formbuilder from "../../api/formbuilder";
 const state = {
     formCards: null,
     singleForm: null,
+    makePayment: false,
 };
 
 const getters = {
@@ -38,6 +39,9 @@ const mutations = {
         let formCards = state.formCards.filter((form) => form.id != formId);
         state.formCards = formCards;
     },
+    SET_MAKEPAYMENT(state, value) {
+        state.makePayment = value;
+    },
 };
 
 const actions = {
@@ -56,6 +60,7 @@ const actions = {
         try {
             const response = await formbuilder.getAllForms();
             commit("setForms", response.data);
+            console.log(JSON.stringify(response.data, null, 2));
             return response;
         } catch (error) {
             console.log(JSON.stringify(error, null, 2));
@@ -94,6 +99,10 @@ const actions = {
             return Promise.reject(error);
         }
     },
+
+    // callMakePayment({ commit }, value) {
+    //     commit("SET_MAKEPAYMENT", value);
+    // },
 };
 
 export default {

@@ -55,8 +55,8 @@
                     <v-layout style="padding-top: 20px">
                       <template>
                         <FormRenderer
-                          :form-configuration="formData"
-                          v-if="formData"
+                          :form-configuration="formData.form_fields"
+                          v-if="formData.form_fields"
                         />
                       </template>
                     </v-layout>
@@ -209,6 +209,7 @@ export default {
         this.$route.params.id
       );
       console.log(JSON.stringify(response.data.data.form_fields, null, 2));
+      console.log(JSON.stringify(response.data.data, null, 2));
       this.formData = response.data.data;
     },
     async updateFormData() {

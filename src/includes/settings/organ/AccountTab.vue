@@ -9,9 +9,9 @@
             </v-subheader>
           </v-col>
         </v-row>
-        <div class="mx-4 ml-md-13 mt-6">
+        <div class="mx-md-13 mt-6">
           <v-form>
-            <v-row class="mr-md-4 mx-md-10 mb-8">
+            <v-row class="mx-md-10 mb-8">
               <v-col cols="12">
                 <v-text-field
                   v-model="accountDetails.paymentTerms"
@@ -45,7 +45,7 @@
                 </v-select>
               </v-col>
             </v-row>
-            <v-card-actions class="justify-end pa-md-8">
+            <v-card-actions class="justify-end pa-md-8 mr-md-6">
               <v-btn
                 class="submit-btn"
                 dark

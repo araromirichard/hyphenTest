@@ -39,7 +39,7 @@
                     <v-spacer></v-spacer>
                     <v-chip
                       color="#D8D8D8"
-                      class="my-auto mx-8"
+                      class="my-auto mx-8 mr-md-12"
                       v-if="isAnAdmin"
                       small
                       >Admin</v-chip

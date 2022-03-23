@@ -34,7 +34,7 @@
                   "
                 >
                   <v-card-title
-                    class="mx-2 mt-4 text-break"
+                    class="mx-2 mt-2 text-break"
                     style="
                       max-width: 90%;
                       font-family: Inter;
@@ -46,6 +46,9 @@
                     "
                     >{{ card.form_title }}</v-card-title
                   >
+                  <v-card-subtitle class="mx-2 pb-2 indigo--text darken-4"
+                    >https://hypn.so/{{ card.hypn_id }}</v-card-subtitle
+                  >
                   <div class="d-flex justify-space-between my-4">
                     <div class="mx-4 mx-md-1">
                       <v-chip
@@ -56,14 +59,17 @@
                         class="mt-4 mx-md-5"
                         >{{ numFormEntries }}</v-chip
                       >
-                      <h5 class="mx-md-5 text--disabled">entries</h5>
+                      <h5 class="mx-md-5 text--disabled text-caption">
+                        entries
+                      </h5>
                     </div>
                     <v-switch
                       class="pt-0"
                       hide-details="true"
                       dense
-                      :value="card.switchValue"
-                      v-model="switch1"
+                      :value="card.hypn_id"
+                      v-model="inActiveForms"
+                      multiple
                       color="#16BE98"
                     ></v-switch>
                   </div>
@@ -97,13 +103,12 @@
                         }`,
                       }"
                     >
-                      Created {{ createdAt }}
+                      Created {{ card.created_at | date }}
                     </p>
                     <v-spacer></v-spacer>
                     <v-btn
                       v-model="selectedIcon"
                       @click="showForm(icon, index, j)"
-                      target="_blank"
                       class="px-0 mx-0"
                       style="margin-top: 4px"
                       icon
@@ -168,15 +173,9 @@
 import { mapActions, mapState } from "vuex";
 
 export default {
-  props: {
-    createdAt: {
-      type: String,
-      required: true,
-    },
-  },
   data() {
     return {
-      switch1: [],
+      inActiveForms: [],
       selectedIcon: null,
       numFormEntries: 0,
       formEntries: [],
@@ -187,6 +186,7 @@ export default {
       ],
 
       loading: true,
+      submitUrl: "",
     };
   },
   methods: {
@@ -212,7 +212,7 @@ export default {
       } else if (index === 1) {
         this.$emit("entries");
         // iterate over the formCards controls and get the name and label of each  field
-        const controlsObject = this.formCards[parentIndex].data.controls;
+        const controlsObject = this.formCards[parentIndex].form_fields.controls;
         const nameLabelsArray = [];
         const nameArray = [];
         for (const key in controlsObject) {
@@ -226,9 +226,10 @@ export default {
         var filteredNameLabelArray = nameLabelsArray.filter(
           (item) => item.label !== "Submit" || item.name !== ""
         );
+        var filteredNameArray = nameArray.filter((item) => item !== "");
         this.$emit("send-entries", filteredNameLabelArray);
-        //console.log(nameArray);
-        //console.log(filteredNameLabelArray);
+        console.log(filteredNameArray);
+        console.log(filteredNameLabelArray);
       } else if (index === 2) {
         //get the index of the particula form card
         //pass this index to a variable
@@ -264,7 +265,7 @@ export default {
     this.loading = true;
     setTimeout(() => {
       this.loading = false;
-    }, 5000);
+    }, 3000);
     this.$store.dispatch("formBuilder/FetchAllForms");
     console.log(JSON.stringify(this.formCards, null, 2));
     //console.log(this.$store.dispatch("formBuilder/FetchAllForms"));
@@ -281,6 +282,11 @@ export default {
     totalEntriesNum() {
       return this.formEntries.length;
     },
+
+    //set the value of the submit form URL
+    // submitFormUrl() {
+    //   return ;
+    // },
   },
 };
 </script>

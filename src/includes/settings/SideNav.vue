@@ -19,15 +19,38 @@
       <v-list dense nav>
         <v-list-item-group active-class="font-weight-bold link-text-active">
           <v-list-item
-            v-for="item in navLinks"
+            v-for="item in userLinks"
             :key="item.title"
             link
             :to="item.link"
             class="pr-0"
           >
             <v-list-item-icon class="mr-1" v-if="item.title == 'Integrations'">
-              <img :src="require('@/assets/icons/Line_out_alt_light.svg')" />
             </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title>
+                <span class="link-text"> {{ item.title }}</span>
+              </v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list-item-group>
+      </v-list>
+      <v-list-item-subtitle class="pl-4">
+        <v-list-item-icon class="mx-0 mb-0">
+          <img
+            :src="require('@/assets/icons/Line_out_alt_light.svg')"
+          /> </v-list-item-icon
+        ><span class="link-text font-weight-bold pb-2">Integrations</span>
+      </v-list-item-subtitle>
+      <v-list dense nav>
+        <v-list-item-group active-class="font-weight-bold link-text-active">
+          <v-list-item
+            v-for="item in integrationLinks"
+            :key="item.title"
+            link
+            :to="item.link"
+            class="pr-0"
+          >
             <v-list-item-content>
               <v-list-item-title>
                 <span class="link-text"> {{ item.title }}</span>
@@ -51,15 +74,17 @@ export default {
   },
   data() {
     return {
-      navLinks: [
+      userLinks: [
         { title: "Profile", link: "profile" },
         { title: "Organization", link: "organization" },
         { title: "Security", link: "security" },
-        { title: "Integrations", link: "integrations" },
+      ],
+      integrationLinks: [
         { title: "Bank", link: "bank" },
         { title: "Apps", link: "apps" },
         { title: "API", link: "api" },
       ],
+
       right: null,
     };
   },

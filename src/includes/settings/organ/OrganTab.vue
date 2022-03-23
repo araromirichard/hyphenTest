@@ -35,9 +35,9 @@
             >
           </v-sheet>
         </div>
-        <div class="mx-4 ml-md-13 mt-6">
+        <div class="mx-13 mt-6">
           <v-form>
-            <v-row class="mr-md-4 mx-md-10 mb-8">
+            <v-row class="mx-md-10 my-md-2 mb-8">
               <v-col cols="12">
                 <v-text-field
                   v-model="companyDetails.companyName"
@@ -70,7 +70,7 @@
                 </v-text-field>
               </v-col>
             </v-row>
-            <v-row class="mr-md-4 mx-md-10 mb-8">
+            <v-row class="mx-md-10 my-md-2 mb-8">
               <v-subheader class="my-4 section-title">
                 Office/Location
               </v-subheader>
@@ -132,7 +132,7 @@
                 Leadership
               </v-subheader>
             </div>
-            <v-row class="mr-md-4 mx-md-10 mb-8">
+            <v-row class="mx-md-10 my-md-2 mb-8">
               <v-col cols="12" md="6">
                 <v-text-field
                   v-model="companyDetails.leadership.firstName"
@@ -194,7 +194,7 @@
                 </v-text-field>
               </v-col>
             </v-row>
-            <v-card-actions class="justify-end pa-md-8">
+            <v-card-actions class="justify-end pa-md-8 pr-md-11">
               <v-btn
                 class="submit-btn"
                 dark

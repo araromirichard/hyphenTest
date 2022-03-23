@@ -2,9 +2,9 @@
   <div>
     <v-row>
       <v-col class="pt-0">
-        <div class="mx-4 ml-md-13 mt-6">
+        <div class="mx-4 mx-md-auto mt-6">
           <v-form>
-            <v-row class="mr-md-4 mx-md-10 mb-8">
+            <v-row class="mx-md-4 mx-md-10 mb-8">
               <v-col cols="12" md="6">
                 <v-text-field
                   ref="firstName"
@@ -59,7 +59,7 @@
                 <resetBtn :color="color" :btnTitle="btnTitle" />
               </div>
             </v-row>
-            <v-card-actions class="justify-end pa-md-8">
+            <v-card-actions class="justify-end pa-md-8 mr-md-4">
               <v-btn
                 class="submit-btn"
                 :loading="isSaving"

@@ -230,13 +230,7 @@ const routes = [{
                         import ("@/views/settings/Bank.vue"),
                 },
             },
-            {
-                path: "integrations",
-                components: {
-                    default: () =>
-                        import ("@/views/settings/Integrations.vue"),
-                },
-            },
+
             {
                 path: "Organization",
                 components: {

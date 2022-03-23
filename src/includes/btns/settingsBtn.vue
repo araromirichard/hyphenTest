@@ -1,11 +1,5 @@
 <template>
-  <v-btn
-    outlined
-    elevation="1"
-    x-small
-    color="#19283D"
-    class="px-3 text-capitalize"
-  >
+  <v-btn outlined elevation="1" color="#19283D" class="px-3 text-capitalize">
     {{ btnTitle }}
   </v-btn>
 </template>
