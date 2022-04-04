@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="22px" height="21px" viewBox="0 0 22 21" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 54.1 (76490) - https://sketchapp.com -->
+    <title>Stroke 1</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M7,8 L4,8 C2.343,8 1,9.343 1,11 L1,17 C1,18.657 2.343,20 4,20 L18,20 C19.657,20 21,18.657 21,17 L21,11 C21,9.343 19.657,8 18,8 L15,8 M11,16 L11,0 M7,12 L11,16 L15,12" id="Stroke-1" stroke="#000000"></path>
+    </g>
+</svg>
