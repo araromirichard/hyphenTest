@@ -7,26 +7,6 @@
       class="d-flex mx-sm-0 py-0 py-md-2"
       color="#f4f4f4"
     >
-<<<<<<< HEAD
-=======
-      <v-btn
-        v-if="!showFormCards"
-        plain
-        @click="showFormCards = true"
-        class="ml-4 text-capitalize"
-        style="
-          font-family: Inter;
-          font-style: normal;
-          font-weight: 300;
-          font-size: 14px;
-          line-height: 19px;
-          color: #7f919b;
-        "
-      >
-        <v-icon class="pt-1">mdi-chevron-left</v-icon>
-        <span>Back</span>
-      </v-btn>
->>>>>>> 0108695badfe21a4a8e1ab44c7bbbaefd364beff
       <span
         v-if="formDisplay"
         class="
@@ -42,63 +22,15 @@
         {{ formName }}
       </span>
       <v-spacer></v-spacer>
-<<<<<<< HEAD
-=======
-      <div style="width = 10px">
-        <v-autocomplete
-          class="px-8"
-          dense
-          hide-details="true"
-          v-if="!showFormCards"
-          v-model="selectedHeaders"
-          :items="headers"
-          multiple
-          return-object
-        >
-          <template v-slot:selection="{ item, index }">
-            <v-chip small v-if="index < 2">
-              <span>{{ item.text }}</span>
-            </v-chip>
-            <span v-if="index === 2" class="grey--text caption"
-              >(+{{ selectedHeaders.length - 2 }} others)</span
-            >
-          </template>
-        </v-autocomplete>
-      </div>
->>>>>>> 0108695badfe21a4a8e1ab44c7bbbaefd364beff
     </v-card>
 
     <template>
       <v-container class="pt-8 px-0">
         <SingleFormCard
           v-if="showFormCards"
-<<<<<<< HEAD
           @create-form="buildForm"
           class="mx-md-10"
         />
-
-       
-=======
-          @send-entries="loadEntries"
-          @create-form="buildForm"
-          @entries="showFormCards = false"
-          class="mx-md-10"
-        />
-
-        <div class="ma-0 pa-0" v-else>
-          <template>
-            <v-data-table
-              height="100%"
-              ref="myTable"
-              :headers="showHeaders"
-              :items="dataEntries"
-              :items-per-page="8"
-              class="elevation-0"
-            >
-            </v-data-table>
-          </template>
-        </div>
->>>>>>> 0108695badfe21a4a8e1ab44c7bbbaefd364beff
       </v-container>
     </template>
   </v-container>
@@ -118,27 +50,7 @@ export default {
       newForm: false,
       formDisplay: false,
       showFormCards: true,
-<<<<<<< HEAD
-      
-=======
-      headers: [],
-      selectedHeaders: [],
-      dataEntries: [
-        {
-          vendorEmail: "richjohn@gmail.com",
-          contactPerson: "Emmanuel Peace",
-          vendorName: "Richard Johnson",
-          Date: "21/03/2022",
-          vendorPhoneNumber: "+234705647896",
-          vendorAddress: "plot 2, make way avenue, solid state, Nigeria",
-          courier: "DHL",
-          shipToAddress: "2, Ajayi street, Uwasota road, Benin city",
-          shipping: "Dispatch",
-          contactEmail: "emmapee@yahoo.com",
-          contactNumber: "+234804578965",
-        },
-      ],
->>>>>>> 0108695badfe21a4a8e1ab44c7bbbaefd364beff
+
       loading: true,
 
       formName: "New Form 1",
@@ -165,38 +77,6 @@ export default {
     setSearchText(value) {
       this.search = value;
     },
-<<<<<<< HEAD
-=======
-    loadEntries(value) {
-      const newValueArray = [];
-      for (const key in value) {
-        const newValue = {};
-        newValue.text = value[key]["name"];
-        newValue.value = value[key]["name"];
-
-        newValueArray.push(newValue);
-      }
-      this.headers = newValueArray;
-      console.log(this.headers);
-    },
-    populateHeaders() {
-      let headers = JSON.parse(localStorage.getItem("headers"));
-      if (!headers) {
-        this.selectedHeaders = this.headers;
-      } else {
-        this.selectedHeaders = headers;
-      }
-    },
-  },
-  async mounted() {
-    //
-    await this.populateHeaders();
-  },
-  computed: {
-    showHeaders() {
-      return this.headers.filter((s) => this.selectedHeaders.includes(s));
-    },
->>>>>>> 0108695badfe21a4a8e1ab44c7bbbaefd364beff
   },
 };
 </script>

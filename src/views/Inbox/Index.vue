@@ -174,10 +174,7 @@
                 <img :src="require('@/assets/info.svg')" alt="" />
               </v-avatar>
               <v-card-text
-<<<<<<< HEAD
                 v-if="organizationToken.data"
-=======
->>>>>>> 0108695badfe21a4a8e1ab44c7bbbaefd364beff
                 style="
                   font-style: normal;
                   font-weight: normal;
@@ -226,14 +223,10 @@
                 <div class="pr-8 pl-4">
                   <p class="pt-8 my-0 h-card-title">Incoming invoice/bill</p>
 
-<<<<<<< HEAD
                   <p
                     v-if="organizationToken.data"
                     class="pt-2 pr-1 my-md-1 text-wrap h-card-body-bold"
                   >
-=======
-                  <p class="pt-2 pr-1 my-md-1 text-wrap h-card-body-bold">
->>>>>>> 0108695badfe21a4a8e1ab44c7bbbaefd364beff
                     {{ organizationToken.data.hypn_email }}
                   </p>
                   <p class="pt-2 text-wrap h-card-body">
@@ -500,11 +493,7 @@
                   <validation-provider
                     v-slot="{ errors }"
                     name="First Name"
-<<<<<<< HEAD
                     rules="required|alpha"
-=======
-                    rules="required"
->>>>>>> 0108695badfe21a4a8e1ab44c7bbbaefd364beff
                   >
                     <v-text-field
                       v-model="stakeholder.firstName"
@@ -522,11 +511,7 @@
                   <validation-provider
                     v-slot="{ errors }"
                     name="Last Name"
-<<<<<<< HEAD
                     rules="required|alpha"
-=======
-                    rules="required"
->>>>>>> 0108695badfe21a4a8e1ab44c7bbbaefd364beff
                   >
                     <v-text-field
                       v-model="stakeholder.lastName"
@@ -558,10 +543,6 @@
                       :error-messages="errors"
                     ></v-text-field>
                   </validation-provider>
-<<<<<<< HEAD
-
-=======
->>>>>>> 0108695badfe21a4a8e1ab44c7bbbaefd364beff
                   <validation-provider
                     v-slot="{ errors }"
                     name="select"
@@ -586,13 +567,8 @@
                     <v-btn
                       @click="sendInvite"
                       :disabled="invalid"
-<<<<<<< HEAD
                       width="121"
                       color="primary"
-=======
-                      type="submit"
-                      width="121"
->>>>>>> 0108695badfe21a4a8e1ab44c7bbbaefd364beff
                       height="45"
                       style="
                         margin-top: 24px;
@@ -605,14 +581,10 @@
                       <simple-line-icons
                         icon="plus"
                         size="small"
-<<<<<<< HEAD
                         style="color: #ffffff"
                         :style="{
                           color: `${invalid ? '#050c13' : ''}`,
                         }"
-=======
-                        style="color: var(--v-primary-base)"
->>>>>>> 0108695badfe21a4a8e1ab44c7bbbaefd364beff
                         no-svg
                       />
                       <span
@@ -626,16 +598,11 @@
                           text-align: center;
                           letter-spacing: 0.636364px;
 
-<<<<<<< HEAD
                           color: #ffffff;
                         "
                         :style="{
                           color: `${invalid ? '#050c13' : ''}`,
                         }"
-=======
-                          color: var(--v-primary-base);
-                        "
->>>>>>> 0108695badfe21a4a8e1ab44c7bbbaefd364beff
                         >Add</span
                       >
                     </v-btn>
@@ -683,13 +650,8 @@
 </template>
 
 <script>
-<<<<<<< HEAD
 import { mapGetters, mapState, mapActions } from "vuex";
 import { required, email, alpha } from "vee-validate/dist/rules";
-=======
-import { mapGetters, mapState } from "vuex";
-import { required, email } from "vee-validate/dist/rules";
->>>>>>> 0108695badfe21a4a8e1ab44c7bbbaefd364beff
 import {
   extend,
   ValidationObserver,
@@ -702,13 +664,10 @@ extend("required", {
   ...required,
   message: "{_field_} can not be empty",
 });
-<<<<<<< HEAD
 extend("alpha", {
   ...alpha,
   message: "{_field_} can only contain alphabeth",
 });
-=======
->>>>>>> 0108695badfe21a4a8e1ab44c7bbbaefd364beff
 
 extend("email", {
   ...email,
@@ -737,10 +696,7 @@ export default {
         email: "",
         selectedType: null,
       },
-<<<<<<< HEAD
       password: "",
-=======
->>>>>>> 0108695badfe21a4a8e1ab44c7bbbaefd364beff
       stakeholderTypes: ["Co-worker", "Payee"],
       items: [
         { tab: "All", content: "TabDataTableAll" },
@@ -795,17 +751,13 @@ export default {
     ValidationObserver,
   },
   methods: {
-<<<<<<< HEAD
     ...mapActions({ showToast: "ui/showToast" }),
-=======
->>>>>>> 0108695badfe21a4a8e1ab44c7bbbaefd364beff
     toggleSearch() {
       this.isClicked = false;
     },
     searchDataTable(e) {
       this.$refs.dataTable.setSearchText(e);
     },
-<<<<<<< HEAD
     async sendInvite() {
       const payload = {
         username: this.stat,
@@ -837,10 +789,6 @@ export default {
       //     timeout: 3000,
       //   });
       // }
-=======
-    sendInvite() {
-      console.table(this.stakeholder);
->>>>>>> 0108695badfe21a4a8e1ab44c7bbbaefd364beff
     },
 
     async getOrganizationToken() {
@@ -854,10 +802,7 @@ export default {
   async created() {
     await this.getOrganizationToken();
     console.log(JSON.stringify(this.organizationToken, null, 2));
-<<<<<<< HEAD
     console.log(JSON.stringify(this.user, null, 2));
-=======
->>>>>>> 0108695badfe21a4a8e1ab44c7bbbaefd364beff
   },
 
   computed: {
@@ -880,12 +825,9 @@ export default {
       //console.log(this.$store.state.auth.user);
       return this.$store.state.auth.user;
     },
-<<<<<<< HEAD
     getUsername() {
       return this.stakeholder.firstName + this.stakeholde.lastName;
     },
-=======
->>>>>>> 0108695badfe21a4a8e1ab44c7bbbaefd364beff
   },
 
   watch: {

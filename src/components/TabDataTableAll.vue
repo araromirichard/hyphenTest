@@ -185,13 +185,9 @@
             :amount="invoice.total"
             :status="invoice.status"
             :category="invoice.category"
-<<<<<<< HEAD
             :textColor="
               invoice.invoicetype === 'expense' ? '#E3AA1C' : '#2BD5AE'
             "
-=======
-            :textColor="invoice.invoicetype === 'expense' ? '#E3AA1C' : '#2BD5AE'"
->>>>>>> 0108695badfe21a4a8e1ab44c7bbbaefd364beff
           />
 
           <!-- Data table for mobile -->
@@ -233,10 +229,6 @@ export default {
       sendToWorkflow: true,
       workflowName: "workflow name…",
       switchState: false,
-<<<<<<< HEAD
-=======
-      
->>>>>>> 0108695badfe21a4a8e1ab44c7bbbaefd364beff
     };
   },
   methods: {

@@ -1,5 +1,4 @@
 <template>
-<<<<<<< HEAD
   <v-card
     flat
     :height="height"
@@ -8,10 +7,6 @@
     class="mx-auto"
   >
     <v-navigation-drawer class="mx-auto my-0" :color="color" permanent>
-=======
-  <v-card flat :height="height" :width="width" color="transparent" class="mx-0">
-    <v-navigation-drawer class="ma-0" :color="color" permanent>
->>>>>>> 0108695badfe21a4a8e1ab44c7bbbaefd364beff
       <v-list-item>
         <v-list-item-content class="py-0">
           <v-list-item-title class="link-title mt-9 py-4">

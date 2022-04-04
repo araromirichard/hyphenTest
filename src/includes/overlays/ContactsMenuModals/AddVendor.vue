@@ -47,10 +47,6 @@
                   address, default payment terms, etc
                 </p>
               </div>
-<<<<<<< HEAD
-
-=======
->>>>>>> 0108695badfe21a4a8e1ab44c7bbbaefd364beff
               <v-form>
                 <v-row class="mx-10">
                   <v-col cols="12"
@@ -267,11 +263,7 @@
                     ></v-select
                   ></v-col>
                 </v-row>
-<<<<<<< HEAD
                 <v-card-actions class="justify-end pa-8 mb-8">
-=======
-                <v-card-actions class="justify-end pa-8">
->>>>>>> 0108695badfe21a4a8e1ab44c7bbbaefd364beff
                   <v-btn
                     @click="switchTabs('next')"
                     dark

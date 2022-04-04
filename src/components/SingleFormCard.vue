@@ -190,11 +190,7 @@ export default {
     };
   },
   methods: {
-<<<<<<< HEAD
     ...mapActions("formBuilder", ["deleteForm"]),
-=======
-    ...mapActions("formBuilder", ["getFormCards", "deleteForm"]),
->>>>>>> 0108695badfe21a4a8e1ab44c7bbbaefd364beff
     //method to emit event to open modal
 
     activateModal() {
@@ -215,7 +211,6 @@ export default {
         });
       } else if (index === 1) {
         this.$emit("entries");
-<<<<<<< HEAD
 
         this.$router.push({
           path: `/form/${this.formCards[parentIndex].id}`,
@@ -242,27 +237,6 @@ export default {
         // this.$emit("send-entries", filteredNameLabelArray);
         // console.log(filteredNameArray);
         // console.log(filteredNameLabelArray);
-=======
-        // iterate over the formCards controls and get the name and label of each  field
-        const controlsObject = this.formCards[parentIndex].form_fields.controls;
-        const nameLabelsArray = [];
-        const nameArray = [];
-        for (const key in controlsObject) {
-          const newNameLabel = {};
-          newNameLabel.name = controlsObject[key]["name"];
-          newNameLabel.label = controlsObject[key]["label"];
-          //push it into a new array
-          nameLabelsArray.push(newNameLabel);
-          nameArray.push(newNameLabel.name);
-        }
-        var filteredNameLabelArray = nameLabelsArray.filter(
-          (item) => item.label !== "Submit" || item.name !== ""
-        );
-        var filteredNameArray = nameArray.filter((item) => item !== "");
-        this.$emit("send-entries", filteredNameLabelArray);
-        console.log(filteredNameArray);
-        console.log(filteredNameLabelArray);
->>>>>>> 0108695badfe21a4a8e1ab44c7bbbaefd364beff
       } else if (index === 2) {
         //get the index of the particula form card
         //pass this index to a variable

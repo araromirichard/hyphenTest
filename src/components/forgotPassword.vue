@@ -107,7 +107,6 @@ export default {
 
     async submitForm() {
       this.$refs.form.validate();
-<<<<<<< HEAD
       const payload = JSON.stringify(this.email, null, 2);
       console.log(payload);
       try {
@@ -122,22 +121,6 @@ export default {
               timeout: 5000,
             })
           );
-=======
-
-      await console.log(this.email);
-      try {
-        this.isSending = true;
-        await this.$store.dispatch("auth/sendResetPasswordEmailLink", {
-          identifier: this.email,
-        });
-
-        this.showToast({
-          sclass: "success",
-          show: true,
-          message: "Email Sent, Please Check Your Email",
-          timeout: 5000,
-        });
->>>>>>> 0108695badfe21a4a8e1ab44c7bbbaefd364beff
       } catch (error) {
         this.showToast({
           sclass: "error",
@@ -152,15 +135,8 @@ export default {
   },
 
   computed: {
-<<<<<<< HEAD
     //
   },
-=======
-  //
-  },
-
- 
->>>>>>> 0108695badfe21a4a8e1ab44c7bbbaefd364beff
 };
 </script>
 

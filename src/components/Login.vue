@@ -141,11 +141,6 @@
                 </router-link>
               </v-chip>
             </v-card-actions>
-<<<<<<< HEAD
-=======
-
-            
->>>>>>> 0108695badfe21a4a8e1ab44c7bbbaefd364beff
           </div>
         </v-card>
 
@@ -164,11 +159,7 @@
               color: #7f919b;
             "
           >
-<<<<<<< HEAD
             We are commited to your privacy. Hyphen is fully encrypted and keeps
-=======
-            We are commited to your privacy. pBot is fully encrypted and keeps
->>>>>>> 0108695badfe21a4a8e1ab44c7bbbaefd364beff
             all your sensitive information 100% secure and private</span
           >
         </div>
@@ -247,13 +238,8 @@ export default {
     },
 
     goToRecovery() {
-<<<<<<< HEAD
       this.$router.push("/forgot-password");
     },
-=======
-      this.$router.push("/forgot-password")
-    }
->>>>>>> 0108695badfe21a4a8e1ab44c7bbbaefd364beff
   },
 
   computed: {

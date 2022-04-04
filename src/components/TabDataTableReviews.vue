@@ -134,10 +134,6 @@ export default {
       selectedRows: [],
       sendToWorkflow: true,
       workflowName: "workflow name…",
-<<<<<<< HEAD
-=======
-     
->>>>>>> 0108695badfe21a4a8e1ab44c7bbbaefd364beff
     };
   },
   methods: {

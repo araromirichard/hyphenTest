@@ -62,7 +62,9 @@
                   >
                 </p>
               </div>
-              <validation-observer ref="observer">
+
+              <!-- company form starts here -->
+              <validation-observer ref="observer" v-slot="{ invalid }">
                 <v-form>
                   <v-row class="mx-10 mb-8">
                     <v-col class="p-0" cols="12">
@@ -191,9 +193,13 @@
                   </v-row>
                   <v-card-actions class="justify-end px-12 px-md-0">
                     <v-btn
+                      :disabled="invalid"
                       @click="switchTabs('next')"
                       class="mx-auto mx-md-12 mb-12"
-                      dark
+                
+                      :style="{
+                        background: `${invalid ? '#e6eaeb' : '#19283D'}`,
+                      }"
                       :width="$vuetify.breakpoint.smAndDown ? '100%' : '121'"
                       height="45"
                     >
@@ -207,9 +213,18 @@
                           font-size: 12px;
                           line-height: 16px;
                         "
+                        :style="{
+                          color: `${invalid ? '#050c13' : '#ffffff'}`,
+                        }"
                         no-svg
                       />
-                      <span class="btn-name text-capitalize pl-3">Next</span>
+                      <span
+                        class="btn-name text-capitalize pl-3"
+                        :style="{
+                          color: `${invalid ? '#050c13' : '#ffffff'}`,
+                        }"
+                        >Next</span
+                      >
                     </v-btn>
                   </v-card-actions>
                 </v-form>
@@ -224,7 +239,7 @@
               document or authorised to approve bank payments
             </h6>
             <v-card style="background-color: transparent" flat>
-              <validation-observer ref="observer">
+              <validation-observer ref="observer" v-slot="{ invalid }">
                 <v-form>
                   <v-row class="mb-8 mx-10 mt-8">
                     <v-col class="p-0" cols="6">
@@ -317,7 +332,7 @@
                       <validation-provider
                         v-slot="{ errors }"
                         name="BVN"
-                        rules="required|alpha"
+                        rules="required|digits"
                       >
                         <v-text-field
                           :error-messages="errors"
@@ -349,15 +364,6 @@
                       </validation-provider>
                     </v-col>
                     <v-col class="p-0" cols="6">
-                      <!-- <v-file-input
-                        style="border: 1px dashed rgba(127, 145, 155, 0.551929)"
-                        v-model="company.leadership.IdType"
-                        background-color="#ffffff"
-                        prepend-icon=""
-                        hide-details="auto"
-                        placeholder="Please upload a copy of selected ID"
-                      >
-                      </v-file-input> -->
                       <template>
                         <v-card
                           @click="handleFileImport"
@@ -366,7 +372,7 @@
                           @dragover.prevent="dragging = true"
                           @dragenter.prevent="dragging = true"
                           @dragleave.prevent="dragging = false"
-                          height="56"
+                          height="56 "
                           width="100%"
                           class="mx-auto justify-center d-flex"
                           style=""
@@ -413,9 +419,12 @@
                   </v-row>
                   <v-card-actions class="justify-end px-0">
                     <v-btn
+                      :disabled="invalid"
                       @click="saveKycData"
                       class="submit-btn mx-12 mb-12"
-                      dark
+                      :style="{
+                        background: `${invalid ? '#e6eaeb' : '#19283D'}`,
+                      }"
                       type="submit"
                       :width="$vuetify.breakpoint.smAndDown ? '100%' : '121'"
                       height="45"
@@ -430,9 +439,18 @@
                           font-size: 12px;
                           line-height: 16px;
                         "
+                        :style="{
+                          color: `${invalid ? '#050c13' : '#ffffff'}`,
+                        }"
                         no-svg
                       />
-                      <span class="btn-name text-capitalize pl-3">Submit</span>
+                      <span
+                        class="btn-name text-capitalize pl-3"
+                        :style="{
+                          color: `${invalid ? '#050c13' : '#ffffff'}`,
+                        }"
+                        >Submit</span
+                      >
                     </v-btn>
                   </v-card-actions>
                 </v-form>
@@ -446,7 +464,13 @@
 </template>
 
 <script>
-import { required, email, alpha, alpha_num } from "vee-validate/dist/rules";
+import {
+  required,
+  email,
+  alpha,
+  alpha_num,
+  digits,
+} from "vee-validate/dist/rules";
 import {
   extend,
   ValidationObserver,
@@ -462,6 +486,10 @@ extend("required", {
 extend("alpha", {
   ...alpha,
   message: "{_field_} can only contain alphabeth",
+});
+extend("digits", {
+  ...digits,
+  message: "{_field_} can only contain numbers",
 });
 extend("alpha_num", {
   ...alpha_num,
