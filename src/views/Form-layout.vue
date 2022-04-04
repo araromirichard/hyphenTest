@@ -62,7 +62,11 @@
                     letter-spacing: 0.278409px;
                   "
                 >
+<<<<<<< HEAD
                   Hyphen is empowering the finance office. <br />
+=======
+                  pBot is empowering the finance office. <br />
+>>>>>>> 0108695badfe21a4a8e1ab44c7bbbaefd364beff
                   Enabling every company with visibility, approval and workflow
                   technology to grow cashflow
                 </p>
@@ -93,7 +97,11 @@
                   "
                 >
                   <strong>Setup in 5mins or less</strong><br />
+<<<<<<< HEAD
                   Hyphen team will help onboard you and your company with great
+=======
+                  pBot team will help onboard you and your company with great
+>>>>>>> 0108695badfe21a4a8e1ab44c7bbbaefd364beff
                   care and worldclass service
                 </p>
 

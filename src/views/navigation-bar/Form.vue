@@ -132,9 +132,14 @@
           </template>
           <template>
             <v-switch
+<<<<<<< HEAD
               @change="changeValue"
               class="ml-9"
               v-model="payment"
+=======
+              class="ml-9"
+              v-model="makePayment"
+>>>>>>> 0108695badfe21a4a8e1ab44c7bbbaefd364beff
               label="Make Payment"
             ></v-switch>
           </template>
@@ -269,6 +274,10 @@
               </v-expand-x-transition>
             </v-tabs>
           </v-card>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 0108695badfe21a4a8e1ab44c7bbbaefd364beff
           <component
             @open-modal="dialog = true"
             v-bind:is="items[tab].content"
@@ -283,14 +292,21 @@
 
 <script>
 import FormEntriesCards from "../../components/FormEntriesCards.vue";
+<<<<<<< HEAD
 import { mapActions, mapGetters } from "vuex";
+=======
+import { mapActions } from "vuex";
+>>>>>>> 0108695badfe21a4a8e1ab44c7bbbaefd364beff
 export default {
   components: { FormEntriesCards },
   name: "Form",
   data() {
     return {
       dialog: false,
+<<<<<<< HEAD
       payment: null,
+=======
+>>>>>>> 0108695badfe21a4a8e1ab44c7bbbaefd364beff
       isClicked: true,
       search: "",
       formName: "",
@@ -299,17 +315,29 @@ export default {
     };
   },
   computed: {
+<<<<<<< HEAD
     ...mapGetters({
       is_payment: "formBuilder/getPaymentStatus"
     })
 
     
+=======
+    makePayment: {
+      get() {
+        return this.$store.state.formBuilder.makePayment;
+      },
+      set(value) {
+        this.$store.commit("formBuilder/SET_MAKEPAYMENT", value);
+      },
+    },
+>>>>>>> 0108695badfe21a4a8e1ab44c7bbbaefd364beff
   },
   methods: {
     ...mapActions({ showToast: "ui/showToast" }),
     closeFormDialog() {
       this.dialog = false;
     },
+<<<<<<< HEAD
 
     //check and change the store value of is_payment switch
     changeValue() {
@@ -317,6 +345,8 @@ export default {
   
     },
 
+=======
+>>>>>>> 0108695badfe21a4a8e1ab44c7bbbaefd364beff
     toggleSearch() {
       this.isClicked = false;
     },

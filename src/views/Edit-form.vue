@@ -76,7 +76,10 @@
         <div>
           <div class="d-flex justify-center align-center">
             <h6
+<<<<<<< HEAD
               v-if="formData"
+=======
+>>>>>>> 0108695badfe21a4a8e1ab44c7bbbaefd364beff
               class="pl-5 pt-md-5"
               style="
                 font-family: Inter;
@@ -197,7 +200,10 @@ export default {
         isPrivate: true,
         formName: "",
       },
+<<<<<<< HEAD
       form_id: null,
+=======
+>>>>>>> 0108695badfe21a4a8e1ab44c7bbbaefd364beff
     };
   },
   methods: {
@@ -213,13 +219,20 @@ export default {
       console.log(JSON.stringify(response.data.data.form_fields, null, 2));
       console.log(JSON.stringify(response.data.data, null, 2));
       this.formData = response.data.data;
+<<<<<<< HEAD
       this.form_id = response.data.id;
+=======
+>>>>>>> 0108695badfe21a4a8e1ab44c7bbbaefd364beff
     },
     async updateFormData() {
       try {
         await this.$store
           .dispatch("formBuilder/updateForm", {
+<<<<<<< HEAD
             id: this.form_id,
+=======
+            id: this.$route.params.id,
+>>>>>>> 0108695badfe21a4a8e1ab44c7bbbaefd364beff
             payload: this.updateRequestData,
           })
           .then(
@@ -233,6 +246,7 @@ export default {
         //console.log(JSON.stringify(payload, null, 2));
       } catch (error) {
         console.log(error);
+<<<<<<< HEAD
 
         this.showToast({
           sclass: "error",
@@ -240,6 +254,16 @@ export default {
           message: "Form " + this.formData.form_title + " could not Updated",
           timeout: 3000,
         });
+=======
+        if (error) {
+          this.showToast({
+            sclass: "error",
+            show: true,
+            message: "Form " + this.formData.form_title + " could not Updated",
+            timeout: 3000,
+          });
+        }
+>>>>>>> 0108695badfe21a4a8e1ab44c7bbbaefd364beff
       }
     },
   },

@@ -35,8 +35,16 @@ Vue.use(VueFormBuilderPlugin);
 Vue.filter("date", DateFilter);
 
 new Vue({
+<<<<<<< HEAD
   router,
   store,
   vuetify,
   render: (h) => h(App),
 }).$mount("#app");
+=======
+    router,
+    store,
+    vuetify,
+    render: (h) => h(App),
+}).$mount("#app");
+>>>>>>> 0108695badfe21a4a8e1ab44c7bbbaefd364beff

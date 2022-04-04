@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {
   "name": "hyphen",
   "version": "0.1.0",
@@ -57,3 +58,63 @@
     "vuetify-loader": "^1.7.0"
   }
 }
+=======
+{
+  "name": "hyphen",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
+  },
+  "dependencies": {
+    "axios": "^0.24.0",
+    "core-js": "^3.6.5",
+    "date-fns": "^2.25.0",
+    "dayjs": "^1.10.7",
+    "deep-equal": "^2.0.5",
+    "export-to-csv": "^0.2.1",
+    "install": "^0.13.0",
+    "litepicker": "^2.0.11",
+    "mdb-ui-kit": "^3.9.0",
+    "moment": "^2.29.1",
+    "pure-vue-chart": "^0.4.0",
+    "simple-line-icons": "^2.5.5",
+    "skeleton-loader-vue": "^1.0.10",
+    "v-form-builder": "^2.1.1",
+    "vee-validate": "^3.4.13",
+    "vue": "^2.6.11",
+    "vue-form-generator": "^2.3.4",
+    "vue-ico": "^1.0.15",
+    "vue-ionicons": "^3.0.5",
+    "vue-json-csv": "^1.2.12",
+    "vue-router": "^3.2.0",
+    "vue-simple-line": "^1.1.1",
+    "vuedraggable": "^2.24.3",
+    "vuetable-2": "^2.0.0-beta.4",
+    "vuetify": "^2.4.0",
+    "vuex": "^3.4.0"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "~4.5.0",
+    "@vue/cli-plugin-eslint": "~4.5.0",
+    "@vue/cli-plugin-router": "~4.5.0",
+    "@vue/cli-plugin-vuex": "~4.5.0",
+    "@vue/cli-service": "~4.5.0",
+    "@vue/eslint-config-prettier": "^6.0.0",
+    "babel-eslint": "^10.1.0",
+    "css-loader": "^6.4.0",
+    "eslint": "^6.7.2",
+    "eslint-plugin-prettier": "^3.3.1",
+    "eslint-plugin-vue": "^6.2.2",
+    "html-loader": "^2.1.2",
+    "prettier": "^2.2.1",
+    "sass": "~1.32.0",
+    "sass-loader": "^10.0.0",
+    "vue-cli-plugin-vuetify": "~2.4.1",
+    "vue-template-compiler": "^2.6.11",
+    "vuetify-loader": "^1.7.0"
+  }
+}
+>>>>>>> 0108695badfe21a4a8e1ab44c7bbbaefd364beff

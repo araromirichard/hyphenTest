@@ -15,7 +15,11 @@
       <h5
         class="px-auto mt-8 font-weight-bold text-h5 text-center primary--text"
       >
+<<<<<<< HEAD
         {{ invoiceRef }}
+=======
+        Invoice {{ invoiceRef }}
+>>>>>>> 0108695badfe21a4a8e1ab44c7bbbaefd364beff
       </h5>
       <template>
         <v-simple-table dense>

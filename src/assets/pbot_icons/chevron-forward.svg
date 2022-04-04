@@ -1,3 +1,9 @@
+<<<<<<< HEAD
 <svg width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M11.625 8.5L16.625 13.5L11.625 18.5M13.5 26C20.4037 26 26 20.4025 26 13.5C26 6.59625 20.4037 1 13.5 1C6.59625 1 1 6.59625 1 13.5C1 20.4025 6.59625 26 13.5 26Z" stroke="#311B92" stroke-linecap="square"/>
 </svg>
+=======
+<svg width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M11.625 8.5L16.625 13.5L11.625 18.5M13.5 26C20.4037 26 26 20.4025 26 13.5C26 6.59625 20.4037 1 13.5 1C6.59625 1 1 6.59625 1 13.5C1 20.4025 6.59625 26 13.5 26Z" stroke="#311B92" stroke-linecap="square"/>
+</svg>
+>>>>>>> 0108695badfe21a4a8e1ab44c7bbbaefd364beff

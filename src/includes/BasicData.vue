@@ -918,6 +918,7 @@ export default {
   },
 
   watch: {
+<<<<<<< HEAD
     singleInvoice: {
       immediate: true,
       deep: true,
@@ -928,6 +929,19 @@ export default {
       },
     },
   },
+=======
+    singleInvoice : {
+      immediate: true,
+      deep: true,
+      handler(val) {
+        if (val  != null) {
+          this.payableData = val
+        }
+      }
+
+    }
+  }
+>>>>>>> 0108695badfe21a4a8e1ab44c7bbbaefd364beff
 };
 </script>
 

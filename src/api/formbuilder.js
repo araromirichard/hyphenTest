@@ -31,6 +31,7 @@ export default {
             },
         });
     },
+<<<<<<< HEAD
     getFormEntries(id) {
         return api().get("/forms/" + id, {
             headers: {
@@ -38,6 +39,8 @@ export default {
             },
         });
     },
+=======
+>>>>>>> 0108695badfe21a4a8e1ab44c7bbbaefd364beff
     deleteForm(id) {
         return api().delete("/forms/" + id, {
             headers: {

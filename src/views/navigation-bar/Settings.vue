@@ -6,10 +6,16 @@
       "
       no-gutters
     >
+<<<<<<< HEAD
       <v-col cols="12" md="2">
         <div class="setting-nav" style="background: #fdf9ef">
           <SideNav
             class="px-auto"
+=======
+      <v-col cols="12" md="3">
+        <div class="setting-nav" style="background: #fdf9ef">
+          <SideNav
+>>>>>>> 0108695badfe21a4a8e1ab44c7bbbaefd364beff
             :height="navigation.height"
             :width="navigation.width"
             :color="navigation.color"

@@ -1,10 +1,14 @@
 import Organization from "../../api/organization";
 
 const state = {
+<<<<<<< HEAD
     organization: null,
 
     organizationToken: {},
     invitedCoWorkers: [],
+=======
+    organizationToken: {},
+>>>>>>> 0108695badfe21a4a8e1ab44c7bbbaefd364beff
 };
 
 const getters = {
@@ -24,9 +28,12 @@ const mutations = {
     organizationToken(state, token) {
         state.organizationToken = token;
     },
+<<<<<<< HEAD
     coWorkerState(state, coWorker) {
         state.invitedCoWorkers = coWorker;
     },
+=======
+>>>>>>> 0108695badfe21a4a8e1ab44c7bbbaefd364beff
 };
 
 const actions = {
@@ -62,6 +69,7 @@ const actions = {
             return Promise.reject(error);
         }
     },
+<<<<<<< HEAD
     async inviteCoWorker({ commit, rootState }, payload) {
         try {
             const response = await Organization.inviteCoWorker(
@@ -76,6 +84,8 @@ const actions = {
             return Promise.reject(error);
         }
     },
+=======
+>>>>>>> 0108695badfe21a4a8e1ab44c7bbbaefd364beff
 };
 
 export default {
