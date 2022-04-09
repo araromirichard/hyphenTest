@@ -76,6 +76,15 @@ const routes = [
     path: "/workflow/new",
     name: "NewWorkFlow",
     components: {
+      default: () => import("@/views/workflow/new.vue"),
+      MainLayout,
+    },
+    meta: { middleware: ["auth"] },
+  },
+  {
+    path: "/workflow/old",
+    name: "NewWorkFlow",
+    components: {
       default: () => import("@/views/workflow/RulesEdit.vue"),
       MainLayout,
     },
