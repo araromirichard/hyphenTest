@@ -11,7 +11,7 @@
 
     <v-tab-item>
       <v-divider></v-divider>
-      Details
+     <div class="details"></div>
     </v-tab-item>
     <v-tab-item>
       <v-divider></v-divider>
@@ -24,4 +24,11 @@
 export default {};
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+.details{
+  width: 100%;
+  background-color:red;
+  height: 100%;
+ 
+}
+</style>

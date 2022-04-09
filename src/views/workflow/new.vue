@@ -14,7 +14,7 @@
 
         <div class="mt-10 pa-10">
           <div class="flow-setup__trigger">
-            <div class="header">
+            <div class="header" @click="showTriggers = !showTriggers">
               <span class="d-flex items-center">
                 <v-btn color="#8F96A1" icon
                   ><v-icon size="33"
@@ -23,7 +23,7 @@
                 >
                 <span class="title pl-1">{{ workflow.title }}</span></span
               >
-              <v-btn color="primary" @click="showTriggers = !showTriggers" icon
+              <v-btn color="primary" icon
                 ><v-icon size="33" v-if="!showTriggers"
                   >mdi-chevron-down</v-icon
                 >
@@ -37,10 +37,17 @@
             </div>
           </div>
 
-          <span class="vertical-line" v-if="workflow.trigger"></span>
           <payment-trigger
+            v-model="workflow.payment"
             v-if="workflow.trigger && workflow.trigger.value == 'PAYMENT'"
           />
+
+          <form-trigger
+            v-model="workflow.schema"
+            v-if="workflow.trigger && workflow.trigger.value == 'FORM'"
+          />
+
+          <compose-workflow />
         </div>
       </div>
     </div>
@@ -48,11 +55,19 @@
 </template>
 
 <script>
+import ComposeWorkflow from "../../components/pages/workflow/compose/compose-workflow.vue";
 import detailsTabWorkflow from "../../components/pages/workflow/details-tab-workflow.vue";
 import TriggerWorkflow from "../../components/pages/workflow/trigger-workflow.vue";
+import FormTrigger from "../../components/pages/workflow/trigger/form-trigger.vue";
 import PaymentTrigger from "../../components/pages/workflow/trigger/payment-trigger.vue";
 export default {
-  components: { detailsTabWorkflow, TriggerWorkflow, PaymentTrigger },
+  components: {
+    detailsTabWorkflow,
+    TriggerWorkflow,
+    PaymentTrigger,
+    FormTrigger,
+    ComposeWorkflow,
+  },
   data() {
     {
       return {
@@ -76,6 +91,8 @@ export default {
         workflow: {
           title: this.$route.query.name || "untitled",
           trigger: null,
+          schema: null,
+          payment: null,
         },
       };
     }
@@ -89,15 +106,6 @@ export default {
 <style lang="scss" scoped>
 .items-center {
   align-items: center;
-}
-
-.vertical-line {
-  display: block;
-  background-color: #d9dee1;
-
-  margin: auto;
-  height: 80px;
-  width: 2px;
 }
 
 .workflow {
@@ -129,6 +137,7 @@ export default {
           display: flex;
           align-items: center;
           justify-content: space-between;
+          cursor: pointer;
 
           .title {
             font-size: 30px;
