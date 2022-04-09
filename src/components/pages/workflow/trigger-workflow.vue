@@ -37,12 +37,12 @@ export default {
           icon: require("@/assets/form-trigger.svg"),
           value: "FORM",
         },
-         {
+        {
           name: "Invoices",
           icon: require("@/assets/invoice-trigger.svg"),
           value: "INVOICE",
         },
-            {
+        {
           name: "Payments",
           icon: require("@/assets/payment-trigger.svg"),
           value: "PAYMENT",
@@ -62,6 +62,7 @@ export default {
     selected: {
       handler(newValue) {
         this.$emit("input", newValue);
+        this.$store.dispatch("workflow/setTrigger", newValue);
       },
       immediate: true,
       deep: true,
@@ -91,7 +92,7 @@ export default {
   &__content {
     display: flex;
     flex-wrap: wrap;
-    justify-content:space-around;
+    justify-content: space-around;
     gap: 20px;
     margin-top: 40px;
     cursor: pointer;

@@ -1,6 +1,6 @@
 const state = {
   workflow: null,
-  trigger: "Email",
+  trigger: null,
   runs: 0,
 };
 

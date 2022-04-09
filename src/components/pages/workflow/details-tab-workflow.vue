@@ -11,24 +11,51 @@
 
     <v-tab-item>
       <v-divider></v-divider>
-     <div class="details"></div>
+     <div class="details">
+        <div class="trigger">
+         <span class="t">Trigger: </span>
+         <span class="n"> {{trigger.name}}</span>
+        </div>
+     </div>
     </v-tab-item>
     <v-tab-item>
       <v-divider></v-divider>
-      Audit
+      
     </v-tab-item>
   </v-tabs>
 </template>
 
 <script>
-export default {};
+import { mapGetters } from "vuex";
+
+export default {
+
+    computed: {
+    ...mapGetters("workflow", ["workflow", "conditions", "trigger", "runs"]),
+  },
+};
 </script>
 
 <style lang="scss" scoped>
 .details{
   width: 100%;
-  background-color:red;
   height: 100%;
+  padding: 5px;
+
+  .trigger{
+      background-color: #FBF4E4;
+        border-radius: 4px;
+
+padding: 10px;
+
+    .t{
+      color: #8F96A1;
+    }
+
+    .n{
+      color: #19283D;
+    }
+  }
  
 }
 </style>

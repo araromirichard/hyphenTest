@@ -43,11 +43,20 @@
           />
 
           <form-trigger
-            v-model="workflow.schema"
+            v-model="workflow.form"
             v-if="workflow.trigger && workflow.trigger.value == 'FORM'"
           />
+          <compose-workflow
+            v-model="workflow.conditions"
+            :isVisable="canShowConditions"
+            v-if="canShowConditions"
+          />
 
-          <compose-workflow />
+          <execute-actions-workflow
+            v-model="workflow.actions"
+            :isVisable="canShowActions"
+            v-if="canShowActions"
+          />
         </div>
       </div>
     </div>
@@ -55,6 +64,7 @@
 </template>
 
 <script>
+import ExecuteActionsWorkflow from "../../components/pages/workflow/actions/execute-actions-workflow.vue";
 import ComposeWorkflow from "../../components/pages/workflow/compose/compose-workflow.vue";
 import detailsTabWorkflow from "../../components/pages/workflow/details-tab-workflow.vue";
 import TriggerWorkflow from "../../components/pages/workflow/trigger-workflow.vue";
@@ -67,6 +77,7 @@ export default {
     PaymentTrigger,
     FormTrigger,
     ComposeWorkflow,
+    ExecuteActionsWorkflow,
   },
   data() {
     {
@@ -91,14 +102,42 @@ export default {
         workflow: {
           title: this.$route.query.name || "untitled",
           trigger: null,
-          schema: null,
+          conditions: null,
           payment: null,
+          form: null,
+          actions: null,
         },
       };
     }
   },
   mounted() {
     this.breadcrumbs[2].text = this.$route.query.name || "untitled";
+  },
+
+  watch: {
+    "workflow.trigger": {
+      deep: true,
+      immediate: true,
+      handler() {
+        this.workflow.form = null;
+        this.workflow.payment = null;
+        this.workflow.conditions = null;
+      },
+    },
+  },
+
+  computed: {
+    canShowConditions() {
+      return (
+        (this.workflow.trigger && this.workflow.trigger.value == "INVOICE") ||
+        this.workflow.payment ||
+        this.workflow.form
+      );
+    },
+
+    canShowActions() {
+      return this.workflow.conditions !== null;
+    },
   },
 };
 </script>

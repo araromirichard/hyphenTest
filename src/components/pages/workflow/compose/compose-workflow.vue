@@ -1,56 +1,57 @@
 <template>
   <div>
-     <div class="vertical-line"></div>
-      <div class="form-trigger">
-    <div class="header" @click="showTriggers = !showTriggers">
-      <span class="title"> Compose the conditions</span>
+    <div class="vertical-line"></div>
 
-      <v-btn color="primary" icon
-        ><v-icon size="33" v-if="!showTriggers">mdi-chevron-down</v-icon>
-        <v-icon size="33" v-else>mdi-chevron-up</v-icon>
-      </v-btn>
+    <div class="loader" v-if="isLoadingFormFields">
+      <v-progress-circular color="primary" indeterminate></v-progress-circular>
     </div>
 
+    <div v-else class="form-trigger">
+      <div class="header" @click="showTriggers = !showTriggers">
+        <span class="title"> Compose the conditions</span>
 
-    <div v-if="showTriggers">
-      <span class="text"
-        >Design the conditions for which this workflow’ data will be
-        proccessed</span
-      >
-
-      <transition name="animate-down">
-       <workflow-parent-group
-      :group-type="schema.condition.properties.type"
-      @update-group-type="schema.condition.properties.type = $event"
-    >
-      <div v-for="(card, i) in selectedCompareGroup" :key="i">
-        <workflow-child-group
-          :is-last="i == selectedCompareGroup.length - 1"
-          :group-index="i"
-          :group-type="selectedCompareGroup[i]"
-          @remove-condition="removeCondition($event, i)"
-          @update-group="updateGroupCondition($event, i)"
-          @add-new-group="addNewGroup($event, i)"
-          @update-group-type="updateGroupType($event, i)"
-          :index="i"
-        />
+        <v-btn color="primary" icon
+          ><v-icon size="33" v-if="!showTriggers">mdi-chevron-down</v-icon>
+          <v-icon size="33" v-else>mdi-chevron-up</v-icon>
+        </v-btn>
       </div>
-    </workflow-parent-group>
 
-    <v-btn
-      @click="$emit('completed')"
-      :disabled="!isCompleted"
-      large
-      elevation="0"
-      color="primary"
-    >
-      <v-icon size="27" left>mdi-chevron-right</v-icon> Next
-    </v-btn>
-      </transition>
+      <div v-if="showTriggers">
+        <span class="text"
+          >Design the conditions for which this workflow’ data will be
+          proccessed</span
+        >
+
+        <transition name="animate-down">
+          <workflow-parent-group
+            :group-type="schema.condition.properties.type"
+            @update-group-type="schema.condition.properties.type = $event"
+          >
+            <div v-for="(card, i) in selectedCompareGroup" :key="i">
+              <workflow-child-group
+                :is-last="i == selectedCompareGroup.length - 1"
+                :group-index="i"
+                :group-type="selectedCompareGroup[i]"
+                @remove-condition="removeCondition($event, i)"
+                @update-group="updateGroupCondition($event, i)"
+                @add-new-group="addNewGroup($event, i)"
+                @update-group-type="updateGroupType($event, i)"
+                :index="i"
+              />
+            </div>
+
+            <v-btn
+              @click="$emit('input',schema)"
+              large
+              elevation="0"
+              color="primary"
+            >
+              <v-icon size="27" left>mdi-chevron-right</v-icon> Finish
+            </v-btn>
+          </workflow-parent-group>
+        </transition>
+      </div>
     </div>
-  </div>
-  
-   
   </div>
 </template>
 
@@ -62,9 +63,16 @@ import WorkflowChildGroup from "./workflow-child-group.vue";
 import WorkflowParentGroup from "./workflow-parent-group.vue";
 export default {
   components: { WorkflowChildGroup, WorkflowParentGroup },
+  props: {
+    isVisable: {
+      type: Boolean,
+      default: false,
+    },
+  },
   data() {
     return {
-       showTriggers: false,
+      isLoadingFormFields: false,
+      showTriggers: false,
       comparisonType,
       selectedCompareGroup: ["and"], // we are using this to store the whole group condition
       schema: {
@@ -106,6 +114,13 @@ export default {
     updateGroupType(e, i) {
       this.selectedCompareGroup.splice(i, 1, e);
     },
+
+    fetchFormFields() {
+      this.isLoadingFormFields = true;
+      setTimeout(() => {
+        this.isLoadingFormFields = false;
+      }, 1000);
+    },
   },
   watch: {
     schema: {
@@ -114,8 +129,14 @@ export default {
       handler(val) {
         console.log("schema changed", JSON.stringify(val, null, 2));
         // push out the latest changes
-        this.$emit("input", val);
+      //  this.$emit("input", val);
       },
+    },
+
+    isVisable(val) {
+      if (val) {
+        this.fetchFormFields();
+      }
     },
   },
   computed: {
@@ -134,6 +155,16 @@ export default {
   margin: auto;
   height: 80px;
   width: 2px;
+}
+
+.loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  background: #ffffff;
+  box-shadow: 0px 4px 16px rgba(204, 188, 252, 0.15);
+  border-radius: 6px;
 }
 
 .form-trigger {

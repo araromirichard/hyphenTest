@@ -1,6 +1,4 @@
 <template>
-
-
   <div>
     <div class="vertical-line"></div>
     <div class="form-trigger">
@@ -32,8 +30,6 @@ export default {
   },
   data() {
     return {
-      //   showTriggers: false,
-      //   schema: null,
       selectedForm: null,
       items: [
         {
@@ -48,13 +44,6 @@ export default {
     };
   },
   watch: {
-    // schema: {
-    //   deep: true,
-    //   immediate: true,
-    //   handler(val) {
-    //     this.$emit("input", val);
-    //   },
-    // },
     selectedForm: {
       deep: true,
       immediate: true,
@@ -77,35 +66,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// .form-trigger {
-//   width: 100%;
-//   padding: 30px;
-//   background: #ffffff;
-//   box-shadow: 0px 4px 16px rgba(204, 188, 252, 0.15);
-//   border-radius: 6px;
-
-//   .header {
-//     display: flex;
-//     align-items: center;
-//     justify-content: space-between;
-//     cursor: pointer;
-
-//     .title {
-//       font-weight: bold;
-//       color: var(--v-primary-base);
-//       font-size: 16px;
-//       display: block;
-//       text-transform: capitalize;
-//     }
-
-//     .text {
-//       display: block;
-//       font-size: 14px;
-//       color: rgba(25, 40, 61, 0.8);
-//       margin-top: 10px;
-//     }
-//   }
-// }
 
 .vertical-line {
   display: block;

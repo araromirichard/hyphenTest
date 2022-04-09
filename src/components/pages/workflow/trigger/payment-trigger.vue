@@ -10,7 +10,7 @@
         <v-select
           outlined
           :items="items"
-          v-model="value"
+          v-model="selectedPayment"
           color="primary"
           hide-details="auto"
           placeholder="Select type"
@@ -22,11 +22,45 @@
 
 <script>
 export default {
+  props: {
+    value: {
+      type: Object,
+      default: () => ({}),
+    },
+  },
   data() {
     return {
-      value: null,
-      items: ["Custom payment"],
+      selectedPayment: null,
+      items: [
+        {
+          text: "Custom payment",
+          value: "custom-payment",
+        },
+        {
+          text: "Flutterwave",
+          value: "flutterwave",
+        },
+      ],
     };
+  },
+  watch: {
+    selectedPayment: {
+      deep: true,
+      immediate: true,
+      handler(val) {
+        this.$emit("input", val);
+      },
+    },
+
+    value: {
+      deep: true,
+      immediate: true,
+      handler(val) {
+        if (val !== this.selectedPayment) {
+          this.selectedPayment = val;
+        }
+      },
+    },
   },
 };
 </script>
