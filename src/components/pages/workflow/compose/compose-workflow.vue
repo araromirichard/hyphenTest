@@ -41,12 +41,12 @@
             </div>
 
             <v-btn
-              @click="$emit('input',schema)"
+              @click="$emit('input', schema)"
               large
               elevation="0"
               color="primary"
             >
-              <v-icon size="27" left>mdi-chevron-right</v-icon> Finish
+              <v-icon size="27" left>mdi-chevron-right</v-icon> Continue
             </v-btn>
           </workflow-parent-group>
         </transition>
@@ -129,7 +129,7 @@ export default {
       handler(val) {
         console.log("schema changed", JSON.stringify(val, null, 2));
         // push out the latest changes
-      //  this.$emit("input", val);
+        //  this.$emit("input", val);
       },
     },
 

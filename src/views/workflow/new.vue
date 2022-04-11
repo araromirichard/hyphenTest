@@ -12,7 +12,7 @@
           </template>
         </v-breadcrumbs>
 
-        <div class="mt-10 pa-10">
+        <div class="flows">
           <div class="flow-setup__trigger">
             <div class="header" @click="showTriggers = !showTriggers">
               <span class="d-flex items-center">
@@ -151,19 +151,37 @@ export default {
   height: 100%;
 
   &__wrapper {
-    display: flex;
+    // display: flex;
+    display: relative;
     height: 100%;
     padding: 10px 0px;
 
     .analytics {
       width: 25%;
       height: 100%;
+      position: absolute;
       padding-top: 30px;
+      left: 0;
+      top: 0;
+      bottom: 0;
+    }
+
+    .flows {
+      flex: 1;
+      overflow: auto;
     }
 
     .flow-setup {
-      flex: 1;
+      position: absolute;
+      // flex: 1;
       height: 100%;
+      width: 75%;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      display: flex;
+      overflow: hidden;
+      flex-direction: column;
 
       &__trigger {
         width: 100%;
