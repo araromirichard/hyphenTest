@@ -127,7 +127,8 @@ export default {
       immediate: true,
       deep: true,
       handler(val) {
-        console.log("schema changed", JSON.stringify(val, null, 2));
+       // console.log("schema changed", JSON.stringify(val, null, 2));
+        this.$store.dispatch("workflow/updateSchema", val);
         // push out the latest changes
         //  this.$emit("input", val);
       },

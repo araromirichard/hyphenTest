@@ -157,7 +157,7 @@ export default {
     padding: 10px 0px;
 
     .analytics {
-      width: 25%;
+      width: 31%;
       height: 100%;
       position: absolute;
       padding-top: 30px;
@@ -169,13 +169,14 @@ export default {
     .flows {
       flex: 1;
       overflow: auto;
+      padding: 20px;
     }
 
     .flow-setup {
       position: absolute;
       // flex: 1;
       height: 100%;
-      width: 75%;
+      width: 69%;
       right: 0;
       top: 0;
       bottom: 0;
@@ -186,7 +187,7 @@ export default {
       &__trigger {
         width: 100%;
         padding: 30px;
-        background: #ffffff;
+        background: #fff;
         box-shadow: 0px 4px 16px rgba(204, 188, 252, 0.15);
         border-radius: 6px;
 
