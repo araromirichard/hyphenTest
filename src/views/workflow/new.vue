@@ -38,21 +38,26 @@
           </div>
 
           <payment-trigger
+            ref="paymentTrigger"
             v-model="workflow.payment"
-            v-if="workflow.trigger && workflow.trigger.value == 'PAYMENT'"
+            v-if="isPaymentTrigger"
           />
 
           <form-trigger
+          ref="formTrigger"
             v-model="workflow.form"
-            v-if="workflow.trigger && workflow.trigger.value == 'FORM'"
+            v-if="isFormTrigger"
           />
+
           <compose-workflow
+            ref="conditions"
             v-model="workflow.conditions"
             :isVisable="canShowConditions"
             v-if="canShowConditions"
           />
 
           <execute-actions-workflow
+            ref="actions"
             v-model="workflow.actions"
             :isVisable="canShowActions"
             v-if="canShowActions"
@@ -83,6 +88,12 @@ export default {
     {
       return {
         showTriggers: false,
+        scrollOptions: {
+          duration: 500,
+          offset: 0,
+          easing: "easeInOutCubic",
+          container: ".flows",
+        },
         breadcrumbs: [
           {
             text: "Workflow",
@@ -124,12 +135,47 @@ export default {
         this.workflow.conditions = null;
       },
     },
+
+    canShowConditions(val) {
+      if (val) {
+        this.$nextTick(() => {
+          this.$vuetify.goTo(this.$refs.conditions, this.scrollOptions);
+        });
+      }
+    },
+
+    canShowActions(val) {
+      if (val) {
+        this.$nextTick(() => {
+          this.$vuetify.goTo(this.$refs.actions, this.scrollOptions);
+        });
+      }
+    },
+
+
+      isPaymentTrigger(val) {
+      if (val) {
+        console.log("payment scroll");
+        this.$nextTick(() => {
+          this.$vuetify.goTo(this.$refs.paymentTrigger, this.scrollOptions);
+        });
+      }
+    },
+
+    isFormTrigger(val) {
+      if (val) {
+        console.log("form scroll");
+        this.$nextTick(() => {
+          this.$vuetify.goTo(this.$refs.formTrigger, this.scrollOptions);
+        });
+      }
+    },
   },
 
   computed: {
     canShowConditions() {
       return (
-        (this.workflow.trigger && this.workflow.trigger.value == "INVOICE") ||
+        (this.isInvoiceTrigger) ||
         this.workflow.payment ||
         this.workflow.form
       );
@@ -137,6 +183,27 @@ export default {
 
     canShowActions() {
       return this.workflow.conditions !== null;
+    },
+
+    isPaymentTrigger(){
+      if(this.workflow.trigger && this.workflow.trigger.value == "PAYMENT"){
+        return true;
+      }
+      return false;
+    },
+
+    isFormTrigger(){
+      if(this.workflow.trigger && this.workflow.trigger.value == "FORM"){
+        return true;
+      }
+      return false;
+    },
+
+    isInvoiceTrigger(){
+      if(this.workflow.trigger && this.workflow.trigger.value == "INVOICE"){
+        return true
+      }
+      return false;
     },
   },
 };

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div ref="action">
     <div class="vertical-line"></div>
 
     <div class="loader" v-if="isLoadingFormFields">
@@ -7,7 +7,7 @@
     </div>
     <div v-else class="form-trigger">
       <div class="header" @click="showTriggers = !showTriggers">
-        <span class="title"> Actions to Execute</span>
+        <span class="title"> Actions to Execute {{isVisable}}</span>
 
         <v-btn color="primary" icon
           ><v-icon size="33" v-if="!showTriggers">mdi-chevron-down</v-icon>
@@ -95,8 +95,15 @@
 import actionWorkflow from "./action-workflow.vue";
 export default {
   components: { actionWorkflow },
+  props:{
+    isVisable: {
+      type: Boolean,
+      default: false,
+    },
+  },
   data() {
     return {
+      isLoadingFormFields: false,
       showTriggers: false,
       availableActions: [
         {
@@ -126,6 +133,12 @@ export default {
       ],
       selectedActions: [],
       selectedProperties: [],
+      scrollOptions: {
+        duration: 500,
+        offset: 0,
+        easing: "easeInOutCubic",
+        container: ".flows",
+      },
     };
   },
 
@@ -181,6 +194,12 @@ export default {
     isVisable(val) {
       if (val) {
         this.fetchActions();
+      }
+    },
+
+    showTriggers(val) {
+      if (val) {
+        this.$vuetify.goTo(this.$refs.action, this.scrollOptions);
       }
     },
   },

@@ -6,15 +6,26 @@
         >Select payment type which will trigger this workflow</span
       >
 
-      <div class="mt-5" style="width: 220px">
-        <v-select
-          outlined
-          :items="items"
-          v-model="selectedPayment"
+      <div class="wrapper">
+        <div style="width: 220px">
+          <v-select
+            outlined
+            :items="items"
+            v-model="selectedPayment"
+            color="primary"
+            hide-details="auto"
+            placeholder="Select type"
+          ></v-select>
+        </div>
+
+        <v-btn
+          elevation="0"
+          @click="$emit('input', selectedPayment)"
+          :disabled="selectedPayment == null"
           color="primary"
-          hide-details="auto"
-          placeholder="Select type"
-        ></v-select>
+        >
+          <v-icon left>mdi-arrow-down</v-icon> Continue</v-btn
+        >
       </div>
     </div>
   </div>
@@ -44,13 +55,13 @@ export default {
     };
   },
   watch: {
-    selectedPayment: {
-      deep: true,
-      immediate: true,
-      handler(val) {
-        this.$emit("input", val);
-      },
-    },
+    // selectedPayment: {
+    //   deep: true,
+    //   immediate: true,
+    //   handler(val) {
+    //     this.$emit("input", val);
+    //   },
+    // },
 
     value: {
       deep: true,
@@ -66,6 +77,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.wrapper {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .vertical-line {
   display: block;
   background-color: #d9dee1;

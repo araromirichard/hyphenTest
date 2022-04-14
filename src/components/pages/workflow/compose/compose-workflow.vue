@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div ref="compose">
     <div class="vertical-line"></div>
 
     <div class="loader" v-if="isLoadingFormFields">
@@ -84,6 +84,12 @@ export default {
           },
         },
       },
+      scrollOptions: {
+        duration: 500,
+        offset: 0,
+        easing: "easeInOutCubic",
+        container: ".flows",
+      },
     };
   },
   methods: {
@@ -127,16 +133,19 @@ export default {
       immediate: true,
       deep: true,
       handler(val) {
-       // console.log("schema changed", JSON.stringify(val, null, 2));
         this.$store.dispatch("workflow/updateSchema", val);
-        // push out the latest changes
-        //  this.$emit("input", val);
       },
     },
 
     isVisable(val) {
       if (val) {
         this.fetchFormFields();
+      }
+    },
+
+    showTriggers(val) {
+      if (val) {
+        this.$vuetify.goTo(this.$refs.compose, this.scrollOptions);
       }
     },
   },
