@@ -57,7 +57,7 @@
                         dark
                         color="#636b70"
                         class="mt-4 mx-md-5"
-                        >{{ numFormEntries }}</v-chip
+                        >{{ card.entries.length }}</v-chip
                       >
                       <h5 class="mx-md-5 text--disabled text-caption">
                         entries
@@ -70,7 +70,7 @@
                       :value="card.hypn_id"
                       v-model="inActiveForms"
                       multiple
-                      color="#16BE98"
+                      color="#1a1544"
                     ></v-switch>
                   </div>
                   <div
@@ -108,7 +108,7 @@
                     <v-spacer></v-spacer>
                     <v-btn
                       v-model="selectedIcon"
-                      @click="showForm(icon, index, j)"
+                      @click="showForm(index, j)"
                       class="px-0 mx-0"
                       style="margin-top: 4px"
                       icon
@@ -177,7 +177,6 @@ export default {
     return {
       inActiveForms: [],
       selectedIcon: null,
-      numFormEntries: 0,
       formEntries: [],
       icons: [
         { title: "mdi-pencil-outline", path: "#" },
@@ -191,23 +190,23 @@ export default {
   },
   methods: {
     ...mapActions("formBuilder", ["deleteForm"]),
+    ...mapActions({ showToast: "ui/showToast" }),
     //method to emit event to open modal
 
     activateModal() {
       this.$parent.$emit("open-modal");
     },
 
-    showForm(icon, index, parentIndex) {
-      // i = this.selectedIcon;
-      // console.log({ icon, index });
+    async showForm(index, parentIndex) {
+      console.log(index);
       if (index === 0) {
         console.log(
-          JSON.stringify(this.formCards[parentIndex].form_title, null, 2)
+          JSON.stringify(this.formCards[parentIndex].entries, null, 2)
         );
         this.$emit("edit-form");
 
         this.$router.push({
-          path: `/edit-form/${this.formCards[parentIndex].hypn_id}`,
+          path: `/edit-form/${this.formCards[parentIndex].id}`,
         });
       } else if (index === 1) {
         this.$emit("entries");
@@ -243,23 +242,37 @@ export default {
         const id = this.$store.state.formBuilder.formCards[parentIndex].id;
 
         console.log(this.$store.state.formBuilder.formCards[parentIndex].id);
-        this.$store.state.formBuilder.formCards.splice(parentIndex, 1);
-        console.log(this.$store.state.formBuilder.formCards);
 
         //delete card from vue data object to reflect on UI
-        // this.formCards.splice(parentIndex, 1);
+        this.formCards.splice(parentIndex, 1);
 
-        this.deleteForm(id);
+        // this.deleteForm(id);
+
+        console.log(id);
 
         //delete from server....
-        // formBuider
-        //   .deleteForm(id)
-        //   .then((response) => {
-        //     console.log(response.data);
-        //   })
-        //   .catch((error) => {
-        //     console.log("an error occurred: ", error.response);
-        //   });
+        try {
+          await this.$store.dispatch("formBuilder/deleteForm", id).then(
+            this.showToast({
+              sclass: "success",
+              show: true,
+              message:
+                "deleted Form " + this.configuration.formName + " successfully",
+              timeout: 3000,
+            })
+          );
+        } catch (error) {
+          console.log(error);
+          if (error) {
+            this.showToast({
+              sclass: "error",
+              show: true,
+              message:
+                "Form " + this.configuration.formName + " could not be deleted",
+              timeout: 3000,
+            });
+          }
+        }
       }
     },
 
@@ -267,7 +280,7 @@ export default {
       this.$emit("formBuilder/create-form", this.formCards);
     },
   },
-  created() {
+  mounted() {
     //make skeleton loader stop
     this.loading = true;
     setTimeout(() => {
@@ -295,6 +308,9 @@ export default {
     //   return ;
     // },
   },
+  watch: {
+
+  }
 };
 </script>
 

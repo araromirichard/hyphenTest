@@ -310,6 +310,8 @@ export default {
 
       this.formName = response.data.form_title;
       this.allEntries = response.data.entries;
+
+      if(this.allEntries == null || this.allEntries == undefined)
       this.filterEntries = this.allEntries.filter(
         (e) => e.form_entry.Date !== ""
       );

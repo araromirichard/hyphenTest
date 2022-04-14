@@ -65,13 +65,13 @@
 
               <!-- company form starts here -->
               <validation-observer ref="observer" v-slot="{ invalid }">
-                <v-form>
+                <form enctype="multipart/form-data">
                   <v-row class="mx-10 mb-8">
                     <v-col class="p-0" cols="12">
                       <validation-provider
                         v-slot="{ errors }"
                         name="Company Street Address"
-                        rules="required|alpha"
+                        rules="required"
                       >
                         <v-text-field
                           :error-messages="errors"
@@ -124,7 +124,7 @@
                       <validation-provider
                         v-slot="{ errors }"
                         name="Accounting software"
-                        rules="required|alpha"
+                        rules="required"
                       >
                         <v-text-field
                           :error-messages="errors"
@@ -158,20 +158,16 @@
                           flat
                         >
                           <span
-                            class="d-flex mx-auto my-auto"
-                            style="
-                              font-family: Inter;
-                              font-style: normal;
-                              font-weight: normal;
-                              font-size: 12px;
-                              line-height: 18px;
-                              text-align: center;
-                              color: #7f919b;
-                            "
+                            v-if="isInitial"
+                            class="uploadInfo d-flex mx-auto my-auto"
                             >{{ placeholder }}
+                          </span>
+                          <span
+                            v-if="isSaving"
+                            class="uploadInfo d-flex mx-auto my-auto"
+                            >{{ fileName }}
                             <v-icon
-                              v-if="cac"
-                              @click="removeFile"
+                              @click="removeFile($event, cac)"
                               small
                               tag="button"
                               color="red"
@@ -193,10 +189,10 @@
                   </v-row>
                   <v-card-actions class="justify-end px-12 px-md-0">
                     <v-btn
+                      :loading="moveToNext"
                       :disabled="invalid"
                       @click="switchTabs('next')"
                       class="mx-auto mx-md-12 mb-12"
-                
                       :style="{
                         background: `${invalid ? '#e6eaeb' : '#19283D'}`,
                       }"
@@ -227,7 +223,7 @@
                       >
                     </v-btn>
                   </v-card-actions>
-                </v-form>
+                </form>
               </validation-observer>
             </v-card>
           </v-tab-item>
@@ -240,7 +236,7 @@
             </h6>
             <v-card style="background-color: transparent" flat>
               <validation-observer ref="observer" v-slot="{ invalid }">
-                <v-form>
+                <form enctype="multipart/form-data">
                   <v-row class="mb-8 mx-10 mt-8">
                     <v-col class="p-0" cols="6">
                       <validation-provider
@@ -280,7 +276,7 @@
                       <validation-provider
                         v-slot="{ errors }"
                         name="Executive position"
-                        rules="required|alpha"
+                        rules="required"
                       >
                         <v-text-field
                           :error-messages="errors"
@@ -332,7 +328,7 @@
                       <validation-provider
                         v-slot="{ errors }"
                         name="BVN"
-                        rules="required|digits"
+                        rules="required|numeric"
                       >
                         <v-text-field
                           :error-messages="errors"
@@ -368,11 +364,7 @@
                         <v-card
                           @click="handleFileImport"
                           v-model="idCard"
-                          @drop.prevent="onDroppedFiles($event)"
-                          @dragover.prevent="dragging = true"
-                          @dragenter.prevent="dragging = true"
-                          @dragleave.prevent="dragging = false"
-                          height="56 "
+                          height="56"
                           width="100%"
                           class="mx-auto justify-center d-flex"
                           style=""
@@ -384,20 +376,16 @@
                           flat
                         >
                           <span
-                            class="d-flex mx-auto my-auto"
-                            style="
-                              font-family: Inter;
-                              font-style: normal;
-                              font-weight: normal;
-                              font-size: 12px;
-                              line-height: 18px;
-                              text-align: center;
-                              color: #7f919b;
-                            "
+                            v-if="isInitial"
+                            class="uploadInfo d-flex mx-auto my-auto"
                             >{{ placeholderId }}
+                          </span>
+                          <span
+                            v-if="isSaving"
+                            class="uploadInfo d-flex mx-auto my-auto"
+                            >{{ fileName }}
                             <v-icon
-                              v-if="cac"
-                              @click="removeFile"
+                              @click="removeFile($event, idCard)"
                               small
                               tag="button"
                               color="red"
@@ -412,13 +400,14 @@
                           ref="file"
                           class="d-none"
                           type="file"
-                          @change="onFileSelected"
+                          @change="uploadFile"
                         />
                       </template>
                     </v-col>
                   </v-row>
                   <v-card-actions class="justify-end px-0">
                     <v-btn
+                      :loading="updateKyc"
                       :disabled="invalid"
                       @click="saveKycData"
                       class="submit-btn mx-12 mb-12"
@@ -453,7 +442,7 @@
                       >
                     </v-btn>
                   </v-card-actions>
-                </v-form>
+                </form>
               </validation-observer>
             </v-card>
           </v-tab-item>
@@ -464,6 +453,7 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 import {
   required,
   email,
@@ -493,13 +483,15 @@ extend("digits", {
 });
 extend("alpha_num", {
   ...alpha_num,
-  message: "{_field_} can only contain alphabeth or numbers",
+  message:
+    "{_field_} can only contain alphabeth or numbers, remove special characters/symbols",
 });
 
 extend("email", {
   ...email,
   message: "Email must be valid",
 });
+
 export default {
   name: "company",
   components: {
@@ -508,8 +500,11 @@ export default {
   },
   data() {
     return {
+      moveToNext: false,
+      updateKyc: false,
       dragging: false,
       dialog: false,
+      fileName: null,
       placeholder: "Upload Company Registration Document. CAC Certificate",
       placeholderId: "Please upload a copy of selected ID",
       company: {
@@ -529,6 +524,9 @@ export default {
       },
       idCard: null,
       cac: null,
+      isInitial: true,
+      isSaving: false,
+      currentStatus: null,
       tab: null,
       companyTypeArray: ["Partnership", "Limited Liability", "Cooperative"],
       industryTypeArray: [
@@ -575,27 +573,54 @@ export default {
     };
   },
   methods: {
+    ...mapActions({ showToast: "ui/showToast" }),
+
     handleFileImport() {
       // Trigger click on the FileInput
       this.$refs.uploader.click();
     },
+    handleIdPick() {
+      // Trigger click on the FileInput
+      this.$refs.file.click();
+    },
 
+    //fxn to upload means of identity
+    uploadFile(e) {
+      const file = e.target.files[0];
+      if (!this.idCard.length) return;
+      console.log(this.idCard);
+      this.fileName = file.name;
+      this.isInitial = false;
+      this.isSaving = true;
+    },
+
+    //fxn to trigger input event in cac document
     onFileSelected(event) {
       this.cac = event.target.files[0];
       console.log(this.cac);
-      this.placeholder = this.cac.name;
+      this.fileName = this.cac.name;
+      this.isInitial = false;
+      this.isSaving = true;
     },
+
+    //fxn for drag and drop
     onDroppedFiles(e) {
       this.dragging = false;
 
       this.cac = e.dataTransfer.files[0];
       console.log(this.cac);
-      this.placeholder = this.cac.name;
+      this.fileName = this.cac.name;
+      this.isInitial = false;
+      this.isSaving = true;
     },
-    removeFile(e) {
+    // reset form to initial state
+
+    removeFile(e, selectedFile) {
       e.preventDefault;
-      this.cac = null;
-      return this.placeholder;
+      this.isInitial = true;
+      this.isSaving = false;
+      selectedFile = null;
+      console.log(selectedFile);
     },
     switchTabs(direction) {
       //console.log(direction);
@@ -617,6 +642,15 @@ export default {
       }
     },
 
+    // saveUploadedFiles() {
+    //   // upload data to the server
+    //   this.isSaving = true;
+
+    //   console.log(this.cac);
+    //   console.log(this.idCard);
+    // },
+
+    //submit form fields alone... without the attached files
     saveKycData() {
       //
       const payload = {
@@ -634,34 +668,28 @@ export default {
           },
         ],
       };
-
-      console.log(JSON.stringify(payload, null, 2));
-    },
-    canSubmit() {
-      // loop through rules, if all passes then data can be submitted....
-      // const rules = Object.keys(this.rules);
-      // return rules
-      //   .map((rule) => {
-      //     return Object.keys(this.rules[rule])
-      //       .map((field, index) => {
-      //         return this.rules[rule][index](this.company[rule]);
-      //       })
-      //       .every((val) => val == true);
-      //   })
-      //   .every((val) => val == true);
-    },
-
-    submitForm(event) {
-      Object.keys(this.form).forEach((f) => {
-        this.$refs[f].validate(true);
-      });
-      if (this.canSubmit) {
-        event.preventDefault();
-        console.log(JSON.stringify(this.form, null, 2));
+      if (this.canSubmit()) {
+        console.log(JSON.stringify(payload, null, 2));
+        // this.saveUploadedFiles();
+      } else {
+        this.showToast({
+          sclass: "error",
+          show: true,
+          message: "please fill all fields before submiting the forms",
+          timeout: 3000,
+        });
       }
     },
-    show(value) {
-      this.dialog = value;
+    canSubmit() {
+      //check if the dragdrop cards or the upload doc fields have values in them...
+
+      if (this.idCard !== null && this.cac !== null) {
+        return true;
+      }
+    },
+
+    show() {
+      this.dialog = true;
     },
   },
   computed: {
@@ -689,5 +717,15 @@ export default {
   background: #ffffff;
   box-sizing: border-box;
   border-radius: 8px;
+}
+
+.uploadInfo {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 18px;
+  text-align: center;
+  color: #7f919b;
 }
 </style>

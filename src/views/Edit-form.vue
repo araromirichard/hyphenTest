@@ -211,11 +211,12 @@ export default {
         this.$route.params.id
       );
       console.log(JSON.stringify(response.data.data.form_fields, null, 2));
-      console.log(JSON.stringify(response.data.data, null, 2));
+      console.log(JSON.stringify(response.data, null, 2));
       this.formData = response.data.data;
       this.form_id = response.data.id;
     },
     async updateFormData() {
+      console.log(JSON.stringify(this.updateRequestData, null, 2));
       try {
         await this.$store
           .dispatch("formBuilder/updateForm", {
@@ -257,6 +258,7 @@ export default {
       return {
         form_fields: this.formData,
         is_private: this.configuration.isPrivate,
+      
       };
     },
   },
