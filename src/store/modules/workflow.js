@@ -1,8 +1,45 @@
-const state = {
-  workflow: null,
-  trigger: "Email",
+const state = () => ({
+  trigger: null,
   runs: 0,
-};
+  schema: null,
+  operators:[
+    {
+      string: "Equal to",
+      val: "=",
+    },
+    {
+      string: "Not Equal to",
+      val: "!=",
+    },
+    {
+      string: "Less than",
+      val: "<",
+    },
+    {
+      string: "Less than or Equal to",
+      val: "<=",
+    },
+    {
+      string: "Greater than",
+      val: ">",
+    },
+    {
+      string: "Greater than",
+      val: ">=",
+    },
+  ],
+  comparisonType:[
+    {
+      string: "ALL",
+      val: "and",
+    },
+    {
+      string: "ANY",
+      val: "or",
+    },
+  ]
+
+});
 
 const getters = {
   workflow(state) {
@@ -13,12 +50,8 @@ const getters = {
     return workflow;
   },
 
-  conditions(state) {
-    try {
-      return state.workflow.schema.condition;
-    } catch (e) {
-      return null;
-    }
+  schema(state) {
+    return state.schema;
   },
 
   actions(state) {
@@ -35,11 +68,19 @@ const getters = {
   runs(state) {
     return state.runs;
   },
+  
+  operators(state) {
+    return state.operators;
+  },
+
+  comparisonType(state) {
+    return state.comparisonType;
+  }
 };
 
 const mutations = {
-  SET_WORKFLOW(state, payload) {
-    state.workflow = payload;
+  SET_SCHEMA(state, payload) {
+    state.schema = payload;
   },
 
   SET_TRIGGER(state, payload) {
@@ -55,6 +96,10 @@ const actions = {
   setTrigger({ commit }, payload) {
     commit("SET_TRIGGER", payload);
   },
+
+  updateSchema({ commit }, payload) {
+    commit("SET_SCHEMA", payload)
+  }
 };
 
 export default {

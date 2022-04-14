@@ -37,4 +37,8 @@ export default {
 </script>
 <style>
 @import "https://cdn.jsdelivr.net/npm/animate.css@3.5.1";
+
+html{
+  overflow: auto;
+}
 </style>
