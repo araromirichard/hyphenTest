@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div ref="action">
     <div class="vertical-line"></div>
 
     <div class="loader" v-if="isLoadingFormFields">
@@ -53,18 +53,29 @@
                       </v-btn>
                     </div>
                   </template>
-                  <v-list>
-                    <v-list-item-group>
-                      <v-list-item
-                        @click="selectedActions.push(item)"
-                        class="py-3"
-                        v-for="(item, j) in availableActions"
-                        :key="j"
-                      >
-                        <v-list-item-title>{{ item.text }}</v-list-item-title>
-                      </v-list-item>
-                    </v-list-item-group>
-                  </v-list>
+
+                  <div style="width: 260px">
+                    <v-list>
+                      <v-list-item-group>
+                        <v-list-item
+                          @click="selectedActions.push(action)"
+                          v-for="(action, j) in availableActions"
+                          :key="j"
+                        >
+                          <v-list-item-icon>
+                            <img
+                              class="actions-icon"
+                              :src="action.icon"
+                              :alt="action.channel"
+                            />
+                          </v-list-item-icon>
+                          <v-list-item-title>{{
+                            action.text
+                          }}</v-list-item-title>
+                        </v-list-item>
+                      </v-list-item-group>
+                    </v-list>
+                  </div>
                 </v-menu>
               </div>
             </v-timeline>
@@ -95,37 +106,71 @@
 import actionWorkflow from "./action-workflow.vue";
 export default {
   components: { actionWorkflow },
+  props: {
+    isVisable: {
+      type: Boolean,
+      default: false,
+    },
+  },
   data() {
     return {
+      isLoadingFormFields: false,
       showTriggers: false,
       availableActions: [
         {
-          text: "Send Payment",
-          channel: "SendPayment",
+          text: "Send Email",
+          channel: "sendEmail",
+          icon: require("@/assets/actions-send-email.svg"),
+        },
+        {
+          text: "Get Approval",
+          channel: "getApproval",
+          icon: require("@/assets/actions-get-approval.svg"),
         },
         {
           text: "Add to Payables",
           channel: "addToPayables",
+          icon: require("@/assets/actions-add-to-payables.svg"),
         },
         {
-          text: "Send Notification",
-          channel: "SendNotifications",
+          text: "Send Payment",
+          channel: "SendPayment",
+          icon: require("@/assets/actions-send-payment.svg"),
         },
         {
-          text: "Update ERP/Accounting",
-          channel: "UpdateERP",
+          text: "Update Customer",
+          channel: "updateCustomer",
+          icon: require("@/assets/actions-update-customer.svg"),
         },
         {
-          text: "Create Document",
-          channel: "CreateDocument",
+          text: "Update Vendor",
+          channel: "updateVendor",
+          icon: require("@/assets/actions-update-vendor.svg"),
         },
         {
-          text: "Add Custom",
-          channel: "",
+          text: "Send form",
+          channel: "sendForm",
+          icon: require("@/assets/actions-send-form.svg"),
+        },
+        {
+          text: "Connect Workflow",
+          channel: "connectWorkflow",
+          icon: require("@/assets/actions-connect-workflow.svg"),
+        },
+        {
+          text: "Add Delay",
+          channel: "addDelay",
+          icon: require("@/assets/actions-add-delay.svg"),
         },
       ],
       selectedActions: [],
       selectedProperties: [],
+      scrollOptions: {
+        duration: 500,
+        offset: 0,
+        easing: "easeInOutCubic",
+        container: ".flows",
+      },
     };
   },
 
@@ -139,18 +184,18 @@ export default {
     },
 
     /// this is still very buggy
-    reOrder(event) {
-      this.selectedActions.splice(
-        event.newIndex,
-        0,
-        this.selectedActions.splice(event.oldIndex, 1)[0]
-      );
-      this.selectedProperties.splice(
-        event.newIndex,
-        0,
-        this.selectedProperties.splice(event.oldIndex, 1)[0]
-      );
-    },
+    // reOrder(event) {
+    //   this.selectedActions.splice(
+    //     event.newIndex,
+    //     0,
+    //     this.selectedActions.splice(event.oldIndex, 1)[0]
+    //   );
+    //   this.selectedProperties.splice(
+    //     event.newIndex,
+    //     0,
+    //     this.selectedProperties.splice(event.oldIndex, 1)[0]
+    //   );
+    // },
 
     addAction(action) {
       this.selectedActions.push(action);
@@ -181,6 +226,12 @@ export default {
     isVisable(val) {
       if (val) {
         this.fetchActions();
+      }
+    },
+
+    showTriggers(val) {
+      if (val) {
+        this.$vuetify.goTo(this.$refs.action, this.scrollOptions);
       }
     },
   },
@@ -243,5 +294,11 @@ export default {
   min-height: 400px;
   border-radius: 6px;
   margin-top: 30px;
+}
+
+.actions-icon {
+  width: 30px;
+  height: 30px;
+  object-fit: cover;
 }
 </style>
