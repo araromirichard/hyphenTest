@@ -60,32 +60,58 @@
       </div>
     </v-timeline>
 
-    <AddToPayables v-model="data" ref="addToPayables" />
+    <!-- <AddToPayables v-model="data" ref="addToPayables" />
     <CreateDocument v-model="data" ref="CreateDocument" />
     <SendNotifications v-model="data" ref="SendNotifications" />
     <SendPayment v-model="data" ref="SendPayment" />
-    <UpdateERP v-model="data" ref="UpdateERP" />
+    <UpdateERP v-model="data" ref="UpdateERP" /> -->
+    
+    <get-approval-action  ref="getApproval" />
+
+    <send-email-action ref="sendEmail"/>
+
+    <add-to-payables-action ref="addToPayables" />
+
+    <send-form-action ref="sendForm" />
+
+    <add-delay-action ref="addDelay" />
+
+     <update-customer-action ref="updateCustomer" />
+
+     <send-payment ref="SendPayment" />
   </div>
 </template>
 
 <script>
-import AddToPayables from "../../../../includes/overlays/ExecuteActionsModals/AddToPayables.vue";
-import CreateDocument from "../../../../includes/overlays/ExecuteActionsModals/CreateDocument.vue";
-import SendNotifications from "../../../../includes/overlays/ExecuteActionsModals/SendNotifications.vue";
+import AddDelayAction from './addDelayAction.vue';
+import AddToPayablesAction from './addToPayablesAction.vue';
+// import AddToPayables from "../../../../includes/overlays/ExecuteActionsModals/AddToPayables.vue";
+// import CreateDocument from "../../../../includes/overlays/ExecuteActionsModals/CreateDocument.vue";
+// import SendNotifications from "../../../../includes/overlays/ExecuteActionsModals/SendNotifications.vue";
 import SendPayment from "../../../../includes/overlays/ExecuteActionsModals/SendPayment.vue";
-import UpdateERP from "../../../../includes/overlays/ExecuteActionsModals/UpdateERP.vue";
+// import UpdateERP from "../../../../includes/overlays/ExecuteActionsModals/UpdateERP.vue";
+import GetApprovalAction from './getApprovalAction.vue';
+import sendEmailAction from './sendEmailAction.vue';
+import SendFormAction from './sendFormAction.vue';
+import UpdateCustomerAction from './updateCustomerAction.vue';
 
 export default {
   components: {
-    AddToPayables,
-    CreateDocument,
-    SendNotifications,
+    // AddToPayables,
+    // CreateDocument,
+    // SendNotifications,
     SendPayment,
-    UpdateERP,
+    // UpdateERP,
+    GetApprovalAction,
+    sendEmailAction,
+    AddToPayablesAction,
+    SendFormAction,
+    AddDelayAction,
+    UpdateCustomerAction
   },
   props: {
     action: {
-      type: Object,
+       type: Object,
       default: null,
     },
     availableActions: {
@@ -111,7 +137,7 @@ export default {
   methods: {
     showDialog(ref) {
       //call show function of modal component identified the "ref"
-      this.$refs[ref].show(true);
+      this.$refs[ref].open();
     },
   },
 
