@@ -427,8 +427,8 @@ export default {
     // }, 3000);
   },
   methods: {
-    show(value) {
-      this.dialog = value;
+    open() {
+      this.dialog = true;
     },
 
     goBack() {
