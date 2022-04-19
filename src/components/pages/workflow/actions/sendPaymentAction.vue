@@ -3,7 +3,7 @@
     <div class="action">
       <div class="action__header">
         <div class="b">
-          <img class="i" src="@/assets/actions-update-customer.svg" alt="" />
+          <img class="i" src="@/assets/actions-send-payment.svg" alt="" />
           <span class="t">Send Payment</span>
         </div>
 
@@ -17,11 +17,85 @@
         </div>
 
         <span class="action-description">
-         How should this payment be made?
+          Payment will be made to the vendor data within this workflow, if no
+          vendor data is found at the time of execution the workflow will be
+          terminated at this point.
         </span>
 
         <div class="a-wrapper">
-         
+          <div class="payee">
+            <div class="head">
+              <img src="@/assets/actions-update-vendor.svg" alt="update" />
+              <span>Payee Info</span>
+            </div>
+
+            <v-btn icon color="#7F919B"><v-icon>mdi-chevron-up</v-icon></v-btn>
+          </div>
+
+          <v-radio-group v-model="verified">
+            <v-radio
+              color="primary"
+              label="Verified vendor only"
+              value="yes"
+            ></v-radio>
+          </v-radio-group>
+        </div>
+        <br />
+        <br />
+
+        <div class="a-wrapper2">
+          <div class="paymentType">
+            <div class="option">
+              <v-radio-group v-model="paymentType">
+                <v-radio
+                  color="primary"
+                  label="full payment"
+                  value="full"
+                ></v-radio>
+              </v-radio-group>
+            </div>
+
+            <div class="option">
+              <v-radio-group v-model="paymentType">
+                <v-radio
+                  color="primary"
+                  label="part payment"
+                  value="part"
+                ></v-radio>
+              </v-radio-group>
+            </div>
+          </div>
+
+          <div v-if="paymentType == 'full'" class="fullPayment">
+            <v-chip>
+              <v-avatar>
+                <v-icon>mdi-clock</v-icon>
+              </v-avatar>
+              Instant
+            </v-chip>
+
+            <v-chip>
+              <v-avatar>
+                <v-icon>mdi-clock</v-icon>
+              </v-avatar>
+              In 30 Days
+            </v-chip>
+
+            <v-chip>
+              <v-avatar>
+                <v-icon>mdi-calendar</v-icon>
+              </v-avatar>
+              Custom
+            </v-chip>
+          </div>
+
+          <div v-if="paymentType == 'part'" class="fullPayment">
+            <v-chip> 20% </v-chip>
+
+            <v-chip> 50% </v-chip>
+
+            <v-chip> Custom </v-chip>
+          </div>
         </div>
 
         <!-- <span class="note">
@@ -48,14 +122,8 @@ export default {
   data() {
     return {
       dialog: false,
-      atrribute: ["Tag", "Payment Terms", "Balance"],
-      selectedAttribute: null,
-      tags: [
-          "high value",
-          "wema bank",
-          "ikeja"
-      ],
-      terms:["Net 30","Net 45","Net 60","Net 90"]
+      verified: "yes",
+      paymentType: "full",
     };
   },
   methods: {
@@ -136,9 +204,10 @@ export default {
       font-size: 16px;
     }
 
-    .a-wrapper {
+    .a-wrapper,
+    .a-wrapper2 {
       background-color: #fff;
-      padding:  30px;
+      padding: 20px;
       border: 1px solid #d9dee1;
       border-radius: 4px;
     }
@@ -155,6 +224,48 @@ export default {
       margin: 20px 0px;
       gap: 20px;
     }
+  }
+
+  .a-wrapper2 {
+    padding: 0px;
+  }
+
+  .payee {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      img {
+        width: 25px;
+        height: 25px;
+        object-fit: fit;
+      }
+    }
+  }
+
+  .paymentType {
+    display: flex;
+
+    .option {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #d9dee1;
+    }
+  }
+
+  .fullPayment {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
   }
 }
 </style>

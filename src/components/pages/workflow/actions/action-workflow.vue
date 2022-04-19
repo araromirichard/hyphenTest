@@ -44,15 +44,22 @@
               </v-btn>
             </div>
           </template>
-          <v-list>
+          <v-list width="260px">
             <v-list-item-group>
               <v-list-item
                 @click="$emit('add-action', item)"
-                class="py-3"
+               
                 v-for="(item, j) in availableActions"
                 :key="j"
               >
-                <v-list-item-title>{{ item.text }}</v-list-item-title>
+                 <v-list-item-icon>
+                            <img
+                              class="actions-icon"
+                              :src="item.icon"
+                              :alt="item.channel"
+                            />
+                          </v-list-item-icon>
+                <v-list-item-title> {{ item.text }}</v-list-item-title>
               </v-list-item>
             </v-list-item-group>
           </v-list>
@@ -78,7 +85,9 @@
 
      <update-customer-action ref="updateCustomer" />
 
-     <send-payment ref="SendPayment" />
+      <send-payment-action ref="SendPayment" />
+
+     
   </div>
 </template>
 
@@ -88,11 +97,11 @@ import AddToPayablesAction from './addToPayablesAction.vue';
 // import AddToPayables from "../../../../includes/overlays/ExecuteActionsModals/AddToPayables.vue";
 // import CreateDocument from "../../../../includes/overlays/ExecuteActionsModals/CreateDocument.vue";
 // import SendNotifications from "../../../../includes/overlays/ExecuteActionsModals/SendNotifications.vue";
-import SendPayment from "../../../../includes/overlays/ExecuteActionsModals/SendPayment.vue";
 // import UpdateERP from "../../../../includes/overlays/ExecuteActionsModals/UpdateERP.vue";
 import GetApprovalAction from './getApprovalAction.vue';
 import sendEmailAction from './sendEmailAction.vue';
 import SendFormAction from './sendFormAction.vue';
+import SendPaymentAction from './sendPaymentAction.vue';
 import UpdateCustomerAction from './updateCustomerAction.vue';
 
 export default {
@@ -100,14 +109,14 @@ export default {
     // AddToPayables,
     // CreateDocument,
     // SendNotifications,
-    SendPayment,
     // UpdateERP,
     GetApprovalAction,
     sendEmailAction,
     AddToPayablesAction,
     SendFormAction,
     AddDelayAction,
-    UpdateCustomerAction
+    UpdateCustomerAction,
+    SendPaymentAction
   },
   props: {
     action: {
@@ -132,6 +141,10 @@ export default {
     return {
       data: null,
     };
+  },
+
+  mounted(){
+    this.showDialog(this.action.channel);
   },
 
   methods: {
@@ -222,4 +235,6 @@ export default {
     border-bottom: 1px solid #f9eed2;
   }
 }
+
+
 </style>

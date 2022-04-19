@@ -30,9 +30,9 @@
                 <v-icon size="33" v-else>mdi-chevron-up</v-icon>
               </v-btn>
             </div>
-            <div v-if="showTriggers">
+            <div>
               <transition name="animate-down">
-                <trigger-workflow v-model="workflow.trigger" />
+                <trigger-workflow  v-if="showTriggers" v-model="workflow.trigger" />
               </transition>
             </div>
           </div>
@@ -123,6 +123,7 @@ export default {
   },
   mounted() {
     this.breadcrumbs[2].text = this.$route.query.name || "untitled";
+      this.showTriggers = true
   },
 
   watch: {

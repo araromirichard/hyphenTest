@@ -8,7 +8,7 @@
 
     <div v-else class="form-trigger">
       <div class="header" @click="showTriggers = !showTriggers">
-        <span class="title"> Compose the conditions</span>
+        <span class="title"> Compose the conditions {{ isVisable }} </span>
 
         <v-btn color="primary" icon
           ><v-icon size="33" v-if="!showTriggers">mdi-chevron-down</v-icon>
@@ -72,7 +72,7 @@ export default {
   data() {
     return {
       isLoadingFormFields: false,
-      showTriggers: false,
+      showTriggers: true,
       comparisonType,
       selectedCompareGroup: ["and"], // we are using this to store the whole group condition
       schema: {
@@ -137,16 +137,23 @@ export default {
       },
     },
 
-    isVisable(val) {
-      if (val) {
-        this.fetchFormFields();
-      }
+    isVisable: {
+      immediate: true,
+      handler(val) {
+        if (val) {
+          this.fetchFormFields();
+        }
+      },
     },
 
-    showTriggers(val) {
-      if (val) {
-        this.$vuetify.goTo(this.$refs.compose, this.scrollOptions);
-      }
+    showTriggers: {
+      immediate: true,
+      handler(val) {
+        if (val) {
+                     this.$nextTick()
+          this.$vuetify.goTo(this.$refs.compose, this.scrollOptions);
+        }
+      },
     },
   },
   computed: {

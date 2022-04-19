@@ -115,7 +115,7 @@ export default {
   data() {
     return {
       isLoadingFormFields: false,
-      showTriggers: false,
+      showTriggers: true,
       availableActions: [
         {
           text: "Send Email",
@@ -223,16 +223,24 @@ export default {
       },
     },
 
-    isVisable(val) {
-      if (val) {
-        this.fetchActions();
-      }
+    isVisable: {
+      immediate: true,
+      handler(val) {
+        if (val) {
+          this.fetchActions();
+        }
+      },
     },
 
-    showTriggers(val) {
-      if (val) {
+    showTriggers:{
+      immediate:true,
+      handler(val){
+        if (val) {
+           this.$nextTick()
         this.$vuetify.goTo(this.$refs.action, this.scrollOptions);
       }
+      }
+      
     },
   },
 };
@@ -296,9 +304,9 @@ export default {
   margin-top: 30px;
 }
 
-.actions-icon {
-  width: 30px;
-  height: 30px;
-  object-fit: cover;
-}
+// .actions-icon {
+//   width: 24px;
+//   height: 24px;
+//   object-fit: cover;
+// }
 </style>
