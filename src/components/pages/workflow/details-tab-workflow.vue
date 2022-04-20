@@ -94,6 +94,16 @@
 import { mapGetters } from "vuex";
 
 export default {
+  props:{
+    runs:{
+      type: Number,
+      default: 0
+    },
+    trigger:{
+      type: Object,
+      default: null
+    },
+  },
   data() {
     return {
       test: ">",
@@ -104,23 +114,19 @@ export default {
   methods: {
     operator(operand) {
       if (this.operators) {
-        return this.operators.find((operator) => operator.val == operand)
-          .string;
+        return this.operators.find((operator) => operator.val == operand)?.string;
       }
     },
 
     groupType(type) {
       if (this.comparisonType) {
-        return this.comparisonType.find((groupType) => groupType.val === type)
-          .string;
+        return this.comparisonType.find((groupType) => groupType.val === type)?.string;
       }
     },
   },
   computed: {
     ...mapGetters({
       schema: "workflow/schema",
-      trigger: "workflow/trigger",
-      runs: "workflow/runs",
       operators: "workflow/operators",
       comparisonType: "workflow/comparisonType",
     }),
