@@ -134,6 +134,7 @@ export default {
       deep: true,
       handler(val) {
         this.$store.dispatch("workflow/updateSchema", val);
+        console.log(JSON.stringify(val, null, 2));
       },
     },
 
@@ -150,8 +151,10 @@ export default {
       immediate: true,
       handler(val) {
         if (val) {
-                     this.$nextTick()
-          this.$vuetify.goTo(this.$refs.compose, this.scrollOptions);
+          this.$nextTick();
+          setTimeout(() => {
+            this.$vuetify.goTo(this.$refs.compose, this.scrollOptions);
+          }, 1500);
         }
       },
     },
