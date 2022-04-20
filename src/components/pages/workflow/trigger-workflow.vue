@@ -33,17 +33,17 @@ export default {
     return {
       triggers: [
         {
-          name: "Forms",
+          name: "Form",
           icon: require("@/assets/form-trigger.svg"),
           value: "FORM",
         },
         {
-          name: "Invoices",
+          name: "Invoice",
           icon: require("@/assets/invoice-trigger.svg"),
           value: "INVOICE",
         },
         {
-          name: "Payments",
+          name: "Payment",
           icon: require("@/assets/payment-trigger.svg"),
           value: "PAYMENT",
         },
