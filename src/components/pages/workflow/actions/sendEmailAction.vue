@@ -134,8 +134,8 @@ export default {
     }
 
     .i {
-      width: 40px;
-      height: 40px;
+      width: 26px;
+      height: 26px;
       object-fit: fit;
     }
 

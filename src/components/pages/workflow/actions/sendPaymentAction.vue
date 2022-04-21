@@ -13,7 +13,12 @@
       </div>
       <div class="action__content">
         <div class="top">
-          <span class="action-title">PAYMENT</span>
+          <span class="action-title">PAYMENT</span>    
+          <div> 
+            <span class="bal-title">Wallet Balance</span>
+            <span class="bal">N140,000</span>
+          
+          </div>
         </div>
 
         <span class="action-description">
@@ -165,8 +170,8 @@ export default {
     }
 
     .i {
-      width: 40px;
-      height: 40px;
+      width: 26px;
+      height: 26px;
       object-fit: fit;
     }
 
@@ -184,6 +189,8 @@ export default {
     .top {
       padding: 30px 0px 0px 0px;
       box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.1);
+      display: flex;
+      justify-content: space-between;
 
       .action-title {
         color: var(--v-primary-base);
@@ -191,9 +198,22 @@ export default {
         font-weight: 600;
         border-bottom: 5px solid var(--v-primary-base);
         font-size: 16px;
-        height: 40px;
+        height: 45px;
         padding: 0px 15px;
+        padding-top: 5px;
         display: inline-block;
+      }
+
+      .bal-title{
+        font-size: 13px;
+        color: var(--v-primary-base);
+        display: block;
+      }
+
+      .bal{
+        font-size: 17px;
+        color: var(--v-primary-base);
+        font-weight: 600;
       }
     }
 

@@ -2,10 +2,8 @@
   <div ref="action">
     <div class="vertical-line"></div>
 
-    <div class="loader" v-if="isLoadingFormFields">
-      <v-progress-circular color="primary" indeterminate></v-progress-circular>
-    </div>
-    <div v-else class="form-trigger">
+   
+    <div  class="form-trigger">
       <div class="header" @click="showTriggers = !showTriggers">
         <span class="title"> Actions to Execute</span>
 
@@ -114,7 +112,6 @@ export default {
   },
   data() {
     return {
-      isLoadingFormFields: false,
       showTriggers: true,
       availableActions: [
         {
@@ -219,28 +216,20 @@ export default {
       immediate: true,
       handler(newVal) {
         this.$emit("input", newVal);
-        console.log(JSON.stringify(newVal, null, 2));
+        // console.log(JSON.stringify(newVal, null, 2));
       },
     },
 
-    isVisable: {
+    showTriggers: {
       immediate: true,
       handler(val) {
         if (val) {
-          this.fetchActions();
+          this.$nextTick();
+          setTimeout(() => {
+            this.$vuetify.goTo(this.$refs.action, this.scrollOptions);
+          }, 1500);
         }
       },
-    },
-
-    showTriggers:{
-      immediate:true,
-      handler(val){
-        if (val) {
-           this.$nextTick()
-        this.$vuetify.goTo(this.$refs.action, this.scrollOptions);
-      }
-      }
-      
     },
   },
 };

@@ -2,7 +2,7 @@
   <div class="workflow">
     <div class="workflow__wrapper">
       <div class="analytics">
-        <details-tab-workflow />
+        <details-tab-workflow :runs="workflow.runs" :trigger="workflow.trigger" />
       </div>
 
       <div class="flow-setup">
@@ -113,6 +113,7 @@ export default {
         workflow: {
           title: this.$route.query.name || "untitled",
           trigger: null,
+          runs:0,
           conditions: null,
           payment: null,
           form: null,
