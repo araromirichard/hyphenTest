@@ -1,8 +1,11 @@
 <template>
   <v-container>
     <v-row>
-      <v-col class="d-flex flex-column align-center justify-center" cols="12">
-        <v-container class="mt-md-12">
+      <v-col
+        class="d-flex flex-column align-center justify-center pa-0"
+        cols="12"
+      >
+        <v-container class="mt-md-12 pa-0">
           <v-row class="mx-md-8 pa-0">
             <v-col
               class="d-flex flex-column align-center justify-center"

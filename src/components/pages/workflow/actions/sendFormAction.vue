@@ -17,11 +17,12 @@
         </div>
 
         <span class="action-description"
-          >Select a form to be sent to a recipient by email. Recipient will get the link to the form by email</span
+          >Select a form to be sent to a recipient by email. Recipient will get
+          the link to the form by email</span
         >
 
         <div class="a-wrapper">
-           <v-row>
+          <v-row>
             <v-col cols="12" sm="6">
               <v-select
                 outlined
@@ -41,18 +42,20 @@
                 primary
               ></v-text-field>
             </v-col>
-           </v-row>
+          </v-row>
         </div>
 
         <span class="note">
-         <b>Note:</b> if an email is missing from the trigger data, this action will be skipped. Where more than one email is found, the first in the sequence will be used
+          <b>Note:</b> if an email is missing from the trigger data, this action
+          will be skipped. Where more than one email is found, the first in the
+          sequence will be used
         </span>
 
         <div class="bottom">
-             <v-btn @click="close" large color="primary" outlined>
+          <v-btn @click="close" large color="primary" outlined>
             <v-icon left>mdi-close</v-icon> Cancel
           </v-btn>
-         
+
           <v-btn large color="primary" elevation="0">
             <v-icon left>mdi-chevron-right</v-icon> Add to FLow
           </v-btn>
@@ -67,7 +70,6 @@ export default {
   data() {
     return {
       dialog: false,
-     
     };
   },
   methods: {
@@ -150,7 +152,7 @@ export default {
 
     .a-wrapper {
       background-color: #fff;
-      padding: 20px ;
+      padding: 20px;
       border: 1px solid #d9dee1;
       border-radius: 4px;
     }

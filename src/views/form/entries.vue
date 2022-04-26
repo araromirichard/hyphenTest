@@ -309,9 +309,7 @@ export default {
       console.log(response.data);
 
       this.formName = response.data.form_title;
-      this.allEntries = response.data.entries;
-
-      if(this.allEntries == null || this.allEntries == undefined)
+      this.allEntries = response.data.form_entry;
       this.filterEntries = this.allEntries.filter(
         (e) => e.form_entry.Date !== ""
       );
@@ -321,7 +319,7 @@ export default {
       console.log(JSON.stringify(this.dataEntries, null, 2));
       //get the first object in the array and get the key each value....
 
-      let firstObj = response.data.form_fields.controls;
+      let firstObj = response.data.form.form_fields.controls;
       console.log(firstObj);
       //get a {text:'',value:''} to use as the headers for the datatable
 

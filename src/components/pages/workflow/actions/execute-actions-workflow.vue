@@ -2,8 +2,7 @@
   <div ref="action">
     <div class="vertical-line"></div>
 
-   
-    <div  class="form-trigger">
+    <div class="form-trigger">
       <div class="header" @click="showTriggers = !showTriggers">
         <span class="title"> Actions to Execute</span>
 

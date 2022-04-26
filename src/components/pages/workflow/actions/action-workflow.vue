@@ -48,17 +48,16 @@
             <v-list-item-group>
               <v-list-item
                 @click="$emit('add-action', item)"
-               
                 v-for="(item, j) in availableActions"
                 :key="j"
               >
-                 <v-list-item-icon>
-                            <img
-                              class="actions-icon"
-                              :src="item.icon"
-                              :alt="item.channel"
-                            />
-                          </v-list-item-icon>
+                <v-list-item-icon>
+                  <img
+                    class="actions-icon"
+                    :src="item.icon"
+                    :alt="item.channel"
+                  />
+                </v-list-item-icon>
                 <v-list-item-title> {{ item.text }}</v-list-item-title>
               </v-list-item>
             </v-list-item-group>
@@ -72,10 +71,10 @@
     <SendNotifications v-model="data" ref="SendNotifications" />
     <SendPayment v-model="data" ref="SendPayment" />
     <UpdateERP v-model="data" ref="UpdateERP" /> -->
-    
-    <get-approval-action  ref="getApproval" />
 
-    <send-email-action ref="sendEmail"/>
+    <get-approval-action ref="getApproval" />
+
+    <send-email-action ref="sendEmail" />
 
     <add-to-payables-action ref="addToPayables" />
 
@@ -83,26 +82,24 @@
 
     <add-delay-action ref="addDelay" />
 
-     <update-customer-action ref="updateCustomer" />
+    <update-customer-action ref="updateCustomer" />
 
-      <send-payment-action ref="SendPayment" />
-
-     
+    <send-payment-action ref="SendPayment" />
   </div>
 </template>
 
 <script>
-import AddDelayAction from './addDelayAction.vue';
-import AddToPayablesAction from './addToPayablesAction.vue';
+import AddDelayAction from "./addDelayAction.vue";
+import AddToPayablesAction from "./addToPayablesAction.vue";
 // import AddToPayables from "../../../../includes/overlays/ExecuteActionsModals/AddToPayables.vue";
 // import CreateDocument from "../../../../includes/overlays/ExecuteActionsModals/CreateDocument.vue";
 // import SendNotifications from "../../../../includes/overlays/ExecuteActionsModals/SendNotifications.vue";
 // import UpdateERP from "../../../../includes/overlays/ExecuteActionsModals/UpdateERP.vue";
-import GetApprovalAction from './getApprovalAction.vue';
-import sendEmailAction from './sendEmailAction.vue';
-import SendFormAction from './sendFormAction.vue';
-import SendPaymentAction from './sendPaymentAction.vue';
-import UpdateCustomerAction from './updateCustomerAction.vue';
+import GetApprovalAction from "./getApprovalAction.vue";
+import sendEmailAction from "./sendEmailAction.vue";
+import SendFormAction from "./sendFormAction.vue";
+import SendPaymentAction from "./sendPaymentAction.vue";
+import UpdateCustomerAction from "./updateCustomerAction.vue";
 
 export default {
   components: {
@@ -116,11 +113,11 @@ export default {
     SendFormAction,
     AddDelayAction,
     UpdateCustomerAction,
-    SendPaymentAction
+    SendPaymentAction,
   },
   props: {
     action: {
-       type: Object,
+      type: Object,
       default: null,
     },
     availableActions: {
@@ -143,7 +140,7 @@ export default {
     };
   },
 
-  mounted(){
+  mounted() {
     this.showDialog(this.action.channel);
   },
 
@@ -235,6 +232,4 @@ export default {
     border-bottom: 1px solid #f9eed2;
   }
 }
-
-
 </style>

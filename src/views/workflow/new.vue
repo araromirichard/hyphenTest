@@ -2,7 +2,10 @@
   <div class="workflow">
     <div class="workflow__wrapper">
       <div class="analytics">
-        <details-tab-workflow :runs="workflow.runs" :trigger="workflow.trigger" />
+        <details-tab-workflow
+          :runs="workflow.runs"
+          :trigger="workflow.trigger"
+        />
       </div>
 
       <div class="flow-setup">
@@ -32,7 +35,10 @@
             </div>
             <div>
               <transition name="animate-down">
-                <trigger-workflow  v-if="showTriggers" v-model="workflow.trigger" />
+                <trigger-workflow
+                  v-if="showTriggers"
+                  v-model="workflow.trigger"
+                />
               </transition>
             </div>
           </div>
@@ -44,7 +50,7 @@
           />
 
           <form-trigger
-          ref="formTrigger"
+            ref="formTrigger"
             v-model="workflow.form"
             v-if="isFormTrigger"
           />
@@ -113,7 +119,7 @@ export default {
         workflow: {
           title: this.$route.query.name || "untitled",
           trigger: null,
-          runs:0,
+          runs: 0,
           conditions: null,
           payment: null,
           form: null,
@@ -124,7 +130,7 @@ export default {
   },
   mounted() {
     this.breadcrumbs[2].text = this.$route.query.name || "untitled";
-      this.showTriggers = true
+    this.showTriggers = true;
   },
 
   watch: {
@@ -154,8 +160,7 @@ export default {
       }
     },
 
-
-      isPaymentTrigger(val) {
+    isPaymentTrigger(val) {
       if (val) {
         console.log("payment scroll");
         this.$nextTick(() => {
@@ -177,9 +182,7 @@ export default {
   computed: {
     canShowConditions() {
       return (
-        (this.isInvoiceTrigger) ||
-        this.workflow.payment ||
-        this.workflow.form
+        this.isInvoiceTrigger || this.workflow.payment || this.workflow.form
       );
     },
 
@@ -187,23 +190,23 @@ export default {
       return this.workflow.conditions !== null;
     },
 
-    isPaymentTrigger(){
-      if(this.workflow.trigger && this.workflow.trigger.value == "PAYMENT"){
+    isPaymentTrigger() {
+      if (this.workflow.trigger && this.workflow.trigger.value == "PAYMENT") {
         return true;
       }
       return false;
     },
 
-    isFormTrigger(){
-      if(this.workflow.trigger && this.workflow.trigger.value == "FORM"){
+    isFormTrigger() {
+      if (this.workflow.trigger && this.workflow.trigger.value == "FORM") {
         return true;
       }
       return false;
     },
 
-    isInvoiceTrigger(){
-      if(this.workflow.trigger && this.workflow.trigger.value == "INVOICE"){
-        return true
+    isInvoiceTrigger() {
+      if (this.workflow.trigger && this.workflow.trigger.value == "INVOICE") {
+        return true;
       }
       return false;
     },
