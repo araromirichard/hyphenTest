@@ -2,8 +2,7 @@
   <div ref="action">
     <div class="vertical-line"></div>
 
-   
-    <div  class="form-trigger">
+    <div class="form-trigger">
       <div class="header" @click="showTriggers = !showTriggers">
         <span class="title"> Actions to Execute</span>
 
@@ -34,7 +33,20 @@
 
             <v-timeline>
               <div class="d-flex mt-5">
-                <v-menu bottom offset-y>
+                <v-btn
+                  v-if="selectedActions.length == 0"
+                  fab
+                  dark
+                  height="45"
+                  @click="showActionModal"
+                  width="45"
+                  color="var(--v-primary-base)"
+                  depressed
+                  class="mx-auto justify-center"
+                >
+                  <v-icon>mdi-plus</v-icon>
+                </v-btn>
+                <!-- <v-menu bottom offset-y>
                   <template v-slot:activator="{ on, attrs }">
                     <div class="d-flex mx-auto" v-bind="attrs" v-on="on">
                       <v-btn
@@ -74,7 +86,7 @@
                       </v-list-item-group>
                     </v-list>
                   </div>
-                </v-menu>
+                </v-menu> -->
               </div>
             </v-timeline>
 
@@ -89,7 +101,7 @@
                 :action="action"
                 :availableActions="availableActions"
                 @properties="selectedProperties.splice(index, 1, $event)"
-                @add-action="addAction($event)"
+                @add-new-action="showActionModal"
                 @remove-action="removeAction(index)"
               />
             </div>
@@ -97,6 +109,52 @@
         </transition>
       </div>
     </div>
+
+    <v-navigation-drawer
+      width="360px"
+      v-model="actionModal"
+      right
+      temporary
+      app
+    >
+      <div class="action-drawer">
+        <span class="title">Actions</span>
+        <span class="desc">
+          Select from list of actions below. Selected action is added to your
+          actions canvas within your workflow
+        </span>
+        <div>
+          <v-text-field
+            name="Search"
+            label="search"
+            hide-details="auto"
+            v-model="searchQuery"
+            color="primary"
+            outlined
+            prepend-inner-icon="mdi-magnify"
+          ></v-text-field>
+        </div>
+        <div class="content">
+          <div
+            class="content__action"
+            v-for="(action, index) in searchQuery == ''
+              ? availableActions
+              : filteredActions"
+            :key="index"
+            @click="addAction(action)"
+          >
+            <img
+              class="actions-icon"
+              :src="action.icon"
+              :alt="action.channel"
+            />
+            <span>{{ action.text }}</span>
+            <span v-if="!action.active" class="coming-soon">Coming soon</span>
+          </div>
+        </div>
+      </div>
+      <!-- -->
+    </v-navigation-drawer>
   </div>
 </template>
 
@@ -113,51 +171,80 @@ export default {
   data() {
     return {
       showTriggers: true,
+      actionModal: false,
+      searchQuery: "",
       availableActions: [
         {
           text: "Send Email",
           channel: "sendEmail",
           icon: require("@/assets/actions-send-email.svg"),
+          active: true,
         },
         {
           text: "Get Approval",
           channel: "getApproval",
           icon: require("@/assets/actions-get-approval.svg"),
+          active: true,
         },
         {
           text: "Add to Payables",
           channel: "addToPayables",
           icon: require("@/assets/actions-add-to-payables.svg"),
+          active: true,
         },
         {
           text: "Send Payment",
           channel: "SendPayment",
           icon: require("@/assets/actions-send-payment.svg"),
+          active: true,
         },
         {
           text: "Update Customer",
           channel: "updateCustomer",
           icon: require("@/assets/actions-update-customer.svg"),
+          active: true,
         },
         {
           text: "Update Vendor",
           channel: "updateVendor",
           icon: require("@/assets/actions-update-vendor.svg"),
+          active: true,
         },
         {
           text: "Send form",
           channel: "sendForm",
           icon: require("@/assets/actions-send-form.svg"),
+          active: true,
         },
         {
           text: "Connect Workflow",
           channel: "connectWorkflow",
           icon: require("@/assets/actions-connect-workflow.svg"),
+          active: true,
         },
         {
           text: "Add Delay",
           channel: "addDelay",
           icon: require("@/assets/actions-add-delay.svg"),
+          active: true,
+        },
+        {
+          text: "Send to Webhook",
+          channel: "sendToWebhook",
+          icon: require("@/assets/actions-send-to-webhook.svg"),
+          active: true,
+        },
+        {
+          text: "Send Invoice",
+          channel: "sendInvoice",
+          icon: require("@/assets/actions-send-invoice.svg"),
+          active: false,
+        },
+        {
+          text: "Send to ERP",
+          channel: "sendToERP",
+          icon: require("@/assets/actions-send-to-erp.svg"),
+          active: false,
         },
       ],
       selectedActions: [],
@@ -180,6 +267,10 @@ export default {
       );
     },
 
+    showActionModal() {
+      this.actionModal = true;
+    },
+
     /// this is still very buggy
     // reOrder(event) {
     //   this.selectedActions.splice(
@@ -195,6 +286,10 @@ export default {
     // },
 
     addAction(action) {
+      if (!action.active) {
+        return;
+      }
+      this.actionModal = false;
       this.selectedActions.push(action);
     },
     removeAction(index) {
@@ -207,6 +302,15 @@ export default {
       setTimeout(() => {
         this.isLoadingFormFields = false;
       }, 1000);
+    },
+  },
+  computed: {
+    filteredActions() {
+      return this.availableActions.filter((action) => {
+        return action.text
+          .toLowerCase()
+          .includes(this.searchQuery.toLowerCase());
+      });
     },
   },
 
@@ -230,6 +334,12 @@ export default {
           }, 1500);
         }
       },
+    },
+
+    actionModal(val) {
+      if (!val) {
+        this.searchQuery = "";
+      }
     },
   },
 };
@@ -293,9 +403,85 @@ export default {
   margin-top: 30px;
 }
 
-// .actions-icon {
-//   width: 24px;
-//   height: 24px;
-//   object-fit: cover;
-// }
+.action-drawer {
+  padding: 20px;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+
+  .title {
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--v-primary-base);
+    display: block;
+  }
+
+  .desc {
+    font-size: 14px;
+    color: #8f96a1;
+    margin: 10px 0px;
+    display: block;
+    line-height: 22px;
+  }
+
+  .content::-webkit-scrollbar {
+    width: 8px;
+    border-radius: 10px;
+  }
+
+  .content::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .content::-webkit-scrollbar-thumb {
+    background-color: var(--v-primary-base);
+    border-radius: 10px;
+  }
+
+  .content {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    flex: 1;
+    overflow: auto;
+
+    &__action {
+      padding: 0px 5px;
+      cursor: pointer;
+      margin: 20px 0px;
+
+      &:hover {
+        img {
+          opacity: 0.8;
+          filter: drop-shadow(3px 2px 2px #d7a47b);
+        }
+
+        span {
+          color: #d7a47b;
+        }
+      }
+
+      img {
+        width: 30px;
+        height: 30px;
+        display: block;
+        margin: auto;
+      }
+
+      span {
+        display: block;
+        text-align: center;
+        margin-top: 10px;
+        color: #7f919b;
+      }
+
+      .coming-soon {
+        font-family: "Inter";
+        opacity: 0.9;
+        margin-top: 1px;
+        color: #d7a47b;
+      }
+    }
+  }
+}
 </style>
