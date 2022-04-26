@@ -27,11 +27,9 @@
 
     <v-timeline>
       <div class="d-flex mt-1">
-        <v-menu bottom offset-y>
-          <template v-slot:activator="{ on, attrs }">
-            <div class="d-flex mx-auto" v-bind="attrs" v-on="on">
-              <v-btn
+           <v-btn
                 v-if="isLast"
+                   @click="$emit('add-new-action')"
                 fab
                 dark
                 height="45"
@@ -42,35 +40,8 @@
               >
                 <v-icon>mdi-plus</v-icon>
               </v-btn>
-            </div>
-          </template>
-          <v-list width="260px">
-            <v-list-item-group>
-              <v-list-item
-                @click="$emit('add-action', item)"
-                v-for="(item, j) in availableActions"
-                :key="j"
-              >
-                <v-list-item-icon>
-                  <img
-                    class="actions-icon"
-                    :src="item.icon"
-                    :alt="item.channel"
-                  />
-                </v-list-item-icon>
-                <v-list-item-title> {{ item.text }}</v-list-item-title>
-              </v-list-item>
-            </v-list-item-group>
-          </v-list>
-        </v-menu>
       </div>
     </v-timeline>
-
-    <!-- <AddToPayables v-model="data" ref="addToPayables" />
-    <CreateDocument v-model="data" ref="CreateDocument" />
-    <SendNotifications v-model="data" ref="SendNotifications" />
-    <SendPayment v-model="data" ref="SendPayment" />
-    <UpdateERP v-model="data" ref="UpdateERP" /> -->
 
     <get-approval-action ref="getApproval" />
 
