@@ -17,7 +17,9 @@
         </div>
 
         <span class="action-description"
-          >Hyphen allows you trigger a previously created workflow, from a new workflow. Data from this action will trigger the workflow selected below.</span
+          >Hyphen allows you trigger a previously created workflow, from a new
+          workflow. Data from this action will trigger the workflow selected
+          below.</span
         >
 
         <div class="a-wrapper">
@@ -32,7 +34,9 @@
         </div>
 
         <span class="note">
-          <b>Note:</b> if the data within this workflow doesn’t match fields expected by the choosen workflow above, this action will not be processed
+          <b>Note:</b> if the data within this workflow doesn’t match fields
+          expected by the choosen workflow above, this action will not be
+          processed
         </span>
 
         <div class="bottom">

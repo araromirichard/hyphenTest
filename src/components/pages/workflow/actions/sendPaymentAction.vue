@@ -13,11 +13,10 @@
       </div>
       <div class="action__content">
         <div class="top">
-          <span class="action-title">PAYMENT</span>    
-          <div> 
+          <span class="action-title">PAYMENT</span>
+          <div>
             <span class="bal-title">Wallet Balance</span>
             <span class="bal">N140,000</span>
-          
           </div>
         </div>
 
@@ -204,13 +203,13 @@ export default {
         display: inline-block;
       }
 
-      .bal-title{
+      .bal-title {
         font-size: 13px;
         color: var(--v-primary-base);
         display: block;
       }
 
-      .bal{
+      .bal {
         font-size: 17px;
         color: var(--v-primary-base);
         font-weight: 600;

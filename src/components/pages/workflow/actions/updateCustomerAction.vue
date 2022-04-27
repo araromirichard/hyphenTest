@@ -48,8 +48,7 @@
               ></v-select>
             </v-col>
 
-
-             <v-col cols="12" v-if="selectedAttribute == 'Payment Terms'">
+            <v-col cols="12" v-if="selectedAttribute == 'Payment Terms'">
               <v-select
                 outlined
                 color="primary"
@@ -88,12 +87,8 @@ export default {
       dialog: false,
       atrribute: ["Tag", "Payment Terms", "Balance"],
       selectedAttribute: null,
-      tags: [
-          "high value",
-          "wema bank",
-          "ikeja"
-      ],
-      terms:["Net 30","Net 45","Net 60","Net 90"]
+      tags: ["high value", "wema bank", "ikeja"],
+      terms: ["Net 30", "Net 45", "Net 60", "Net 90"],
     };
   },
   methods: {
@@ -176,7 +171,7 @@ export default {
 
     .a-wrapper {
       background-color: #fff;
-      padding:  30px;
+      padding: 30px;
       border: 1px solid #d9dee1;
       border-radius: 4px;
     }

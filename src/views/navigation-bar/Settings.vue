@@ -16,7 +16,7 @@
           />
         </div>
       </v-col>
-      <v-col cols="12" md="9" class="">
+      <v-col cols="12" md="9" class="px-0">
         <div class="setting-nav">
           <router-view></router-view>
         </div>

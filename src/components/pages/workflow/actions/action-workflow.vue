@@ -27,19 +27,19 @@
 
     <v-timeline>
       <div class="d-flex mt-1">
-           <v-btn
-                v-if="isLast"
-                   @click="$emit('add-new-action')"
-                fab
-                dark
-                height="45"
-                width="45"
-                color="primary"
-                depressed
-                class="mx-auto justify-center"
-              >
-                <v-icon>mdi-plus</v-icon>
-              </v-btn>
+        <v-btn
+          v-if="isLast"
+          @click="$emit('add-new-action')"
+          fab
+          dark
+          height="45"
+          width="45"
+          color="primary"
+          depressed
+          class="mx-auto justify-center"
+        >
+          <v-icon>mdi-plus</v-icon>
+        </v-btn>
       </div>
     </v-timeline>
 

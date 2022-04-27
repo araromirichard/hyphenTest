@@ -115,6 +115,30 @@ export default {
       },
     });
   },
+  async uploadOrganCac(payload) {
+    return await api().post(`/upload`, payload, {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+        "Content-Type": "multipart/form-data",
+      },
+    });
+  },
+  async uploadIdCard(payload) {
+    return await api().post(`/upload`, payload, {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+        "Content-Type": "multipart/form-data",
+      },
+    });
+  },
+  async uploadOrganizationLogo(payload) {
+    return await api().post(`/upload`, payload, {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+        "Content-Type": "multipart/form-data",
+      },
+    });
+  },
 
   addBankAccount(organizationId, bankCode) {
     return api().put("/organizations/" + organizationId + "/addBank", bankCode);

@@ -2,7 +2,7 @@ const state = () => ({
   trigger: null,
   runs: 0,
   schema: null,
-  operators:[
+  operators: [
     {
       string: "Equal to",
       val: "=",
@@ -28,7 +28,7 @@ const state = () => ({
       val: ">=",
     },
   ],
-  comparisonType:[
+  comparisonType: [
     {
       string: "ALL",
       val: "and",
@@ -37,8 +37,7 @@ const state = () => ({
       string: "ANY",
       val: "or",
     },
-  ]
-
+  ],
 });
 
 const getters = {
@@ -68,14 +67,14 @@ const getters = {
   runs(state) {
     return state.runs;
   },
-  
+
   operators(state) {
     return state.operators;
   },
 
   comparisonType(state) {
     return state.comparisonType;
-  }
+  },
 };
 
 const mutations = {
@@ -98,8 +97,8 @@ const actions = {
   },
 
   updateSchema({ commit }, payload) {
-    commit("SET_SCHEMA", payload)
-  }
+    commit("SET_SCHEMA", payload);
+  },
 };
 
 export default {

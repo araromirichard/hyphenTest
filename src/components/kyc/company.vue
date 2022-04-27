@@ -128,7 +128,7 @@
                       >
                         <v-text-field
                           :error-messages="errors"
-                          v-model="company.accountingSoftware"
+                          v-model="company.accountSoftware"
                           background-color="#ffffff"
                           outlined
                           hide-details="auto"
@@ -140,6 +140,7 @@
                     <v-col>
                       <template>
                         <v-card
+                          ref="uploader"
                           @click="handleFileImport"
                           v-model="cac"
                           @drop.prevent="onDroppedFiles($event)"
@@ -361,47 +362,20 @@
                     </v-col>
                     <v-col class="p-0" cols="6">
                       <template>
-                        <v-card
-                          @click="handleFileImport"
+                        <v-file-input
+                          id="id-card"
+                          clearable
+                          background-color="#fff"
+                          color="#9e9ebd"
+                          prepend-icon=""
+                          accept=".pdf, image/*"
+                          placeholder="Please upload a copy of selected ID"
+                          outlined
                           v-model="idCard"
-                          height="56"
-                          width="100%"
-                          class="mx-auto justify-center d-flex"
-                          style=""
-                          :style="{
-                            border: dragging
-                              ? '1px dashed #424f95'
-                              : '1px dashed rgba(127, 145, 155, 0.551929)',
-                          }"
-                          flat
-                        >
-                          <span
-                            v-if="isInitial"
-                            class="uploadInfo d-flex mx-auto my-auto"
-                            >{{ placeholderId }}
-                          </span>
-                          <span
-                            v-if="isSaving"
-                            class="uploadInfo d-flex mx-auto my-auto"
-                            >{{ fileName }}
-                            <v-icon
-                              @click="removeFile($event, idCard)"
-                              small
-                              tag="button"
-                              color="red"
-                              class="mx-4"
-                              >mdi-close</v-icon
-                            ></span
-                          >
-                        </v-card>
-                      </template>
-                      <template>
-                        <input
-                          ref="file"
-                          class="d-none"
-                          type="file"
+                          ref="idCard"
                           @change="uploadFile"
-                        />
+                        >
+                        </v-file-input>
                       </template>
                     </v-col>
                   </v-row>
@@ -409,7 +383,7 @@
                     <v-btn
                       :loading="updateKyc"
                       :disabled="invalid"
-                      @click="saveKycData"
+                      @click.prevent="saveKycData"
                       class="submit-btn mx-12 mb-12"
                       :style="{
                         background: `${invalid ? '#e6eaeb' : '#19283D'}`,
@@ -453,13 +427,13 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 import {
   required,
   email,
   alpha,
   alpha_num,
-  digits,
+  numeric,
 } from "vee-validate/dist/rules";
 import {
   extend,
@@ -477,8 +451,8 @@ extend("alpha", {
   ...alpha,
   message: "{_field_} can only contain alphabeth",
 });
-extend("digits", {
-  ...digits,
+extend("numeric", {
+  ...numeric,
   message: "{_field_} can only contain numbers",
 });
 extend("alpha_num", {
@@ -515,7 +489,7 @@ export default {
         leadership: {
           firstName: "",
           lastName: "",
-          excecutivePosition: "",
+          executivePosition: "",
           bvn: "",
           email: "",
           phone: "",
@@ -584,12 +558,11 @@ export default {
       this.$refs.file.click();
     },
 
-    //fxn to upload means of identity
+    //fxn to attach and recieve means of identity
     uploadFile(e) {
-      const file = e.target.files[0];
-      if (!this.idCard.length) return;
+      this.idCard = e.target.files[0];
       console.log(this.idCard);
-      this.fileName = file.name;
+      this.fileName = this.idCard.name;
       this.isInitial = false;
       this.isSaving = true;
     },
@@ -642,17 +615,79 @@ export default {
       }
     },
 
-    // saveUploadedFiles() {
-    //   // upload data to the server
-    //   this.isSaving = true;
+    async uploadCAC() {
+      //initialize the formData
+      const formData = new FormData();
+      // add the data needed for uploading the cac doc...
+      formData.append("files", this.cac);
+      formData.append("ref", "kyc.cac");
+      formData.append("refId", this.user.organization);
+      formData.append("field", "cac");
 
-    //   console.log(this.cac);
-    //   console.log(this.idCard);
-    // },
+      console.log(this.cac);
+      console.log(formData);
+
+      try {
+        await this.$store.dispatch("organizations/uploadCacDoc", formData).then(
+          this.showToast({
+            sclass: "success",
+            show: true,
+            message: "Upload CAC document successfully..",
+            timeout: 3000,
+          })
+        );
+      } catch (error) {
+        console.log(error);
+        if (error) {
+          this.showToast({
+            sclass: "error",
+            show: true,
+            message: "CAC document upload was unsuccessful..",
+            timeout: 3000,
+          });
+        }
+      }
+    },
+    async UploadIdCard() {
+      //initialize the formData
+      const formData = new FormData();
+      // add the data needed for uploading the id card doc...
+      formData.append("files", this.idCard);
+      formData.append("ref", "kyc.ownership");
+      formData.append("refId", this.user.organization);
+      formData.append("field", "identity_url");
+      // upload  idCard to the server
+
+      console.log(this.idCard);
+      console.log(formData);
+
+      try {
+        await this.$store.dispatch("organizations/uploadIdCard", formData).then(
+          this.showToast({
+            sclass: "success",
+            show: true,
+            message: "Uploaded Id Card successfully..",
+            timeout: 3000,
+          })
+        );
+      } catch (error) {
+        console.log(error);
+        if (error) {
+          this.showToast({
+            sclass: "error",
+            show: true,
+            message: "Id card upload failed",
+            timeout: 3000,
+          });
+        }
+      }
+    },
 
     //submit form fields alone... without the attached files
-    saveKycData() {
-      //
+    async saveKycData() {
+      // send organization info to the server as an update request....
+      this.updateKyc = true;
+
       const payload = {
         account_software: this.company.accountSoftware,
         office: [{ address: this.company.streetAddress }],
@@ -662,15 +697,47 @@ export default {
           {
             first_name: this.company.leadership.firstName,
             last_name: this.company.leadership.lastName,
-            position: this.company.leadership.excecutivePosition,
+            position: this.company.leadership.executivePosition,
             email: this.company.leadership.email,
             phone: this.company.leadership.phone,
           },
         ],
       };
+      const id = this.user.organization;
       if (this.canSubmit()) {
         console.log(JSON.stringify(payload, null, 2));
-        // this.saveUploadedFiles();
+
+        //axios request starts from here..
+        try {
+          //axios req to send organ. info and leadership...
+          await this.$store
+            .dispatch("organizations/updateOrganization", id, payload)
+            .then(
+              this.showToast({
+                sclass: "success",
+                show: true,
+                message: "Updated KYC successfully..",
+                timeout: 3000,
+              })
+            );
+
+          //calling axios post request to upload cac doc and id card..
+          this.uploadCAC();
+          this.UploadIdCard();
+        } catch (error) {
+          console.log(error);
+          if (error) {
+            this.showToast({
+              sclass: "error",
+              show: true,
+              message: "Organization Kyc Update failed",
+              timeout: 3000,
+            });
+          }
+        } finally {
+          this.updateKyc = false;
+          this.dialog = false;
+        }
       } else {
         this.showToast({
           sclass: "error",
@@ -694,6 +761,11 @@ export default {
   },
   computed: {
     //
+
+    ...mapGetters({
+      user: "auth/user",
+      token: "auth/token",
+    }),
   },
 };
 </script>
@@ -727,5 +799,8 @@ export default {
   line-height: 18px;
   text-align: center;
   color: #7f919b;
+}
+.v-file-input .v-file-input >>> placeholder {
+  font-size: 9px !important;
 }
 </style>

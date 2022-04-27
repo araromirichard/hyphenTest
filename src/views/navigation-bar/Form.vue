@@ -92,7 +92,7 @@
                 font-weight: 600;
                 font-size: 16px;
                 line-height: 19px;
-                color: #301f78;
+                color: #19283d;
               "
               >Create Form</span
             >
@@ -108,6 +108,7 @@
           </v-card-title>
           <template>
             <v-tabs
+              slider-size="4"
               background-color="#FDFAF2"
               v-model="tab"
               align-with-title
@@ -130,11 +131,11 @@
                       rules="required"
                     >
                       <v-text-field
+                        background-color="#fff"
                         :error-messages="errors"
                         class="form__field"
                         placeholder="give this form a name"
                         hide-details="auto"
-                        single-line
                         outlined
                         color="primary"
                         v-model="formName"
@@ -149,6 +150,7 @@
                       rules="required"
                     >
                       <v-text-field
+                        background-color="#fff"
                         :error-messages="errors"
                         class="form__field"
                         hide-details="auto"
@@ -476,6 +478,7 @@ export default {
   computed: {
     ...mapGetters({
       is_payment: "formBuilder/getPaymentStatus",
+      is_signature: "formBuilder/getSignatureStatus",
     }),
   },
   methods: {
@@ -486,10 +489,16 @@ export default {
 
     //check and change the store value of is_payment switch
     changeValue() {
+      if (this.payment == true) {
+        this.signature = false;
+      }
       this.$store.dispatch("formBuilder/updatePaymentStatus", this.payment);
     },
     //check and change the store value of add_signature switch
     allowSignature() {
+      if (this.signature == true) {
+        this.payment = false;
+      }
       this.$store.dispatch("formBuilder/updateSignatureStatus", this.signature);
     },
 
@@ -505,12 +514,17 @@ export default {
         //   "/form/create-new-form/?name=" + this.formName
         // );
         if (!this.show) {
-          return this.show === true;
+          this.show === true;
         }
-        let routeData = this.$router.resolve({
+        console.log("hello World");
+        this.$router.push({
           name: "Create-form",
           query: { data: this.formName },
         });
+        // let routeData = this.$router.resolve({
+        //   name: "Create-form",
+        //   query: { data: this.formName },
+        // });
         this.$store.dispatch(
           "formBuilder/getFormDescription",
           this.formDescription
@@ -527,7 +541,7 @@ export default {
           );
         }
         this.closeFormDialog();
-        window.open(routeData.href, "_blank");
+        // window.open(routeData.href, "_blank");
       } else {
         this.showToast({
           sclass: "error",
@@ -538,6 +552,11 @@ export default {
       }
     },
   },
+  // watch: {
+  //   payment: function (value) {
+  //     !this.signature == value;
+  //   },
+  // },
 };
 </script>
 
@@ -550,6 +569,7 @@ export default {
   font-size: 12px !important;
 }
 .field__title {
+  padding-bottom: 10px;
   margin-top: 30px;
   margin-left: 67px;
   font-family: "Inter";
@@ -564,8 +584,8 @@ export default {
   margin-left: 67px;
   margin-right: 67px;
   margin-bottom: 30px;
-  background: #ffffff;
-  border: 1px solid rgba(212, 216, 223, 0.377431);
+  /* background: #ffffff; */
+  /* border: 1px solid rgba(212, 216, 223, 0.377431); */
   border-radius: 3px;
 }
 </style>

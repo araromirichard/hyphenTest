@@ -3,7 +3,7 @@
     <v-row no-gutters>
       <v-col
         cols="12"
-        md="3"
+        md="4"
         style="min-height: 100vh"
         class="white d-flex flex-column align-center"
         v-if="$vuetify.breakpoint.mdAndUp"
@@ -71,7 +71,7 @@
         class="d-flex flex-column justify-center pa-2"
         style="background-color: rgb(253, 249, 239); min-height: 100vh"
         cols="12"
-        md="9"
+        md="8"
       >
         <div>
           <div class="d-flex justify-center align-center">
@@ -102,6 +102,7 @@
             <div class="px-8 pt-6">
               <v-switch
                 color="#16be98"
+                :input-value="formData.is_private"
                 v-model="configuration.isPrivate"
                 :label="`Private Form?: ${configuration.isPrivate.toString()}`"
               ></v-switch>
@@ -126,7 +127,7 @@
                     line-height: 20px;
                     color: #596a73;
                   "
-                  >https://hypn.so/{{ $route.params.id }}</span
+                  >https://hypn.so/{{ formData.hypn_id }}</span
                 >
               </v-sheet>
             </div>
@@ -258,7 +259,6 @@ export default {
       return {
         form_fields: this.formData,
         is_private: this.configuration.isPrivate,
-      
       };
     },
   },
