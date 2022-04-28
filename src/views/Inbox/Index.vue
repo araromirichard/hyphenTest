@@ -457,7 +457,7 @@
                   font-weight: 600;
                   font-size: 16px;
                   line-height: 19px;
-                  color: #301f78;
+                  color: #19283d;
                 "
                 >Invite a Stakeholder</span
               >
@@ -565,6 +565,7 @@
                 <template>
                   <v-card-actions class="d-flex justify-end align-center mr-9">
                     <v-btn
+                      :loading="isInviting"
                       @click="sendInvite"
                       :disabled="invalid"
                       width="121"
@@ -683,6 +684,7 @@ export default {
   name: "Inbox",
   data() {
     return {
+      isInviting: false,
       loading: false,
       dialog: false,
       dialog2: false,
@@ -759,36 +761,51 @@ export default {
       this.$refs.dataTable.setSearchText(e);
     },
     async sendInvite() {
+      this.isInviting = true;
+
+      const orgId = this.organizationToken.data.organization;
       const payload = {
-        username: this.stat,
+        username: this.getUsername,
         first_name: this.stakeholder.firstName,
         last_name: this.stakeholder.lastName,
-        role: this.stakeholder.selectedType,
+        // role: this.stakeholder.selectedType,
         email: this.stakeholder.email,
         organization: this.organizationToken.data.organization,
       };
       console.log(JSON.stringify(payload, null, 2));
+      console.log(orgId);
 
-      // try {
-      //   //this.isCreating = true;
-      //   await this.$store.dispatch("organizations/inviteCoWorker", payload);
-
-      //   //show success toast
-      //   this.showToast({
-      //     sclass: "success",
-      //     show: true,
-      //     message: "co-worker successfully created",
-      //     timeout: 3000,
-      //   });
-      // } catch (error) {
-      //   console.log(JSON.stringify(error, null, 2));
-      //   this.showToast({
-      //     sclass: "error",
-      //     show: true,
-      //     message: error.msg,
-      //     timeout: 3000,
-      //   });
+      //       {
+      //     "first_name":"Michael",
+      //     "last_name":"James",
+      //     "username":"testcoworker007",
+      //     "email":"random007@mailinator.com",
+      //     "organization": 2
       // }
+
+      try {
+        await this.$store.dispatch(
+          "organizations/inviteCoWorker",
+
+          payload
+        );
+
+        //show success toast
+        this.showToast({
+          sclass: "success",
+          show: true,
+          message: "co-worker successfully created",
+          timeout: 3000,
+        });
+      } catch (error) {
+        console.log(JSON.stringify(error, null, 2));
+        this.showToast({
+          sclass: "error",
+          show: true,
+          message: error.msg,
+          timeout: 3000,
+        });
+      }
     },
 
     async getOrganizationToken() {
@@ -800,9 +817,13 @@ export default {
     },
   },
   async created() {
+    this.loading = true;
     await this.getOrganizationToken();
     console.log(JSON.stringify(this.organizationToken, null, 2));
     console.log(JSON.stringify(this.user, null, 2));
+    if (this.invoiceArrayStatus) {
+      this.loading = false;
+    }
   },
 
   computed: {
@@ -826,7 +847,7 @@ export default {
       return this.$store.state.auth.user;
     },
     getUsername() {
-      return this.stakeholder.firstName + this.stakeholde.lastName;
+      return this.stakeholder.firstName + this.stakeholder.lastName;
     },
   },
 

@@ -21,6 +21,11 @@ const getters = {
         }
         return forms;
     },
+    getSingleForm: (state) => {
+        if (state.singleForm != null) {
+            return state.singleForm;
+        }
+    },
     getPaymentStatus: (state) => {
         if (state.makePayment != null) {
             return state.makePayment;
@@ -172,9 +177,9 @@ const actions = {
         }
     },
 
-    async getFormEntries({ commit }, id) {
+    async getFormEntries({ commit }, hypn_id) {
         try {
-            const response = await formbuilder.getFormEntries(id);
+            const response = await formbuilder.getFormEntries(hypn_id);
             commit("GETFORMENTRIES", response.data);
             console.log(response.data);
             return response;
