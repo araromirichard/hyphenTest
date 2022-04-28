@@ -1,6 +1,13 @@
 <template>
   <div v-if="action != null">
-    <div class="selected-action">
+    <div
+      class="selected-action"
+      :style="
+        action.channel == 'addDelay'
+          ? 'border:3px dashed rgb(249, 238, 210)'
+          : ''
+      "
+    >
       <div class="selected-action__icon">
         <div>
           <v-icon color="primary">mdi-lightning-bolt-outline </v-icon>
@@ -27,19 +34,19 @@
 
     <v-timeline>
       <div class="d-flex mt-1">
-           <v-btn
-                v-if="isLast"
-                   @click="$emit('add-new-action')"
-                fab
-                dark
-                height="45"
-                width="45"
-                color="primary"
-                depressed
-                class="mx-auto justify-center"
-              >
-                <v-icon>mdi-plus</v-icon>
-              </v-btn>
+        <v-btn
+          v-if="isLast"
+          @click="$emit('add-new-action')"
+          fab
+          dark
+          height="45"
+          width="45"
+          color="primary"
+          depressed
+          class="mx-auto justify-center"
+        >
+          <v-icon>mdi-plus</v-icon>
+        </v-btn>
       </div>
     </v-timeline>
 
