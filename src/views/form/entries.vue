@@ -24,142 +24,7 @@
         Forms
       </h3>
       <v-spacer></v-spacer>
-      <v-dialog
-        elevation="0"
-        v-model="dialog"
-        max-width="590"
-        overlay-color="#301F78"
-        overlay-opacity="0.282397"
-      >
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn
-            dark
-            v-bind="attrs"
-            v-on="on"
-            class="text-capitalize"
-            style="
-              width: 209px;
-              height: 54px;
-              background: var(--v-primary-base);
-              box-shadow: 0px 12px 22px rgba(0, 0, 0, 0.24);
-              border-radius: 4px;
-            "
-            :style="{
-              width: `${$vuetify.breakpoint.mdAndDown ? '150px' : '209px'}`,
-            }"
-          >
-            <img :src="require('@/assets/pbot_icons/file.svg')" />
-            <span
-              style="
-                padding-left: 8px;
-                font-family: Inter;
-                font-style: normal;
-                font-weight: 500;
-                font-size: 14px;
-                line-height: 17px;
-                text-align: center;
-                letter-spacing: 0.636364px;
-                color: #ffffff;
-              "
-            >
-              New Form
-            </span>
-          </v-btn>
-        </template>
-        <v-card
-          max-width=""
-          height="300"
-          flat
-          class="m-0"
-          style="background: #fefcf8; border-radius: 8px"
-        >
-          <v-card-title
-            class="mb-8"
-            style="background: #ffffff; border-radius: 8px 8px 0px 0px"
-          >
-            <span
-              style="
-                font-family: Inter;
-                font-style: normal;
-                font-weight: 600;
-                font-size: 16px;
-                line-height: 19px;
-                color: #301f78;
-              "
-              >New Form</span
-            >
-            <v-spacer></v-spacer>
-            <v-icon
-              tag="button"
-              @click="closeFormDialog"
-              class="text-bolder"
-              color="#596A73"
-            >
-              mdi-close
-            </v-icon>
-          </v-card-title>
-          <template class="d-flex">
-            <span
-              style="
-                margin-top: 30px;
-                margin-left: 37px;
-                font-family: Inter;
-                font-style: normal;
-                font-weight: normal;
-                font-size: 12px;
-                line-height: 18px;
-                letter-spacing: 0.45px;
-                color: #7f919b;
-              "
-              >Form Name</span
-            >
-            <v-text-field
-              style="
-                margin-left: 37px;
-                margin-right: 31px;
-                margin-bottom: 30px;
-                background: #ffffff;
-                border: 1px solid rgba(212, 216, 223, 0.377431);
-                border-radius: 3px;
-              "
-              dense
-              :hide-details="true"
-              label="Form Name"
-              single-line
-              outlined
-              color="primary"
-              v-model="formName"
-            ></v-text-field>
-          </template>
-          <template>
-            <v-switch
-              class="ml-9"
-              v-model="makePayment"
-              label="Make Payment"
-            ></v-switch>
-          </template>
-          <template class="mt-6">
-            <v-card-actions class="d-flex justify-end mt-2 mr-9">
-              <v-btn
-                link
-                @click="createForm"
-                dark
-                width="121"
-                height="45"
-                color="primary"
-                class="text-capitalize"
-                style="
-                  box-shadow: 0px 12px 22px rgba(0, 0, 0, 0.24);
-                  border-radius: 4px;
-                "
-              >
-                <v-icon>mdi-chevron-right</v-icon>
-                <span>Next</span>
-              </v-btn>
-            </v-card-actions>
-          </template>
-        </v-card>
-      </v-dialog>
+      <create-form-modal ref="formDialog" />
     </div>
     <template>
       <v-container class="pt-8 px-0">
@@ -249,20 +114,21 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
+import createFormModal from "../../includes/overlays/createFormModal.vue";
 export default {
+  components: { createFormModal },
   name: "entries",
 
   data() {
     return {
-      dialog: false,
       isClicked: true,
       search: "",
       formName: "",
       dataEntries: [],
-
+      hypn_id: null,
       headers: [],
-
+      allEntries: null,
       selectedHeaders: [],
     };
   },
@@ -271,8 +137,8 @@ export default {
       showToast: "ui/showToast",
       formEntries: "formBuilder/getFormEntries",
     }),
-    closeFormDialog() {
-      this.dialog = false;
+    showModal() {
+      this.$refs.formDialog.openDialog();
     },
     toggleSearch() {
       this.isClicked = false;
@@ -280,46 +146,35 @@ export default {
     searchDataTable(e) {
       this.$refs.dataTable.setSearchText(e);
     },
-    createForm() {
-      if (this.formName != "") {
-        // let routeData = this.$router.push(
-        //   "/form/create-new-form/?name=" + this.formName
-        // );
-        let routeData = this.$router.resolve({
-          name: "Create-form",
-          query: { data: this.formName },
-        });
-        this.closeFormDialog();
-        window.open(routeData.href, "_blank");
-      } else {
-        this.showToast({
-          sclass: "error",
-          show: true,
-          message: "Form name is required",
-          timeout: 3000,
-        });
-      }
+    async fetchFormsById() {
+      let response = await this.$store.dispatch(
+        "formBuilder/getSingleForm",
+        this.$route.params.id
+      );
+      // console.log(JSON.stringify(response.data.data.form_fields, null, 2));
+      // console.log(JSON.stringify(response.data.data.hypn_id, null, 2));
+
+      this.hypn_id = response.data.data.hypn_id;
     },
     async fetchEntries() {
       let response = await this.$store.dispatch(
         "formBuilder/getFormEntries",
-        this.$route.params.id
+        this.hypn_id
       );
 
-      console.log(response.data);
+      // console.log(JSON.stringify(response.data.data, null, 2));
 
-      this.formName = response.data.form_title;
-      this.allEntries = response.data.form_entry;
-      this.filterEntries = this.allEntries.filter(
-        (e) => e.form_entry.Date !== ""
-      );
+      // this.formName = response.data.form_title;
+      const allEntries = response.data.data;
 
-      //map over the filterEntries form_entry and get the key and value of each obj
-      this.dataEntries = this.filterEntries.map((entry) => entry.form_entry);
-      console.log(JSON.stringify(this.dataEntries, null, 2));
+      //map over the allEntries and get a new array that contains just the form_entry objs
+      const formEntryArray = allEntries.map((entry) => entry.form_entry);
+      console.log(JSON.stringify(formEntryArray, null, 2));
+      this.dataEntries = formEntryArray
+
       //get the first object in the array and get the key each value....
 
-      let firstObj = response.data.form.form_fields.controls;
+      let firstObj = response.data.form_fields.controls;
       console.log(firstObj);
       //get a {text:'',value:''} to use as the headers for the datatable
 
@@ -361,10 +216,16 @@ export default {
     showHeaders() {
       return this.headers.filter((s) => this.selectedHeaders.includes(s));
     },
+
+    ...mapGetters({
+      singleForm: "formBuilder/getSingleForm",
+    }),
   },
 
   async mounted() {
+    await this.fetchFormsById();
     await this.fetchEntries();
+
     this.selectedHeaders = this.headers;
     console.log(this.selectedHeaders);
   },
