@@ -17,11 +17,12 @@
         </div>
 
         <span class="action-description"
-          >Create a new payable entry using  transaction data within the workflow</span
+          >Create a new payable entry using transaction data within the
+          workflow</span
         >
 
         <div class="a-wrapper">
-           <v-row>
+          <v-row>
             <v-col cols="12" sm="6">
               <v-select
                 outlined
@@ -41,7 +42,7 @@
                 primary
               ></v-select>
             </v-col>
-           </v-row>
+          </v-row>
         </div>
 
         <!-- <span class="note">
@@ -50,7 +51,6 @@
         </span> -->
 
         <div class="bottom">
-         
           <v-btn large color="primary" elevation="0">
             <v-icon left>mdi-chevron-right</v-icon> SAVE
           </v-btn>
@@ -148,7 +148,7 @@ export default {
 
     .a-wrapper {
       background-color: transparent;
-      padding: 20px ;
+      padding: 20px;
       //border: 1px solid #d9dee1;
       border-radius: 4px;
     }

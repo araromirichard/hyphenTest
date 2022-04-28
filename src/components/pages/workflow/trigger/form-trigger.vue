@@ -18,7 +18,12 @@
           ></v-select>
         </div>
 
-        <v-btn elevation="0" @click='$emit("input", selectedForm)' :disabled="selectedForm == null" color="primary"  >
+        <v-btn
+          elevation="0"
+          @click="$emit('input', selectedForm)"
+          :disabled="selectedForm == null"
+          color="primary"
+        >
           <v-icon left>mdi-arrow-down</v-icon> Continue</v-btn
         >
       </div>

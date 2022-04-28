@@ -188,6 +188,7 @@
 //import formBuider from "@/api/formbuilder.js";
 import { mapActions, mapGetters, mapState } from "vuex";
 export default {
+  name: "Create-form",
   components: {
     //Overlaybtns
   },
@@ -196,6 +197,7 @@ export default {
       switch1: true,
       formInputData: null,
       creatingForm: false,
+      field_names: null,
       configuration: {
         formTitle: "",
         isPrivate: false,
@@ -210,6 +212,7 @@ export default {
     ...mapActions({ showToast: "ui/showToast" }),
 
     async saveData() {
+      this.checkFieldNames();
       const formPayload = this.createRequestData;
       console.log(JSON.stringify(formPayload), null, 2);
       //console.log(this.formData);
@@ -246,11 +249,28 @@ export default {
         }
       }
     },
+    checkFieldNames() {
+      var controlsObject = this.formData.controls;
+
+      const newArray = Object.keys(controlsObject).map((key) => {
+        return {
+          name: controlsObject[key].name,
+        };
+      });
+      console.log(JSON.stringify(newArray, null, 2));
+
+      const newObj = Object.assign({}, newArray);
+      // if (this.field_names == null) {
+      //   this.field_names = Object.values(newObj);
+      // }
+      this.field_names = Object.values(newObj);
+      console.log(this.field_names);
+    },
     checkGridClassAndFormActions() {
       //check that the formData array is not empty...
       if (this.formData == null && this.formData == undefined) return;
       //declare and assign the value of organization to a variable
-      var organId = this.user.organization;
+      var organId = this.user.organization.id;
 
       this.formData.formConfig.formActionURL = `https://api.onpbot.com/v1/forms/${organId}/submit`;
       this.formData.sections[Object.keys(this.formData.sections)].headline =
@@ -281,12 +301,14 @@ export default {
     //return full object to send to
     createRequestData() {
       return {
-        organization: this.user.organization.toString(),
+        organization: this.user.organization.id.toString(),
         form_title: this.configuration.formName,
         form_fields: this.formData,
         is_private: this.configuration.isPrivate,
-        // form_id: this.getFormId,
         is_payment: this.$store.state.formBuilder.makePayment,
+        has_signature: this.$store.state.formBuilder.needSignature,
+        form_type: this.$store.state.formBuilder.selectedFormType,
+        field_names: this.field_names,
       };
     },
   },

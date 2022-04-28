@@ -1,15 +1,17 @@
 <template>
-  <div>
-    <v-row>
+  <div class="">
+    <v-row class="">
       <v-col class="pt-0">
         <v-row class="pa-0">
           <v-col class="mx-md-10 pb-0">
-            <v-subheader class="mx-md-10 pl-md-6 pt-8 section-title">
+            <v-subheader
+              class="mx-10 accordion-bodymx-md-10 pl-md-6 pt-8 section-title"
+            >
               Invocing/Billing
             </v-subheader>
           </v-col>
         </v-row>
-        <div class="mx-md-13 mt-6">
+        <div class="mx-13 mt-6">
           <v-form>
             <v-row class="mx-md-10 mb-8">
               <v-col cols="12">
@@ -92,6 +94,8 @@ export default {
 
 <style scoped>
 .section-title {
+  /* margin-left: 48px;
+  margin-right: 48px; */
   font-family: "Inter";
   font-style: normal;
   font-weight: 500;

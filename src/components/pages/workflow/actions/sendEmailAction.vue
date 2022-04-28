@@ -119,7 +119,6 @@ export default {
   border-radius: 8px;
   background-color: #fff;
 
-
   &__header {
     padding: 20px;
     width: 100%;

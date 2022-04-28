@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-row>
-      <v-col cols="12">
+      <v-col cols="12" class="px-0">
         <p
           class="
             ml-md-16

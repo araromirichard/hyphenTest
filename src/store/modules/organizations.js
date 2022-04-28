@@ -1,14 +1,24 @@
+import organization from "../../api/organization";
 import Organization from "../../api/organization";
 
 const state = {
   organization: null,
+  fullOrganizationObject: null,
   invitedCoWorkers: [],
   organizationToken: {},
+  cacDoc: null,
+  idCard: null,
 };
 
 const getters = {
   OrganToken(state) {
     return state.organizationToken;
+  },
+  organObj(state) {
+    return state.fullOrganizationObject;
+  },
+  getOrganizationLogoData(state) {
+    return state.fullOrganizationObject.logo;
   },
   getOrganizationEmail(state) {
     console.log(state.organizationToken.data);
@@ -23,9 +33,20 @@ const mutations = {
   organizationToken(state, token) {
     state.organizationToken = token;
   },
-
+  setFullOrganization(state, data) {
+    state.fullOrganizationObject = data;
+  },
+  setOrganizationLogo(state, data) {
+    state.fullOrganizationObject.logo = data;
+  },
   coWorkerState(state, coWorker) {
     state.invitedCoWorkers = coWorker;
+  },
+  setCAC(state, cacDoc) {
+    state.cacDoc = cacDoc;
+  },
+  setIdCard(state, idCard) {
+    state.idCard = idCard;
   },
 };
 
@@ -49,10 +70,38 @@ const actions = {
       return Promise.reject(error);
     }
   },
+
+  async uploadCacDoc({ commit }, payload) {
+    try {
+      const response = await organization.uploadOrganCac(payload);
+      commit("setCAC", response.data);
+      return response;
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  },
+  async uploadIdCard({ commit }, payload) {
+    try {
+      const response = await organization.uploadIdCard(payload);
+      commit("setIdCard", response.data);
+      return response;
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  },
+  async organizationLogoUpload({ commit }, payload) {
+    try {
+      const response = await organization.uploadOrganizationLogo(payload);
+      commit("setOrganizationLogo", response.data);
+      return response;
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  },
   async getOrganizationToken({ commit, rootState }) {
     console.log(rootState.auth.user);
     try {
-      const response = await Organization.getOrganizationToken(
+      const response = await organization.getOrganizationToken(
         rootState.auth.user.organization
       );
       commit("organizationToken", response.data);
@@ -62,9 +111,22 @@ const actions = {
       return Promise.reject(error);
     }
   },
+
+  async getOrganizationById({ commit, rootState }) {
+    try {
+      const response = await organization.get(rootState.auth.user.organization);
+      commit("setFullOrganization", response.data);
+      console.log(JSON.stringify(response.data, null, 2));
+      console.log(response);
+      return response;
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  },
+
   async inviteCoWorker({ commit, rootState }, payload) {
     try {
-      const response = await Organization.inviteCoWorker(
+      const response = await organization.inviteCoWorker(
         rootState.auth.user.organization,
         payload
       );

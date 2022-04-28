@@ -94,14 +94,14 @@
 import { mapGetters } from "vuex";
 
 export default {
-  props:{
-    runs:{
+  props: {
+    runs: {
       type: Number,
-      default: 0
+      default: 0,
     },
-    trigger:{
+    trigger: {
       type: Object,
-      default: null
+      default: null,
     },
   },
   data() {
@@ -114,13 +114,15 @@ export default {
   methods: {
     operator(operand) {
       if (this.operators) {
-        return this.operators.find((operator) => operator.val == operand)?.string;
+        return this.operators.find((operator) => operator.val == operand)
+          ?.string;
       }
     },
 
     groupType(type) {
       if (this.comparisonType) {
-        return this.comparisonType.find((groupType) => groupType.val === type)?.string;
+        return this.comparisonType.find((groupType) => groupType.val === type)
+          ?.string;
       }
     },
   },
@@ -140,7 +142,7 @@ export default {
       if (this.schema) return this.schema.condition.properties.conditions;
       else return null;
     },
-  }
+  },
 };
 </script>
 

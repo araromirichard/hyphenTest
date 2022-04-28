@@ -65,13 +65,13 @@
 
               <!-- company form starts here -->
               <validation-observer ref="observer" v-slot="{ invalid }">
-                <v-form>
+                <form enctype="multipart/form-data">
                   <v-row class="mx-10 mb-8">
                     <v-col class="p-0" cols="12">
                       <validation-provider
                         v-slot="{ errors }"
                         name="Company Street Address"
-                        rules="required|alpha"
+                        rules="required"
                       >
                         <v-text-field
                           :error-messages="errors"
@@ -124,11 +124,11 @@
                       <validation-provider
                         v-slot="{ errors }"
                         name="Accounting software"
-                        rules="required|alpha"
+                        rules="required"
                       >
                         <v-text-field
                           :error-messages="errors"
-                          v-model="company.accountingSoftware"
+                          v-model="company.accountSoftware"
                           background-color="#ffffff"
                           outlined
                           hide-details="auto"
@@ -140,6 +140,7 @@
                     <v-col>
                       <template>
                         <v-card
+                          ref="uploader"
                           @click="handleFileImport"
                           v-model="cac"
                           @drop.prevent="onDroppedFiles($event)"
@@ -158,20 +159,16 @@
                           flat
                         >
                           <span
-                            class="d-flex mx-auto my-auto"
-                            style="
-                              font-family: Inter;
-                              font-style: normal;
-                              font-weight: normal;
-                              font-size: 12px;
-                              line-height: 18px;
-                              text-align: center;
-                              color: #7f919b;
-                            "
+                            v-if="isInitial"
+                            class="uploadInfo d-flex mx-auto my-auto"
                             >{{ placeholder }}
+                          </span>
+                          <span
+                            v-if="isSaving"
+                            class="uploadInfo d-flex mx-auto my-auto"
+                            >{{ fileName }}
                             <v-icon
-                              v-if="cac"
-                              @click="removeFile"
+                              @click="removeFile($event, cac)"
                               small
                               tag="button"
                               color="red"
@@ -193,10 +190,10 @@
                   </v-row>
                   <v-card-actions class="justify-end px-12 px-md-0">
                     <v-btn
+                      :loading="moveToNext"
                       :disabled="invalid"
                       @click="switchTabs('next')"
                       class="mx-auto mx-md-12 mb-12"
-                
                       :style="{
                         background: `${invalid ? '#e6eaeb' : '#19283D'}`,
                       }"
@@ -227,7 +224,7 @@
                       >
                     </v-btn>
                   </v-card-actions>
-                </v-form>
+                </form>
               </validation-observer>
             </v-card>
           </v-tab-item>
@@ -240,7 +237,7 @@
             </h6>
             <v-card style="background-color: transparent" flat>
               <validation-observer ref="observer" v-slot="{ invalid }">
-                <v-form>
+                <form enctype="multipart/form-data">
                   <v-row class="mb-8 mx-10 mt-8">
                     <v-col class="p-0" cols="6">
                       <validation-provider
@@ -280,7 +277,7 @@
                       <validation-provider
                         v-slot="{ errors }"
                         name="Executive position"
-                        rules="required|alpha"
+                        rules="required"
                       >
                         <v-text-field
                           :error-messages="errors"
@@ -332,7 +329,7 @@
                       <validation-provider
                         v-slot="{ errors }"
                         name="BVN"
-                        rules="required|digits"
+                        rules="required|numeric"
                       >
                         <v-text-field
                           :error-messages="errors"
@@ -365,62 +362,28 @@
                     </v-col>
                     <v-col class="p-0" cols="6">
                       <template>
-                        <v-card
-                          @click="handleFileImport"
+                        <v-file-input
+                          id="id-card"
+                          clearable
+                          background-color="#fff"
+                          color="#9e9ebd"
+                          prepend-icon=""
+                          accept=".pdf, image/*"
+                          placeholder="Please upload a copy of selected ID"
+                          outlined
                           v-model="idCard"
-                          @drop.prevent="onDroppedFiles($event)"
-                          @dragover.prevent="dragging = true"
-                          @dragenter.prevent="dragging = true"
-                          @dragleave.prevent="dragging = false"
-                          height="56 "
-                          width="100%"
-                          class="mx-auto justify-center d-flex"
-                          style=""
-                          :style="{
-                            border: dragging
-                              ? '1px dashed #424f95'
-                              : '1px dashed rgba(127, 145, 155, 0.551929)',
-                          }"
-                          flat
+                          ref="idCard"
+                          @change="uploadFile"
                         >
-                          <span
-                            class="d-flex mx-auto my-auto"
-                            style="
-                              font-family: Inter;
-                              font-style: normal;
-                              font-weight: normal;
-                              font-size: 12px;
-                              line-height: 18px;
-                              text-align: center;
-                              color: #7f919b;
-                            "
-                            >{{ placeholderId }}
-                            <v-icon
-                              v-if="cac"
-                              @click="removeFile"
-                              small
-                              tag="button"
-                              color="red"
-                              class="mx-4"
-                              >mdi-close</v-icon
-                            ></span
-                          >
-                        </v-card>
-                      </template>
-                      <template>
-                        <input
-                          ref="file"
-                          class="d-none"
-                          type="file"
-                          @change="onFileSelected"
-                        />
+                        </v-file-input>
                       </template>
                     </v-col>
                   </v-row>
                   <v-card-actions class="justify-end px-0">
                     <v-btn
+                      :loading="updateKyc"
                       :disabled="invalid"
-                      @click="saveKycData"
+                      @click.prevent="saveKycData"
                       class="submit-btn mx-12 mb-12"
                       :style="{
                         background: `${invalid ? '#e6eaeb' : '#19283D'}`,
@@ -453,7 +416,7 @@
                       >
                     </v-btn>
                   </v-card-actions>
-                </v-form>
+                </form>
               </validation-observer>
             </v-card>
           </v-tab-item>
@@ -464,12 +427,13 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from "vuex";
 import {
   required,
   email,
   alpha,
   alpha_num,
-  digits,
+  numeric,
 } from "vee-validate/dist/rules";
 import {
   extend,
@@ -487,19 +451,21 @@ extend("alpha", {
   ...alpha,
   message: "{_field_} can only contain alphabeth",
 });
-extend("digits", {
-  ...digits,
+extend("numeric", {
+  ...numeric,
   message: "{_field_} can only contain numbers",
 });
 extend("alpha_num", {
   ...alpha_num,
-  message: "{_field_} can only contain alphabeth or numbers",
+  message:
+    "{_field_} can only contain alphabeth or numbers, remove special characters/symbols",
 });
 
 extend("email", {
   ...email,
   message: "Email must be valid",
 });
+
 export default {
   name: "company",
   components: {
@@ -508,8 +474,11 @@ export default {
   },
   data() {
     return {
+      moveToNext: false,
+      updateKyc: false,
       dragging: false,
       dialog: false,
+      fileName: null,
       placeholder: "Upload Company Registration Document. CAC Certificate",
       placeholderId: "Please upload a copy of selected ID",
       company: {
@@ -520,7 +489,7 @@ export default {
         leadership: {
           firstName: "",
           lastName: "",
-          excecutivePosition: "",
+          executivePosition: "",
           bvn: "",
           email: "",
           phone: "",
@@ -529,6 +498,9 @@ export default {
       },
       idCard: null,
       cac: null,
+      isInitial: true,
+      isSaving: false,
+      currentStatus: null,
       tab: null,
       companyTypeArray: ["Partnership", "Limited Liability", "Cooperative"],
       industryTypeArray: [
@@ -575,27 +547,53 @@ export default {
     };
   },
   methods: {
+    ...mapActions({ showToast: "ui/showToast" }),
+
     handleFileImport() {
       // Trigger click on the FileInput
       this.$refs.uploader.click();
     },
+    handleIdPick() {
+      // Trigger click on the FileInput
+      this.$refs.file.click();
+    },
 
+    //fxn to attach and recieve means of identity
+    uploadFile(e) {
+      this.idCard = e.target.files[0];
+      console.log(this.idCard);
+      this.fileName = this.idCard.name;
+      this.isInitial = false;
+      this.isSaving = true;
+    },
+
+    //fxn to trigger input event in cac document
     onFileSelected(event) {
       this.cac = event.target.files[0];
       console.log(this.cac);
-      this.placeholder = this.cac.name;
+      this.fileName = this.cac.name;
+      this.isInitial = false;
+      this.isSaving = true;
     },
+
+    //fxn for drag and drop
     onDroppedFiles(e) {
       this.dragging = false;
 
       this.cac = e.dataTransfer.files[0];
       console.log(this.cac);
-      this.placeholder = this.cac.name;
+      this.fileName = this.cac.name;
+      this.isInitial = false;
+      this.isSaving = true;
     },
-    removeFile(e) {
+    // reset form to initial state
+
+    removeFile(e, selectedFile) {
       e.preventDefault;
-      this.cac = null;
-      return this.placeholder;
+      this.isInitial = true;
+      this.isSaving = false;
+      selectedFile = null;
+      console.log(selectedFile);
     },
     switchTabs(direction) {
       //console.log(direction);
@@ -617,8 +615,79 @@ export default {
       }
     },
 
-    saveKycData() {
-      //
+    async uploadCAC() {
+      //initialize the formData
+      const formData = new FormData();
+      // add the data needed for uploading the cac doc...
+      formData.append("files", this.cac);
+      formData.append("ref", "kyc.cac");
+      formData.append("refId", this.user.organization);
+      formData.append("field", "cac");
+
+      console.log(this.cac);
+      console.log(formData);
+
+      try {
+        await this.$store.dispatch("organizations/uploadCacDoc", formData).then(
+          this.showToast({
+            sclass: "success",
+            show: true,
+            message: "Upload CAC document successfully..",
+            timeout: 3000,
+          })
+        );
+      } catch (error) {
+        console.log(error);
+        if (error) {
+          this.showToast({
+            sclass: "error",
+            show: true,
+            message: "CAC document upload was unsuccessful..",
+            timeout: 3000,
+          });
+        }
+      }
+    },
+    async UploadIdCard() {
+      //initialize the formData
+      const formData = new FormData();
+      // add the data needed for uploading the id card doc...
+      formData.append("files", this.idCard);
+      formData.append("ref", "kyc.ownership");
+      formData.append("refId", this.user.organization);
+      formData.append("field", "identity_url");
+      // upload  idCard to the server
+
+      console.log(this.idCard);
+      console.log(formData);
+
+      try {
+        await this.$store.dispatch("organizations/uploadIdCard", formData).then(
+          this.showToast({
+            sclass: "success",
+            show: true,
+            message: "Uploaded Id Card successfully..",
+            timeout: 3000,
+          })
+        );
+      } catch (error) {
+        console.log(error);
+        if (error) {
+          this.showToast({
+            sclass: "error",
+            show: true,
+            message: "Id card upload failed",
+            timeout: 3000,
+          });
+        }
+      }
+    },
+
+    //submit form fields alone... without the attached files
+    async saveKycData() {
+      // send organization info to the server as an update request....
+      this.updateKyc = true;
+
       const payload = {
         account_software: this.company.accountSoftware,
         office: [{ address: this.company.streetAddress }],
@@ -628,44 +697,75 @@ export default {
           {
             first_name: this.company.leadership.firstName,
             last_name: this.company.leadership.lastName,
-            position: this.company.leadership.excecutivePosition,
+            position: this.company.leadership.executivePosition,
             email: this.company.leadership.email,
             phone: this.company.leadership.phone,
           },
         ],
       };
+      const id = this.user.organization;
+      if (this.canSubmit()) {
+        console.log(JSON.stringify(payload, null, 2));
 
-      console.log(JSON.stringify(payload, null, 2));
-    },
-    canSubmit() {
-      // loop through rules, if all passes then data can be submitted....
-      // const rules = Object.keys(this.rules);
-      // return rules
-      //   .map((rule) => {
-      //     return Object.keys(this.rules[rule])
-      //       .map((field, index) => {
-      //         return this.rules[rule][index](this.company[rule]);
-      //       })
-      //       .every((val) => val == true);
-      //   })
-      //   .every((val) => val == true);
-    },
+        //axios request starts from here..
+        try {
+          //axios req to send organ. info and leadership...
+          await this.$store
+            .dispatch("organizations/updateOrganization", id, payload)
+            .then(
+              this.showToast({
+                sclass: "success",
+                show: true,
+                message: "Updated KYC successfully..",
+                timeout: 3000,
+              })
+            );
 
-    submitForm(event) {
-      Object.keys(this.form).forEach((f) => {
-        this.$refs[f].validate(true);
-      });
-      if (this.canSubmit) {
-        event.preventDefault();
-        console.log(JSON.stringify(this.form, null, 2));
+          //calling axios post request to upload cac doc and id card..
+          this.uploadCAC();
+          this.UploadIdCard();
+        } catch (error) {
+          console.log(error);
+          if (error) {
+            this.showToast({
+              sclass: "error",
+              show: true,
+              message: "Organization Kyc Update failed",
+              timeout: 3000,
+            });
+          }
+        } finally {
+          this.updateKyc = false;
+          this.dialog = false;
+        }
+      } else {
+        this.showToast({
+          sclass: "error",
+          show: true,
+          message: "please fill all fields before submiting the forms",
+          timeout: 3000,
+        });
       }
     },
-    show(value) {
-      this.dialog = value;
+    canSubmit() {
+      //check if the dragdrop cards or the upload doc fields have values in them...
+
+      if (this.idCard !== null && this.cac !== null) {
+        return true;
+      }
+    },
+
+    show() {
+      this.dialog = true;
     },
   },
   computed: {
     //
+
+    ...mapGetters({
+      user: "auth/user",
+      token: "auth/token",
+    }),
   },
 };
 </script>
@@ -689,5 +789,18 @@ export default {
   background: #ffffff;
   box-sizing: border-box;
   border-radius: 8px;
+}
+
+.uploadInfo {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 18px;
+  text-align: center;
+  color: #7f919b;
+}
+.v-file-input .v-file-input >>> placeholder {
+  font-size: 9px !important;
 }
 </style>

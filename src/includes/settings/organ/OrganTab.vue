@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!-- <pre>{{ organObj.leadership[0].first_name }}</pre> -->
     <v-row>
       <v-col>
         <div class="ml-13 mt-6 px-md-12">
@@ -12,13 +13,14 @@
             height="160"
           >
             <input
-              ref="uploader"
+              ref="logo"
               class="d-none"
               type="file"
               @change="onFileChanged"
             />
 
             <span
+              v-if="isInitial"
               class="pb-6"
               style="bottom: 0; display: table-cell; vertical-align: bottom"
               ><v-btn
@@ -33,6 +35,12 @@
                 Upload Picture
               </v-btn></span
             >
+            <span
+              v-if="isSaving"
+              class="pb-6"
+              style="bottom: 0; display: table-cell; vertical-align: bottom"
+              >{{ fileName }}<img src="" alt=""
+            /></span>
           </v-sheet>
         </div>
         <div class="mx-13 mt-6">
@@ -197,6 +205,8 @@
             <v-card-actions class="justify-end pa-md-8 pr-md-11">
               <v-btn
                 class="submit-btn"
+                :loading="isSending"
+                @click="submitData"
                 dark
                 :width="$vuetify.breakpoint.smAndDown ? '100%' : '121'"
                 height="45"
@@ -224,11 +234,14 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 export default {
   data() {
     return {
+      isInitial: true,
+      isSaving: false,
       isSelecting: false,
+      isSending: false,
       selectedFile: null,
       companyDetails: {
         companyName: "",
@@ -266,12 +279,49 @@ export default {
       );
 
       // Trigger click on the FileInput
-      this.$refs.uploader.click();
+      this.$refs.logo.click();
     },
     onFileChanged(e) {
       this.selectedFile = e.target.files[0];
-
+      this.fileName = this.selectedFile.name;
+      this.isInitial = false;
+      this.isSaving = true;
       console.log(this.selectedFile);
+    },
+    async uploadLogo() {
+      //initialize the formData
+      const formData = new FormData();
+      // add the data needed for uploading the logo...
+      formData.append("files", this.selectedFile);
+      formData.append("ref", "organization");
+      formData.append("refId", this.user.organization);
+      formData.append("field", "logo");
+      // upload  logo data to the server
+
+      try {
+        const res = await this.$store
+          .dispatch("organizations/organizationLogoUpload", formData)
+          .then(console.log(JSON.stringify(res, null, 2)))
+
+          .then(
+            this.showToast({
+              sclass: "success",
+              show: true,
+              message: "Uploaded logo successfully..",
+              timeout: 3000,
+            })
+          );
+      } catch (error) {
+        console.log(error);
+        if (error) {
+          this.showToast({
+            sclass: "error",
+            show: true,
+            message: "logo upload failed",
+            timeout: 3000,
+          });
+        }
+      }
 
       this.showToast({
         sclass: "success",
@@ -280,6 +330,39 @@ export default {
         timeout: 3000,
       });
     },
+    submitData() {
+      this.isSending = true;
+      console.log("func fired");
+      this.uploadLogo().then((this.isSending = false));
+    },
+  },
+  computed: {
+    ...mapGetters({
+      organObj: "organizations/organObj",
+      user: "auth/user",
+    }),
+  },
+
+  mounted() {
+    this.$store
+      .dispatch("organizations/getOrganizationById")
+      .then((response) => {
+        if (response.status == 200) {
+          this.companyDetails.companyName = response.data.company.company_name;
+          this.companyDetails.regNumber =
+            response.data.company.registration_number;
+          this.companyDetails.leadership.firstName =
+            response.data.leadership[0].first_name;
+          this.companyDetails.leadership.lastName =
+            response.data.leadership[0].last_name;
+          this.companyDetails.leadership.email =
+            response.data.leadership[0].email;
+          this.companyDetails.leadership.phone =
+            response.data.leadership[0].phone;
+        }
+      });
+
+    console.log(JSON.stringify(this.organObj, null, 2));
   },
 };
 </script>

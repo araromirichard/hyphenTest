@@ -17,7 +17,7 @@ export default {
     });
   },
   getForm(id) {
-    return api().get("/organizations/form/" + id, {
+    return api().get("/forms/" + id, {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("token"),
       },
