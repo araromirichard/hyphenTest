@@ -77,7 +77,7 @@
                 class="px-8"
                 dense
                 hide-details="true"
-                v-model="selectedHeaders"
+                v-model="selectedColumns"
                 :items="headers"
                 multiple
                 return-object
@@ -87,7 +87,7 @@
                     <span>{{ item.text }}</span>
                   </v-chip>
                   <span v-if="index === 2" class="grey--text caption"
-                    >(+{{ selectedHeaders.length - 2 }} others)</span
+                    >(+{{ selectedColumns.length - 2 }} others)</span
                   >
                 </template>
               </v-autocomplete>
@@ -99,7 +99,7 @@
                 :server-items-length="dataEntries.length"
                 height="100%"
                 ref="myTable"
-                :headers="showHeaders"
+                :headers="selectedColumns"
                 :items="dataEntries"
                 :items-per-page="10"
                 class="elevation-0"
@@ -130,6 +130,7 @@ export default {
       headers: [],
       allEntries: null,
       selectedHeaders: [],
+      selectedColumns: [],
     };
   },
   methods: {
@@ -145,6 +146,11 @@ export default {
     },
     searchDataTable(e) {
       this.$refs.dataTable.setSearchText(e);
+    },
+    addColumns(event) {
+      console.log(event);
+      //this.selectedColumns = event;
+      console.log(JSON.stringify(this.selectedColumns, null, 2));
     },
     async fetchFormsById() {
       let response = await this.$store.dispatch(
@@ -170,7 +176,8 @@ export default {
       //map over the allEntries and get a new array that contains just the form_entry objs
       const formEntryArray = allEntries.map((entry) => entry.form_entry);
       console.log(JSON.stringify(formEntryArray, null, 2));
-      this.dataEntries = formEntryArray
+      
+      this.dataEntries = formEntryArray;
 
       //get the first object in the array and get the key each value....
 
@@ -188,6 +195,7 @@ export default {
 
       //return the textValue array as the header array
       this.headers = newNameLabel;
+      this.selectedColumns = this.headers.slice(0, 5);
 
       console.log(newNameLabel);
       console.log(this.headers);
@@ -204,6 +212,13 @@ export default {
     },
   },
   computed: {
+    // selectedColumns() {
+    //   var x = [];
+    //   if (this.selectedHeaders.length > 5) {
+    //     x = this.selectedHeaders.slice(0, 5);
+    //   }
+    //   return x;
+    // },
     makePayment: {
       get() {
         return this.$store.state.formBuilder.makePayment;

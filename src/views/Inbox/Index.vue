@@ -105,32 +105,26 @@
           style="padding-top: 40px"
           v-if="!invoiceArrayStatus"
         >
-          <v-skeleton-loader
-            class="mx-auto py-2 py-md-4"
-            width="50%"
-            type="table-heading"
-            :loading="loading"
+          <p
+            v-if="!invoiceArrayStatus"
+            style="
+              font-family: Inter;
+              font-style: normal;
+              font-weight: bold;
+              line-height: 29px;
+              color: var(--v-primary-base);
+            "
           >
-            <p
-              style="
-                font-family: Inter;
-                font-style: normal;
-                font-weight: bold;
-                line-height: 29px;
-                color: var(--v-primary-base);
-              "
-            >
-              No invoice/transaction is awaiting action
-            </p>
-          </v-skeleton-loader>
+            No invoice/transaction is awaiting action
+          </p>
         </v-row>
 
         <!-- instructions when there is no invoice -->
         <v-row class="justify-center pt-0" v-if="!invoiceArrayStatus">
           <v-skeleton-loader
             class="mx-auto"
-            width="40%"
-            type="text"
+            width="90%"
+            type="table"
             :loading="loading"
           >
             <p
@@ -160,34 +154,27 @@
               border-radius: 4px;
             "
           >
-            <v-skeleton-loader
-              class="mx-auto"
-              width="100%"
-              type="list-item-avatar-three-line"
-              :loading="loading"
+            <v-avatar
+              class="d-flex align-center mx-auto mt-4 ml-6"
+              color="#F9EED2"
+              size="20"
             >
-              <v-avatar
-                class="d-flex align-center mx-auto mt-4 ml-6"
-                color="#F9EED2"
-                size="20"
-              >
-                <img :src="require('@/assets/info.svg')" alt="" />
-              </v-avatar>
-              <v-card-text
-                v-if="organizationToken.data"
-                style="
-                  font-style: normal;
-                  font-weight: normal;
-                  font-size: 12px;
-                  line-height: 20px;
-                  color: #596a73;
-                "
-              >
-                To capture invoices sent to email, forward attachements to
-                {{ organizationToken.data.hypn_email }} or ask your vendors to
-                send directly
-              </v-card-text>
-            </v-skeleton-loader>
+              <img :src="require('@/assets/info.svg')" alt="" />
+            </v-avatar>
+            <v-card-text
+              v-if="organizationToken.data"
+              style="
+                font-style: normal;
+                font-weight: normal;
+                font-size: 12px;
+                line-height: 20px;
+                color: #596a73;
+              "
+            >
+              To capture invoices sent to email, forward attachements to
+              {{ organizationToken.data.hypn_email }} or ask your vendors to
+              send directly
+            </v-card-text>
           </v-card>
         </v-row>
       </v-col>
