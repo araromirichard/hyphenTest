@@ -101,10 +101,10 @@
             <v-spacer></v-spacer>
             <div class="px-8 pt-6">
               <v-switch
+                :input-value="configuration.isPrivate"
                 color="#16be98"
-                :input-value="formData.is_private"
                 v-model="configuration.isPrivate"
-                :label="`Private Form?: ${configuration.isPrivate.toString()}`"
+                label="Private"
               ></v-switch>
               <v-sheet
                 outlined
@@ -195,7 +195,7 @@ export default {
       formData: null,
       configuration: {
         formTitle: "",
-        isPrivate: true,
+        isPrivate: null,
         formName: "",
       },
       form_id: null,
@@ -215,6 +215,9 @@ export default {
       console.log(JSON.stringify(response.data, null, 2));
       this.formData = response.data.data;
       this.form_id = response.data.id;
+      this.configuration.isPrivate = response.data.data.is_private;
+      console.log(response.data.data.is_private);
+      console.log(this.configuration.isPrivate);
     },
     async updateFormData() {
       console.log(JSON.stringify(this.updateRequestData, null, 2));
