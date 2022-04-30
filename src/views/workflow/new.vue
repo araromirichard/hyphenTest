@@ -55,8 +55,10 @@
             v-if="isFormTrigger"
           />
 
+
           <compose-workflow
             ref="conditions"
+            :inputs="inputItems"
             v-model="workflow.conditions"
             :isVisable="canShowConditions"
             v-if="canShowConditions"
@@ -108,6 +110,9 @@ import detailsTabWorkflow from "../../components/pages/workflow/details-tab-work
 import TriggerWorkflow from "../../components/pages/workflow/trigger-workflow.vue";
 import FormTrigger from "../../components/pages/workflow/trigger/form-trigger.vue";
 import PaymentTrigger from "../../components/pages/workflow/trigger/payment-trigger.vue";
+
+import {  operators } from "@/utils/ManagerApprovalOptions.js";
+
 export default {
   components: {
     detailsTabWorkflow,
@@ -216,6 +221,34 @@ export default {
   },
 
   computed: {
+      inputItems(){
+        if (this.workflow.trigger && this.workflow.trigger.value == "INVOICE") {
+          return {
+            fields:[
+              'Invoice Total',
+              'Invoice Number',
+              'Vendor Name',
+              'Invoice Date',
+              'PO Number',
+              'Invoice Type',
+              'Net Term',
+              'Due Date'       
+              ],
+              operators:operators
+          }
+        }else{
+          return {
+            fields:[
+              'email',
+              'Total',
+              'PO Number',
+              'Registered Date',
+              'Due Date'       
+              ],
+              operators:operators
+          }
+        }
+      },
     canShowConditions() {
       return (
         this.isInvoiceTrigger || this.workflow.payment || this.workflow.form
