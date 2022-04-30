@@ -22,7 +22,7 @@
             sm="6"
             class="mx-auto mb-10 ma-md-0 px-md-6 pa-0"
           >
-            <v-card color="#FCF7ED" height="100%" flat>
+            <v-card class="" color="#FCF7ED" height="100%" elevation="5">
               <img
                 :src="require('@/assets/person.svg')"
                 style="
@@ -60,7 +60,7 @@
             </v-card>
           </v-col>
           <v-col class="mb-10 ma-md-0 px-md-6 pa-0" cols="12" md="3" sm="6">
-            <v-card color="#FCF7ED" height="100%" flat>
+            <v-card class="card" color="#FCF7ED" height="100%" elevation="5">
               <img
                 :src="require('@/assets/bank.svg')"
                 style="
@@ -120,7 +120,7 @@
             </v-card>
           </v-col>
           <v-col class="ma-md-0 px-md-6 pa-0" cols="12" md="3" sm="6">
-            <v-card color="#FCF7ED" height="100%" flat>
+            <v-card class="" color="#FCF7ED" height="100%" elevation="5">
               <img
                 :src="require('@/assets/person.svg')"
                 style="
@@ -308,5 +308,9 @@ p {
   text-align: center;
 
   color: #7f919b;
+}
+.v-application .elevation-5 {
+  box-shadow: 0px 3px 5px -1px rgb(0 0 0 / 2%), 0px 5px 8px 0px rgb(0 0 0 / 2%),
+    0px 1px 14px 0px rgb(0 0 0 / 1%) !important;
 }
 </style>
