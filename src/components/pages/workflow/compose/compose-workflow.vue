@@ -5,6 +5,7 @@
     <div class="loader" v-if="isLoadingFormFields">
       <v-progress-circular color="primary" indeterminate></v-progress-circular>
     </div>
+    
 
     <div v-else class="form-trigger">
       <div class="header" @click="showTriggers = !showTriggers">
@@ -37,6 +38,7 @@
                 @add-new-group="addNewGroup($event, i)"
                 @update-group-type="updateGroupType($event, i)"
                 :index="i"
+                :inputs="inputs"
               />
             </div>
 
@@ -68,6 +70,9 @@ export default {
       type: Boolean,
       default: false,
     },
+    inputs:{
+      default:null
+    }
   },
   data() {
     return {

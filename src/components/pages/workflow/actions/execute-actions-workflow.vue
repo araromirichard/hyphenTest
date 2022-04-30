@@ -131,6 +131,7 @@
             v-model="searchQuery"
             color="primary"
             outlined
+            dense
             prepend-inner-icon="mdi-magnify"
           ></v-text-field>
         </div>
@@ -444,6 +445,7 @@ export default {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     flex: 1;
     overflow: auto;
+    margin-top: 5px;
 
     &__action {
       padding: 0px 5px;
@@ -451,11 +453,6 @@ export default {
       margin: 20px 0px;
 
       &:hover {
-        img {
-          opacity: 0.8;
-          filter: drop-shadow(3px 2px 2px #d7a47b);
-        }
-
         span {
           color: #d7a47b;
         }

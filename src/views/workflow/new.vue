@@ -55,8 +55,10 @@
             v-if="isFormTrigger"
           />
 
+
           <compose-workflow
             ref="conditions"
+            :inputs="inputItems"
             v-model="workflow.conditions"
             :isVisable="canShowConditions"
             v-if="canShowConditions"
@@ -68,9 +70,36 @@
             :isVisable="canShowActions"
             v-if="canShowActions"
           />
+           <div  v-if="canShowActions" style="margin-top:20px;width:150px">
+           <v-btn color="primary" large @click="publishDialog = true"><v-icon>mdi-chevron-right</v-icon> publish</v-btn>
         </div>
+        </div>
+       
       </div>
     </div>
+
+    <v-dialog
+      v-model="publishDialog"
+      max-width="550px"
+      transition="dialog-transition"
+    >
+      <div class="publish">
+        <div class="publish__header">
+          <span class="t">Confirm Workflow</span>
+          <v-btn @click="publishDialog = false" icon color="primary">
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
+        </div>
+        <div class="publish__content">
+          <span class="msg">Confirm this workflow is completed and ready for use</span>
+
+          <v-btn color="primary" @click="CREATE_WORKFLOW" elevation="1" x-large> <v-icon left>mdi-chevron-right</v-icon> Save</v-btn>
+
+
+          <button id="add-to-draft" @click="addWorkflowToDraft">No, Add to draft</button>
+        </div>
+      </div>
+    </v-dialog>
   </div>
 </template>
 
@@ -81,6 +110,9 @@ import detailsTabWorkflow from "../../components/pages/workflow/details-tab-work
 import TriggerWorkflow from "../../components/pages/workflow/trigger-workflow.vue";
 import FormTrigger from "../../components/pages/workflow/trigger/form-trigger.vue";
 import PaymentTrigger from "../../components/pages/workflow/trigger/payment-trigger.vue";
+
+import {  operators } from "@/utils/ManagerApprovalOptions.js";
+
 export default {
   components: {
     detailsTabWorkflow,
@@ -93,6 +125,7 @@ export default {
   data() {
     {
       return {
+        publishDialog: false,
         showTriggers: false,
         scrollOptions: {
           duration: 500,
@@ -176,10 +209,46 @@ export default {
           this.$vuetify.goTo(this.$refs.formTrigger, this.scrollOptions);
         });
       }
+    },  
+
+    CREATE_WORKFLOW(){
+      this.publishDialog = false
     },
+
+    addWorkflowToDraft(){
+      this.publishDialog = false
+    }
   },
 
   computed: {
+      inputItems(){
+        if (this.workflow.trigger && this.workflow.trigger.value == "INVOICE") {
+          return {
+            fields:[
+              'Invoice Total',
+              'Invoice Number',
+              'Vendor Name',
+              'Invoice Date',
+              'PO Number',
+              'Invoice Type',
+              'Net Term',
+              'Due Date'       
+              ],
+              operators:operators
+          }
+        }else{
+          return {
+            fields:[
+              'email',
+              'Total',
+              'PO Number',
+              'Registered Date',
+              'Due Date'       
+              ],
+              operators:operators
+          }
+        }
+      },
     canShowConditions() {
       return (
         this.isInvoiceTrigger || this.workflow.payment || this.workflow.form
@@ -294,6 +363,48 @@ export default {
   &leave-to {
     opacity: 0;
     transform: translateY(-10px);
+  }
+}
+
+.publish {
+  border-radius: 8px;
+  background-color: #fff;
+  &__header {
+    padding: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .t {
+      color: var(--v-primary-base);
+      font-weight: 600;
+      font-size: 20px;
+    }
+  }
+
+  &__content {
+    background-color: #fefcf8;
+    padding: 60px  120px ;
+    text-align: center;
+
+    .msg{
+      font-size: 17px;
+      color: #757575;
+      line-height: 24px;
+      display: block;
+      margin-bottom: 30px;
+    }
+
+    #add-to-draft{
+      display: block;
+      margin: 20px auto 0px auto;
+      background: transparent;
+      color: #D7A47B;
+      cursor: pointer;
+      font-size: 17px;
+      border-bottom: 1px solid #D7A47B;
+    }
   }
 }
 </style>

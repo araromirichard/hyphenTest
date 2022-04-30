@@ -1,6 +1,13 @@
 <template>
   <div v-if="action != null">
-    <div class="selected-action">
+    <div
+      class="selected-action"
+      :style="
+        action.channel == 'addDelay'
+          ? 'border:3px dashed rgb(249, 238, 210)'
+          : ''
+      "
+    >
       <div class="selected-action__icon">
         <div>
           <v-icon color="primary">mdi-lightning-bolt-outline </v-icon>

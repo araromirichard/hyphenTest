@@ -87,6 +87,7 @@
             class="my-4"
             :rule="rule"
             :index="i"
+            :inputs="inputs"
             @updateField="updateGroupCondition($event, i)"
             @delete="deleteGroupCondition($event)"
           />
@@ -184,8 +185,6 @@
 
 <script>
 import {
-  formItems,
-  operators,
   comparisonType,
 } from "@/utils/ManagerApprovalOptions.js";
 import WorkflowConditionInput from "./workflow-condition-input.vue";
@@ -200,6 +199,9 @@ export default {
     groupIndex: {
       default: 0,
     },
+    inputs:{
+      default:null
+    }
   },
   components: { WorkflowConditionInput },
   data() {
@@ -212,8 +214,6 @@ export default {
           target: "",
         },
       ],
-      formItems,
-      operators,
       newGroup: "and",
     };
   },
