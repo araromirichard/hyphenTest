@@ -182,7 +182,7 @@ export default {
   }
 
   &__content {
-    background-color: #fefcf8;
+    background-color: #F8F7F4;
     padding: 20px 50px;
 
     .top {

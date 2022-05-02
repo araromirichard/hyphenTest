@@ -40,7 +40,7 @@
                   height="45"
                   @click="showActionModal"
                   width="45"
-                  color="var(--v-primary-base)"
+                  color="#D7A47B"
                   depressed
                   class="mx-auto justify-center"
                 >
@@ -108,6 +108,10 @@
           </div>
         </transition>
       </div>
+
+        <div  style="margin-top:25px;width:150px">
+           <v-btn color="primary" elevation="0" large @click="$emit('publish')"><v-icon>mdi-chevron-right</v-icon> publish</v-btn>
+        </div>
     </div>
 
     <v-navigation-drawer
@@ -398,7 +402,7 @@ export default {
 
 .actions {
   padding: 50px 0px;
-  background-color: #fdf9ef;
+  background-color: #F8F7F4;
   min-height: 400px;
   border-radius: 6px;
   margin-top: 30px;

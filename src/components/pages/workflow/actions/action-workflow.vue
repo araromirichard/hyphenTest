@@ -41,7 +41,7 @@
           dark
           height="45"
           width="45"
-          color="primary"
+          color="#D7A47B"
           depressed
           class="mx-auto justify-center"
         >

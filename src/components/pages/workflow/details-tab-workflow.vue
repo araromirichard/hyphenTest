@@ -155,7 +155,7 @@ export default {
   overflow: auto;
 
   .runs {
-    background-color: #fbf4e4;
+    background-color: #F3EEE8;
     border-radius: 4px;
     display: flex;
     gap: 20px;
@@ -163,6 +163,7 @@ export default {
 
     padding: 20px;
     margin-bottom: 5px;
+    margin-top: 40px;
 
     &__title {
       font-size: 16px;
