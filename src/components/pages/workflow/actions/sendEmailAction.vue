@@ -77,7 +77,7 @@
             <v-icon left>mdi-close</v-icon> Cancel
           </v-btn>
 
-          <v-btn large color="primary" elevation="0">
+          <v-btn @click="addToWorkflow" large color="primary" elevation="0">
             <v-icon left>mdi-chevron-right</v-icon> Add to workflow
           </v-btn>
         </div>
@@ -101,6 +101,34 @@ export default {
     close() {
       this.dialog = false;
     },
+
+    
+    addToWorkflow(){
+      const payload = {
+         "type":"hyphenEmail",
+         "properties":{
+            "keys":[
+               "subject",
+               "message",
+               "to",
+               "cc",
+               "organization id",
+               "name"
+            ],
+            "values":[
+              "subject value",
+              "message value",
+              "to value",
+              "cc value",
+              "organization id value",
+              "email"
+            ]
+         }
+      }
+
+      this.$emit("input",payload)
+      this.close();
+    }
   },
   watch: {
     dialog(val) {
