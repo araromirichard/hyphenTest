@@ -25,6 +25,7 @@
           <v-select
             outlined
             color="primary"
+            v-model="day"
             label="No of Days"
             :items="days"
             hide-details="auto"
@@ -42,7 +43,7 @@
             <v-icon left>mdi-close</v-icon> Cancel
           </v-btn>
 
-          <v-btn large color="primary" elevation="0">
+          <v-btn @click="addToWorkflow" large color="primary" elevation="0">
             <v-icon left>mdi-chevron-right</v-icon> Add to workflow
           </v-btn>
         </div>
@@ -65,6 +66,25 @@ export default {
     },
     close() {
       this.dialog = false;
+    },
+
+    addToWorkflow() {
+      const payload = {
+        type: "hyphenDelay",
+        properties: {
+          keys: ["days", "organization id", "type", ""],
+          values: [
+            this.day,
+            "organization id value",
+            "identity value",
+            "delay",
+            "delay",
+          ],
+        },
+      };
+
+      this.$emit("input", payload);
+      this.close();
     },
   },
   watch: {
@@ -111,7 +131,7 @@ export default {
   }
 
   &__content {
-    background-color: #F8F7F4;
+    background-color: #f8f7f4;
     padding: 20px 50px;
 
     .top {
