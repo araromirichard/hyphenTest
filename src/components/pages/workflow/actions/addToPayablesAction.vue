@@ -75,6 +75,19 @@ export default {
     close() {
       this.dialog = false;
     },
+
+    addToWorkflow() {
+      const payload = {
+        type: "hyphenAddToPayables",
+        properties: {
+          keys: [],
+          values: [],
+        },
+      };
+
+      this.$emit("input", payload);
+      this.close();
+    },
   },
   watch: {
     dialog(val) {
@@ -120,7 +133,7 @@ export default {
   }
 
   &__content {
-    background-color: #F8F7F4;
+    background-color: #f8f7f4;
     padding: 20px 50px;
 
     .top {
