@@ -50,21 +50,21 @@
       </div>
     </v-timeline>
 
-    <get-approval-action ref="getApproval" />
+    <get-approval-action v-model="data" ref="getApproval" />
 
-    <send-email-action ref="sendEmail" />
+    <send-email-action v-model="data" ref="sendEmail" />
 
-    <add-to-payables-action ref="addToPayables" />
+    <add-to-payables-action v-model="data" ref="addToPayables" />
 
-    <send-form-action ref="sendForm" />
+    <send-form-action v-model="data" ref="sendForm" />
 
-    <add-delay-action ref="addDelay" />
+    <add-delay-action v-model="data" ref="addDelay" />
 
-    <update-customer-action ref="updateCustomer" />
+    <update-customer-action v-model="data" ref="updateCustomer" />
 
-    <send-payment-action ref="SendPayment" />
+    <send-payment-action v-model="data" ref="SendPayment" />
 
-    <connect-workflow-action ref="connectWorkflow" />
+    <connect-workflow-action v-model="data" ref="connectWorkflow" />
   </div>
 </template>
 
