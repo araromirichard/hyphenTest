@@ -42,7 +42,7 @@
             <v-icon left>mdi-close</v-icon> Cancel
           </v-btn>
 
-          <v-btn large color="primary" elevation="0">
+          <v-btn @click="addToWorkflow" large color="primary" elevation="0">
             <v-icon left>mdi-chevron-right</v-icon> Add to workflow
           </v-btn>
         </div>
@@ -66,6 +66,29 @@ export default {
     close() {
       this.dialog = false;
     },
+
+    addToWorkflow(){
+      const payload = {
+         "type":"PbotApproval",
+         "properties":{
+            "keys":[
+               "identity",
+               "organization id",
+               "type",
+               "name"
+            ],
+            "values":[
+              "identiy value",
+              "organization id value",
+              "human",
+              "approval"
+            ]
+         }
+      }
+
+      this.$emit("input",payload)
+      this.close();
+    }
   },
   watch: {
     dialog(val) {
