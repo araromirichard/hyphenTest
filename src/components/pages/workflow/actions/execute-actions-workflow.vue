@@ -325,6 +325,8 @@ export default {
       immediate: true,
       handler(newVal) {
         this.$emit("input", newVal);
+
+        //console.log(JSON.stringify(newVal,null,2))
         // console.log(JSON.stringify(newVal, null, 2));
       },
     },
