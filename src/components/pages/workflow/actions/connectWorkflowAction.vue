@@ -28,6 +28,9 @@
             color="primary"
             label="Select Workflow"
             :items="workflows"
+            v-model="workflow"
+            item-text="name"
+            item-value="id"
             hide-details="auto"
             placeholder="Select one"
           ></v-select>
@@ -55,11 +58,43 @@
 
 <script>
 export default {
+  props: {
+    value: {
+      default: {
+        type: "hyphenToWorkFlow",
+        properties: {
+          keys: ["workflow", "organization"],
+          values: ["", ""],
+        },
+      },
+    },
+  },
   data() {
     return {
       dialog: false,
-      workflows: ["Workflow 1", "Workflow 2", "Workflow 3", "Workflow 4"],
+      workflows: [
+        {
+          name: "Workflow 1",
+          id: "1",
+        },
+        {
+          name: "Workflow 2",
+          id: "2",
+        },
+        {
+          name: "Workflow 3",
+          id: "3",
+        },
+        {
+          name: "Workflow 4",
+          id: "4",
+        },
+      ],
+      workflow: "",
     };
+  },
+  mounted() {
+    this.mapForm();
   },
   methods: {
     open() {
@@ -74,18 +109,38 @@ export default {
         type: "hyphenToWorkFlow",
         properties: {
           keys: ["workflow", "organization"],
-          values: ["workflow id", "organization id"],
+          values: [this.workflow, this.orgId],
         },
       };
 
       this.$emit("input", payload);
+      this.sendOutChannel();
       this.close();
+    },
+
+    mapForm() {
+      if (this.value) {
+        this.workflow =
+          this.value.properties.values[
+            this.value.properties.keys.indexOf("workflow")
+          ];
+
+        this.sendOutChannel();
+      }
+    },
+
+    sendOutChannel() {
+      let channel = this.workflows.find(
+        (workflow) => workflow.id == this.workflow
+      ).name;
+      this.$emit("channel", channel);
     },
   },
   watch: {
     dialog(val) {
       if (val) {
         this.$emit("open");
+        this.mapForm();
       } else {
         this.$emit("close");
       }

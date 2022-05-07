@@ -111,11 +111,11 @@
 
 <script>
 import ExecuteActionsWorkflow from "../../components/pages/workflow/actions/execute-actions-workflow.vue";
-import ComposeWorkflow from "../../components/pages/workflow/compose/compose-workflow.vue";
+//import ComposeWorkflow from "../../components/pages/workflow/compose/compose-workflow.vue";
 import detailsTabWorkflow from "../../components/pages/workflow/details-tab-workflow.vue";
 import TriggerWorkflow from "../../components/pages/workflow/trigger-workflow.vue";
-import FormTrigger from "../../components/pages/workflow/trigger/form-trigger.vue";
-import PaymentTrigger from "../../components/pages/workflow/trigger/payment-trigger.vue";
+//import FormTrigger from "../../components/pages/workflow/trigger/form-trigger.vue";
+//import PaymentTrigger from "../../components/pages/workflow/trigger/payment-trigger.vue";
 
 import { operators } from "@/utils/ManagerApprovalOptions.js";
 
@@ -123,9 +123,9 @@ export default {
   components: {
     detailsTabWorkflow,
     TriggerWorkflow,
-    PaymentTrigger,
-    FormTrigger,
-    ComposeWorkflow,
+    //  PaymentTrigger,
+    //  FormTrigger,
+    // ComposeWorkflow,
     ExecuteActionsWorkflow,
   },
   data() {
@@ -195,6 +195,47 @@ export default {
                   2,
                   "email",
                 ],
+              },
+            },
+            {
+              type: "hyphenAddToPayables",
+              properties: {
+                keys: ["total", "amount_due", "organization", "name"],
+                values: ["5000", "8,000", 2, "payables"],
+              },
+            },
+            {
+              type: "hyphenUpdateCustomer",
+              properties: {
+                keys: ["attribute", "tag", "term", "organization", "name"],
+                values: ["Tag", ["high value", "wema bank"], "", 2, "customer"],
+              },
+            },
+            {
+              type: "hyphenForm",
+              properties: {
+                keys: [
+                  "form id",
+                  "form name",
+                  "identity",
+                  "organization",
+                  "name",
+                ],
+                values: [3, "Form 3", "musk@mail.com", 2, "form"],
+              },
+            },
+            {
+              type: "hyphenToWorkFlow",
+              properties: {
+                keys: ["workflow", "organization"],
+                values: ["3", 2],
+              },
+            },
+            {
+              type: "hyphenDelay",
+              properties: {
+                keys: ["days", "organization", "type", "name"],
+                values: ["5 Days", 2, "delay", "delay"],
               },
             },
           ],

@@ -54,10 +54,25 @@
 
 <script>
 export default {
+  props:{
+    value:{
+      default:{
+          type: "hyphenDelay",
+            properties: {
+              keys: ["days", "organization", "type", "name"],
+              values: ["", "", "", "delay", "delay"],
+            },
+      }
+    }
+  },
+  mounted(){
+    this.mapForm();
+  },
   data() {
     return {
       dialog: false,
       days: ["1 Day", "2 Days", "3 Days", "4 Days", "5 Days"],
+      day:""
     };
   },
   methods: {
@@ -72,11 +87,10 @@ export default {
       const payload = {
         type: "hyphenDelay",
         properties: {
-          keys: ["days", "organization id", "type", ""],
+          keys: ["days", "organization", "type", "name"],
           values: [
             this.day,
-            "organization id value",
-            "identity value",
+            this.orgId,
             "delay",
             "delay",
           ],
@@ -84,13 +98,31 @@ export default {
       };
 
       this.$emit("input", payload);
+      this.sendOutChannel()
       this.close();
+    },
+
+        mapForm() {
+      if (this.value) {
+        this.day =
+          this.value.properties.values[
+            this.value.properties.keys.indexOf("days")
+          ];
+
+        this.sendOutChannel();
+      }
+    },
+
+        sendOutChannel() {
+      let channel = this.day
+      this.$emit("channel", channel);
     },
   },
   watch: {
     dialog(val) {
       if (val) {
         this.$emit("open");
+        this.mapForm()
       } else {
         this.$emit("close");
       }

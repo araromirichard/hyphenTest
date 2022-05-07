@@ -24,15 +24,8 @@ export default {
           meta: {
             type: "hyphenEmail",
             properties: {
-              keys: [
-                "subject",
-                "message",
-                "to",
-                "cc",
-                "organization id",
-                "name",
-              ],
-              values: ["", "", "", "", "", ""],
+              keys: ["subject", "message", "to", "cc", "organization", "name"],
+              values: ["", "", "", "", "", "email"],
             },
           },
         },
@@ -44,7 +37,7 @@ export default {
           meta: {
             type: "hyphenAddToPayables",
             properties: {
-              keys: [],
+              keys: ["total", "amount_due", "organization", "name"],
               values: [],
             },
           },
@@ -62,17 +55,10 @@ export default {
                 "payment",
                 "due_date",
                 "invoice",
-                "organization id",
+                "organization",
                 "name",
               ],
-              values: [
-                "amount_due",
-                this.paymentType,
-                "due_date",
-                "invoice id value",
-                "organization id value",
-                "payment",
-              ],
+              values: ["amount_due", this.paymentType, "", "", "", ""],
             },
           },
         },
@@ -84,14 +70,8 @@ export default {
           meta: {
             type: "hyphenUpdateCustomer",
             properties: {
-              keys: ["attribute", "tag", "term", "organization id", "name"],
-              values: [
-                "attribute value",
-                "tag value",
-                "term value",
-                "organization id value",
-                "name value",
-              ],
+              keys: ["attribute", "tag", "term", "organization", "name"],
+              values: ["", "", "", "", "update customer"],
             },
           },
         },
@@ -113,30 +93,38 @@ export default {
                 "form id",
                 "form name",
                 "identity",
-                "organization id",
+                "organization",
                 "name",
               ],
-              values: [
-                "form id value",
-                "form name value",
-                "identity value",
-                "organization id value",
-                "form",
-              ],
+              values: ["", "", "", "", "form"],
             },
           },
         },
         {
           text: "Connect Workflow",
-          type: "connectWorkflow",
+          type: "hyphenToWorkFlow",
           icon: require("@/assets/actions-connect-workflow.svg"),
           active: true,
+          meta: {
+            type: "hyphenToWorkFlow",
+            properties: {
+              keys: ["workflow", "organization"],
+              values: ["", ""],
+            },
+          },
         },
         {
           text: "Add Delay",
-          type: "addDelay",
+          type: "hyphenDelay",
           icon: require("@/assets/actions-add-delay.svg"),
           active: true,
+          meta: {
+            type: "hyphenDelay",
+            properties: {
+              keys: ["days", "organization", "type", "name"],
+              values: ["", "", "", "delay", "delay"],
+            },
+          },
         },
         {
           text: "Send to Webhook",
@@ -160,8 +148,8 @@ export default {
     };
   },
   computed: {
-    helloWorld() {
-      return "wow";
+    walletBalance() {
+      return "14,000.00";
     },
 
     ...mapGetters({

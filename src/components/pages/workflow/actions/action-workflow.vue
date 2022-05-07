@@ -3,7 +3,7 @@
     <div
       class="selected-action"
       :style="
-        actionMeta.type == 'addDelay'
+        actionMeta.type == 'hyphenDelay'
           ? 'border:3px dashed rgb(249, 238, 210)'
           : ''
       "
@@ -90,13 +90,19 @@
       ref="hyphenForm"
     />
 
-    <!-- 
+    <add-delay-action
+      v-if="actionModal == 'hyphenDelay'"
+      @channel="channel = $event"
+      v-model="data"
+      ref="hyphenDelay"
+    />
 
-    <add-delay-action v-model="data" ref="addDelay" />
-
-
-
-    <connect-workflow-action v-model="data" ref="connectWorkflow" /> -->
+    <connect-workflow-action
+      v-if="actionModal == 'hyphenToWorkFlow'"
+      @channel="channel = $event"
+      v-model="data"
+      ref="hyphenToWorkFlow"
+    />
   </div>
 </template>
 

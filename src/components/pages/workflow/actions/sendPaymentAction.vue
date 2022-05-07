@@ -16,7 +16,7 @@
           <span class="action-title">PAYMENT</span>
           <div>
             <span class="bal-title">Wallet Balance</span>
-            <span class="bal">N140,000</span>
+            <span class="bal">{{walletBalance}}</span>
           </div>
         </div>
 
@@ -120,6 +120,31 @@
 
 <script>
 export default {
+  props:{
+    value:{
+      default:{
+         type: "hyphenSendPayment",
+        properties: {
+            keys: [
+                "amount_due",
+                "payment",
+                "due_date",
+                "invoice",
+                "organization",
+                "name",
+              ],
+              values: [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+              ],
+        },
+      }
+    }
+  },
   data() {
     return {
       dialog: false,
@@ -139,22 +164,22 @@ export default {
       const payload = {
         type: "hyphenSendPayment",
         properties: {
-          keys: [
-            "amount_due",
-            "payment",
-            "due_date",
-            "invoice",
-            "organization id",
-            "name",
-          ],
-          values: [
-            "amount_due",
-            this.paymentType,
-            "due_date",
-            "invoice id value",
-            "organization id value",
-            "payment",
-          ],
+            keys: [
+                "amount_due",
+                "payment",
+                "due_date",
+                "invoice",
+                "organization",
+                "name",
+              ],
+              values: [
+                "amount_due",
+                this.paymentType,
+                "",
+                "",
+                "",
+                "",
+              ],
         },
       };
 
