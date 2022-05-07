@@ -44,7 +44,7 @@
             <v-icon left>mdi-close</v-icon> Cancel
           </v-btn>
 
-          <v-btn @click="addToWorkflow" large color="primary" elevation="0">
+          <v-btn large color="primary" elevation="0">
             <v-icon left>mdi-chevron-right</v-icon> Add to workflow
           </v-btn>
         </div>
@@ -67,19 +67,6 @@ export default {
     },
     close() {
       this.dialog = false;
-    },
-
-    addToWorkflow() {
-      const payload = {
-        type: "hyphenToWorkFlow",
-        properties: {
-          keys: ["workflow", "organization"],
-          values: ["workflow id", "organization id"],
-        },
-      };
-
-      this.$emit("input", payload);
-      this.close();
     },
   },
   watch: {
@@ -126,7 +113,7 @@ export default {
   }
 
   &__content {
-    background-color: #f8f7f4;
+    background-color: #F8F7F4;
     padding: 20px 50px;
 
     .top {

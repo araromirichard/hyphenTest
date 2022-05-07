@@ -28,40 +28,30 @@
                 name="Subject"
                 label="Subject"
                 placeholder="Subject"
-                v-model="data.subject"
                 hide-details="auto"
                 outlined
                 primary
               ></v-text-field>
             </v-col>
             <v-col cols="12" sm="6">
-              <v-autocomplete
+              <v-select
                 outlined
                 color="primary"
                 label="To:"
                 :items="workers"
-                item-text="name"
-                item-value="email"
-                v-model="data.to"
                 hide-details="auto"
                 placeholder="To:"
-              ></v-autocomplete>
+              ></v-select>
             </v-col>
             <v-col cols="12" sm="6">
-              <v-autocomplete
-                multiple
-                :items="workers"
-                item-text="name"
-                item-value="email"
+              <v-text-field
                 name="CC"
                 label="CC"
-                sele
-                v-model="data.cc"
                 placeholder="Subject"
                 hide-details="auto"
                 outlined
                 primary
-              ></v-autocomplete>
+              ></v-text-field>
             </v-col>
 
             <v-col cols="12">
@@ -69,7 +59,6 @@
                 name="Message"
                 label="Message"
                 placeholder="Message"
-                v-model="data.message"
                 hide-details="auto"
                 outlined
                 primary
@@ -88,7 +77,7 @@
             <v-icon left>mdi-close</v-icon> Cancel
           </v-btn>
 
-          <v-btn @click="addToWorkflow" large color="primary" elevation="0">
+          <v-btn large color="primary" elevation="0">
             <v-icon left>mdi-chevron-right</v-icon> Add to workflow
           </v-btn>
         </div>
@@ -99,50 +88,11 @@
 
 <script>
 export default {
-  props: {
-    value: {
-      default: {
-        text: "Send Email",
-        type: "sendEmail",
-        icon: require("@/assets/actions-send-email.svg"),
-        active: true,
-        meta: {
-          type: "hyphenEmail",
-          properties: {
-            keys: ["subject", "message", "to", "cc", "organization id", "name"],
-            values: ["", "", "", "", "", ""],
-          },
-        },
-      },
-    },
-  },
   data() {
     return {
       dialog: false,
-      workers: [
-        {
-          name: "John Doe",
-          email: "johndoe@gmail.com",
-        },
-        {
-          name: "Jane Doe",
-          email: "janedoe@gmail.com",
-        },
-        {
-          name: "Elon musk",
-          email: "musk@mail.com",
-        },
-      ],
-      data: {
-        subject: "",
-        to: null,
-        cc: null,
-        message: "",
-      },
+      workers: ["John Doe", "Jane Doe", "Jack Doe", "Jill Doe"],
     };
-  },
-  mounted(){
-    this.mapForm()
   },
   methods: {
     open() {
@@ -151,67 +101,10 @@ export default {
     close() {
       this.dialog = false;
     },
-
-    addToWorkflow() {
-      const payload = {
-        type: "hyphenEmail",
-        properties: {
-          keys: ["subject", "message", "to", "cc", "organization id", "name"],
-          values: [
-            this.data.subject,
-            this.data.message,
-            this.data.to,
-            this.data.cc,
-            this.orgId,
-            "email",
-          ],
-        },
-      };
-
-      this.$emit("input", payload);
-            this.sendOutChannel();
-
-      this.close();
-    },
-
-    mapForm() {
-      if (this.value) {
-        // set subject
-        this.data.subject =
-          this.value.properties.values[
-            this.value.properties.keys.indexOf("subject")
-          ];
-        // set message
-        this.data.message =
-          this.value.properties.values[
-            this.value.properties.keys.indexOf("message")
-          ];
-
-        // set to
-        this.data.to =
-          this.value.properties.values[
-            this.value.properties.keys.indexOf("to")
-          ];
-
-        // set cc
-        this.data.cc =
-          this.value.properties.values[
-            this.value.properties.keys.indexOf("cc")
-          ];
-      }
-
-            this.sendOutChannel();
-
-    },
-
-       sendOutChannel() {
-      this.$emit("channel", this.data.to);
-    },
   },
   watch: {
     dialog(val) {
       if (val) {
-        this.mapForm();
         this.$emit("open");
       } else {
         this.$emit("close");
@@ -253,7 +146,7 @@ export default {
   }
 
   &__content {
-    background-color: #f8f7f4;
+    background-color: #F8F7F4;
     padding: 20px 50px;
 
     .top {

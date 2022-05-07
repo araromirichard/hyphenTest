@@ -43,13 +43,7 @@
             </div>
           </div>
 
-          <execute-actions-workflow
-            ref="actions"
-            @publish="publishDialog = true"
-            v-model="workflow.actions"
-          />
-
-          <!-- <payment-trigger
+          <payment-trigger
             ref="paymentTrigger"
             v-model="workflow.payment"
             v-if="isPaymentTrigger"
@@ -75,7 +69,7 @@
             v-model="workflow.actions"
             :isVisable="canShowActions"
             v-if="canShowActions"
-          /> -->
+          />
         </div>
       </div>
     </div>
@@ -156,48 +150,13 @@ export default {
           },
         ],
         workflow: {
-          id: "",
           title: this.$route.query.name || "untitled",
           trigger: null,
           runs: 0,
           conditions: null,
           payment: null,
           form: null,
-          actions: [
-            {
-              type: "PbotApproval",
-              properties: {
-                keys: ["identity", "organization id", "type", "name"],
-                values: [
-                  "musk@mail.com",
-                  "organization id value",
-                  "human",
-                  "approval",
-                ],
-              },
-            },
-            {
-              type: "hyphenEmail",
-              properties: {
-                keys: [
-                  "subject",
-                  "message",
-                  "to",
-                  "cc",
-                  "organization id",
-                  "name",
-                ],
-                values: [
-                  "Next step",
-                  "I am buying amazon next",
-                  "musk@mail.com",
-                  ["johndoe@gmail.com", "musk@mail.com", "janedoe@gmail.com"],
-                  2,
-                  "email",
-                ],
-              },
-            },
-          ],
+          actions: null,
         },
       };
     }
@@ -225,14 +184,6 @@ export default {
         this.workflow.form = null;
         this.workflow.payment = null;
         this.workflow.conditions = null;
-      },
-    },
-
-    workflowPayload: {
-      deep: true,
-      immediate: true,
-      handler(val) {
-        console.log(JSON.stringify(val, null, 2));
       },
     },
 
@@ -329,16 +280,6 @@ export default {
         return true;
       }
       return false;
-    },
-
-    workflowPayload() {
-      return {
-        id: this.workflow.id, // rand it by time stamp for now
-        name: this.workflow.title,
-        trigger: this.workflow.trigger?.value || "",
-        schema: this.workflow.conditions, // data gotten from workflow component
-        actions: this.workflow.actions, // data gotten from workflo actions component
-      };
     },
   },
 };
