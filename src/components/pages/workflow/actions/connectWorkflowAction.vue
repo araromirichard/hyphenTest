@@ -113,7 +113,7 @@ export default {
   }
 
   &__content {
-    background-color: #fefcf8;
+    background-color: #f8f7f4;
     padding: 20px 50px;
 
     .top {

@@ -5,7 +5,7 @@
         <v-container class="mt-md-12">
           <v-row class="mx-md-8 pa-0">
             <v-col
-              class="d-flex flex-column align-center justify-center"
+              class="d-flex flex-column align-center justify-center px-0"
               cols="12"
             >
               <v-card
@@ -17,9 +17,10 @@
                   style="border-bottom: 1px solid rgba(127, 145, 155, 0.3)"
                 >
                   <v-tabs
+                    slider-size="4"
                     v-model="tab"
                     :align-with-title="
-                      $vuetify.breakpoint.smAndDown ? 'false' : 'true'
+                      $vuetify.breakpoint.smAndDown ? false : true
                     "
                   >
                     <v-tab

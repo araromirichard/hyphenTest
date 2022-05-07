@@ -34,7 +34,7 @@
         </template>
       </v-checkbox>
     </template>
-    <v-card flat class="m-0" style="background: #fefcf8; border-radius: 8px">
+    <v-card flat class="m-0" style="background: #f8f7f4; border-radius: 8px">
       <v-card-title
         class="mb-8"
         style="background: #ffffff; border-radius: 8px 8px 0px 0px"

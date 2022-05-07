@@ -13,9 +13,14 @@ export default async function ({ store, redirect }) {
     }
 
     try {
-      await store.dispatch("auth/fetchUserDetails", userId).then(async () => {
-        await store.dispatch("organizations/getOrganizationToken");
-      });
+      await store
+        .dispatch("auth/fetchUserDetails", userId)
+        .then(async () => {
+          await store.dispatch("organizations/getOrganizationToken");
+        })
+        .then(async () => {
+          await store.dispatch("organizations/getOrganizationById");
+        });
     } catch (error) {
       console.log(JSON.stringify(error, null, 2));
       redirect("/error");

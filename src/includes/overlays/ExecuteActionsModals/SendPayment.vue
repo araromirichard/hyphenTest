@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-dialog v-model="dialog" max-width="574">
-      <v-card height="722" color="#FEFCF8" class="rounded-lg">
+      <v-card height="722" color="#f8f7f4" class="rounded-lg">
         <v-card-title
           class="mb-8"
           style="background: #ffffff; border-radius: 8px 8px 0px 0px"
@@ -312,7 +312,7 @@
     </v-dialog>
 
     <v-dialog :value="dialog2" v-model="dialog2" max-width="574px">
-      <v-card height="722" color="#FEFCF8" class="rounded-lg">
+      <v-card height="722" color="#f8f7f4" class="rounded-lg">
         <v-card-title
           class="mb-8"
           style="background: #ffffff; border-radius: 8px 8px 0px 0px"

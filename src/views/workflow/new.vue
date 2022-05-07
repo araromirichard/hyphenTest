@@ -68,11 +68,12 @@
             :isVisable="canShowActions"
             v-if="canShowActions"
           />
-           <div  v-if="canShowActions" style="margin-top:20px;width:150px">
-           <v-btn color="primary" large @click="publishDialog = true"><v-icon>mdi-chevron-right</v-icon> publish</v-btn>
+          <div v-if="canShowActions" style="margin-top: 20px; width: 150px">
+            <v-btn color="primary" large @click="publishDialog = true"
+              ><v-icon>mdi-chevron-right</v-icon> publish</v-btn
+            >
+          </div>
         </div>
-        </div>
-       
       </div>
     </div>
 
@@ -89,12 +90,17 @@
           </v-btn>
         </div>
         <div class="publish__content">
-          <span class="msg">Confirm this workflow is completed and ready for use</span>
+          <span class="msg"
+            >Confirm this workflow is completed and ready for use</span
+          >
 
-          <v-btn color="primary" @click="CREATE_WORKFLOW" elevation="1" x-large> <v-icon left>mdi-chevron-right</v-icon> Save</v-btn>
+          <v-btn color="primary" @click="CREATE_WORKFLOW" elevation="1" x-large>
+            <v-icon left>mdi-chevron-right</v-icon> Save</v-btn
+          >
 
-
-          <button id="add-to-draft" @click="addWorkflowToDraft">No, Add to draft</button>
+          <button id="add-to-draft" @click="addWorkflowToDraft">
+            No, Add to draft
+          </button>
         </div>
       </div>
     </v-dialog>
@@ -204,15 +210,15 @@ export default {
           this.$vuetify.goTo(this.$refs.formTrigger, this.scrollOptions);
         });
       }
-    },  
-
-    CREATE_WORKFLOW(){
-      this.publishDialog = false
     },
 
-    addWorkflowToDraft(){
-      this.publishDialog = false
-    }
+    CREATE_WORKFLOW() {
+      this.publishDialog = false;
+    },
+
+    addWorkflowToDraft() {
+      this.publishDialog = false;
+    },
   },
 
   computed: {
@@ -351,11 +357,11 @@ export default {
   }
 
   &__content {
-    background-color: #fefcf8;
-    padding: 60px  120px ;
+    background-color: #f8f7f4;
+    padding: 60px 120px;
     text-align: center;
 
-    .msg{
+    .msg {
       font-size: 17px;
       color: #757575;
       line-height: 24px;
@@ -363,14 +369,14 @@ export default {
       margin-bottom: 30px;
     }
 
-    #add-to-draft{
+    #add-to-draft {
       display: block;
       margin: 20px auto 0px auto;
       background: transparent;
-      color: #D7A47B;
+      color: #d7a47b;
       cursor: pointer;
       font-size: 17px;
-      border-bottom: 1px solid #D7A47B;
+      border-bottom: 1px solid #d7a47b;
     }
   }
 }

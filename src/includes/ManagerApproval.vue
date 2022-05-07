@@ -145,7 +145,7 @@
     </v-card>
 
     <v-dialog v-model="completed" max-width="450">
-      <v-card color="#FEFCF8" class="rounded-lg">
+      <v-card color="#f8f7f4" class="rounded-lg">
         <v-card-title
           class="mb-8"
           style="background: #ffffff; border-radius: 8px 8px 0px 0px"

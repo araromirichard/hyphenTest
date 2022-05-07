@@ -46,7 +46,7 @@
         max-width=""
         flat
         class="m-0"
-        style="background: #fefcf8; border-radius: 8px"
+        style="background: #f8f7f4; border-radius: 8px"
       >
         <v-card-title
           style="
@@ -96,7 +96,7 @@
             <v-tab> New form </v-tab>
           </v-tabs>
         </template>
-        <v-tabs-items v-model="tab" style="background-color: #fefcf8">
+        <v-tabs-items v-model="tab" style="background-color: #f8f7f4">
           <v-tab-item class="mt-13">
             <validation-observer ref="observer" v-slot="{}">
               <form @submit.prevent ref="form">

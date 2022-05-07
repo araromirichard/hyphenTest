@@ -23,9 +23,8 @@
         Forms
       </h3>
       <v-spacer></v-spacer>
-     
-        <create-form-modal ref="formDialog" />
-     
+
+      <create-form-modal ref="formDialog" />
     </div>
     <div class="d-flex" v-if="$vuetify.breakpoint.mdAndDown">
       <p
@@ -173,9 +172,9 @@ export default {
     searchDataTable(e) {
       this.$refs.dataTable.setSearchText(e);
     },
-    showModal(){
-      this.$refs.formDialog.openDialog()
-    }
+    showModal() {
+      this.$refs.formDialog.openDialog();
+    },
   },
 };
 </script>

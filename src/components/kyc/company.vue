@@ -1,7 +1,7 @@
 <template>
   <div class="px-4 py-2">
     <v-dialog v-model="dialog" max-width="530">
-      <v-card color="#FEFCF8" class="rounded-lg">
+      <v-card color="#f8f7f4" class="rounded-lg">
         <v-card-title
           style="background: #ffffff; border-radius: 8px 8px 0px 0px"
         >
@@ -44,9 +44,9 @@
             </v-tab>
           </v-tabs>
         </div>
-        <v-tabs-items v-model="tab" style="background: #fefcf8">
+        <v-tabs-items v-model="tab" style="background: #f8f7f4">
           <v-tab-item>
-            <v-card style="background-color: #fefcf8" flat>
+            <v-card style="background-color: #f8f7f4" flat>
               <div class="my-7 mx-10">
                 <p class="pa-0 ma-0 text--disabled text-subtitle-2">
                   To comply with regulatory authorities, we need to collect a
