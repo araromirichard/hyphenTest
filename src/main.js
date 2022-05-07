@@ -3,6 +3,7 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import vuetify from "./plugins/vuetify";
+import appMixin from "./plugins/app-mixin";
 import DateFilter from "./filters/date";
 import { ValidationProvider } from "vee-validate/dist/vee-validate.full.esm";
 import { ValidationObserver } from "vee-validate";
@@ -33,6 +34,8 @@ Vue.use(VueFormBuilderPlugin);
 
 //register date filter
 Vue.filter("date", DateFilter);
+
+Vue.mixin(appMixin);
 
 new Vue({
   router,

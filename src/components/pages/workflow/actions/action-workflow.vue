@@ -1,9 +1,9 @@
 <template>
-  <div v-if="action != null">
+  <div v-if="value != null">
     <div
       class="selected-action"
       :style="
-        action.channel == 'addDelay'
+        actionMeta.type == 'addDelay'
           ? 'border:3px dashed rgb(249, 238, 210)'
           : ''
       "
@@ -14,9 +14,9 @@
         </div>
       </div>
       <div class="selection-acion__text">
-        <span class="selected-action__text-title"> {{ action.text }} </span>
+        <span class="selected-action__text-title"> {{ actionMeta.text }} </span>
         <span class="selected-action__text-description">
-          channel: {{ action.channel }}
+          channel: {{ channel }}
         </span>
       </div>
       <div class="selection-acion__actions">
@@ -25,12 +25,11 @@
             >mdi-close-circle-outline</v-icon
           >
         </button>
-        <button @click="showDialog(action.channel)">
+        <button @click="showDialog(actionMeta.type)">
           <v-icon size="24" color="rgba(127, 145, 155, 0.4)">mdi-cog</v-icon>
         </button>
       </div>
     </div>
-    <!--  -->
 
     <v-timeline>
       <div class="d-flex mt-1">
@@ -50,21 +49,31 @@
       </div>
     </v-timeline>
 
-    <get-approval-action ref="getApproval" />
+    <get-approval-action
+      v-if="actionModal == 'PbotApproval'"
+      @channel="channel = $event"
+      v-model="data"
+      ref="PbotApproval"
+    />
 
-    <send-email-action ref="sendEmail" />
+    <send-email-action
+      v-if="actionModal == 'hyphenEmail'"
+       @channel="channel = $event"
+      v-model="data"
+      ref="hyphenEmail"
+    />
+    
+    <add-to-payables-action v-if=" actionModal == 'hyphenAddToPayables'" v-model="data" ref="hyphenAddToPayables" />
 
-    <add-to-payables-action ref="addToPayables" />
+    <!-- <send-form-action v-model="data" ref="sendForm" />
 
-    <send-form-action ref="sendForm" />
+    <add-delay-action v-model="data" ref="addDelay" />
 
-    <add-delay-action ref="addDelay" />
+    <update-customer-action v-model="data" ref="updateCustomer" />
 
-    <update-customer-action ref="updateCustomer" />
+    <send-payment-action v-model="data" ref="SendPayment" />
 
-    <send-payment-action ref="SendPayment" />
-
-    <connect-workflow-action ref="connectWorkflow" />
+    <connect-workflow-action v-model="data" ref="connectWorkflow" /> -->
   </div>
 </template>
 
@@ -90,13 +99,8 @@ export default {
     ConnectWorkflowAction,
   },
   props: {
-    action: {
-      type: Object,
+    value: {
       default: null,
-    },
-    availableActions: {
-      type: Array,
-      default: () => [],
     },
     index: {
       type: Number,
@@ -111,17 +115,39 @@ export default {
   data() {
     return {
       data: null,
+      actionModal: null,
+      channel:"N/A"
     };
   },
 
   mounted() {
-    this.showDialog(this.action.channel);
+    this.data = this.value;
+
+    if (this.value?.fresh) {
+      this.showDialog(this.value.type);
+    }
+
+    this.actionModal = this.value.type;
   },
 
   methods: {
-    showDialog(ref) {
+    async showDialog(ref) {
+      // this.actionModal = ref;
+      await this.$nextTick();
       //call show function of modal component identified the "ref"
       this.$refs[ref].open();
+    },
+  },
+
+  computed: {
+    actionMeta() {
+      if (typeof this.value === "object") {
+        return this.actionsMeta.find(
+          (action) => action.type === this.value.type
+        );
+      } else {
+        return this.actionsMeta.find((action) => action.type === this.value);
+      }
     },
   },
 
@@ -130,8 +156,19 @@ export default {
       immediate: true,
       deep: true,
       handler(newValue) {
+        if (JSON.stringify(newValue) !== JSON.stringify(this.value)) {
+          this.$emit("input", newValue);
+        }
         // send out the collected from the modal form
-        this.$emit("properties", newValue);
+      },
+    },
+
+    value: {
+      immediate: true,
+      deep: true,
+      handler(newValue) {
+        this.data = newValue;
+        // reset the modal form data
       },
     },
   },
@@ -184,6 +221,7 @@ export default {
       font-size: 15px;
       overflow: hidden;
       text-overflow: ellipsis;
+      white-space: nowrap;
     }
   }
 
