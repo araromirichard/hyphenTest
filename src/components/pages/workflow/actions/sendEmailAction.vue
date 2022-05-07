@@ -88,6 +88,30 @@
 
 <script>
 export default {
+  props: {
+    value: {
+      default: {
+        text: "Send Email",
+        type: "sendEmail",
+        icon: require("@/assets/actions-send-email.svg"),
+        active: true,
+        meta: {
+          type: "hyphenEmail",
+          properties: {
+            keys: ["subject", "message", "to", "cc", "organization id", "name"],
+            values: [
+              "subject value",
+              "message value",
+              "to value",
+              "cc value",
+              "organization id value",
+              "email",
+            ],
+          },
+        },
+      },
+    },
+  },
   data() {
     return {
       dialog: false,
@@ -102,33 +126,25 @@ export default {
       this.dialog = false;
     },
 
-    
-    addToWorkflow(){
+    addToWorkflow() {
       const payload = {
-         "type":"hyphenEmail",
-         "properties":{
-            "keys":[
-               "subject",
-               "message",
-               "to",
-               "cc",
-               "organization id",
-               "name"
-            ],
-            "values":[
-              "subject value",
-              "message value",
-              "to value",
-              "cc value",
-              "organization id value",
-              "email"
-            ]
-         }
-      }
+        type: "hyphenEmail",
+        properties: {
+          keys: ["subject", "message", "to", "cc", "organization id", "name"],
+          values: [
+            "subject value",
+            "message value",
+            "to value",
+            "cc value",
+            "organization id value",
+            "email",
+          ],
+        },
+      };
 
-      this.$emit("input",payload)
+      this.$emit("input", payload);
       this.close();
-    }
+    },
   },
   watch: {
     dialog(val) {
@@ -174,7 +190,7 @@ export default {
   }
 
   &__content {
-    background-color: #F8F7F4;
+    background-color: #f8f7f4;
     padding: 20px 50px;
 
     .top {

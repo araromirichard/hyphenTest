@@ -43,7 +43,14 @@
             </div>
           </div>
 
-          <payment-trigger
+             <execute-actions-workflow
+            ref="actions"
+            @publish="publishDialog = true"
+            v-model="workflow.actions"
+          
+          />
+
+          <!-- <payment-trigger
             ref="paymentTrigger"
             v-model="workflow.payment"
             v-if="isPaymentTrigger"
@@ -69,7 +76,7 @@
             v-model="workflow.actions"
             :isVisable="canShowActions"
             v-if="canShowActions"
-          />
+          /> -->
         </div>
       </div>
     </div>
@@ -157,7 +164,20 @@ export default {
           conditions: null,
           payment: null,
           form: null,
-          actions: null,
+          actions: [
+             {
+              type: "PbotApproval",
+              properties: {
+                keys: ["identity", "organization id", "type", "name"],
+                values: [
+                  "musk@mail.com",
+                  "organization id value",
+                  "human",
+                  "approval",
+                ],
+              },
+            },
+          ],
         },
       };
     }

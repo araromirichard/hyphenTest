@@ -46,61 +46,20 @@
                 >
                   <v-icon>mdi-plus</v-icon>
                 </v-btn>
-                <!-- <v-menu bottom offset-y>
-                  <template v-slot:activator="{ on, attrs }">
-                    <div class="d-flex mx-auto" v-bind="attrs" v-on="on">
-                      <v-btn
-                        v-if="selectedActions.length == 0"
-                        fab
-                        dark
-                        height="45"
-                        width="45"
-                        color="var(--v-primary-base)"
-                        depressed
-                        class="mx-auto justify-center"
-                      >
-                        <v-icon>mdi-plus</v-icon>
-                      </v-btn>
-                    </div>
-                  </template>
-
-                  <div style="width: 260px">
-                    <v-list>
-                      <v-list-item-group>
-                        <v-list-item
-                          @click="selectedActions.push(action)"
-                          v-for="(action, j) in availableActions"
-                          :key="j"
-                        >
-                          <v-list-item-icon>
-                            <img
-                              class="actions-icon"
-                              :src="action.icon"
-                              :alt="action.channel"
-                            />
-                          </v-list-item-icon>
-                          <v-list-item-title>{{
-                            action.text
-                          }}</v-list-item-title>
-                        </v-list-item>
-                      </v-list-item-group>
-                    </v-list>
-                  </div>
-                </v-menu> -->
+             
               </div>
             </v-timeline>
 
             <!-- <div v-sortable="{ onUpdate: reOrder }"> -->
 
             <div>
+         
               <action-workflow
                 v-for="(action, index) in selectedActions"
                 :isLast="index == selectedActions.length - 1"
                 :key="index"
                 :index="index"
-                :action="action"
-                :availableActions="availableActions"
-                @properties="selectedProperties.splice(index, 1, $event)"
+                v-model="selectedActions[index]"
                 @add-new-action="showActionModal"
                 @remove-action="removeAction(index)"
               />
@@ -109,9 +68,11 @@
         </transition>
       </div>
 
-        <div  style="margin-top:25px;width:150px">
-           <v-btn color="primary" elevation="0" large @click="$emit('publish')"><v-icon>mdi-chevron-right</v-icon> publish</v-btn>
-        </div>
+      <div style="margin-top: 25px; width: 150px">
+        <v-btn color="primary" elevation="0" large @click="$emit('publish')"
+          ><v-icon>mdi-chevron-right</v-icon> publish</v-btn
+        >
+      </div>
     </div>
 
     <v-navigation-drawer
@@ -143,16 +104,12 @@
           <div
             class="content__action"
             v-for="(action, index) in searchQuery == ''
-              ? availableActions
+              ? actionsMeta
               : filteredActions"
             :key="index"
             @click="addAction(action)"
           >
-            <img
-              class="actions-icon"
-              :src="action.icon"
-              :alt="action.channel"
-            />
+            <img class="actions-icon" :src="action.icon" :alt="action.type" />
             <span>{{ action.text }}</span>
             <span v-if="!action.active" class="coming-soon">Coming soon</span>
           </div>
@@ -172,88 +129,16 @@ export default {
       type: Boolean,
       default: false,
     },
+    value: {
+      default: [],
+    },
   },
   data() {
     return {
       showTriggers: true,
       actionModal: false,
       searchQuery: "",
-      availableActions: [
-        {
-          text: "Send Email",
-          channel: "sendEmail",
-          icon: require("@/assets/actions-send-email.svg"),
-          active: true,
-        },
-        {
-          text: "Get Approval",
-          channel: "getApproval",
-          icon: require("@/assets/actions-get-approval.svg"),
-          active: true,
-        },
-        {
-          text: "Add to Payables",
-          channel: "addToPayables",
-          icon: require("@/assets/actions-add-to-payables.svg"),
-          active: true,
-        },
-        {
-          text: "Send Payment",
-          channel: "SendPayment",
-          icon: require("@/assets/actions-send-payment.svg"),
-          active: true,
-        },
-        {
-          text: "Update Customer",
-          channel: "updateCustomer",
-          icon: require("@/assets/actions-update-customer.svg"),
-          active: true,
-        },
-        {
-          text: "Update Vendor",
-          channel: "updateVendor",
-          icon: require("@/assets/actions-update-vendor.svg"),
-          active: true,
-        },
-        {
-          text: "Send form",
-          channel: "sendForm",
-          icon: require("@/assets/actions-send-form.svg"),
-          active: true,
-        },
-        {
-          text: "Connect Workflow",
-          channel: "connectWorkflow",
-          icon: require("@/assets/actions-connect-workflow.svg"),
-          active: true,
-        },
-        {
-          text: "Add Delay",
-          channel: "addDelay",
-          icon: require("@/assets/actions-add-delay.svg"),
-          active: true,
-        },
-        {
-          text: "Send to Webhook",
-          channel: "sendToWebhook",
-          icon: require("@/assets/actions-send-to-webhook.svg"),
-          active: true,
-        },
-        {
-          text: "Send Invoice",
-          channel: "sendInvoice",
-          icon: require("@/assets/actions-send-invoice.svg"),
-          active: false,
-        },
-        {
-          text: "Send to ERP",
-          channel: "sendToERP",
-          icon: require("@/assets/actions-send-to-erp.svg"),
-          active: false,
-        },
-      ],
       selectedActions: [],
-      selectedProperties: [],
       scrollOptions: {
         duration: 500,
         offset: 0,
@@ -283,10 +168,10 @@ export default {
     //     0,
     //     this.selectedActions.splice(event.oldIndex, 1)[0]
     //   );
-    //   this.selectedProperties.splice(
+    //   this.selectedActions.splice(
     //     event.newIndex,
     //     0,
-    //     this.selectedProperties.splice(event.oldIndex, 1)[0]
+    //     this.selectedActions.splice(event.oldIndex, 1)[0]
     //   );
     // },
 
@@ -295,11 +180,10 @@ export default {
         return;
       }
       this.actionModal = false;
-      this.selectedActions.push(action);
+      this.selectedActions.push({...action.meta,fresh:true});
     },
     removeAction(index) {
       this.selectedActions.splice(index, 1);
-      this.selectedProperties.splice(index, 1);
     },
 
     fetchActions() {
@@ -311,7 +195,7 @@ export default {
   },
   computed: {
     filteredActions() {
-      return this.availableActions.filter((action) => {
+      return this.actionsMeta.filter((action) => {
         return action.text
           .toLowerCase()
           .includes(this.searchQuery.toLowerCase());
@@ -320,14 +204,21 @@ export default {
   },
 
   watch: {
-    selectedProperties: {
+    value: {
+      deep: true,
+      immediate: true,
+      handler(val) {
+        if (JSON.stringify(val) !== JSON.stringify(this.selectedActions)) {
+          this.selectedActions = val;
+        }
+      },
+    },
+    selectedActions: {
       deep: true,
       immediate: true,
       handler(newVal) {
         this.$emit("input", newVal);
-
-        //console.log(JSON.stringify(newVal,null,2))
-        // console.log(JSON.stringify(newVal, null, 2));
+      //  console.log(JSON.stringify(newVal, null, 2));
       },
     },
 
@@ -404,7 +295,7 @@ export default {
 
 .actions {
   padding: 50px 0px;
-  background-color: #F8F7F4;
+  background-color: #f8f7f4;
   min-height: 400px;
   border-radius: 6px;
   margin-top: 30px;
