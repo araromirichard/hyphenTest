@@ -62,6 +62,17 @@
 
 <script>
 export default {
+  props: {
+    value: {
+      default: {
+        type: "hyphenAddToPayables",
+        properties: {
+          keys: [],
+          values: [],
+        },
+      },
+    },
+  },
   data() {
     return {
       dialog: false,

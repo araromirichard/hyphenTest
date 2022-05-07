@@ -32,22 +32,22 @@ export default {
                 "organization id",
                 "name",
               ],
-              values: [
-                "subject value",
-                "message value",
-                "to value",
-                "cc value",
-                "organization id value",
-                "email",
-              ],
+              values: ["", "", "", "", "", ""],
             },
           },
         },
         {
           text: "Add to Payables",
-          type: "addToPayables",
+          type: "hyphenAddToPayables",
           icon: require("@/assets/actions-add-to-payables.svg"),
           active: true,
+          meta: {
+            type: "hyphenAddToPayables",
+            properties: {
+              keys: [],
+              values: [],
+            },
+          },
         },
         {
           text: "Send Payment",

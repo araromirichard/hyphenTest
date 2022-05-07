@@ -16,7 +16,7 @@
       <div class="selection-acion__text">
         <span class="selected-action__text-title"> {{ actionMeta.text }} </span>
         <span class="selected-action__text-description">
-          channel: {{ actionMeta.type }}
+          channel: {{ channel }}
         </span>
       </div>
       <div class="selection-acion__actions">
@@ -49,13 +49,23 @@
       </div>
     </v-timeline>
 
-    <get-approval-action v-if="actionModal == 'PbotApproval'" v-model="data" ref="PbotApproval" />
+    <get-approval-action
+      v-if="actionModal == 'PbotApproval'"
+      @channel="channel = $event"
+      v-model="data"
+      ref="PbotApproval"
+    />
 
-    <send-email-action v-if="actionModal == 'hyphenEmail'" v-model="data" ref="hyphenEmail" />
-<!-- 
-    <add-to-payables-action v-model="data" ref="addToPayables" />
+    <send-email-action
+      v-if="actionModal == 'hyphenEmail'"
+       @channel="channel = $event"
+      v-model="data"
+      ref="hyphenEmail"
+    />
+    
+    <add-to-payables-action v-if=" actionModal == 'hyphenAddToPayables'" v-model="data" ref="hyphenAddToPayables" />
 
-    <send-form-action v-model="data" ref="sendForm" />
+    <!-- <send-form-action v-model="data" ref="sendForm" />
 
     <add-delay-action v-model="data" ref="addDelay" />
 
@@ -65,7 +75,6 @@
 
     <connect-workflow-action v-model="data" ref="connectWorkflow" /> -->
   </div>
-
 </template>
 
 <script>
@@ -106,35 +115,40 @@ export default {
   data() {
     return {
       data: null,
-      actionModal: null
+      actionModal: null,
+      channel:"N/A"
     };
   },
 
   mounted() {
     this.data = this.value;
 
-    if(this.value?.fresh){
+    if (this.value?.fresh) {
       this.showDialog(this.value.type);
     }
+
+    this.actionModal = this.value.type;
   },
 
   methods: {
-   async showDialog(ref) {
-      this.actionModal = ref;
-     await this.$nextTick();
+    async showDialog(ref) {
+      // this.actionModal = ref;
+      await this.$nextTick();
       //call show function of modal component identified the "ref"
       this.$refs[ref].open();
     },
   },
 
-  computed:{
-    actionMeta(){
-      if( typeof this.value === 'object') {
-      return this.actionsMeta.find(action => action.type === this.value.type);
-      }else {
-        return this.actionsMeta.find(action => action.type === this.value);
+  computed: {
+    actionMeta() {
+      if (typeof this.value === "object") {
+        return this.actionsMeta.find(
+          (action) => action.type === this.value.type
+        );
+      } else {
+        return this.actionsMeta.find((action) => action.type === this.value);
       }
-    }
+    },
   },
 
   watch: {
@@ -142,11 +156,19 @@ export default {
       immediate: true,
       deep: true,
       handler(newValue) {
-        if(JSON.stringify(newValue) !== JSON.stringify(this.value)){
+        if (JSON.stringify(newValue) !== JSON.stringify(this.value)) {
           this.$emit("input", newValue);
         }
         // send out the collected from the modal form
-        // this.$emit("input", newValue);
+      },
+    },
+
+    value: {
+      immediate: true,
+      deep: true,
+      handler(newValue) {
+        this.data = newValue;
+        // reset the modal form data
       },
     },
   },
@@ -199,6 +221,7 @@ export default {
       font-size: 15px;
       overflow: hidden;
       text-overflow: ellipsis;
+      white-space: nowrap;
     }
   }
 

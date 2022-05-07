@@ -85,7 +85,9 @@ export default {
       worker: null,
     };
   },
-  mounted() {},
+  mounted() {
+    this.mapForm();
+  },
   methods: {
     open() {
       this.dialog = true;
@@ -104,7 +106,15 @@ export default {
       };
 
       this.$emit("input", payload);
+      this.sendOutChannel();
       this.close();
+    },
+
+    sendOutChannel() {
+      let channel = this.workers.find(
+        (worker) => worker.email == this.worker
+      ).name;
+      this.$emit("channel", channel);
     },
 
     mapForm() {
@@ -114,6 +124,8 @@ export default {
           this.value.properties.values[
             this.value.properties.keys.indexOf("identity")
           ];
+
+        this.sendOutChannel();
       }
     },
   },

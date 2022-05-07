@@ -28,30 +28,40 @@
                 name="Subject"
                 label="Subject"
                 placeholder="Subject"
+                v-model="data.subject"
                 hide-details="auto"
                 outlined
                 primary
               ></v-text-field>
             </v-col>
             <v-col cols="12" sm="6">
-              <v-select
+              <v-autocomplete
                 outlined
                 color="primary"
                 label="To:"
                 :items="workers"
+                item-text="name"
+                item-value="email"
+                v-model="data.to"
                 hide-details="auto"
                 placeholder="To:"
-              ></v-select>
+              ></v-autocomplete>
             </v-col>
             <v-col cols="12" sm="6">
-              <v-text-field
+              <v-autocomplete
+                multiple
+                :items="workers"
+                item-text="name"
+                item-value="email"
                 name="CC"
                 label="CC"
+                sele
+                v-model="data.cc"
                 placeholder="Subject"
                 hide-details="auto"
                 outlined
                 primary
-              ></v-text-field>
+              ></v-autocomplete>
             </v-col>
 
             <v-col cols="12">
@@ -59,6 +69,7 @@
                 name="Message"
                 label="Message"
                 placeholder="Message"
+                v-model="data.message"
                 hide-details="auto"
                 outlined
                 primary
@@ -99,14 +110,7 @@ export default {
           type: "hyphenEmail",
           properties: {
             keys: ["subject", "message", "to", "cc", "organization id", "name"],
-            values: [
-              "subject value",
-              "message value",
-              "to value",
-              "cc value",
-              "organization id value",
-              "email",
-            ],
+            values: ["", "", "", "", "", ""],
           },
         },
       },
@@ -115,8 +119,30 @@ export default {
   data() {
     return {
       dialog: false,
-      workers: ["John Doe", "Jane Doe", "Jack Doe", "Jill Doe"],
+      workers: [
+        {
+          name: "John Doe",
+          email: "johndoe@gmail.com",
+        },
+        {
+          name: "Jane Doe",
+          email: "janedoe@gmail.com",
+        },
+        {
+          name: "Elon musk",
+          email: "musk@mail.com",
+        },
+      ],
+      data: {
+        subject: "",
+        to: null,
+        cc: null,
+        message: "",
+      },
     };
+  },
+  mounted(){
+    this.mapForm()
   },
   methods: {
     open() {
@@ -132,23 +158,60 @@ export default {
         properties: {
           keys: ["subject", "message", "to", "cc", "organization id", "name"],
           values: [
-            "subject value",
-            "message value",
-            "to value",
-            "cc value",
-            "organization id value",
+            this.data.subject,
+            this.data.message,
+            this.data.to,
+            this.data.cc,
+            this.orgId,
             "email",
           ],
         },
       };
 
       this.$emit("input", payload);
+            this.sendOutChannel();
+
       this.close();
+    },
+
+    mapForm() {
+      if (this.value) {
+        // set subject
+        this.data.subject =
+          this.value.properties.values[
+            this.value.properties.keys.indexOf("subject")
+          ];
+        // set message
+        this.data.message =
+          this.value.properties.values[
+            this.value.properties.keys.indexOf("message")
+          ];
+
+        // set to
+        this.data.to =
+          this.value.properties.values[
+            this.value.properties.keys.indexOf("to")
+          ];
+
+        // set cc
+        this.data.cc =
+          this.value.properties.values[
+            this.value.properties.keys.indexOf("cc")
+          ];
+      }
+
+            this.sendOutChannel();
+
+    },
+
+       sendOutChannel() {
+      this.$emit("channel", this.data.to);
     },
   },
   watch: {
     dialog(val) {
       if (val) {
+        this.mapForm();
         this.$emit("open");
       } else {
         this.$emit("close");

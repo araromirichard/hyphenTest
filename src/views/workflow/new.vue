@@ -43,11 +43,10 @@
             </div>
           </div>
 
-             <execute-actions-workflow
+          <execute-actions-workflow
             ref="actions"
             @publish="publishDialog = true"
             v-model="workflow.actions"
-          
           />
 
           <!-- <payment-trigger
@@ -165,7 +164,7 @@ export default {
           payment: null,
           form: null,
           actions: [
-             {
+            {
               type: "PbotApproval",
               properties: {
                 keys: ["identity", "organization id", "type", "name"],
@@ -174,6 +173,27 @@ export default {
                   "organization id value",
                   "human",
                   "approval",
+                ],
+              },
+            },
+            {
+              type: "hyphenEmail",
+              properties: {
+                keys: [
+                  "subject",
+                  "message",
+                  "to",
+                  "cc",
+                  "organization id",
+                  "name",
+                ],
+                values: [
+                  "Next step",
+                  "I am buying amazon next",
+                  "musk@mail.com",
+                  ["johndoe@gmail.com", "musk@mail.com", "janedoe@gmail.com"],
+                  2,
+                  "email",
                 ],
               },
             },
