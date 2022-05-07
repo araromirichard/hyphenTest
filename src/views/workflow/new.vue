@@ -57,6 +57,7 @@
 
           <compose-workflow
             ref="conditions"
+            :inputs="inputItems"
             v-model="workflow.conditions"
             :isVisable="canShowConditions"
             v-if="canShowConditions"
@@ -64,15 +65,11 @@
 
           <execute-actions-workflow
             ref="actions"
+            @publish="publishDialog = true"
             v-model="workflow.actions"
             :isVisable="canShowActions"
             v-if="canShowActions"
           />
-          <div v-if="canShowActions" style="margin-top: 20px; width: 150px">
-            <v-btn color="primary" large @click="publishDialog = true"
-              ><v-icon>mdi-chevron-right</v-icon> publish</v-btn
-            >
-          </div>
         </div>
       </div>
     </div>
@@ -97,7 +94,6 @@
           <v-btn color="primary" @click="CREATE_WORKFLOW" elevation="1" x-large>
             <v-icon left>mdi-chevron-right</v-icon> Save</v-btn
           >
-
           <button id="add-to-draft" @click="addWorkflowToDraft">
             No, Add to draft
           </button>
@@ -114,6 +110,9 @@ import detailsTabWorkflow from "../../components/pages/workflow/details-tab-work
 import TriggerWorkflow from "../../components/pages/workflow/trigger-workflow.vue";
 import FormTrigger from "../../components/pages/workflow/trigger/form-trigger.vue";
 import PaymentTrigger from "../../components/pages/workflow/trigger/payment-trigger.vue";
+
+import { operators } from "@/utils/ManagerApprovalOptions.js";
+
 export default {
   components: {
     detailsTabWorkflow,
@@ -167,6 +166,16 @@ export default {
     this.showTriggers = true;
   },
 
+  methods: {
+    CREATE_WORKFLOW() {
+      this.publishDialog = false;
+    },
+
+    addWorkflowToDraft() {
+      this.publishDialog = false;
+    },
+  },
+
   watch: {
     "workflow.trigger": {
       deep: true,
@@ -211,17 +220,37 @@ export default {
         });
       }
     },
-
-    CREATE_WORKFLOW() {
-      this.publishDialog = false;
-    },
-
-    addWorkflowToDraft() {
-      this.publishDialog = false;
-    },
   },
 
   computed: {
+    inputItems() {
+      if (this.workflow.trigger && this.workflow.trigger.value == "INVOICE") {
+        return {
+          fields: [
+            "Invoice Total",
+            "Invoice Number",
+            "Vendor Name",
+            "Invoice Date",
+            "PO Number",
+            "Invoice Type",
+            "Net Term",
+            "Due Date",
+          ],
+          operators: operators,
+        };
+      } else {
+        return {
+          fields: [
+            "email",
+            "Total",
+            "PO Number",
+            "Registered Date",
+            "Due Date",
+          ],
+          operators: operators,
+        };
+      }
+    },
     canShowConditions() {
       return (
         this.isInvoiceTrigger || this.workflow.payment || this.workflow.form
@@ -357,7 +386,7 @@ export default {
   }
 
   &__content {
-    background-color: #f8f7f4;
+    background-color: #fefcf8;
     padding: 60px 120px;
     text-align: center;
 

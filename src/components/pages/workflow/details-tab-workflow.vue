@@ -3,7 +3,7 @@
     grow
     slider-color="primary"
     slider-size="4"
-    background-color="#fffbf1"
+    background-color="#F8F7F4"
     style="margin:0px auto auto auto;width:100% mix-blend-mode: normal;padding:10px"
   >
     <v-tab> Details </v-tab>
@@ -151,11 +151,11 @@ export default {
   width: 100%;
   height: calc(100vh - 100px);
   padding: 5px;
-  background-color: rgba(242, 242, 242, 0.3);
+  background-color: rgba(242, 242, 242, 0.6);
   overflow: auto;
 
   .runs {
-    background-color: #fbf4e4;
+    background-color: #F3EEE8;
     border-radius: 4px;
     display: flex;
     gap: 20px;
@@ -163,6 +163,7 @@ export default {
 
     padding: 20px;
     margin-bottom: 5px;
+    margin-top: 40px;
 
     &__title {
       font-size: 16px;

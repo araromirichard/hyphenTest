@@ -4,7 +4,7 @@
       <v-select
         v-model="form.field"
         :menu-props="{ bottom: true, offsetY: true }"
-        :items="formItems"
+        :items="inputs.fields"
         style="background: #ffffff; box-sizing: border-box; border-radius: 3px"
         class="justify-center my-2 mr-2"
         flat
@@ -25,7 +25,7 @@
         id="operators"
         item-value="val"
         :menu-props="{ bottom: true, offsetY: true }"
-        :items="operators"
+        :items="inputs.operators"
         item-text="string"
         style="border-radius: 3px"
         class="justify-center highlight my-2 mr-2"
@@ -69,13 +69,19 @@
 
 <script>
 // this component holds the input field for each condition
-import { formItems, operators } from "@/utils/ManagerApprovalOptions.js";
+//import { formItems, operators } from "@/utils/ManagerApprovalOptions.js";
 export default {
-  props: ["rule", "index"],
+  props:{
+    rule:{},
+    index:{},
+    inputs:{
+      default:null
+    },
+  },
   data() {
     return {
-      formItems,
-      operators,
+      // formItems,
+      // operators,
 
       form: {
         field: "",
