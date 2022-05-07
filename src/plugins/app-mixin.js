@@ -51,15 +51,49 @@ export default {
         },
         {
           text: "Send Payment",
-          type: "SendPayment",
+          type: "hyphenSendPayment",
           icon: require("@/assets/actions-send-payment.svg"),
           active: true,
+          meta: {
+            type: "hyphenSendPayment",
+            properties: {
+              keys: [
+                "amount_due",
+                "payment",
+                "due_date",
+                "invoice",
+                "organization id",
+                "name",
+              ],
+              values: [
+                "amount_due",
+                this.paymentType,
+                "due_date",
+                "invoice id value",
+                "organization id value",
+                "payment",
+              ],
+            },
+          },
         },
         {
           text: "Update Customer",
-          type: "updateCustomer",
+          type: "hyphenUpdateCustomer",
           icon: require("@/assets/actions-update-customer.svg"),
           active: true,
+          meta: {
+            type: "hyphenUpdateCustomer",
+            properties: {
+              keys: ["attribute", "tag", "term", "organization id", "name"],
+              values: [
+                "attribute value",
+                "tag value",
+                "term value",
+                "organization id value",
+                "name value",
+              ],
+            },
+          },
         },
         {
           text: "Update Vendor",
@@ -69,9 +103,28 @@ export default {
         },
         {
           text: "Send form",
-          type: "sendForm",
+          type: "hyphenForm",
           icon: require("@/assets/actions-send-form.svg"),
           active: true,
+          meta: {
+            type: "hyphenForm",
+            properties: {
+              keys: [
+                "form id",
+                "form name",
+                "identity",
+                "organization id",
+                "name",
+              ],
+              values: [
+                "form id value",
+                "form name value",
+                "identity value",
+                "organization id value",
+                "form",
+              ],
+            },
+          },
         },
         {
           text: "Connect Workflow",

@@ -58,20 +58,43 @@
 
     <send-email-action
       v-if="actionModal == 'hyphenEmail'"
-       @channel="channel = $event"
+      @channel="channel = $event"
       v-model="data"
       ref="hyphenEmail"
     />
-    
-    <add-to-payables-action v-if=" actionModal == 'hyphenAddToPayables'" v-model="data" ref="hyphenAddToPayables" />
 
-    <!-- <send-form-action v-model="data" ref="sendForm" />
+    <add-to-payables-action
+      v-if="actionModal == 'hyphenAddToPayables'"
+      @channel="channel = $event"
+      v-model="data"
+      ref="hyphenAddToPayables"
+    />
+    <send-payment-action
+      v-if="actionModal == 'hyphenSendPayment'"
+      @channel="channel = $event"
+      v-model="data"
+      ref="hyphenSendPayment"
+    />
+
+    <update-customer-action
+      v-if="actionModal == 'hyphenUpdateCustomer'"
+      v-model="data"
+      @channel="channel = $event"
+      ref="hyphenUpdateCustomer"
+    />
+
+    <send-form-action
+      v-if="actionModal == 'hyphenForm'"
+      v-model="data"
+      @channel="channel = $event"
+      ref="hyphenForm"
+    />
+
+    <!-- 
 
     <add-delay-action v-model="data" ref="addDelay" />
 
-    <update-customer-action v-model="data" ref="updateCustomer" />
 
-    <send-payment-action v-model="data" ref="SendPayment" />
 
     <connect-workflow-action v-model="data" ref="connectWorkflow" /> -->
   </div>
@@ -116,7 +139,7 @@ export default {
     return {
       data: null,
       actionModal: null,
-      channel:"N/A"
+      channel: "N/A",
     };
   },
 
