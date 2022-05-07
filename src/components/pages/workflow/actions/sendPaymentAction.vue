@@ -102,14 +102,17 @@
           </div>
         </div>
 
-       
+        <!-- <span class="note">
+          <b>Note:</b> Approval request will be sent to the selected co-worker,
+          along with details of this workflow
+        </span> -->
 
         <div class="bottom">
           <v-btn @click="close" large color="primary" outlined>
             <v-icon left>mdi-close</v-icon> Cancel
           </v-btn>
 
-          <v-btn @click="addToWorkflow" large color="primary" elevation="0">
+          <v-btn large color="primary" elevation="0">
             <v-icon left>mdi-chevron-right</v-icon> Add to workflow
           </v-btn>
         </div>
@@ -133,33 +136,6 @@ export default {
     },
     close() {
       this.dialog = false;
-    },
-
-    addToWorkflow() {
-      const payload = {
-        type: "hyphenSendPayment",
-        properties: {
-          keys: [
-            "amount_due",
-            "payment",
-            "due_date",
-            "invoice",
-            "organization id",
-            "name",
-          ],
-          values: [
-            "amount_due",
-            this.paymentType,
-            "due_date",
-            "invoice id value",
-            "organization id value",
-            "payment",
-          ],
-        },
-      };
-
-      this.$emit("input", payload);
-      this.close();
     },
   },
   watch: {
@@ -206,7 +182,7 @@ export default {
   }
 
   &__content {
-    background-color: #f8f7f4;
+    background-color: #F8F7F4;
     padding: 20px 50px;
 
     .top {
