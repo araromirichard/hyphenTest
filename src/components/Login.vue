@@ -58,27 +58,11 @@
                   :rules="rules.password"
                 ></v-text-field>
                 <div class="message-details d-flex justify-end my-2">
-                  <v-btn
-                    text
-                    x-small
-                    class="primary--text text-capitalize align-center"
-                    @click.prevent="goToRecovery()"
+                  <router-link
+                    to="/forgot-password"
+                    class="cursor-pointer border-none text-decoration-none"
+                    >Forgot password ?</router-link
                   >
-                    <p
-                      :style="{
-                        fontSize: `${$vuetify.breakpoint.xs ? '10px' : ''}`,
-                      }"
-                      style="
-                        font-family: inter;
-                        font-style: normal;
-                        font-weight: normal;
-                        line-height: 16px;
-                        letter-spacing: 0.278409px;
-                      "
-                    >
-                      Forgot Password?
-                    </p>
-                  </v-btn>
                 </div>
               </v-card-text>
 
@@ -235,10 +219,6 @@ export default {
           this.isLoginin = false;
         }
       }
-    },
-
-    goToRecovery() {
-      this.$router.push("/forgot-password");
     },
   },
 

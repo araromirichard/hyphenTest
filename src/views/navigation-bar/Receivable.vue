@@ -1,9 +1,9 @@
 <template>
   <v-container>
     <v-row>
-      <v-col cols="12">
-        <!-- title for desktop screens -->
-        <v-row align="center" v-if="$vuetify.breakpoint.mdAndUp">
+      <v-col cols="12" class="px-2">
+        <!-- page title-->
+        <v-row align="center">
           <v-col class="d-flex justify-center align-center" cols="12">
             <h3
               class="font-weight-bold text-md-h4 primary--text pl-md-14"
@@ -28,76 +28,27 @@
 
             <v-spacer></v-spacer>
 
-            <ReceivableDropdown
+            <!-- <ReceivableDropdown
               btnText="Add New"
               icon="uploadIcon"
               width="148"
               height="54px"
               style="margin-right: 88px"
-            />
+            /> -->
           </v-col>
         </v-row>
-        <v-row>
-          <!-- title for mobile screen -->
-          <v-col cols="12">
-            <div class="d-flex" v-if="$vuetify.breakpoint.mdAndDown">
-              <p
-                :style="{ display: `${isClicked != true ? 'none' : ''}` }"
-                class="pt-7 pl-5 primary--text"
-                style="
-                  font-family: Inter;
-                  font-style: normal;
-                  font-weight: bold;
-                  font-size: 24px;
-                  line-height: 22px;
-                  letter-spacing: -0.73px;
-                "
-              >
-                Receivables
-              </p>
-              <v-spacer></v-spacer>
-              <v-icon v-if="isClicked" @click="toggleSearch" class="pr-4 pt-7">
-                mdi-magnify
-              </v-icon>
-              <v-expand-x-transition v-else>
-                <v-text-field
-                  @input="searchDataTable"
-                  v-model="search"
-                  @blur="isClicked = true && !search"
-                  class="seacrh-field mt-4 mr-2"
-                  dense
-                  clearable
-                  autofocus
-                  hide-details="true"
-                  persistent-placeholder
-                  placeholder="Search"
-                  append-icon="mdi-magnify"
-                  filled
-                >
-                </v-text-field>
-              </v-expand-x-transition>
-              <ReceivableDropdown
-                btnText="Add New"
-                icon="uploadIcon"
-                width="100px"
-                height="48px"
-              />
-            </div>
-          </v-col>
-        </v-row>
-        <v-container fluid>
+
+        <v-container fluid class="px-2">
           <v-row class="ma-0 pa-0" align="center">
             <v-col class="pa-0 ma-0" cols="12" sm="12" md="6">
               <v-card
                 flat
                 height="180px"
                 :max-width="`${$vuetify.breakpoint.mdAndDown ? '100%' : '78%'}`"
-                class="d-flex flex-row"
+                class="d-flex flex-row mx-0"
                 style="margin-top: 35px"
                 :style="{
-                  marginLeft: `${
-                    $vuetify.breakpoint.mdAndUp ? '60px' : '12px'
-                  }`,
+                  marginLeft: `${$vuetify.breakpoint.mdAndUp ? '60px' : ''}`,
                 }"
               >
                 <v-row>
@@ -108,7 +59,7 @@
                       style="margin-top: 44px"
                       :style="{
                         marginLeft: `${
-                          $vuetify.breakpoint.mdAndUp ? '30px' : '12px'
+                          $vuetify.breakpoint.mdAndUp ? '30px' : ''
                         }`,
                       }"
                     >
@@ -175,9 +126,7 @@
                 class="d-flex flex-row"
                 style="margin-top: 35px"
                 :style="{
-                  marginLeft: `${
-                    $vuetify.breakpoint.mdAndUp ? '78px' : '12px'
-                  }`,
+                  marginLeft: `${$vuetify.breakpoint.mdAndUp ? '78px' : ''}`,
                 }"
               >
                 <v-row>
@@ -337,7 +286,7 @@
 import PureVueChart from "pure-vue-chart";
 import AllReceivables from "@/components/receivableTabs/AllReceivables.vue";
 import PaidReceivables from "../../components/receivableTabs/PaidReceivables.vue";
-import ReceivableDropdown from "../../includes/ReceivableDropdown.vue";
+//import ReceivableDropdown from "../../includes/ReceivableDropdown.vue";
 
 export default {
   name: "Receivables",
@@ -387,7 +336,7 @@ export default {
     PaidReceivables,
 
     PureVueChart,
-    ReceivableDropdown,
+    //ReceivableDropdown,
   },
   methods: {
     toggleSearch() {

@@ -6,7 +6,7 @@
           dark
           v-bind="attrs"
           v-on="on"
-          class="mr-md-16 mr-2"
+          class="mr-md-16"
           color="primary"
           :width="width"
           :height="height"

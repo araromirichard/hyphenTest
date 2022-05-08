@@ -354,7 +354,7 @@
             color="primary"
             active-class="primary--text text--accent-4 link-text"
           >
-            <v-list-item nav link to="/settings" class="mx-auto">
+            <!-- <v-list-item nav link to="/settings" class="mx-auto">
               <v-list-item-icon class="mr-4">
                 <img
                   :src="require('@/assets/pbot_icons/settings.svg')"
@@ -364,7 +364,7 @@
               <v-list-item-content>
                 <v-list-item-title class="navTxt">Settings</v-list-item-title>
               </v-list-item-content>
-            </v-list-item>
+            </v-list-item> -->
             <v-list-item nav link to="#" class="mx-auto">
               <v-list-item-icon class="mr-4">
                 <img
@@ -376,7 +376,7 @@
                 <v-list-item-title class="navTxt">Help</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
-            <v-list-item @click="logout" class="mx-auto">
+            <!-- <v-list-item @click="logout" class="mx-auto">
               <v-list-item-icon class="mr-4">
                 <img
                   :src="require('@/assets/icons/outline/Path.svg')"
@@ -384,25 +384,51 @@
                 />
               </v-list-item-icon>
               <v-list-item-content>
-                <v-list-item-title class="navTxt">Logout</v-list-item-title>
+                <v-list-item-title class="">Logout</v-list-item-title>
               </v-list-item-content>
-            </v-list-item>
+            </v-list-item> -->
           </v-list-item-group>
         </v-list>
       </div>
-      <template v-slot:append absolute v-if="$vuetify.breakpoint.mdAndUp">
-        <div class="pa-14">
-          <v-avatar class="mx-auto" color="primary" size="60">
-            <span class="white--text text-h5">{{ getUserInitials }}</span>
-          </v-avatar>
+
+      <template v-slot:append absolute>
+        <!-- logOutBtn/change organization button starts here  -->
+        <div class="px-8 py-8">
+          <v-btn
+            :to="{ name: 'organizationList' }"
+            outlined
+            class="text-capitalize"
+          >
+            Switch Organization
+            <v-icon> mdi-menu-down </v-icon>
+          </v-btn>
         </div>
+        <div class="ml-12 mb-13" v-if="$vuetify.breakpoint.mdAndUp">
+          <v-menu open-on-hover offset-y>
+            <template v-slot:activator="{ on, attrs }">
+              <v-avatar
+                class="mx-auto"
+                color="primary"
+                size="60"
+                v-bind="attrs"
+                v-on="on"
+              >
+                <span class="white--text text-h5">{{ getUserInitials }}</span>
+              </v-avatar>
+            </template>
+            <log-out-btn />
+          </v-menu>
+        </div>
+        <div style="height: 3vh"></div>
       </template>
     </v-navigation-drawer>
   </div>
 </template>
 
 <script>
+import logOutBtn from "../includes/btns/logOutDropdown.vue";
 export default {
+  components: { logOutBtn },
   data() {
     return {
       model: 1,
@@ -417,6 +443,7 @@ export default {
         "Render-form",
         "forgot-password",
         "reset-password",
+        "organizationList",
       ],
     };
   },

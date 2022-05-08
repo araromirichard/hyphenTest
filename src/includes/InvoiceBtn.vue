@@ -75,7 +75,7 @@
             max-width="362px"
             flat
             class="m-0"
-            style="background: #fefcf8; border-radius: 8px"
+            style="background: #f8f7f4; border-radius: 8px"
           >
             <v-card-title
               class="mb-8"

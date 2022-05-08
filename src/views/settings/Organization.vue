@@ -19,7 +19,7 @@
                   flat
                   style="border-bottom: 1px solid rgba(127, 145, 155, 0.3)"
                 >
-                  <v-tabs v-model="tab" align-with-title>
+                  <v-tabs slider-size="4" v-model="tab" align-with-title>
                     <v-tab
                       class="mt-2"
                       v-for="item in items"
@@ -59,6 +59,7 @@ import OrganTab from "@/includes/settings/organ/OrganTab.vue";
 import AccountTab from "@/includes/settings/organ/AccountTab.vue";
 import BtnCard from "../../includes/settings/btnCard.vue";
 export default {
+  name: "settings.organization",
   data() {
     return {
       tab: 0,

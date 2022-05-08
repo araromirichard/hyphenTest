@@ -18,6 +18,7 @@
             <SignUp v-if="isSignup" class="ma-auto" />
             <Login v-else-if="isLogin" />
             <Recover-password v-else-if="isRecovery" />
+            <reset-password v-else-if="isReset" />
           </v-scroll-y-transition>
         </v-col>
         <v-col
@@ -113,6 +114,7 @@
 import Login from "../components/Login";
 import RecoverPassword from "../components/forgotPassword.vue";
 import SignUp from "../components/SignUp";
+import ResetPassword from "../components/resetPassword.vue";
 
 export default {
   name: "FormLayout",
@@ -124,6 +126,7 @@ export default {
     Login,
     SignUp,
     RecoverPassword,
+    ResetPassword,
   },
 
   computed: {
@@ -135,6 +138,9 @@ export default {
     },
     isRecovery() {
       return this.$route.name === "forgot-password";
+    },
+    isReset() {
+      return this.$route.name === "reset-password";
     },
   },
 };

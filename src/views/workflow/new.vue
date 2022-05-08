@@ -43,7 +43,10 @@
             </div>
           </div>
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> develop
           <payment-trigger
             ref="paymentTrigger"
             v-model="workflow.payment"
@@ -152,7 +155,6 @@ export default {
           },
         ],
         workflow: {
-          id: "",
           title: this.$route.query.name || "untitled",
           trigger: null,
           runs: 0,
@@ -265,14 +267,6 @@ export default {
       },
     },
 
-    workflowPayload: {
-      deep: true,
-      immediate: true,
-      handler(val) {
-        console.log(JSON.stringify(val, null, 2));
-      },
-    },
-
     canShowConditions(val) {
       if (val) {
         this.$nextTick(() => {
@@ -366,16 +360,6 @@ export default {
         return true;
       }
       return false;
-    },
-
-    workflowPayload() {
-      return {
-        id: this.workflow.id, // rand it by time stamp for now
-        name: this.workflow.title,
-        trigger: this.workflow.trigger?.value || "",
-        schema: this.workflow.conditions, // data gotten from workflow component
-        actions: this.workflow.actions, // data gotten from workflo actions component
-      };
     },
   },
 };

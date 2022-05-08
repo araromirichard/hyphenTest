@@ -6,6 +6,7 @@
           <img class="i" src="@/assets/actions-get-approval.svg" alt="" />
           <span class="t">Get Approval</span>
         </div>
+
         <v-btn @click="close" icon color="primary">
           <v-icon>mdi-close</v-icon>
         </v-btn>
@@ -14,6 +15,7 @@
         <div class="top">
           <span class="action-title">Approval Notification</span>
         </div>
+
         <span class="action-description"
           >Select the co-worker from who approval is required for this
           stage</span
@@ -24,10 +26,7 @@
             outlined
             color="primary"
             label="Co-worker"
-            v-model="worker"
             :items="workers"
-            item-text="name"
-            item-value="email"
             hide-details="auto"
             placeholder="Select one"
           ></v-select>
@@ -43,7 +42,7 @@
             <v-icon left>mdi-close</v-icon> Cancel
           </v-btn>
 
-          <v-btn @click="addToWorkflow" large color="primary" elevation="0">
+          <v-btn large color="primary" elevation="0">
             <v-icon left>mdi-chevron-right</v-icon> Add to workflow
           </v-btn>
         </div>
@@ -54,39 +53,11 @@
 
 <script>
 export default {
-  props: {
-    value: {
-      default: {
-        type: "PbotApproval",
-        properties: {
-          keys: ["identity", "organization id", "type", "name"],
-          values: ["", "", "human", "approval"],
-        },
-      },
-    },
-  },
   data() {
     return {
       dialog: false,
-      workers: [
-        {
-          name: "John Doe",
-          email: "johndoe@gmail.com",
-        },
-        {
-          name: "Jane Doe",
-          email: "janedoe@gmail.com",
-        },
-        {
-          name: "Elon musk",
-          email: "musk@mail.com",
-        },
-      ],
-      worker: null,
+      workers: ["John Doe", "Jane Doe", "Jack Doe", "Jill Doe"],
     };
-  },
-  mounted() {
-    this.mapForm();
   },
   methods: {
     open() {
@@ -95,45 +66,11 @@ export default {
     close() {
       this.dialog = false;
     },
-
-    addToWorkflow() {
-      const payload = {
-        type: "PbotApproval",
-        properties: {
-          keys: ["identity", "organization id", "type", "name"],
-          values: [this.worker, this.orgId, "human", "approval"],
-        },
-      };
-
-      this.$emit("input", payload);
-      this.sendOutChannel();
-      this.close();
-    },
-
-    sendOutChannel() {
-      let channel = this.workers.find(
-        (worker) => worker.email == this.worker
-      ).name;
-      this.$emit("channel", channel);
-    },
-
-    mapForm() {
-      if (this.value) {
-        // automatically selects name
-        this.worker =
-          this.value.properties.values[
-            this.value.properties.keys.indexOf("identity")
-          ];
-
-        this.sendOutChannel();
-      }
-    },
   },
   watch: {
     dialog(val) {
       if (val) {
         this.$emit("open");
-        this.mapForm();
       } else {
         this.$emit("close");
       }
@@ -174,7 +111,7 @@ export default {
   }
 
   &__content {
-    background-color: #f8f7f4;
+    background-color: #F8F7F4;
     padding: 20px 50px;
 
     .top {

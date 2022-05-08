@@ -40,10 +40,13 @@
         <v-row>
           <!-- title for mobile screen -->
           <v-col cols="12">
-            <div class="d-flex" v-if="$vuetify.breakpoint.mdAndDown">
+            <div
+              class="d-flex align-center px-1"
+              v-if="$vuetify.breakpoint.mdAndDown"
+            >
               <p
                 :style="{ display: `${isClicked != true ? 'none' : ''}` }"
-                class="pt-7 pl-5 primary--text"
+                class="pt-7 primary--text"
                 style="
                   font-family: Inter;
                   font-style: normal;
@@ -85,14 +88,14 @@
             </div>
           </v-col>
         </v-row>
-        <v-container fluid>
+        <v-container fluid class="px-0">
           <v-row class="ma-0 pa-0" align="center">
             <v-col class="pa-0 ma-0" cols="12" sm="12" md="6">
               <v-card
                 flat
                 height="180px"
                 :max-width="`${$vuetify.breakpoint.mdAndDown ? '100%' : '78%'}`"
-                class="d-flex flex-row"
+                class="d-flex flex-row ml-0 ml-md-16"
                 style="margin-top: 35px"
                 :style="{
                   marginLeft: `${
@@ -171,7 +174,7 @@
                 flat
                 height="180px"
                 :max-width="`${$vuetify.breakpoint.mdAndDown ? '100%' : '78%'}`"
-                class="d-flex flex-row"
+                class="d-flex flex-row ml-0"
                 style="margin-top: 35px"
                 :style="{
                   marginLeft: `${

@@ -200,7 +200,7 @@
                 font-size: 24px;
                 line-height: 29px;
                 text-decoration-line: underline;
-                color: #7b4fff;
+                color: #18293d;
               "
               >Go to Auditor</span
             ></router-link

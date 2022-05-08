@@ -21,16 +21,26 @@
           </span>
         </v-btn>
       </template>
-      <v-card flat class="parent-card"
-        ><v-list-item-group>
+      <v-card flat class="parent-card">
+        <v-list-item-group>
           <v-list>
-            <ListMenu />
-            <v-list-item v-for="(item, index) in inboxMenus" :key="index">
+            <v-list-item
+              v-for="(item, index) in inboxMenus"
+              :key="index"
+              @click="showDialog(index)"
+            >
               <v-list-item-content>
-                <v-list-item-title v-if="item.title == 'EMAIL TO: '"
-                  >{{ item.title }}
-                  {{ organizationToken.data.hypn_email }}</v-list-item-title
+                <v-list-item-title
+                  tag="button"
+                  slot="activator"
+                  v-if="item.title == 'Upload'"
                 >
+                  {{ item.title }}
+                </v-list-item-title>
+                <v-list-item-title v-else-if="item.title == 'EMAIL TO: '">
+                  {{ item.title }}
+                  {{ organizationToken.data.hypn_email }}
+                </v-list-item-title>
                 <v-list-item-title v-else>{{ item.title }}</v-list-item-title>
                 <v-list-item-subtitle>
                   {{ item.subtitle }}
@@ -40,20 +50,20 @@
             </v-list-item>
           </v-list>
         </v-list-item-group>
+        <upload-dialog ref="uploadDialog" />
       </v-card>
     </v-menu>
   </div>
 </template>
 
 <script>
-import ListMenu from "@/includes/overlays/ListMenu.vue";
 import { mapGetters } from "vuex";
+import uploadDialog from "./overlays/uploadDialog.vue";
 
 export default {
+  components: { uploadDialog },
   name: "DropDown",
-  components: {
-    ListMenu,
-  },
+
   props: {
     icon: String,
     btnText: String,
@@ -64,12 +74,11 @@ export default {
     return {
       inboxMenus: [
         {
-          title: "Form",
-          subtitle: "create form",
-          icon: "mdi-text-box-outline ",
-          path: "#",
+          title: "Upload",
+          subtitle: "pdf or jpg invoice",
+          icon: "mdi-file-upload-outline ",
+          path: "",
         },
-
         {
           title: "Bank Account",
           subtitle: "connect your bank account",
@@ -85,6 +94,13 @@ export default {
         },
       ],
     };
+  },
+  methods: {
+    showDialog(index) {
+      if (index === 0) {
+        this.$refs.uploadDialog.OpenDialog();
+      }
+    },
   },
   computed: {
     btnIcon() {
@@ -119,7 +135,6 @@ export default {
 }
 .parent-card {
   width: 227px;
-  height: 266px;
   background: #ffffff;
 }
 

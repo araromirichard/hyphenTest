@@ -2,7 +2,6 @@
   <div>
     <v-hover v-slot:default="{ hover }">
       <v-card
-        @click.stop="dialog = true"
         class="px-6 py-4 my-1"
         style="cursor: pointer; transition: all 0.3s ease"
         :elevation="hover ? 2 : 0"
@@ -120,37 +119,49 @@
           </v-flex>
           <v-flex md2>
             <div class="d-flex align-center">
-              <v-btn
-                @click.stop="dialog = true"
-                exact-path
-                rounded
-                depressed
-                dark
-                small
-                color="#2BD5AE"
-                class="text-lowercase px-2 my-1 mr-2"
-                style="color: var(--v-primary-base)"
-              >
-                view
-              </v-btn>
-              <v-btn
-                rounded
-                depressed
-                dark
-                small
-                color="primary"
-                class="text-lowercase px-2 my-1"
-                >review</v-btn
-              >
+              <v-hover v-slot="{ hover }">
+                <v-btn
+                  :style="{
+                    'background-color': hover ? '#2bd5ae' : '',
+                    border: hover ? 'none' : '',
+                  }"
+                  exact-path
+                  depressed
+                  outlined
+                  dark
+                  small
+                  color="#2BD5AE"
+                  class="text-capitalize px-1 my-1 mr-1 rounded"
+                  style="color: var(--v-primary-base)"
+                >
+                  view
+                </v-btn>
+              </v-hover>
+              <v-hover v-slot="{ hover }">
+                <v-btn
+                  dark
+                  outlined
+                  depressed
+                  small
+                  color="primary"
+                  :style="{
+                    'background-color': hover ? '#c4c9cf' : '',
+                    border: hover ? 'none' : '',
+                    color: hover ? 'white' : '#ffffff',
+                  }"
+                  class="text-capitalize px-2 my-1 rounded"
+                  >review</v-btn
+                >
+              </v-hover>
             </div>
           </v-flex>
         </v-layout>
       </v-card>
     </v-hover>
-    <template>
+    <!-- <template>
       <div>
         <v-dialog v-model="dialog" max-width="516">
-          <v-card color="#FEFCF8" class="rounded-lg">
+          <v-card color="#f8f7f4" class="rounded-lg">
             <v-card-title
               style="background: #ffffff; border-radius: 8px 8px 0px 0px"
             >
@@ -428,7 +439,7 @@
           </v-card>
         </v-dialog>
       </div>
-    </template>
+    </template> -->
   </div>
 </template>
 

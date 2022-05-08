@@ -81,7 +81,7 @@
           cols="12"
           v-for="(payment, i) in filteredPayments"
           :key="i"
-          class="py-0 ma-0"
+          class="py-0 px-0 px-md-3 ma-0"
         >
           <PaymentTable
             v-if="$vuetify.breakpoint.mdAndUp"

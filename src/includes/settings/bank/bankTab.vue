@@ -1,16 +1,8 @@
 <template>
   <div>
     <v-row>
-      <v-col cols="12" class="px-0">
-        <p
-          class="
-            ml-md-16
-            px-8
-            pt-md-8
-            text-caption text-md-body-1
-            blue-grey--text
-          "
-        >
+      <v-col cols="12" class="px-md-14">
+        <p class="px-8 pt-md-8 text-caption text-md-body-1 blue-grey--text">
           Hyphen connects to your company bank accounts through our integration
           partners, who are licensed to read your transactions data in a secure
           and compliant way.

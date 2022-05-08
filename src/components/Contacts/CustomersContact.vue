@@ -5,7 +5,7 @@
         height="60px"
         width="100%"
         flat
-        class="d-flex mb-8 mb-md-0"
+        class="d-flex mb-8 mb-md-0 align-center"
         style="background: rgba(127, 145, 155, 0.052607)"
       >
         <v-spacer></v-spacer>
@@ -15,7 +15,7 @@
               outlined
               @click="alertCSVDownload"
               color="primary"
-              class="my-4 export-btn mr-5 mr-md-9 hover-btn"
+              class="my-4 export-btn mr-2 mr-md-9 hover-btn"
               :style="{
                 'background-color': hover ? '#2bd5ae' : '',
                 border: hover ? 'none' : '',

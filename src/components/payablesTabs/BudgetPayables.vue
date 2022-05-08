@@ -41,7 +41,7 @@
     <template>
       <div>
         <v-dialog v-model="dialog" max-width="516">
-          <v-card color="#FEFCF8" class="rounded-lg">
+          <v-card color="#f8f7f4" class="rounded-lg">
             <v-card-title
               style="background: #ffffff; border-radius: 8px 8px 0px 0px"
             >

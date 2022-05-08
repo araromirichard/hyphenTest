@@ -6,7 +6,7 @@
           v-for="(item, i) in items"
           :key="i"
           cols="12"
-          class="px-10 px-md-16 py-0"
+          class="px-auto px-md-16 py-0"
         >
           <v-item v-slot="{ active, toggle }">
             <v-hover v-slot:default="{ hover }">
