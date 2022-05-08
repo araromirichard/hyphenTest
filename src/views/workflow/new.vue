@@ -43,10 +43,6 @@
             </div>
           </div>
 
-<<<<<<< HEAD
-
-=======
->>>>>>> develop
           <payment-trigger
             ref="paymentTrigger"
             v-model="workflow.payment"
