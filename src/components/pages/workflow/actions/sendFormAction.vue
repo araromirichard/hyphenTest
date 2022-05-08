@@ -61,7 +61,7 @@
             <v-icon left>mdi-close</v-icon> Cancel
           </v-btn>
 
-          <v-btn large color="primary" elevation="0">
+          <v-btn @click="addToWorkflow" large color="primary" elevation="0">
             <v-icon left>mdi-chevron-right</v-icon> Add to FLow
           </v-btn>
         </div>
@@ -154,7 +154,7 @@ export default {
     },
 
     sendOutChannel() {
-      let channel = this.forms.find((form) => form.id == this.data.form).name;
+      let channel = this.forms.find((form) => form.id == this.data.form)?.name || 'N/A';
       this.$emit("channel", channel);
     },
   },

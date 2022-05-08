@@ -45,7 +45,7 @@
             <v-icon left>mdi-close</v-icon> Cancel
           </v-btn>
 
-          <v-btn large color="primary" elevation="0">
+          <v-btn @click="addToWorkflow" large color="primary" elevation="0">
             <v-icon left>mdi-chevron-right</v-icon> Add to workflow
           </v-btn>
         </div>
@@ -132,7 +132,7 @@ export default {
     },
 
     sendOutChannel() {
-      let channel = this.days.find((day) => day.value == this.day).text;
+      let channel = this.days.find((day) => day.value == this.day)?.text || 'N/A';
       this.$emit("channel", channel);
     },
   },
