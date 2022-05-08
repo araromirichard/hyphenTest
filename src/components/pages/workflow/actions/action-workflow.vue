@@ -1,9 +1,9 @@
 <template>
-  <div v-if="action != null">
+  <div v-if="value != null">
     <div
       class="selected-action"
       :style="
-        action.channel == 'addDelay'
+        actionMeta.type == 'hyphenDelay'
           ? 'border:3px dashed rgb(249, 238, 210)'
           : ''
       "
@@ -14,9 +14,9 @@
         </div>
       </div>
       <div class="selection-acion__text">
-        <span class="selected-action__text-title"> {{ action.text }} </span>
+        <span class="selected-action__text-title"> {{ actionMeta.text }} </span>
         <span class="selected-action__text-description">
-          channel: {{ action.channel }}
+          channel: {{ channel }}
         </span>
       </div>
       <div class="selection-acion__actions">
@@ -25,12 +25,11 @@
             >mdi-close-circle-outline</v-icon
           >
         </button>
-        <button @click="showDialog(action.channel)">
+        <button @click="showDialog(actionMeta.type)">
           <v-icon size="24" color="rgba(127, 145, 155, 0.4)">mdi-cog</v-icon>
         </button>
       </div>
     </div>
-    <!--  -->
 
     <v-timeline>
       <div class="d-flex mt-1">
@@ -50,21 +49,60 @@
       </div>
     </v-timeline>
 
-    <get-approval-action ref="getApproval" />
+    <get-approval-action
+      v-if="actionModal == 'PbotApproval'"
+      @channel="channel = $event"
+      v-model="data"
+      ref="PbotApproval"
+    />
 
-    <send-email-action ref="sendEmail" />
+    <send-email-action
+      v-if="actionModal == 'hyphenEmail'"
+      @channel="channel = $event"
+      v-model="data"
+      ref="hyphenEmail"
+    />
 
-    <add-to-payables-action ref="addToPayables" />
+    <add-to-payables-action
+      v-if="actionModal == 'hyphenAddToPayables'"
+      @channel="channel = $event"
+      v-model="data"
+      ref="hyphenAddToPayables"
+    />
+    <send-payment-action
+      v-if="actionModal == 'hyphenSendPayment'"
+      @channel="channel = $event"
+      v-model="data"
+      ref="hyphenSendPayment"
+    />
 
-    <send-form-action ref="sendForm" />
+    <update-customer-action
+      v-if="actionModal == 'hyphenUpdateCustomer'"
+      v-model="data"
+      @channel="channel = $event"
+      ref="hyphenUpdateCustomer"
+    />
 
-    <add-delay-action ref="addDelay" />
+    <send-form-action
+      v-if="actionModal == 'hyphenForm'"
+      v-model="data"
+      @channel="channel = $event"
+      ref="hyphenForm"
+    />
 
-    <update-customer-action ref="updateCustomer" />
+    <add-delay-action
+      v-if="actionModal == 'hyphenDelay'"
+      @channel="channel = $event"
+      v-model="data"
+      ref="hyphenDelay"
+    />
 
-    <send-payment-action ref="SendPayment" />
-
-    <connect-workflow-action ref="connectWorkflow" />
+    <connect-workflow-action
+      v-if="actionModal == 'hyphenToWorkFlow'"
+      @channel="channel = $event"
+      v-model="data"
+      ref="hyphenToWorkFlow"
+    />
   </div>
 </template>
 
@@ -77,7 +115,6 @@ import sendEmailAction from "./sendEmailAction.vue";
 import SendFormAction from "./sendFormAction.vue";
 import SendPaymentAction from "./sendPaymentAction.vue";
 import UpdateCustomerAction from "./updateCustomerAction.vue";
-
 export default {
   components: {
     GetApprovalAction,
@@ -90,13 +127,8 @@ export default {
     ConnectWorkflowAction,
   },
   props: {
-    action: {
-      type: Object,
+    value: {
       default: null,
-    },
-    availableActions: {
-      type: Array,
-      default: () => [],
     },
     index: {
       type: Number,
@@ -111,33 +143,58 @@ export default {
   data() {
     return {
       data: null,
+      actionModal: null,
+      channel: "N/A",
     };
   },
-
   mounted() {
-    this.showDialog(this.action.channel);
+    this.data = this.value;
+    if (this.value?.fresh) {
+      this.showDialog(this.value.type);
+    }
+    this.actionModal = this.value.type;
   },
-
   methods: {
-    showDialog(ref) {
+    async showDialog(ref) {
+      // this.actionModal = ref;
+      await this.$nextTick();
       //call show function of modal component identified the "ref"
       this.$refs[ref].open();
     },
   },
-
+  computed: {
+    actionMeta() {
+      if (typeof this.value === "object") {
+        return this.actionsMeta.find(
+          (action) => action.type === this.value.type
+        );
+      } else {
+        return this.actionsMeta.find((action) => action.type === this.value);
+      }
+    },
+  },
   watch: {
     data: {
       immediate: true,
       deep: true,
       handler(newValue) {
+        if (JSON.stringify(newValue) !== JSON.stringify(this.value)) {
+          this.$emit("input", newValue);
+        }
         // send out the collected from the modal form
-        this.$emit("properties", newValue);
+      },
+    },
+    value: {
+      immediate: true,
+      deep: true,
+      handler(newValue) {
+        this.data = newValue;
+        // reset the modal form data
       },
     },
   },
 };
 </script>
-
 <style lang="scss" scoped>
 .selected-action {
   margin: auto;
@@ -153,7 +210,6 @@ export default {
   font-family: Inter;
   font-style: normal;
   color: #757575;
-
   &__icon {
     width: 44px;
     height: 41px;
@@ -164,29 +220,26 @@ export default {
     align-items: center;
     justify-content: center;
   }
-
   .selection-acion__text {
     flex: 1;
     display: flex;
     flex-direction: column;
     overflow: hidden;
     white-space: nowrap;
-
     .selected-action__text-title {
       font-weight: 600;
       font-size: 16px;
       overflow: hidden;
       text-overflow: ellipsis;
     }
-
     .selected-action__text-description {
       margin-top: 1px;
       font-size: 15px;
       overflow: hidden;
       text-overflow: ellipsis;
+      white-space: nowrap;
     }
   }
-
   .selection-acion__actions {
     display: flex;
     height: 100%;
@@ -194,14 +247,12 @@ export default {
     border-left: 1px solid #f9eed2;
     width: 50px;
   }
-
   .selection-acion__actions button {
     flex: 1;
     color: rgba(5, 6, 7, 0.5);
     cursor: pointer;
     outline: none;
   }
-
   .selection-acion__actions button:first-child {
     border-bottom: 1px solid #f9eed2;
   }

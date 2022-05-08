@@ -28,6 +28,10 @@
                 outlined
                 color="primary"
                 label="Form"
+                v-model="data.form"
+                :items="forms"
+                item-text="name"
+                item-value="id"
                 hide-details="auto"
                 placeholder="Form"
               ></v-select>
@@ -36,6 +40,7 @@
               <v-text-field
                 name="Recipient"
                 label="Recipient"
+                v-model="data.recipient"
                 placeholder="Recipient"
                 hide-details="auto"
                 outlined
@@ -56,7 +61,7 @@
             <v-icon left>mdi-close</v-icon> Cancel
           </v-btn>
 
-          <v-btn large color="primary" elevation="0">
+          <v-btn @click="addToWorkflow" large color="primary" elevation="0">
             <v-icon left>mdi-chevron-right</v-icon> Add to FLow
           </v-btn>
         </div>
@@ -67,10 +72,46 @@
 
 <script>
 export default {
+  props: {
+    value: {
+      default: {
+        type: "hyphenForm",
+        properties: {
+          keys: ["form id", "form name", "identity", "organization", "name"],
+          values: ["", "", "", "", "form"],
+        },
+      },
+    },
+  },
   data() {
     return {
       dialog: false,
+      forms: [
+        {
+          name: "Form 1",
+          id: 1,
+        },
+        {
+          name: "Form 2",
+          id: 2,
+        },
+        {
+          name: "Form 3",
+          id: 3,
+        },
+        {
+          name: "Form 4",
+          id: 4,
+        },
+      ],
+      data: {
+        form: "",
+        recipient: "",
+      },
     };
+  },
+  mounted() {
+    this.mapForm();
   },
   methods: {
     open() {
@@ -79,11 +120,49 @@ export default {
     close() {
       this.dialog = false;
     },
+
+    addToWorkflow() {
+      const payload = {
+        type: "hyphenForm",
+        properties: {
+          keys: ["form id", "form name", "identity", "organization", "name"],
+          values: [
+            this.data.form,
+            this.forms.find((form) => form.id == this.data.form).name,
+            this.data.recipient,
+            this.orgId,
+            "form",
+          ],
+        },
+      };
+
+      this.$emit("input", payload);
+      this.sendOutChannel();
+      this.close();
+    },
+
+    mapForm() {
+      if (this.value) {
+      
+        this.data.form =
+          this.value.properties.values[this.value.properties.keys.indexOf("form id")];
+        this.data.recipient =
+          this.value.properties.values[this.value.properties.keys.indexOf("identity")];
+
+        this.sendOutChannel();
+      }
+    },
+
+    sendOutChannel() {
+      let channel = this.forms.find((form) => form.id == this.data.form)?.name || 'N/A';
+      this.$emit("channel", channel);
+    },
   },
   watch: {
     dialog(val) {
       if (val) {
         this.$emit("open");
+        this.mapForm();
       } else {
         this.$emit("close");
       }

@@ -139,7 +139,7 @@ export default {
       deep: true,
       handler(val) {
         this.$store.dispatch("workflow/updateSchema", val);
-        console.log(JSON.stringify(val, null, 2));
+        //console.log(JSON.stringify(val, null, 2));
       },
     },
 

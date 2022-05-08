@@ -27,6 +27,8 @@
               <v-select
                 outlined
                 color="primary"
+                :items="totals"
+                v-model="total"
                 label="Total"
                 hide-details="auto"
                 placeholder="Total"
@@ -36,6 +38,8 @@
               <v-select
                 name="Amount Due"
                 label="Amount Due"
+                :items="amounts_due"
+                v-model="amount_due"
                 placeholder="Amount Due"
                 hide-details="auto"
                 outlined
@@ -51,7 +55,11 @@
         </span> -->
 
         <div class="bottom">
-          <v-btn large color="primary" elevation="0">
+          <v-btn @click="close" large color="primary" outlined>
+            <v-icon left>mdi-close</v-icon> Cancel
+          </v-btn>
+
+          <v-btn large color="primary" elevation="0" @click="addToWorkflow">
             <v-icon left>mdi-chevron-right</v-icon> SAVE
           </v-btn>
         </div>
@@ -62,11 +70,28 @@
 
 <script>
 export default {
+  props: {
+    value: {
+      default: {
+        type: "hyphenAddToPayables",
+        properties: {
+          keys: ["total", "amount_due", "organization", "name"],
+          values: [],
+        },
+      },
+    },
+  },
   data() {
     return {
       dialog: false,
-      workers: ["John Doe", "Jane Doe", "Jack Doe", "Jill Doe"],
+      totals: ["5000", "5,600", "8,000"],
+      amounts_due: ["5,000", "5,600", "8,000"],
+      total: "",
+      amount_due: "",
     };
+  },
+  mounted() {
+    this.mapForm();
   },
   methods: {
     open() {
@@ -75,11 +100,46 @@ export default {
     close() {
       this.dialog = false;
     },
+
+    addToWorkflow() {
+      const payload = {
+        type: "hyphenAddToPayables",
+        properties: {
+          keys: ["total", "amount_due", "organization", "name"],
+          values: [this.total, this.amount_due, this.orgId, "payables"],
+        },
+      };
+
+      this.$emit("input", payload);
+      this.sendOutChannel();
+      this.close();
+    },
+
+    sendOutChannel() {
+      this.$emit("channel", this.amount_due);
+    },
+
+    mapForm() {
+      if (this.value) {
+        this.total =
+          this.value.properties.values[
+            this.value.properties.keys.indexOf("total")
+          ];
+
+        this.amount_due =
+          this.value.properties.values[
+            this.value.properties.keys.indexOf("amount_due")
+          ];
+
+        this.sendOutChannel();
+      }
+    },
   },
   watch: {
     dialog(val) {
       if (val) {
         this.$emit("open");
+        this.mapForm();
       } else {
         this.$emit("close");
       }
