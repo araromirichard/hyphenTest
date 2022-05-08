@@ -43,13 +43,8 @@
             </div>
           </div>
 
-          <execute-actions-workflow
-            ref="actions"
-            @publish="publishDialog = true"
-            v-model="workflow.actions"
-          />
 
-          <!-- <payment-trigger
+          <payment-trigger
             ref="paymentTrigger"
             v-model="workflow.payment"
             v-if="isPaymentTrigger"
@@ -70,12 +65,13 @@
           />
 
           <execute-actions-workflow
+            v-if="canShowActions"
             ref="actions"
             @publish="publishDialog = true"
-            v-model="workflow.actions"
             :isVisable="canShowActions"
-            v-if="canShowActions"
-          /> -->
+            v-model="workflow.actions"
+          />
+
         </div>
       </div>
     </div>
@@ -111,11 +107,11 @@
 
 <script>
 import ExecuteActionsWorkflow from "../../components/pages/workflow/actions/execute-actions-workflow.vue";
-//import ComposeWorkflow from "../../components/pages/workflow/compose/compose-workflow.vue";
+import ComposeWorkflow from "../../components/pages/workflow/compose/compose-workflow.vue";
 import detailsTabWorkflow from "../../components/pages/workflow/details-tab-workflow.vue";
 import TriggerWorkflow from "../../components/pages/workflow/trigger-workflow.vue";
-//import FormTrigger from "../../components/pages/workflow/trigger/form-trigger.vue";
-//import PaymentTrigger from "../../components/pages/workflow/trigger/payment-trigger.vue";
+import FormTrigger from "../../components/pages/workflow/trigger/form-trigger.vue";
+import PaymentTrigger from "../../components/pages/workflow/trigger/payment-trigger.vue";
 
 import { operators } from "@/utils/ManagerApprovalOptions.js";
 
@@ -123,9 +119,9 @@ export default {
   components: {
     detailsTabWorkflow,
     TriggerWorkflow,
-    //  PaymentTrigger,
-    //  FormTrigger,
-    // ComposeWorkflow,
+    PaymentTrigger,
+    FormTrigger,
+    ComposeWorkflow,
     ExecuteActionsWorkflow,
   },
   data() {
@@ -164,80 +160,80 @@ export default {
           payment: null,
           form: null,
           actions: [
-            {
-              type: "PbotApproval",
-              properties: {
-                keys: ["identity", "organization id", "type", "name"],
-                values: [
-                  "musk@mail.com",
-                  "organization id value",
-                  "human",
-                  "approval",
-                ],
-              },
-            },
-            {
-              type: "hyphenEmail",
-              properties: {
-                keys: [
-                  "subject",
-                  "message",
-                  "to",
-                  "cc",
-                  "organization id",
-                  "name",
-                ],
-                values: [
-                  "Next step",
-                  "I am buying amazon next",
-                  "musk@mail.com",
-                  ["johndoe@gmail.com", "musk@mail.com", "janedoe@gmail.com"],
-                  2,
-                  "email",
-                ],
-              },
-            },
-            {
-              type: "hyphenAddToPayables",
-              properties: {
-                keys: ["total", "amount_due", "organization", "name"],
-                values: ["5000", "8,000", 2, "payables"],
-              },
-            },
-            {
-              type: "hyphenUpdateCustomer",
-              properties: {
-                keys: ["attribute", "tag", "term", "organization", "name"],
-                values: ["Tag", ["high value", "wema bank"], "", 2, "customer"],
-              },
-            },
-            {
-              type: "hyphenForm",
-              properties: {
-                keys: [
-                  "form id",
-                  "form name",
-                  "identity",
-                  "organization",
-                  "name",
-                ],
-                values: [3, "Form 3", "musk@mail.com", 2, "form"],
-              },
-            },
-            {
-              type: "hyphenToWorkFlow",
-              properties: {
-                keys: ["workflow", "organization"],
-                values: ["3", 2],
-              },
-            },
-            {
-              type: "hyphenDelay",
-              properties: {
-                keys: ["days", "organization", "type", "name"],
-                values: [3, 2, "delay", "delay"],
-              },
-            },
+            // {
+            //   type: "PbotApproval",
+            //   properties: {
+            //     keys: ["identity", "organization id", "type", "name"],
+            //     values: [
+            //       "musk@mail.com",
+            //       "organization id value",
+            //       "human",
+            //       "approval",
+            //     ],
+            //   },
+            // },
+            // {
+            //   type: "hyphenEmail",
+            //   properties: {
+            //     keys: [
+            //       "subject",
+            //       "message",
+            //       "to",
+            //       "cc",
+            //       "organization id",
+            //       "name",
+            //     ],
+            //     values: [
+            //       "Next step",
+            //       "I am buying amazon next",
+            //       "musk@mail.com",
+            //       ["johndoe@gmail.com", "musk@mail.com", "janedoe@gmail.com"],
+            //       2,
+            //       "email",
+            //     ],
+            //   },
+            // },
+            // {
+            //   type: "hyphenAddToPayables",
+            //   properties: {
+            //     keys: ["total", "amount_due", "organization", "name"],
+            //     values: ["5000", "8,000", 2, "payables"],
+            //   },
+            // },
+            // {
+            //   type: "hyphenUpdateCustomer",
+            //   properties: {
+            //     keys: ["attribute", "tag", "term", "organization", "name"],
+            //     values: ["Tag", ["high value", "wema bank"], "", 2, "customer"],
+            //   },
+            // },
+            // {
+            //   type: "hyphenForm",
+            //   properties: {
+            //     keys: [
+            //       "form id",
+            //       "form name",
+            //       "identity",
+            //       "organization",
+            //       "name",
+            //     ],
+            //     values: [3, "Form 3", "musk@mail.com", 2, "form"],
+            //   },
+            // },
+            // {
+            //   type: "hyphenToWorkFlow",
+            //   properties: {
+            //     keys: ["workflow", "organization"],
+            //     values: ["3", 2],
+            //   },
+            // },
+            // {
+            //   type: "hyphenDelay",
+            //   properties: {
+            //     keys: ["days", "organization", "type", "name"],
+            //     values: [3, 2, "delay", "delay"],
+            //   },
+            // },
           ],
         },
       };
