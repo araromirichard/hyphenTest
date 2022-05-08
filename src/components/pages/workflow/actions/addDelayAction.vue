@@ -26,6 +26,8 @@
             outlined
             color="primary"
             v-model="day"
+            item-text="text"
+            item-value="value"
             label="No of Days"
             :items="days"
             hide-details="auto"
@@ -54,25 +56,46 @@
 
 <script>
 export default {
-  props:{
-    value:{
-      default:{
-          type: "hyphenDelay",
-            properties: {
-              keys: ["days", "organization", "type", "name"],
-              values: ["", "", "", "delay", "delay"],
-            },
-      }
-    }
+  props: {
+    value: {
+      default: {
+        type: "hyphenDelay",
+        properties: {
+          keys: ["days", "organization", "type", "name"],
+          values: ["", "", "", "delay", "delay"],
+        },
+      },
+    },
   },
-  mounted(){
+  mounted() {
     this.mapForm();
   },
   data() {
     return {
       dialog: false,
-      days: ["1 Day", "2 Days", "3 Days", "4 Days", "5 Days"],
-      day:""
+      days: [
+        {
+          text: "1 Day",
+          value: 1,
+        },
+        {
+          text: "2 Days",
+          value: 2,
+        },
+        {
+          text: "3 Days",
+          value: 3,
+        },
+        {
+          text: "4 Days",
+          value: 4,
+        },
+        {
+          text: "5 Days",
+          value: 5,
+        },
+      ],
+      day: "",
     };
   },
   methods: {
@@ -88,21 +111,16 @@ export default {
         type: "hyphenDelay",
         properties: {
           keys: ["days", "organization", "type", "name"],
-          values: [
-            this.day,
-            this.orgId,
-            "delay",
-            "delay",
-          ],
+          values: [this.day, this.orgId, "delay", "delay"],
         },
       };
 
       this.$emit("input", payload);
-      this.sendOutChannel()
+      this.sendOutChannel();
       this.close();
     },
 
-        mapForm() {
+    mapForm() {
       if (this.value) {
         this.day =
           this.value.properties.values[
@@ -113,8 +131,8 @@ export default {
       }
     },
 
-        sendOutChannel() {
-      let channel = this.day
+    sendOutChannel() {
+      let channel = this.days.find((day) => day.value == this.day).text;
       this.$emit("channel", channel);
     },
   },
@@ -122,7 +140,7 @@ export default {
     dialog(val) {
       if (val) {
         this.$emit("open");
-        this.mapForm()
+        this.mapForm();
       } else {
         this.$emit("close");
       }

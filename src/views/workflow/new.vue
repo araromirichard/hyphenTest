@@ -235,7 +235,7 @@ export default {
               type: "hyphenDelay",
               properties: {
                 keys: ["days", "organization", "type", "name"],
-                values: ["5 Days", 2, "delay", "delay"],
+                values: [3, 2, "delay", "delay"],
               },
             },
           ],
