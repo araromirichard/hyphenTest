@@ -145,11 +145,8 @@ export default {
   data() {
     return {
       data: null,
-<<<<<<< HEAD
       actionModal: null,
       channel: "N/A",
-=======
->>>>>>> develop
     };
   },
 
