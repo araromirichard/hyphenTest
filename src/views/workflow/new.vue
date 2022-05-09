@@ -127,7 +127,7 @@
         <div class="publish-sucessful__content">
           <span class="msg"
             >
-            Your workflow {{workflow.name}}, was successfully saved and is ready to process data from your selected trigger. 
+            Your workflow {{workflow.title}}, was successfully saved and is ready to process data from your selected trigger. 
             </span
           >
 
