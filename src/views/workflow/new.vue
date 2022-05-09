@@ -100,6 +100,68 @@
         </div>
       </div>
     </v-dialog>
+
+
+
+
+
+<!-- publish dialog -->
+
+        <v-dialog
+      v-model="publishDialogSucessful"
+      max-width="550px"
+      transition="dialog-transition"
+    >
+      <div class="publish-sucessful">
+        <div class="publish-sucessful__header">
+          <span class="t">Workflow Published</span>
+          <v-btn @click="publishDialogSucessful = false" icon color="primary">
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
+        </div>
+        <div class="publish-sucessful__top">
+          <v-btn color="success" fab outlined>
+             <v-icon>check</v-icon>
+            </v-btn> <span>Workflow published successfully</span>
+        </div>
+        <div class="publish-sucessful__content">
+          <span class="msg"
+            >
+            Your workflow {{workflow.name}}, was successfully saved and is ready to process data from your selected trigger. 
+            </span
+          >
+
+          <div class="mt-3">
+             <v-btn color="primary" style="font-weight:bold" @click="showAdvance = !showAdvance" text>Advanced <v-icon v-if="!showAdvance" right>mdi-chevron-down</v-icon>  <v-icon v-else>mdi-chevron-up</v-icon> </v-btn>
+             
+
+             <div v-if="showAdvance">
+                <span style="color:#19283DCC" class="mb-2 mt-1 d-block">
+               To trigger this workflow using an external API or webhook service, make a POST request to the endpoint below
+             </span>
+
+            <v-text-field
+              prefix="POST"
+              v-model="workflow.webhook"
+              disabled
+              outlined
+              append-icon="mdi-content-copy"
+            ></v-text-field>
+
+            <span class="mt-1 d-block" style="color:#8F96A1;font-size:14px">
+              <b>Note:</b> This endpoint is unique to this workflow and serves as a trigger. The payload must match the fields used in your workflow composition
+            </span>
+             </div>
+          </div>
+
+          <div class=" mt-5 cta">
+              <v-btn color="primary" @click="publishDialogSucessful = false" elevation="0" large>
+            <v-icon left>mdi-chevron-right</v-icon> close</v-btn
+          >
+          </div>
+        </div>
+      </div>
+    </v-dialog>
   </div>
 </template>
 
@@ -126,6 +188,7 @@ export default {
     {
       return {
         publishDialog: false,
+        publishDialogSucessful:false,
         showTriggers: false,
         scrollOptions: {
           duration: 500,
@@ -149,6 +212,7 @@ export default {
             disabled: false,
           },
         ],
+        showAdvance:false,
         workflow: {
           title: this.$route.query.name || "untitled",
           trigger: null,
@@ -232,6 +296,7 @@ export default {
             //   },
             // },
           ],
+          webhook:"https://flow.hypn.so/weri23mno49mc"
         },
       };
     }
@@ -244,6 +309,7 @@ export default {
   methods: {
     CREATE_WORKFLOW() {
       this.publishDialog = false;
+      this.publishDialogSucessful = true
     },
 
     addWorkflowToDraft() {
@@ -500,6 +566,58 @@ export default {
       font-size: 17px;
       border-bottom: 1px solid #d7a47b;
     }
+  }
+}
+
+
+.publish-sucessful {
+  border-radius: 8px;
+  background-color: #fff;
+  &__header {
+    padding: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .t {
+      color: var(--v-primary-base);
+      font-weight: 600;
+      font-size: 20px;
+    }
+  }
+
+  &__top{
+          box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.1);
+          margin-bottom: 2px;
+          padding: 20px ;
+           background-color: #F6F3EE;   
+          span{
+            display: inline-block;
+            margin-left: 10px;
+            font-size: 21px;
+            font-weight: bold;
+            color: var(--primary-base);
+           
+          }
+  }
+
+  &__content {
+    background-color: #F8F7F4;
+    padding:20px;
+
+    .msg {
+      font-size: 16px;
+      color: #757575;
+      line-height: 24px;
+      display: block;
+      margin-bottom: 30px;
+    }
+
+  .cta{
+    display: flex;
+    justify-content: end;
+  }
   }
 }
 </style>
