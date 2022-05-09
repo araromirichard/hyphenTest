@@ -155,7 +155,7 @@ export default {
   overflow: auto;
 
   .runs {
-    background-color: #F3EEE8;
+    background-color: #f3eee8;
     border-radius: 4px;
     display: flex;
     gap: 20px;

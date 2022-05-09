@@ -5,18 +5,20 @@ import createMultiTabState from "vuex-multi-tab-state";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-    state: {},
-    mutations: {},
-    actions: {},
-    modules: {
-        ...modules,
-    },
-    plugins: [
-        createMultiTabState({
-            statesPaths: [
-                "organizations.organization",
-                "organizations.organizationToken",
-            ],
-        }),
-    ],
+  state: {},
+  mutations: {},
+  actions: {},
+  modules: {
+    ...modules,
+  },
+  plugins: [
+    createMultiTabState({
+      statesPaths: [
+        "organizations.organization",
+        "organizations.organizationToken",
+        "auth.user",
+        "auth.isLoggedIn",
+      ],
+    }),
+  ],
 });

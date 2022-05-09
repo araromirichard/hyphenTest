@@ -180,7 +180,7 @@ export default {
   }
 
   &__content {
-    background-color: #F8F7F4;
+    background-color: #f8f7f4;
     padding: 20px 50px;
 
     .top {

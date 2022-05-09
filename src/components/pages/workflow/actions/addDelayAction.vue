@@ -132,7 +132,8 @@ export default {
     },
 
     sendOutChannel() {
-      let channel = this.days.find((day) => day.value == this.day)?.text || 'N/A';
+      let channel =
+        this.days.find((day) => day.value == this.day)?.text || "N/A";
       this.$emit("channel", channel);
     },
   },
@@ -181,7 +182,7 @@ export default {
   }
 
   &__content {
-    background-color: #F8F7F4;
+    background-color: #f8f7f4;
     padding: 20px 50px;
 
     .top {

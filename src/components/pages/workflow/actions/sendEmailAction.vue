@@ -141,8 +141,8 @@ export default {
       },
     };
   },
-  mounted(){
-    this.mapForm()
+  mounted() {
+    this.mapForm();
   },
   methods: {
     open() {
@@ -167,7 +167,7 @@ export default {
         },
       };
       this.$emit("input", payload);
-            this.sendOutChannel();
+      this.sendOutChannel();
       this.close();
     },
     mapForm() {
@@ -193,9 +193,9 @@ export default {
             this.value.properties.keys.indexOf("cc")
           ];
       }
-            this.sendOutChannel();
+      this.sendOutChannel();
     },
-       sendOutChannel() {
+    sendOutChannel() {
       this.$emit("channel", this.data.to);
     },
   },

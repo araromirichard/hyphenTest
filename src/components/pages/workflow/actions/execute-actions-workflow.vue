@@ -46,14 +46,12 @@
                 >
                   <v-icon>mdi-plus</v-icon>
                 </v-btn>
-             
               </div>
             </v-timeline>
 
             <!-- <div v-sortable="{ onUpdate: reOrder }"> -->
 
             <div>
-         
               <action-workflow
                 v-for="(action, index) in selectedActions"
                 :isLast="index == selectedActions.length - 1"
@@ -176,7 +174,7 @@ export default {
         return;
       }
       this.actionModal = false;
-      this.selectedActions.push({...action.meta,fresh:true});
+      this.selectedActions.push({ ...action.meta, fresh: true });
     },
     removeAction(index) {
       this.selectedActions.splice(index, 1);
@@ -212,7 +210,7 @@ export default {
       immediate: true,
       handler(newVal) {
         this.$emit("input", newVal);
-      //  console.log(JSON.stringify(newVal, null, 2));
+        //  console.log(JSON.stringify(newVal, null, 2));
       },
     },
     showTriggers: {

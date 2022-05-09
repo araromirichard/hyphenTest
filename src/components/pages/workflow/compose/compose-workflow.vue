@@ -5,7 +5,6 @@
     <div class="loader" v-if="isLoadingFormFields">
       <v-progress-circular color="primary" indeterminate></v-progress-circular>
     </div>
-    
 
     <div v-else class="form-trigger">
       <div class="header" @click="showTriggers = !showTriggers">
@@ -70,9 +69,9 @@ export default {
       type: Boolean,
       default: false,
     },
-    inputs:{
-      default:null
-    }
+    inputs: {
+      default: null,
+    },
   },
   data() {
     return {

@@ -16,7 +16,7 @@
           <span class="action-title">PAYMENT</span>
           <div>
             <span class="bal-title">Wallet Balance</span>
-            <span class="bal">{{walletBalance}}</span>
+            <span class="bal">{{ walletBalance }}</span>
           </div>
         </div>
 
@@ -123,30 +123,23 @@
 
 <script>
 export default {
-  props:{
-    value:{
-      default:{
-         type: "hyphenSendPayment",
+  props: {
+    value: {
+      default: {
+        type: "hyphenSendPayment",
         properties: {
-            keys: [
-                "amount_due",
-                "payment",
-                "due_date",
-                "invoice",
-                "organization",
-                "name",
-              ],
-              values: [
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-              ],
+          keys: [
+            "amount_due",
+            "payment",
+            "due_date",
+            "invoice",
+            "organization",
+            "name",
+          ],
+          values: ["", "", "", "", "", ""],
         },
-      }
-    }
+      },
+    },
   },
   data() {
     return {
@@ -167,22 +160,15 @@ export default {
       const payload = {
         type: "hyphenSendPayment",
         properties: {
-            keys: [
-                "amount_due",
-                "payment",
-                "due_date",
-                "invoice",
-                "organization",
-                "name",
-              ],
-              values: [
-                "amount_due",
-                this.paymentType,
-                "",
-                "",
-                "",
-                "",
-              ],
+          keys: [
+            "amount_due",
+            "payment",
+            "due_date",
+            "invoice",
+            "organization",
+            "name",
+          ],
+          values: ["amount_due", this.paymentType, "", "", "", ""],
         },
       };
 
@@ -234,7 +220,7 @@ export default {
   }
 
   &__content {
-    background-color: #F8F7F4;
+    background-color: #f8f7f4;
     padding: 20px 50px;
 
     .top {

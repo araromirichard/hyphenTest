@@ -6,7 +6,12 @@
     color="transparent"
     class="mx-auto"
   >
-    <v-navigation-drawer class="mx-auto my-0" :color="color" permanent>
+    <v-navigation-drawer
+      class="mx-auto my-0"
+      :color="color"
+      width="320"
+      permanent
+    >
       <v-list-item>
         <v-list-item-content class="py-0">
           <v-list-item-title class="link-title mt-9 py-4">

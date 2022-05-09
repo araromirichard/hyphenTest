@@ -143,18 +143,22 @@ export default {
 
     mapForm() {
       if (this.value) {
-      
         this.data.form =
-          this.value.properties.values[this.value.properties.keys.indexOf("form id")];
+          this.value.properties.values[
+            this.value.properties.keys.indexOf("form id")
+          ];
         this.data.recipient =
-          this.value.properties.values[this.value.properties.keys.indexOf("identity")];
+          this.value.properties.values[
+            this.value.properties.keys.indexOf("identity")
+          ];
 
         this.sendOutChannel();
       }
     },
 
     sendOutChannel() {
-      let channel = this.forms.find((form) => form.id == this.data.form)?.name || 'N/A';
+      let channel =
+        this.forms.find((form) => form.id == this.data.form)?.name || "N/A";
       this.$emit("channel", channel);
     },
   },
@@ -203,7 +207,7 @@ export default {
   }
 
   &__content {
-    background-color: #F8F7F4;
+    background-color: #f8f7f4;
     padding: 20px 50px;
 
     .top {

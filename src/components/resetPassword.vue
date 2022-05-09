@@ -107,7 +107,7 @@ export default {
 
       errorMsg: "",
       rules: {
-         password: [
+        password: [
           (v) => !!v || "This field is ",
           (v) => /(?=.*?[A-Z])/.test(v) || "At least 1 Upper Case",
           (v) => /(?=.*?[a-z])/.test(v) || "At least 1 Lower Case",
@@ -123,7 +123,6 @@ export default {
 
   methods: {
     // ...mapActions({ showToast: "ui/showToast" }),
-
     // async submitForm() {
     //   this.$refs.form.validate();
     //   const payload = JSON.stringify(this.email, null, 2);

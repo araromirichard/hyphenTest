@@ -108,9 +108,9 @@ export default {
       this.close();
     },
     sendOutChannel() {
-      let channel = this.workers.find(
-        (worker) => worker.email == this.worker
-      )?.name || 'N/A';
+      let channel =
+        this.workers.find((worker) => worker.email == this.worker)?.name ||
+        "N/A";
       this.$emit("channel", channel);
     },
     mapForm() {
