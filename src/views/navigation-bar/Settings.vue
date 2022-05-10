@@ -6,8 +6,8 @@
       "
       no-gutters
     >
-      <v-col cols="12" md="2">
-        <div class="setting-nav" style="background: #fdf9ef">
+      <v-col cols="12" md="3">
+        <div class="setting-nav" style="background: #f3eee8">
           <SideNav
             class="px-auto"
             :height="navigation.height"

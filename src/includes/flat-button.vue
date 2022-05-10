@@ -5,7 +5,7 @@
     :height="height"
     :width="width"
     color="primary"
-    elevation="20"
+    elevation="5"
     large
     class="text-capitalize mx-auto"
   >

@@ -13,7 +13,6 @@
                   outlined
                   hide-details="auto"
                   placeholder="First Name"
-                  :rules="rules.firstName"
                 >
                 </v-text-field>
               </v-col>
@@ -25,7 +24,6 @@
                   outlined
                   hide-details="auto"
                   placeholder="Last Name"
-                  :rules="rules.lastName"
                 >
                 </v-text-field>
               </v-col>
@@ -39,14 +37,12 @@
                   placeholder="Email"
                   type="email"
                   required
-                  :rules="rules.email"
                 >
                 </v-text-field>
               </v-col>
               <v-col cols="12" md="6">
                 <v-text-field
                   ref="phone"
-                  :rules="rules.phone"
                   v-model="userDetails.phone"
                   background-color="#ffffff"
                   outlined
@@ -59,8 +55,9 @@
                 <resetBtn :color="color" :btnTitle="btnTitle" />
               </div>
             </v-row>
-            <v-card-actions class="justify-end pa-md-8 mr-md-4">
+            <v-card-actions class="justify-end px-0 pa-md-8 mr-md-4">
               <v-btn
+                @click="updateUserDetails"
                 class="submit-btn"
                 :loading="isSaving"
                 dark
@@ -83,6 +80,9 @@
               </v-btn>
             </v-card-actions>
           </v-form>
+          <!-- <Pre>
+            {{ user }}
+          </Pre> -->
         </div>
       </v-col>
     </v-row>
@@ -90,7 +90,7 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 import resetBtn from "../../btns/resetBtn.vue";
 
 export default {
@@ -103,18 +103,7 @@ export default {
         email: "",
         phone: "",
       },
-      rules: {
-        firstName: [(v) => !!v || "This field is required "],
-        lastName: [(v) => !!v || "This field is required "],
-        email: [
-          (v) => !!v || "E-mail is required",
-          (v) => /.+@.+\..+/.test(v) || "E-mail must be valid",
-        ],
-        phone: [
-          (v) => !!v || "This field is required ",
-          (v) => v.length == 14 || "Number is invalid",
-        ],
-      },
+
       isSaving: false,
       btnTitle: "Password reset",
       color: "#525E6E",
@@ -122,28 +111,21 @@ export default {
   },
   methods: {
     ...mapActions({ showToast: "ui/showToast" }),
-    // async createAccount() {
-    consoleLogData() {
-      Object.keys(this.form).forEach((f) => {
-        //throw error to ui if there is any
-        this.$refs[f].validate(true);
-      });
 
-      if (this.canCreateOrg) {
-        //       try {
-        //         this.isCreating = true;
-        //         await this.$store.dispatch("auth/register", this.userDetails);
-        //   console.log(JSON.stringify(req, null, 2));
+    async updateUserDetails() {
+      // try {
+      //   this.isCreating = true;
+      //   await this.$store.dispatch("auth/updateUserDetails", {
+      //     userId: this.user.id,
+      //     payload: this.userDetails,
+      //   });
 
-        console.log(JSON.stringify(this.userDetails, null, 2));
-
-        this.showToast({
-          sclass: "success",
-          show: true,
-          message: "Account created successfully",
-          timeout: 3000,
-        });
-      }
+      //   this.showToast({
+      //     sclass: "success",
+      //     show: true,
+      //     message: "User Details Updated successfully",
+      //     timeout: 3000,
+      //   });
       // } catch (err) {
       //   this.showToast({
       //     sclass: "error",
@@ -154,32 +136,24 @@ export default {
       // } finally {
       //   this.isCreating = false;
       // }
-      //   }
+
+      console.log(JSON.stringify(this.userDetails, null, 2));
     },
   },
   computed: {
-    form() {
-      return {
-        Firstname: this.userDetails.Firstname,
-        Lastname: this.userDetails.Lastname,
-        email: this.userDetails.email,
-        phoneNumber: this.userDetails.phoneNumber,
-      };
-    },
-
-    canCreateOrg() {
-      // loop through rules, if all pass user can create profile
-      const rules = Object.keys(this.rules);
-      return rules
-        .map((rule) => {
-          return Object.keys(this.rules[rule])
-            .map((field, index) => {
-              return this.rules[rule][index](this.userDetails[rule]);
-            })
-            .every((val) => val == true);
-        })
-        .every((val) => val == true);
-    },
+    ...mapGetters({
+      user: "auth/user",
+    }),
+  },
+  async mounted() {
+    await this.$store
+      .dispatch("auth/getUserDetails", this.user.id)
+      .then((response) => {
+        this.userDetails.firstName = response.first_name;
+        this.userDetails.lastName = response.last_name;
+        this.userDetails.email = response.email;
+        this.userDetails.phone = response.phone;
+      });
   },
 };
 </script>

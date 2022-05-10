@@ -213,7 +213,7 @@
 import SendToWorkflowDialog from "../includes/overlays/SendToWorkflowDialog.vue";
 import DataTable from "./DataTable.vue";
 import DataTableCard from "./DataTableCard.vue";
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   components: {
@@ -255,16 +255,18 @@ export default {
     },
   },
   computed: {
-    ...mapState({
-      organization: "organization",
-      formCards: "formBuilder",
-      allInvoices: "invoices",
-    }),
-    // ...mapGetters({
+    // ...mapState({
+    //   organization: "organization",
+    //   formCards: "formBuilder",
+    //   allInvoices: "invoices",
     // }),
+    ...mapGetters({
+      allInvoices: "invoices/getAllInvocies",
+      organisationId: "auth/organizationId",
+    }),
     filteredInvoices() {
       if (this.search) {
-        return this.allInvoices.allInvoices.filter((invoice) => {
+        return this.allInvoices.filter((invoice) => {
           return (
             invoice.requester.toLowerCase().match(this.search.toLowerCase()) ||
             invoice.status.toLowerCase().match(this.search.toLowerCase) ||
@@ -272,8 +274,32 @@ export default {
           );
         });
       } else {
-        return this.allInvoices.allInvoices;
+        return this.allInvoices;
       }
+    },
+  },
+  mounted() {
+    const response = this.$store.dispatch(
+      "invoices/FetchAllInvoices",
+      this.organisationId
+    );
+    this.invoiceArray = response.data;
+    console.log(JSON.stringify(this.user, null, 2));
+  },
+  watch: {
+    allInvoices: {
+      deep: true,
+      immediate: true,
+      handler(val) {
+        if (val == null) {
+          //console.log(JSON.stringify(val, null, 2));
+          const response = this.$store.dispatch(
+            "invoices/FetchAllInvoices",
+            this.organisationId
+          );
+          console.log(JSON.stringify(response, null, 2));
+        }
+      },
     },
   },
 };

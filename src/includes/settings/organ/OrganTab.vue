@@ -245,11 +245,12 @@ export default {
       selectedFile: null,
       companyDetails: {
         companyName: "",
-        selectedCurrency: [],
-        selectedCountry: [],
-        selectedState: [],
+        address: "",
+        selectedCurrency: "",
+        selectedCountry: "",
+        selectedState: "",
         city: "",
-        Postcode: "",
+        Postcode: null,
         regNumber: "",
         leadership: {
           firstName: "",
@@ -261,8 +262,46 @@ export default {
         },
       },
       currency: ["NGN", "USD"],
-      country: [],
-      state: [],
+      country: ["Nigeria", "USA"],
+      state: [
+        "Abia",
+        "Adamawa",
+        "Akwa Ibom",
+        "Anambra",
+        "Bauchi",
+        "Bayelsa",
+        "Benue",
+        "Borno",
+        "Cross River",
+        "Delta",
+        "Ebonyi",
+        "Edo",
+        "Ekiti",
+        "Enugu",
+        "FCT - Abuja",
+        "Gombe",
+        "Imo",
+        "Jigawa",
+        "Kaduna",
+        "Kano",
+        "Katsina",
+        "Kebbi",
+        "Kogi",
+        "Kwara",
+        "Lagos",
+        "Nasarawa",
+        "Niger",
+        "Ogun",
+        "Ondo",
+        "Osun",
+        "Oyo",
+        "Plateau",
+        "Rivers",
+        "Sokoto",
+        "Taraba",
+        "Yobe",
+        "Zamfara",
+      ],
     };
   },
   methods: {
@@ -323,29 +362,90 @@ export default {
         }
       }
 
-      this.showToast({
-        sclass: "success",
-        show: true,
-        message: "Logo Uploaded Successfully",
-        timeout: 3000,
-      });
+      // this.showToast({
+      //   sclass: "success",
+      //   show: true,
+      //   message: "Logo Uploaded Successfully",
+      //   timeout: 3000,
+      // });
+    },
+
+    //update method for organization...
+    async updateOrganizationData() {
+      const payload = {
+        office: [
+          {
+            address: this.companyDetails.address,
+            country: this.companyDetails.selectedCountry,
+            state: this.companyDetails.selectedState,
+            city: this.companyDetails.city,
+            postcode: this.companyDetails.Postcode,
+          },
+        ],
+        leadership: [
+          {
+            first_name: this.companyDetails.leadership.firstName,
+            last_name: this.companyDetails.leadership.lastName,
+            email: this.companyDetails.leadership.email,
+            phone: this.companyDetails.leadership.phone,
+          },
+        ],
+      };
+      const orgId = this.organToken.data.organization;
+
+      console.log(JSON.stringify(payload, null, 2));
+
+      try {
+        const res = await this.$store
+          .dispatch("organizations/updateOrganization", {
+            orgId: orgId,
+            payload: payload,
+          })
+          .then(console.log(JSON.stringify(res, null, 2)))
+
+          .then(
+            this.showToast({
+              sclass: "success",
+              show: true,
+              message: "Organization Updated successfully..",
+              timeout: 3000,
+            })
+          );
+      } catch (error) {
+        console.log(error);
+        if (error) {
+          this.showToast({
+            sclass: "error",
+            show: true,
+            message: "failed to Update",
+            timeout: 3000,
+          });
+        }
+      }
     },
     submitData() {
       this.isSending = true;
-      console.log("func fired");
-      this.uploadLogo().then((this.isSending = false));
+
+      // this.uploadLogo();
+      this.updateOrganizationData().then((this.isSending = false));
     },
   },
   computed: {
     ...mapGetters({
       organObj: "organizations/organObj",
       user: "auth/user",
+      organToken: "organizations/OrganToken",
     }),
+
+    // organizationUpdatePayload(){
+
+    // }
   },
 
-  mounted() {
-    this.$store
-      .dispatch("organizations/getOrganizationById")
+  async mounted() {
+    const orgId = this.organToken.data.organization;
+    await this.$store
+      .dispatch("organizations/getOrganizationById", orgId)
       .then((response) => {
         if (response.status == 200) {
           this.companyDetails.companyName = response.data.company.company_name;
@@ -359,6 +459,11 @@ export default {
             response.data.leadership[0].email;
           this.companyDetails.leadership.phone =
             response.data.leadership[0].phone;
+          this.companyDetails.address = response.data.office[0].address;
+          this.companyDetails.Postcode = response.data.office[0].postcode;
+          this.companyDetails.selectedCountry = response.data.office[0].country;
+          this.companyDetails.selectedState = response.data.office[0].state;
+          this.companyDetails.city = response.data.office[0].city;
         }
       });
 

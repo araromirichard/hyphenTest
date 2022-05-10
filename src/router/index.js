@@ -35,6 +35,12 @@ const routes = [
     meta: { middleware: ["guest"] },
   },
   {
+    path: "/reset-password/:token",
+    name: "reset-password",
+    component: Formlayout,
+    meta: { middleware: ["guest"] },
+  },
+  {
     path: "/sign-up",
     name: "SignUp",
     component: Formlayout,
@@ -44,6 +50,14 @@ const routes = [
     path: "/onboarding",
     name: "OnBoarding",
     component: OnBoarding,
+  },
+  {
+    path: "/organizations",
+    name: "organizationList",
+    components: {
+      default: () => import("@/views/organizationList.vue"),
+    },
+    meta: { middleware: ["auth"] },
   },
   {
     path: "/welcome",
@@ -202,7 +216,7 @@ const routes = [
       default: () => import("@/views/navigation-bar/Settings.vue"),
       MainLayout,
     },
-    redirect: { name: "settings.profile" },
+    redirect: { name: "settings.organization" },
     children: [
       {
         name: "settings.profile",
@@ -225,6 +239,7 @@ const routes = [
       },
 
       {
+        name: "settings.organization",
         path: "Organization",
         components: {
           default: () => import("@/views/settings/Organization.vue"),

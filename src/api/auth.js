@@ -17,6 +17,20 @@ export default {
       },
     });
   },
+  getUserById(id) {
+    return api().get("/users/" + id, {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    });
+  },
+  upadateUserById(userId, payload) {
+    return api().put("/users/" + userId, payload, {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    });
+  },
 
   registerUser(credentials) {
     return api().post("/auth/local/register", credentials);

@@ -16,7 +16,7 @@
           <span class="action-title">PAYMENT</span>
           <div>
             <span class="bal-title">Wallet Balance</span>
-            <span class="bal">N140,000</span>
+            <span class="bal">{{ walletBalance }}</span>
           </div>
         </div>
 
@@ -123,6 +123,24 @@
 
 <script>
 export default {
+  props: {
+    value: {
+      default: {
+        type: "hyphenSendPayment",
+        properties: {
+          keys: [
+            "amount_due",
+            "payment",
+            "due_date",
+            "invoice",
+            "organization",
+            "name",
+          ],
+          values: ["", "", "", "", "", ""],
+        },
+      },
+    },
+  },
   data() {
     return {
       dialog: false,
@@ -136,6 +154,26 @@ export default {
     },
     close() {
       this.dialog = false;
+    },
+
+    addToWorkflow() {
+      const payload = {
+        type: "hyphenSendPayment",
+        properties: {
+          keys: [
+            "amount_due",
+            "payment",
+            "due_date",
+            "invoice",
+            "organization",
+            "name",
+          ],
+          values: ["amount_due", this.paymentType, "", "", "", ""],
+        },
+      };
+
+      this.$emit("input", payload);
+      this.close();
     },
   },
   watch: {
@@ -182,7 +220,7 @@ export default {
   }
 
   &__content {
-    background-color: #fefcf8;
+    background-color: #f8f7f4;
     padding: 20px 50px;
 
     .top {

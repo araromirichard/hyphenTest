@@ -11,18 +11,17 @@
             >
               Contacts
               <span
-                class="pl-5 text-md-subtitle-1"
+                class="pl-2 text-md-subtitle-1"
                 style="
                   font-family: Inter;
                   font-style: normal;
                   font-weight: normal;
-                  font-size: 16px;
                   line-height: 19px;
                   color: #7f919b;
                   mix-blend-mode: normal;
                   opacity: 0.5;
                 "
-                >{{ contactRecord }}</span
+                >{{ contactRecord }} Records</span
               >
             </h3>
 
@@ -38,8 +37,8 @@
           </v-col>
         </v-row>
         <v-row>
-          <v-col cols="12">
-            <!-- contact tilte for Mobile screens -->
+          <v-col cols="12" class="px-8 px-md-0 align-center">
+            <!-- contact title for Mobile screens -->
             <div class="d-flex" v-if="$vuetify.breakpoint.mdAndDown">
               <p
                 :style="{ display: `${isClicked != true ? 'none' : ''}` }"
@@ -54,22 +53,18 @@
                 "
               >
                 Contacts
+                <span
+                  class="
+                    pl-2
+                    text-subtitle-2 text-md-subtitle-1
+                    contact__record
+                  "
+                  >{{ contactRecord }} Records</span
+                >
               </p>
-              <span
-                class="pl-2 pt-8 text-subtitle-2 text-md-subtitle-1"
-                style="
-                  font-family: Inter;
-                  font-style: normal;
-                  font-weight: normal;
-                  line-height: 19px;
-                  color: #7f919b;
-                  mix-blend-mode: normal;
-                  opacity: 0.5;
-                "
-                >{{ contactRecord }}</span
-              >
+
               <v-spacer></v-spacer>
-              <v-icon v-if="isClicked" @click="toggleSearch" class="pr-4 pt-7">
+              <v-icon v-if="isClicked" @click="toggleSearch" class="pr-4">
                 mdi-magnify
               </v-icon>
               <v-expand-x-transition v-else>
@@ -222,7 +217,7 @@ export default {
   name: "contacts",
   data() {
     return {
-      contactRecord: "234 Records",
+      contactRecord: "234",
 
       isClicked: true,
       tab: 0,
@@ -325,5 +320,22 @@ th {
 }
 #histogram {
   fill: #96ead7 !important;
+}
+
+.contact__record {
+  display: flex;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: normal;
+  line-height: 19px;
+  color: #7f919b;
+  mix-blend-mode: normal;
+  opacity: 0.5;
+}
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  .contact__record {
+    display: block;
+  }
 }
 </style>

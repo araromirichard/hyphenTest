@@ -71,11 +71,11 @@
 // this component holds the input field for each condition
 //import { formItems, operators } from "@/utils/ManagerApprovalOptions.js";
 export default {
-  props:{
-    rule:{},
-    index:{},
-    inputs:{
-      default:null
+  props: {
+    rule: {},
+    index: {},
+    inputs: {
+      default: null,
     },
   },
   data() {

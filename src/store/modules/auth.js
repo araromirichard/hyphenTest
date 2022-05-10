@@ -2,6 +2,7 @@ import Auth from "../../api/auth";
 
 const state = {
   user: null,
+  singleUser: null,
   isLoggedIn: localStorage.getItem("userId") != null,
 };
 
@@ -21,6 +22,13 @@ const mutations = {
     }
 
     state.isLoggedIn = true;
+  },
+  setSingleUser(state, data) {
+    if (data.singleUser != undefined) {
+      state.singleUser = data.user;
+    } else {
+      state.singleUser = data;
+    }
   },
 
   emptyUser(state) {
@@ -88,6 +96,26 @@ const actions = {
       return data;
     } catch (error) {
       console.lo(JSON.stringify(error, null, 2));
+      return Promise.reject(error);
+    }
+  },
+
+  async getUserDetails({ commit }, id) {
+    try {
+      const response = await Auth.getUserById(id);
+      commit("setSingleUser", response.data);
+      // console.log(JSON.stringify(response, null, 2));
+      return response.data;
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  },
+  async updateUserDetails({ commit }, data) {
+    try {
+      const response = await Auth.upadateUserById(data.userId, data.payload);
+      commit("setUser", response.data);
+      return response;
+    } catch (error) {
       return Promise.reject(error);
     }
   },

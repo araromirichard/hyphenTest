@@ -25,6 +25,9 @@
           <v-select
             outlined
             color="primary"
+            v-model="day"
+            item-text="text"
+            item-value="value"
             label="No of Days"
             :items="days"
             hide-details="auto"
@@ -42,7 +45,7 @@
             <v-icon left>mdi-close</v-icon> Cancel
           </v-btn>
 
-          <v-btn large color="primary" elevation="0">
+          <v-btn @click="addToWorkflow" large color="primary" elevation="0">
             <v-icon left>mdi-chevron-right</v-icon> Add to workflow
           </v-btn>
         </div>
@@ -53,10 +56,46 @@
 
 <script>
 export default {
+  props: {
+    value: {
+      default: {
+        type: "hyphenDelay",
+        properties: {
+          keys: ["days", "organization", "type", "name"],
+          values: ["", "", "", "delay", "delay"],
+        },
+      },
+    },
+  },
+  mounted() {
+    this.mapForm();
+  },
   data() {
     return {
       dialog: false,
-      days: ["1 Day", "2 Days", "3 Days", "4 Days", "5 Days"],
+      days: [
+        {
+          text: "1 Day",
+          value: 1,
+        },
+        {
+          text: "2 Days",
+          value: 2,
+        },
+        {
+          text: "3 Days",
+          value: 3,
+        },
+        {
+          text: "4 Days",
+          value: 4,
+        },
+        {
+          text: "5 Days",
+          value: 5,
+        },
+      ],
+      day: "",
     };
   },
   methods: {
@@ -66,11 +105,43 @@ export default {
     close() {
       this.dialog = false;
     },
+
+    addToWorkflow() {
+      const payload = {
+        type: "hyphenDelay",
+        properties: {
+          keys: ["days", "organization", "type", "name"],
+          values: [this.day, this.orgId, "delay", "delay"],
+        },
+      };
+
+      this.$emit("input", payload);
+      this.sendOutChannel();
+      this.close();
+    },
+
+    mapForm() {
+      if (this.value) {
+        this.day =
+          this.value.properties.values[
+            this.value.properties.keys.indexOf("days")
+          ];
+
+        this.sendOutChannel();
+      }
+    },
+
+    sendOutChannel() {
+      let channel =
+        this.days.find((day) => day.value == this.day)?.text || "N/A";
+      this.$emit("channel", channel);
+    },
   },
   watch: {
     dialog(val) {
       if (val) {
         this.$emit("open");
+        this.mapForm();
       } else {
         this.$emit("close");
       }
@@ -111,7 +182,7 @@ export default {
   }
 
   &__content {
-    background-color: #fefcf8;
+    background-color: #f8f7f4;
     padding: 20px 50px;
 
     .top {

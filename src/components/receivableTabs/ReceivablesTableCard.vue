@@ -2,7 +2,7 @@
   <div class="d-flex align-center justify-center">
     <v-card
       max-height="40vh"
-      min-width="87%"
+      min-width="91%"
       outlined
       class="my-4 mx-3 rounded-lg"
     >
@@ -68,27 +68,40 @@
                 <v-list-item
                   class="d-flex flex-column justify-center align-center"
                 >
-                  <v-btn
-                    exact-path
-                    rounded
-                    depressed
-                    dark
-                    small
-                    color="#2BD5AE"
-                    class="text-lowercase px-2 my-4"
-                    style="color: var(--v-primary-base)"
-                  >
-                    view
-                  </v-btn>
-                  <v-btn
-                    rounded
-                    depressed
-                    dark
-                    small
-                    color="primary"
-                    class="text-lowercase px-2"
-                    >review</v-btn
-                  >
+                  <v-hover v-slot="{ hover }">
+                    <v-btn
+                      :style="{
+                        'background-color': hover ? '#2bd5ae' : '',
+                        border: hover ? 'none' : '',
+                      }"
+                      exact-path
+                      depressed
+                      outlined
+                      dark
+                      small
+                      color="#2BD5AE"
+                      class="text-capitalize px-3 my-1 rounded"
+                      style="color: var(--v-primary-base)"
+                    >
+                      view
+                    </v-btn>
+                  </v-hover>
+                  <v-hover v-slot="{ hover }">
+                    <v-btn
+                      dark
+                      outlined
+                      depressed
+                      small
+                      color="primary"
+                      :style="{
+                        'background-color': hover ? '#c4c9cf' : '',
+                        border: hover ? 'none' : '',
+                        color: hover ? 'white' : '#ffffff',
+                      }"
+                      class="text-capitalize px-2 my-1 rounded"
+                      >review</v-btn
+                    >
+                  </v-hover>
                 </v-list-item>
               </v-list>
             </v-menu>

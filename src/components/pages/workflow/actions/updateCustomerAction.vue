@@ -40,6 +40,7 @@
                 color="primary"
                 label="Add/Remove Tag"
                 :items="tags"
+                v-model="selectedTags"
                 chips
                 deletable-chips
                 multiple
@@ -54,6 +55,7 @@
                 color="primary"
                 label="Net Terms"
                 :items="terms"
+                v-model="selectedTerms"
                 hide-details="auto"
                 placeholder="Net Terms"
               ></v-select>
@@ -71,7 +73,7 @@
             <v-icon left>mdi-close</v-icon> Cancel
           </v-btn>
 
-          <v-btn large color="primary" elevation="0">
+          <v-btn large @click="addToWorkflow" color="primary" elevation="0">
             <v-icon left>mdi-chevron-right</v-icon> Add to workflow
           </v-btn>
         </div>
@@ -82,15 +84,32 @@
 
 <script>
 export default {
+  props: {
+    value: {
+      default: {
+        type: "hyphenUpdateCustomer",
+        properties: {
+          keys: ["attribute", "tag", "term", "organization", "name"],
+          values: ["", "", "", "", "customer"],
+        },
+      },
+    },
+  },
   data() {
     return {
       dialog: false,
       atrribute: ["Tag", "Payment Terms", "Balance"],
-      selectedAttribute: null,
+      selectedAttribute: "",
       tags: ["high value", "wema bank", "ikeja"],
+      selectedTags: "",
       terms: ["Net 30", "Net 45", "Net 60", "Net 90"],
+      selectedTerms: "",
     };
   },
+  mounted() {
+    this.mapForm();
+  },
+
   methods: {
     open() {
       this.dialog = true;
@@ -98,14 +117,61 @@ export default {
     close() {
       this.dialog = false;
     },
+
+    addToWorkflow() {
+      const payload = {
+        type: "hyphenUpdateCustomer",
+        properties: {
+          keys: ["attribute", "tag", "term", "organization", "name"],
+          values: [
+            this.selectedAttribute,
+            this.selectedTags,
+            this.selectedTerms,
+            this.orgId,
+            "customer",
+          ],
+        },
+      };
+
+      this.$emit("input", payload);
+      this.sendOutChannel();
+
+      this.close();
+    },
+
+    mapForm() {
+      this.selectedAttribute =
+        this.value.properties.values[
+          this.value.properties.keys.indexOf("attribute")
+        ];
+      this.selectedTags =
+        this.value.properties.values[this.value.properties.keys.indexOf("tag")];
+
+      this.selectedTerms =
+        this.value.properties.values[
+          this.value.properties.keys.indexOf("term")
+        ];
+
+      this.sendOutChannel();
+    },
+
+    sendOutChannel() {
+      this.$emit("channel", this.selectedAttribute);
+    },
   },
   watch: {
     dialog(val) {
       if (val) {
         this.$emit("open");
+        this.mapForm();
       } else {
         this.$emit("close");
       }
+    },
+
+    selectedAttribute() {
+      this.selectedTags = "";
+      this.selectedTerms = "";
     },
   },
 };
@@ -143,7 +209,7 @@ export default {
   }
 
   &__content {
-    background-color: #fefcf8;
+    background-color: #f8f7f4;
     padding: 20px 50px;
 
     .top {

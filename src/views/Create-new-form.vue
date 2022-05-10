@@ -69,7 +69,7 @@
       </v-col>
       <v-col
         class="d-flex flex-column justify-center pa-2"
-        style="background-color: rgb(253, 249, 239); min-height: 100vh"
+        style="background-color: rgb(248, 247, 244); min-height: 100vh"
         cols="12"
         md="9"
       >

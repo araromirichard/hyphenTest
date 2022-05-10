@@ -7,9 +7,8 @@
           params: { id: id },
         })
       "
-      max-height="40vh"
-      min-width="90%"
-      elevation="3"
+      min-width="91%"
+      outlined
       class="my-4 rounded-lg"
     >
       <h5
@@ -89,7 +88,14 @@
           <template>
             <v-menu offset-y>
               <template v-slot:activator="{ on, attrs }">
-                <v-btn plain color="primary" dark v-bind="attrs" v-on="on">
+                <v-btn
+                  plain
+                  color="primary"
+                  dark
+                  v-bind="attrs"
+                  v-on="on"
+                  class="float-end"
+                >
                   Actions
                 </v-btn>
               </template>

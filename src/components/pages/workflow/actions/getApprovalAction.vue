@@ -6,7 +6,6 @@
           <img class="i" src="@/assets/actions-get-approval.svg" alt="" />
           <span class="t">Get Approval</span>
         </div>
-
         <v-btn @click="close" icon color="primary">
           <v-icon>mdi-close</v-icon>
         </v-btn>
@@ -15,7 +14,6 @@
         <div class="top">
           <span class="action-title">Approval Notification</span>
         </div>
-
         <span class="action-description"
           >Select the co-worker from who approval is required for this
           stage</span
@@ -26,7 +24,10 @@
             outlined
             color="primary"
             label="Co-worker"
+            v-model="worker"
             :items="workers"
+            item-text="name"
+            item-value="email"
             hide-details="auto"
             placeholder="Select one"
           ></v-select>
@@ -42,7 +43,7 @@
             <v-icon left>mdi-close</v-icon> Cancel
           </v-btn>
 
-          <v-btn large color="primary" elevation="0">
+          <v-btn @click="addToWorkflow" large color="primary" elevation="0">
             <v-icon left>mdi-chevron-right</v-icon> Add to workflow
           </v-btn>
         </div>
@@ -53,11 +54,39 @@
 
 <script>
 export default {
+  props: {
+    value: {
+      default: {
+        type: "PbotApproval",
+        properties: {
+          keys: ["identity", "organization id", "type", "name"],
+          values: ["", "", "human", "approval"],
+        },
+      },
+    },
+  },
   data() {
     return {
       dialog: false,
-      workers: ["John Doe", "Jane Doe", "Jack Doe", "Jill Doe"],
+      workers: [
+        {
+          name: "John Doe",
+          email: "johndoe@gmail.com",
+        },
+        {
+          name: "Jane Doe",
+          email: "janedoe@gmail.com",
+        },
+        {
+          name: "Elon musk",
+          email: "musk@mail.com",
+        },
+      ],
+      worker: null,
     };
+  },
+  mounted() {
+    this.mapForm();
   },
   methods: {
     open() {
@@ -66,11 +95,40 @@ export default {
     close() {
       this.dialog = false;
     },
+    addToWorkflow() {
+      const payload = {
+        type: "PbotApproval",
+        properties: {
+          keys: ["identity", "organization id", "type", "name"],
+          values: [this.worker, this.orgId, "human", "approval"],
+        },
+      };
+      this.$emit("input", payload);
+      this.sendOutChannel();
+      this.close();
+    },
+    sendOutChannel() {
+      let channel =
+        this.workers.find((worker) => worker.email == this.worker)?.name ||
+        "N/A";
+      this.$emit("channel", channel);
+    },
+    mapForm() {
+      if (this.value) {
+        // automatically selects name
+        this.worker =
+          this.value.properties.values[
+            this.value.properties.keys.indexOf("identity")
+          ];
+        this.sendOutChannel();
+      }
+    },
   },
   watch: {
     dialog(val) {
       if (val) {
         this.$emit("open");
+        this.mapForm();
       } else {
         this.$emit("close");
       }
@@ -83,41 +141,34 @@ export default {
 .action {
   border-radius: 8px;
   background-color: #fff;
-
   &__header {
     padding: 20px;
     width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-
     .b {
       display: flex;
       align-items: center;
       gap: 10px;
     }
-
     .i {
       width: 26px;
       height: 26px;
       object-fit: fit;
     }
-
     .t {
       color: var(--v-primary-base);
       font-weight: 600;
       font-size: 20px;
     }
   }
-
   &__content {
-    background-color: #fefcf8;
+    background-color: #f8f7f4;
     padding: 20px 50px;
-
     .top {
       padding: 30px 0px 0px 0px;
       box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.1);
-
       .action-title {
         color: var(--v-primary-base);
         text-transform: uppercase;
@@ -129,27 +180,23 @@ export default {
         display: inline-block;
       }
     }
-
     .action-description {
       color: var(--v-primary-base);
       display: block;
       padding: 20px 0px;
       font-size: 16px;
     }
-
     .a-wrapper {
       background-color: #fff;
       padding: 50px 200px 50px 20px;
       border: 1px solid #d9dee1;
       border-radius: 4px;
     }
-
     .note {
       display: block;
       margin-top: 10px;
       color: #8f96a1;
     }
-
     .bottom {
       display: flex;
       justify-content: flex-end;

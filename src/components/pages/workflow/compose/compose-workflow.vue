@@ -5,7 +5,6 @@
     <div class="loader" v-if="isLoadingFormFields">
       <v-progress-circular color="primary" indeterminate></v-progress-circular>
     </div>
-    
 
     <div v-else class="form-trigger">
       <div class="header" @click="showTriggers = !showTriggers">
@@ -70,9 +69,9 @@ export default {
       type: Boolean,
       default: false,
     },
-    inputs:{
-      default:null
-    }
+    inputs: {
+      default: null,
+    },
   },
   data() {
     return {
@@ -139,7 +138,7 @@ export default {
       deep: true,
       handler(val) {
         this.$store.dispatch("workflow/updateSchema", val);
-        console.log(JSON.stringify(val, null, 2));
+        //console.log(JSON.stringify(val, null, 2));
       },
     },
 

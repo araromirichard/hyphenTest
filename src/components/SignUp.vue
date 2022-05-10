@@ -95,7 +95,7 @@
                   outlined
                   type="text"
                   prepend-inner-icon="mdi-account-outline"
-                  class="font-weight-regular"
+                  class="font-weight-regular pt-3"
                   v-model="signUpDetails.username"
                   :rules="rules.username"
                 >
@@ -110,7 +110,7 @@
                   single-line
                   outlined
                   type="email"
-                  class="py-3 pb-0 mb-0 font-weight-regular text-lowercase"
+                  class="pt-6 pb-0 mb-0 font-weight-regular text-lowercase"
                   v-model="signUpDetails.email"
                   :rules="rules.email"
                 ></v-text-field>
@@ -250,7 +250,7 @@ export default {
         ],
         phoneNumber: [
           (v) => !!v || "This field is required ",
-          (v) => v.length == 14 || "Numbe is invalid",
+          (v) => v.length == 14 || "Number is invalid",
           // (v) =>
           //   /(^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$)/.test(v) ||
           //   "Number is invalid",

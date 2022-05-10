@@ -28,30 +28,40 @@
                 name="Subject"
                 label="Subject"
                 placeholder="Subject"
+                v-model="data.subject"
                 hide-details="auto"
                 outlined
                 primary
               ></v-text-field>
             </v-col>
             <v-col cols="12" sm="6">
-              <v-select
+              <v-autocomplete
                 outlined
                 color="primary"
                 label="To:"
                 :items="workers"
+                item-text="name"
+                item-value="email"
+                v-model="data.to"
                 hide-details="auto"
                 placeholder="To:"
-              ></v-select>
+              ></v-autocomplete>
             </v-col>
             <v-col cols="12" sm="6">
-              <v-text-field
+              <v-autocomplete
+                multiple
+                :items="workers"
+                item-text="name"
+                item-value="email"
                 name="CC"
                 label="CC"
+                sele
+                v-model="data.cc"
                 placeholder="Subject"
                 hide-details="auto"
                 outlined
                 primary
-              ></v-text-field>
+              ></v-autocomplete>
             </v-col>
 
             <v-col cols="12">
@@ -59,6 +69,7 @@
                 name="Message"
                 label="Message"
                 placeholder="Message"
+                v-model="data.message"
                 hide-details="auto"
                 outlined
                 primary
@@ -77,7 +88,7 @@
             <v-icon left>mdi-close</v-icon> Cancel
           </v-btn>
 
-          <v-btn large color="primary" elevation="0">
+          <v-btn @click="addToWorkflow" large color="primary" elevation="0">
             <v-icon left>mdi-chevron-right</v-icon> Add to workflow
           </v-btn>
         </div>
@@ -88,11 +99,50 @@
 
 <script>
 export default {
+  props: {
+    value: {
+      default: {
+        text: "Send Email",
+        type: "sendEmail",
+        icon: require("@/assets/actions-send-email.svg"),
+        active: true,
+        meta: {
+          type: "hyphenEmail",
+          properties: {
+            keys: ["subject", "message", "to", "cc", "organization id", "name"],
+            values: ["", "", "", "", "", ""],
+          },
+        },
+      },
+    },
+  },
   data() {
     return {
       dialog: false,
-      workers: ["John Doe", "Jane Doe", "Jack Doe", "Jill Doe"],
+      workers: [
+        {
+          name: "John Doe",
+          email: "johndoe@gmail.com",
+        },
+        {
+          name: "Jane Doe",
+          email: "janedoe@gmail.com",
+        },
+        {
+          name: "Elon musk",
+          email: "musk@mail.com",
+        },
+      ],
+      data: {
+        subject: "",
+        to: null,
+        cc: null,
+        message: "",
+      },
     };
+  },
+  mounted() {
+    this.mapForm();
   },
   methods: {
     open() {
@@ -101,10 +151,58 @@ export default {
     close() {
       this.dialog = false;
     },
+    addToWorkflow() {
+      const payload = {
+        type: "hyphenEmail",
+        properties: {
+          keys: ["subject", "message", "to", "cc", "organization id", "name"],
+          values: [
+            this.data.subject,
+            this.data.message,
+            this.data.to,
+            this.data.cc,
+            this.orgId,
+            "email",
+          ],
+        },
+      };
+      this.$emit("input", payload);
+      this.sendOutChannel();
+      this.close();
+    },
+    mapForm() {
+      if (this.value) {
+        // set subject
+        this.data.subject =
+          this.value.properties.values[
+            this.value.properties.keys.indexOf("subject")
+          ];
+        // set message
+        this.data.message =
+          this.value.properties.values[
+            this.value.properties.keys.indexOf("message")
+          ];
+        // set to
+        this.data.to =
+          this.value.properties.values[
+            this.value.properties.keys.indexOf("to")
+          ];
+        // set cc
+        this.data.cc =
+          this.value.properties.values[
+            this.value.properties.keys.indexOf("cc")
+          ];
+      }
+      this.sendOutChannel();
+    },
+    sendOutChannel() {
+      this.$emit("channel", this.data.to);
+    },
   },
   watch: {
     dialog(val) {
       if (val) {
+        this.mapForm();
         this.$emit("open");
       } else {
         this.$emit("close");
@@ -118,41 +216,34 @@ export default {
 .action {
   border-radius: 8px;
   background-color: #fff;
-
   &__header {
     padding: 20px;
     width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-
     .b {
       display: flex;
       align-items: center;
       gap: 10px;
     }
-
     .i {
       width: 26px;
       height: 26px;
       object-fit: fit;
     }
-
     .t {
       color: var(--v-primary-base);
       font-weight: 600;
       font-size: 20px;
     }
   }
-
   &__content {
-    background-color: #fefcf8;
+    background-color: #f8f7f4;
     padding: 20px 50px;
-
     .top {
       padding: 30px 0px 0px 0px;
       box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.1);
-
       .action-title {
         color: var(--v-primary-base);
         text-transform: uppercase;
@@ -164,27 +255,23 @@ export default {
         display: inline-block;
       }
     }
-
     .action-description {
       color: var(--v-primary-base);
       display: block;
       padding: 20px 0px;
       font-size: 16px;
     }
-
     .a-wrapper {
       background-color: #fff;
       padding: 20px;
       border: 1px solid #d9dee1;
       border-radius: 4px;
     }
-
     .note {
       display: block;
       margin-top: 10px;
       color: #8f96a1;
     }
-
     .bottom {
       display: flex;
       justify-content: flex-end;

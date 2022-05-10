@@ -10,138 +10,79 @@
       >
         <v-layout row wrap class="align-center">
           <v-flex md1>
-            <span
-              class="mb-0 mx-4"
-              style="
-                font-family: Lato;
-                font-style: normal;
-                font-weight: normal;
-                font-size: 12px;
-                line-height: 14px;
-                color: #596a73;
-              "
-              >{{ id }}</span
-            >
+            <span class="mb-0 mx-4 table-input">{{ id }}</span>
           </v-flex>
           <v-flex md2>
-            <span
-              class="mb-0 mx-4"
-              style="
-                font-family: Lato;
-                font-style: normal;
-                font-weight: normal;
-                font-size: 12px;
-                line-height: 14px;
-                color: #596a73;
-              "
-              >{{ approvedBy }}</span
-            >
+            <span class="mb-0 mx-4 table-input">{{ approvedBy }}</span>
           </v-flex>
 
           <v-flex md2>
             <div class="d-flex align-center">
-              <span
-                class="mb-0 pl-6 pr-4"
-                style="
-                  font-family: Lato;
-                  font-style: normal;
-                  font-weight: normal;
-                  font-size: 12px;
-                  line-height: 14px;
-                  color: #596a73;
-                "
-                >{{ amount }}</span
-              >
+              <span class="mb-0 pl-6 pr-4 table-input">{{ amount }}</span>
             </div>
           </v-flex>
           <v-flex md1>
             <div class="d-flex align-center">
-              <span
-                class="mb-0"
-                style="
-                  font-family: Lato;
-                  font-style: normal;
-                  font-weight: normal;
-                  font-size: 12px;
-                  line-height: 14px;
-                  color: #596a73;
-                "
-                >{{ paymentRef }}</span
-              >
+              <span class="mb-0 table-input">{{ paymentRef }}</span>
             </div>
           </v-flex>
           <v-flex md1>
             <div class="d-flex align-center">
-              <v-icon small :color="stausIcon"> mdi-circle-medium </v-icon>
-              <span
-                style="
-                  font-family: Lato;
-                  font-style: normal;
-                  font-weight: normal;
-                  font-size: 12px;
-                  line-height: 14px;
-                  color: #596a73;
-                "
-                >{{ status }}</span
-              >
+              <v-icon small :color="statusIcon"> mdi-circle-medium </v-icon>
+              <span class="table-input">{{ status }}</span>
             </div>
           </v-flex>
           <v-flex md2>
             <div class="d-flex align-center">
-              <span
-                class="mb-0"
-                style="
-                  font-family: Lato;
-                  font-style: normal;
-                  font-weight: normal;
-                  font-size: 12px;
-                  line-height: 14px;
-                  color: #596a73;
-                "
-                >{{ payee }}</span
-              >
+              <span class="mb-0 table-input">{{ payee }}</span>
             </div>
           </v-flex>
           <v-flex md1>
             <div>
-              <span
-                class="mb-0"
-                style="
-                  font-family: Lato;
-                  font-style: normal;
-                  font-weight: normal;
-                  font-size: 12px;
-                  line-height: 14px;
-                  color: #596a73;
-                "
-                >{{ date }}</span
-              >
+              <span class="mb-0 table-input">{{ date }}</span>
             </div>
           </v-flex>
           <v-flex md2>
             <div class="d-flex align-center">
-              <v-btn
-                @click.stop="dialog = true"
-                exact-path
-                rounded
-                depressed
-                dark
-                small
-                color="#2BD5AE"
-                class="text-lowercase px-2 my-1 mr-2"
-                style="color: var(--v-primary-base)"
-              >
-                view
-              </v-btn>
-              <v-btn
-                rounded
-                depressed
-                dark
-                small
-                color="primary"
-                class="text-lowercase px-2 my-1"
-                >review</v-btn
-              >
+              <v-hover v-slot="{ hover }">
+                <v-btn
+                  @click.stop="dialog = true"
+                  :style="{
+                    'background-color': hover ? '#2bd5ae' : '',
+                    border: hover ? 'none' : '',
+                  }"
+                  exact-path
+                  depressed
+                  outlined
+                  dark
+                  small
+                  color="#2BD5AE"
+                  class="text-capitalize px-1 my-1 mr-1 rounded"
+                  style="color: var(--v-primary-base)"
+                >
+                  view
+                </v-btn>
+              </v-hover>
+              <v-hover v-slot="{ hover }">
+                <v-btn
+                  @click="
+                    {
+                    }
+                  "
+                  dark
+                  outlined
+                  depressed
+                  small
+                  color="primary"
+                  :style="{
+                    'background-color': hover ? '#c4c9cf' : '',
+                    border: hover ? 'none' : '',
+                    color: hover ? 'white' : '#ffffff',
+                  }"
+                  class="text-capitalize px-2 my-1 rounded"
+                  >review</v-btn
+                >
+              </v-hover>
             </div>
           </v-flex>
         </v-layout>
@@ -150,7 +91,7 @@
     <template>
       <div>
         <v-dialog v-model="dialog" max-width="516">
-          <v-card color="#FEFCF8" class="rounded-lg">
+          <v-card color="#f8f7f4" class="rounded-lg">
             <v-card-title
               style="background: #ffffff; border-radius: 8px 8px 0px 0px"
             >
@@ -471,7 +412,7 @@ export default {
     };
   },
   computed: {
-    stausIcon() {
+    statusIcon() {
       if (this.status === "scheduled") {
         return "#FF6A6A";
       } else if (this.status === "pending") {
@@ -486,5 +427,13 @@ export default {
 .v-application .elevation-2 {
   box-shadow: -6px 3px 1px -2px rgb(0 0 0 / 0%), 0px 2px 2px 0px rgb(0 0 0 / 0%),
     0px 1px 5px 0px rgb(0 0 0 / 7%) !important;
+}
+.table-input {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 14px;
+  color: #596a73;
 }
 </style>

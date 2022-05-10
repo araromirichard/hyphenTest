@@ -176,7 +176,7 @@ export default {
       //map over the allEntries and get a new array that contains just the form_entry objs
       const formEntryArray = allEntries.map((entry) => entry.form_entry);
       console.log(JSON.stringify(formEntryArray, null, 2));
-      
+
       this.dataEntries = formEntryArray;
 
       //get the first object in the array and get the key each value....

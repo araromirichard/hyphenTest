@@ -184,9 +184,7 @@
 </template>
 
 <script>
-import {
-  comparisonType,
-} from "@/utils/ManagerApprovalOptions.js";
+import { comparisonType } from "@/utils/ManagerApprovalOptions.js";
 import WorkflowConditionInput from "./workflow-condition-input.vue";
 export default {
   props: {
@@ -199,9 +197,9 @@ export default {
     groupIndex: {
       default: 0,
     },
-    inputs:{
-      default:null
-    }
+    inputs: {
+      default: null,
+    },
   },
   components: { WorkflowConditionInput },
   data() {
