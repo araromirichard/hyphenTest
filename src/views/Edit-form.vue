@@ -54,10 +54,12 @@
                   <v-col cols="12">
                     <v-layout style="padding-top: 20px">
                       <template>
-                        <FormRenderer
-                          :form-configuration="formData.form_fields"
-                          v-if="formData.form_fields"
-                        />
+                        <v-skeleton-loader :loading="isLoading" type="table">
+                          <FormRenderer
+                            :form-configuration="formData.form_fields"
+                            v-if="formData.form_fields"
+                          />
+                        </v-skeleton-loader>
                       </template>
                     </v-layout>
                   </v-col>
@@ -69,14 +71,13 @@
       </v-col>
       <v-col
         class="d-flex flex-column justify-center pa-2"
-        style="background-color: rgb(253, 249, 239); min-height: 100vh"
+        style="background-color: #f8f7f4; min-height: 100vh"
         cols="12"
         md="8"
       >
-        <div>
-          <div class="d-flex justify-center align-center">
+        <div v-if="formData">
+          <div class="d-flex justify-center align-center mb-md-8">
             <h6
-              v-if="formData"
               class="pl-5 pt-md-5"
               style="
                 font-family: Inter;
@@ -132,7 +133,9 @@
               </v-sheet>
             </div>
           </div>
-          <FormBuilder style="" v-model="formData.form_fields"></FormBuilder>
+          <v-skeleton-loader :loading="isLoading" type="table">
+            <FormBuilder style="" v-model="formData.form_fields"></FormBuilder>
+          </v-skeleton-loader>
         </div>
         <v-row>
           <v-col class="my-2 mx-md-5 d-flex justify-end">
@@ -191,6 +194,7 @@ export default {
   },
   data() {
     return {
+      isLoading: false,
       formInputData: null,
       formData: null,
       configuration: {
@@ -221,11 +225,17 @@ export default {
     },
     async updateFormData() {
       console.log(JSON.stringify(this.updateRequestData, null, 2));
+      const payload = {
+        form_fields: this.formData.form_fields,
+        is_private: this.configuration.isPrivate,
+      };
+      // console.log(JSON.stringify(payload, null, 2));
+
       try {
         await this.$store
           .dispatch("formBuilder/updateForm", {
             id: this.form_id,
-            payload: this.updateRequestData,
+            payload: payload,
           })
           .then(
             this.showToast({
@@ -250,7 +260,15 @@ export default {
   },
 
   async mounted() {
-    await this.fetchFormsById();
+    this.isLoading = true;
+    setTimeout(
+      () => {
+        this.isLoading = false;
+      },
+      5000,
+      this.fetchFormsById()
+    );
+    //await this.fetchFormsById();
   },
   computed: {
     ...mapGetters({
@@ -260,7 +278,7 @@ export default {
     //payload to send as update request
     updateRequestData() {
       return {
-        form_fields: this.formData,
+        form_fields: this.formData.form_fields,
         is_private: this.configuration.isPrivate,
       };
     },
