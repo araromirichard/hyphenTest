@@ -436,8 +436,10 @@ export default {
         id: this.workflow.id, // rand it by time stamp for now
         name: this.workflow.title,
         trigger: this.workflow.trigger?.value || "",
-        schema: this.workflow.conditions, // data gotten from workflow component
-        actions: this.workflow.actions, // data gotten from workflo actions component
+        schema: {
+          ...this.workflow.conditions,
+          actions:this.workflow.actions // data gotten from workflo actions component
+        }, 
       };
     },
   },
