@@ -2,13 +2,13 @@
   <div ref="compose">
     <div class="vertical-line"></div>
 
-    <div class="loader" v-if="isLoadingFormFields">
+    <div class="loader" v-if="isLoadingEntries">
       <v-progress-circular color="primary" indeterminate></v-progress-circular>
     </div>
 
     <div v-else class="form-trigger">
       <div class="header" @click="showTriggers = !showTriggers">
-        <span class="title"> Compose the conditions {{ isVisable }} </span>
+        <span class="title"> Compose the conditions </span>
 
         <v-btn color="primary" icon
           ><v-icon size="33" v-if="!showTriggers">mdi-chevron-down</v-icon>
@@ -36,6 +36,7 @@
                 @update-group="updateGroupCondition($event, i)"
                 @add-new-group="addNewGroup($event, i)"
                 @update-group-type="updateGroupType($event, i)"
+                @selected-field="addSelectedField"
                 :index="i"
                 :inputs="inputs"
               />
@@ -59,7 +60,7 @@
 <script>
 //  <workflow-parent-group> components holds the parent condition
 // ..it holds childen conditions/group (slot components)
-import { comparisonType } from "@/utils/ManagerApprovalOptions.js";
+import { comparisonType, operators } from "@/utils/ManagerApprovalOptions.js";
 import WorkflowChildGroup from "./workflow-child-group.vue";
 import WorkflowParentGroup from "./workflow-parent-group.vue";
 export default {
@@ -69,13 +70,18 @@ export default {
       type: Boolean,
       default: false,
     },
-    inputs: {
+
+    trigger: {
+      default: null,
+    },
+
+    triggerData: {
       default: null,
     },
   },
   data() {
     return {
-      isLoadingFormFields: false,
+      isLoadingEntries: false,
       showTriggers: true,
       comparisonType,
       selectedCompareGroup: ["and"], // we are using this to store the whole group condition
@@ -94,9 +100,24 @@ export default {
         easing: "easeInOutCubic",
         container: ".flows",
       },
+      inputs: {
+        fields: [],
+        operators: operators,
+      },
+      selctedFields: [],
     };
   },
   methods: {
+    addSelectedField(field) {
+      if (this.selctedFields.indexOf(field) == -1) {
+        this.selctedFields.push(field);
+      }
+
+      this.$emit(
+        "selected-field",
+        this.selctedFields.filter((field) => field != "")
+      );
+    },
     addNewGroup(item, i) {
       if (this.selectedCompareGroup.length - 1 === i) {
         // if it called from last condition, add new group to list
@@ -112,12 +133,24 @@ export default {
           // we can't remove the first group
           return;
         }
+
+        // const row = this.schema.condition.properties.conditions[i]
+        //   if(row.type === 'comparison'){
+        //     console.log(row.properties.field)
+        //   }else if(type === 'group'){
+        //     for(let i = 0; i < row.properties.conditions.length; i++){
+        //       console.log(row.properties.conditions[i].properties.field)
+        //     }
+        //   }
+
+        console.log("removing", JSON.stringify(this.schema.condition.properties.conditions, null, 2));
         this.selectedCompareGroup.splice(i, 1);
         this.schema.condition.properties.conditions.splice(i, 1);
       }
     },
 
     updateGroupCondition(e, i) {
+      console.log('adding',JSON.stringify(e));
       this.schema.condition.properties.conditions.splice(i, 1, e);
     },
 
@@ -125,11 +158,37 @@ export default {
       this.selectedCompareGroup.splice(i, 1, e);
     },
 
-    fetchFormFields() {
-      this.isLoadingFormFields = true;
-      setTimeout(() => {
-        this.isLoadingFormFields = false;
-      }, 1000);
+    async fetchFormEntries() {
+      try {
+        this.isLoadingEntries = true;
+        const { data } = await this.$store.dispatch(
+          "formBuilder/getFormEntries",
+          this.triggerData
+        );
+
+        this.inputs.fields = Object.keys(data.form_fields.controls).map(
+          (key) => {
+            return data.form_fields.controls[key].name;
+          }
+        );
+      } catch (err) {
+        console.log("err", JSON.stringify(err, null, 2));
+      } finally {
+        this.isLoadingEntries = false;
+      }
+    },
+
+    async fetchInvoiceEntries() {
+      this.inputs.fields = [
+        "Invoice Total",
+        "Invoice Number",
+        "Vendor Name",
+        "Invoice Date",
+        "PO Number",
+        "Invoice Type",
+        "Net Term",
+        "Due Date",
+      ];
     },
   },
   watch: {
@@ -142,11 +201,15 @@ export default {
       },
     },
 
-    isVisable: {
+    trigger: {
       immediate: true,
       handler(val) {
         if (val) {
-          this.fetchFormFields();
+          if (this.trigger === "invoice") {
+            this.fetchInvoiceEntries();
+          } else if (this.trigger === "form") {
+            this.fetchFormEntries();
+          }
         }
       },
     },

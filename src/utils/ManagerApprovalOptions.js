@@ -35,7 +35,7 @@ const operators = [
     val: ">",
   },
   {
-    string: "Greater than",
+    string: "Greater than or Equal to",
     val: ">=",
   },
 ];

@@ -86,6 +86,7 @@
           <workflow-condition-input
             class="my-4"
             :rule="rule"
+            @selected-schema="$emit('selected-field',$event)"
             :index="i"
             :inputs="inputs"
             @updateField="updateGroupCondition($event, i)"

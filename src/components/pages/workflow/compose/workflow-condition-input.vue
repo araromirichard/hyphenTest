@@ -53,7 +53,7 @@
     <v-col cols="12" md="1">
       <v-btn icon>
         <v-icon
-          @click="$emit('delete', index)"
+          @click="deleteInput"
           class="mx-7"
           id="no-background-hover"
           tag="button"
@@ -90,11 +90,18 @@ export default {
       },
     };
   },
+  methods:{
+    deleteInput(){
+      this.$emit('delete', this.index)
+       this.$emit('deleted-schema',this.form.field)
+    }
+  },
   watch: {
     form: {
       immediate: true,
       deep: true,
       handler(val) {
+        this.$emit('selected-schema',val.field)
         this.$emit("updateField", {
           index: this.index,
           data: val,
