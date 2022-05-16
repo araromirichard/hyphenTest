@@ -8,14 +8,40 @@
         class="d-flex"
         style="background: rgba(127, 145, 155, 0.052607)"
       >
-        <v-switch
-          flat
-          dense
-          class="pl-4 mb-2"
-          color="#16be98"
-          v-model="autoPay"
-          label="Auto pay"
-        ></v-switch>
+        <v-spacer></v-spacer>
+        <download-csv class="btn btn-default" :data="filteredPendingVendors">
+          <v-hover v-slot="{ hover }">
+            <v-btn
+              outlined
+              @click="alertCSVDownload"
+              color="primary"
+              class="my-4 export-btn mr-9 hover-btn"
+              :style="{
+                'background-color': hover ? '#2bd5ae' : '',
+                border: hover ? 'none' : '',
+              }"
+              elevation="2"
+              ><span class="material-icons pr-1"> import_export </span
+              ><span
+                class="primary--text"
+                style="
+                  font-family: Inter;
+                  font-style: normal;
+                  font-weight: 500;
+                  line-height: 12px;
+                  text-align: center;
+                  letter-spacing: 0.636364px;
+                "
+                :style="{
+                  fontSize: `${
+                    $vuetify.breakpoint.mdAndDown ? '9  px' : '11px'
+                  }`,
+                }"
+                >Export</span
+              >
+            </v-btn>
+          </v-hover>
+        </download-csv>
       </v-card>
     </div>
     <v-layout
@@ -25,52 +51,59 @@
       v-if="$vuetify.breakpoint.mdAndUp"
     >
       <v-flex md1>
-        <div class="d-flex align-center">
-          <p class="mb-0 ml-2 mr-4 primary--text font-weight-bold">ID</p>
+        <div class="d-flex align-center pa-0 ma-0">
+          <p class="mb-0 mx-1 pa-0 primary--text font-weight-bold">ID</p>
+          <v-btn class="" color="grey lighten-1" icon>
+            <v-icon>mdi-chevron-down</v-icon>
+          </v-btn>
         </div>
       </v-flex>
-      <v-flex md2>
-        <div class="d-flex align-center">
-          <p class="mb-0 mx-4 primary--text font-weight-bold">Approved by</p>
+      <v-flex md1>
+        <div class="d-flex align-center pa-0 ma-0">
+          <p class="mb-0 mx-1 pa-0 primary--text font-weight-bold">Company</p>
+          <v-btn class="" color="grey lighten-1" icon>
+            <v-icon>mdi-chevron-down</v-icon>
+          </v-btn>
         </div>
       </v-flex>
-
-      <v-flex md2>
+      <v-flex md1 class="d-flex flex-row">
         <div class="d-flex align-center">
-          <p class="mb-0 pl-4 primary--text font-weight-bold">Amount</p>
-          <v-btn class="ml-1" color="grey lighten-1" icon>
+          <p class="mb-0 primary--text font-weight-bold">Name</p>
+          <v-btn class="" color="grey lighten-1" icon>
             <v-icon>mdi-chevron-down</v-icon>
           </v-btn>
         </div>
       </v-flex>
       <v-flex md1>
         <div class="d-flex align-center">
-          <p class="mb-0 primary--text font-weight-bold">Ref No.</p>
+          <p class="mb-0 primary--text font-weight-bold">Due</p>
         </div>
       </v-flex>
-      <v-flex md1>
+      <v-flex md2>
         <div class="d-flex align-center">
-          <p class="mb-0 primary--text font-weight-bold">Status</p>
-          <v-btn class="ml-1" color="grey lighten-1" icon>
+          <p class="mb-0 primary--text font-weight-bold">Email</p>
+          <v-btn class="" color="grey lighten-1" icon>
             <v-icon>mdi-chevron-down</v-icon>
           </v-btn>
         </div>
       </v-flex>
       <v-flex md2>
         <div class="d-flex align-center">
-          <p class="mb-0 primary--text font-weight-bold">Payee</p>
-          <v-btn class="ml-1" color="grey lighten-1" icon>
+          <p class="mb-0 primary--text font-weight-bold">Phone</p>
+          <v-btn class="" color="grey lighten-1" icon>
             <v-icon>mdi-chevron-down</v-icon>
           </v-btn>
         </div>
       </v-flex>
-      <v-flex md1>
-        <div>
-          <p class="mb-0 pl-md-4 primary--text font-weight-bold">Entry Date</p>
+      <v-flex md2>
+        <div class="d-flex justify-center">
+          <p class="mb-0 pl-md-4 primary--text font-weight-bold">
+            Outstanding (N)
+          </p>
         </div>
       </v-flex>
       <v-flex md2>
-        <div class="d-flex align-center">
+        <div class="d-flex justify-center align-center">
           <p class="mb-0 pl-md-8 primary--text font-weight-bold">Actions</p>
         </div>
       </v-flex>
@@ -79,39 +112,44 @@
       <v-row>
         <v-col
           cols="12"
-          v-for="(payment, i) in filteredPayments"
+          v-for="(vendor, i) in filteredPendingVendors"
           :key="i"
           class="py-0 ma-0"
         >
-          <ContactTable
-            v-if="$vuetify.breakpoint.mdAndUp"
-            :index="i"
-            :id="i + 1"
-            :paymentRef="payment.ref"
-            :approvedBy="payment.approvedBy"
-            :payee="payment.payee"
-            :date="payment.date | date"
-            :amount="payment.amount"
-            :status="payment.status"
-            :iconColor="payment.status === 'scheduled' ? '#2BD5AE' : '#E3AA1C'"
-          />
-
+          <v-skeleton-loader :loading="isLoading" type="table">
+            <VendorTable
+              v-if="$vuetify.breakpoint.mdAndUp"
+              :index="i"
+              :id="vendor.id"
+              :company="
+                vendor.organization[Object.keys(vendor.organization)].company
+                  .company_name
+              "
+              :name="vendor.vendorname"
+              :due="vendor.due"
+              :email="vendor.email"
+              :phone="vendor.phone"
+              :outstanding="vendor.outstanding"
+            />
+          </v-skeleton-loader>
           <!-- Data table for mobile -->
-          <ContactTableCard
-            v-if="$vuetify.breakpoint.mdAndDown"
-            :index="i"
-            :id="i + 1"
-            :paymentRef="payment.ref"
-            :approvedBy="payment.approvedBy"
-            :payee="payment.payee"
-            :date="payment.date | date"
-            :amount="payment.amount"
-            :status="payment.status"
-            :iconColor="payment.status === 'scheduled' ? '#2BD5AE' : '#E3AA1C'"
-            :statusColor="
-              payment.status === 'scheduled' ? '#2BD5AE' : '#E3AA1C'
-            "
-          />
+          <v-template v-if="$vuetify.breakpoint.smAndDown">
+            <v-skeleton-loader :loading="isLoading" type="card">
+              <vendorTableCard
+                :index="i"
+                :id="vendor.id"
+                :company="
+                  vendor.organization[Object.keys(vendor.organization)].company
+                    .company_name
+                "
+                :name="vendor.vendorname"
+                :due="vendor.due"
+                :email="vendor.email"
+                :phone="vendor.phone"
+                :outstanding="vendor.outstanding"
+              />
+            </v-skeleton-loader>
+          </v-template>
         </v-col>
       </v-row>
     </v-layout>
@@ -119,15 +157,18 @@
 </template>
 
 <script>
-import ContactTable from "./PaymentTable.vue";
-import ContactTableCard from "./PayableTableCard.vue";
+import { mapGetters } from "vuex";
+import VendorTable from "./VendorTable.vue";
+import vendorTableCard from "./vendorTableCard.vue";
 export default {
+  name: "pendingVendors",
   components: {
-    ContactTable,
-    ContactTableCard,
+    VendorTable,
+    vendorTableCard,
   },
   data() {
     return {
+      isLoading: false,
       autoPay: false,
       amount: "N2,300,000",
       Ref: "#EXP084492",
@@ -135,68 +176,7 @@ export default {
       Subtotal: "172500",
       dragging: false,
       dialog: false,
-      payments: [
-        {
-          id: 1,
-          approvedBy: "John Bull",
-          amount: "200,000,000",
-          ref: "#EXP084492",
-          payee: "John Bello",
-          date: new Date(),
-          status: "scheduled",
-          action: "",
-        },
-        {
-          id: 2,
-          approvedBy: "Ken Chibuzor",
-          amount: "2,300,000",
-          ref: "#EXP084492",
-          payee: "Emmanuel John",
-          date: new Date(),
-          status: "pending",
-          action: "",
-        },
-        {
-          id: 3,
-          approvedBy: "Durosimi Paul",
-          amount: "20,000,000",
-          ref: "#EXP084492",
-          payee: "Samuel Olawale",
-          date: new Date(),
-          status: "paid",
-          action: "",
-        },
-        {
-          id: 4,
-          approvedBy: "Chioma Williams",
-          amount: "1,200,500",
-          ref: "#EXP084492",
-          payee: "FIRS",
-          date: new Date(),
-          status: "pending",
-          action: "",
-        },
-        {
-          id: 5,
-          approvedBy: "Bisi Oguntade",
-          amount: "200,000,000",
-          ref: "#EXP084492",
-          payee: "Brain&Hammer Ltd",
-          date: new Date(),
-          status: "pending",
-          action: "",
-        },
-        {
-          id: 6,
-          approvedBy: "Julius Obe",
-          amount: "11,000,000",
-          ref: "#EXP084492",
-          payee: "Julius Berger",
-          date: new Date(),
-          status: "pending",
-          action: "",
-        },
-      ],
+      //pendingVendors: [],
     };
   },
   methods: {
@@ -216,23 +196,49 @@ export default {
     setSearchText(value) {
       this.search = value;
     },
+    alertCSVDownload() {
+      this.showToast({
+        sclass: "success",
+        show: true,
+        message: "CSV downloaded!",
+        timeout: 3000,
+      });
+    },
   },
   computed: {
-    filteredPayments() {
+    ...mapGetters({
+      pendingVendors: "contacts/PendingVendors",
+    }),
+    filteredPendingVendors() {
       if (this.search) {
-        return this.payments.filter((payment) => {
+        return this.pendingVendors.filter((vendor) => {
           return (
-            payment.payee.toLowerCase().match(this.search.toLowerCase()) ||
-            payment.status.toLowerCase().match(this.search.toLowerCase) ||
-            payment.amount.toString().match(this.search) ||
-            payment.id.toString().match(this.search)
+            vendor.organization[
+              Object.keys(vendor.organization)
+            ].company.company_name
+              .toLowerCase()
+              .match(this.search.toLowerCase()) ||
+            vendor.email.toLowerCase().match(this.search.toLowerCase) ||
+            vendor.vendorname.toString().match(this.search.toLowerCase)
           );
         });
-      } else
-        return this.payments.filter(function (payment) {
-          return payment.status.match("pending");
-        });
+      } else return this.pendingVendors;
     },
+  },
+  mounted() {
+    this.isLoading = true;
+    setTimeout(
+      () => {
+        this.isLoading = false;
+      },
+      3000,
+      this.pendingVendors
+    );
+    try {
+      return this.$store.dispatch("contacts/fetchAllVendors");
+    } catch (error) {
+      console.log(JSON.stringify(error, null, 2));
+    }
   },
 };
 </script>

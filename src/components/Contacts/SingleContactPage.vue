@@ -71,7 +71,7 @@
                 width="100%"
                 style="border-bottom: 1px solid rgba(127, 145, 155, 0.3)"
               >
-                <v-tabs v-model="tab" align-with-title>
+                <v-tabs v-model="tab" align-with-title slider-size="4">
                   <v-tab class="mt-2 tab">Details</v-tab>
 
                   <v-spacer></v-spacer>
@@ -451,7 +451,7 @@
                 width="100%"
                 style="border-bottom: 1px solid rgba(127, 145, 155, 0.3)"
               >
-                <v-tabs v-model="tab1" align-with-title>
+                <v-tabs v-model="tab1" align-with-title slider-size="4">
                   <v-tab
                     class="mt-2"
                     v-for="item in items"
@@ -480,6 +480,7 @@
               <v-col class="ma-0 pa-0" cols="12">
                 <v-bottom-navigation fixed class="pa-0 mx-0" dark>
                   <v-tabs
+                    slider-size="4"
                     center-active
                     class="ma-0"
                     background-color="primary"
@@ -523,7 +524,7 @@
                 width="100%"
                 style="border-bottom: 1px solid rgba(127, 145, 155, 0.3)"
               >
-                <v-tabs v-model="tab" align-with-title>
+                <v-tabs v-model="tab" align-with-title slider-size="4">
                   <v-tab class="mt-2 tab">Details</v-tab>
 
                   <v-spacer></v-spacer>
@@ -1023,7 +1024,7 @@
                 width="100%"
                 style="border-bottom: 1px solid rgba(127, 145, 155, 0.3)"
               >
-                <v-tabs v-model="tab1" align-with-title>
+                <v-tabs v-model="tab1" align-with-title slider-size="4">
                   <v-tab
                     class="mt-2"
                     v-for="item in items"
@@ -1052,6 +1053,7 @@
               <v-col class="ma-0 pa-0" cols="12">
                 <v-bottom-navigation fixed class="pa-0 mx-0" dark>
                   <v-tabs
+                    slider-size="4"
                     center-active
                     class="ma-0"
                     background-color="primary"

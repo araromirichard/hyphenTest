@@ -106,7 +106,11 @@
                 width="100%"
                 style="border-bottom: 1px solid rgba(127, 145, 155, 0.3)"
               >
-                <v-tabs :slider-color="sliderColor" v-model="tab">
+                <v-tabs
+                  :slider-color="sliderColor"
+                  v-model="tab"
+                  slider-size="4"
+                >
                   <v-tab
                     class="mt-2"
                     v-for="item in items"
@@ -211,13 +215,14 @@
 import CustomersContact from "@/components/Contacts/CustomersContact.vue";
 import ContactDropDown from "@/includes/ContactDropdown";
 import VendorsContact from "@/components/Contacts/VendorsContact.vue";
-// import Pending from "../../components/Contacts/Pending.vue";
+import { mapGetters } from "vuex";
+import PendingContact from "../../components/Contacts/PendingContact.vue";
 
 export default {
   name: "contacts",
   data() {
     return {
-      contactRecord: "234",
+      //contactRecord: "234",
 
       isClicked: true,
       tab: 0,
@@ -233,7 +238,7 @@ export default {
     CustomersContact,
     ContactDropDown,
     VendorsContact,
-    // Pending,
+    PendingContact,
   },
   methods: {
     toggleSearch() {
@@ -244,11 +249,21 @@ export default {
     },
   },
   computed: {
+    ...mapGetters({
+      contactRecord: "contacts/numberOfContacts",
+    }),
     sliderColor() {
-      if (this.items.tab === "Pending") {
+      if (this.items.tab == "Pending") {
         return "#FF6A6A";
       } else return "#19283D";
     },
+  },
+  mounted() {
+    try {
+      return this.$store.dispatch("contacts/fetchAllVendors");
+    } catch (error) {
+      console.log(JSON.stringify(error, null, 2));
+    }
   },
 };
 </script>
