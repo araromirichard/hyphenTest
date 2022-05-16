@@ -5,6 +5,7 @@
         <details-tab-workflow
           :runs="workflow.runs"
           :trigger="workflow.trigger"
+          :schema="workflow.conditions"
         />
       </div>
 
