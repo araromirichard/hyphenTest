@@ -113,6 +113,16 @@ export default {
   width: 2px;
 }
 
+.loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  background: #ffffff;
+  box-shadow: 0px 4px 16px rgba(204, 188, 252, 0.15);
+  border-radius: 6px;
+}
+
 .payment-trigger {
   width: 100%;
   padding: 30px;
