@@ -394,14 +394,14 @@
       <template v-slot:append absolute>
         <!-- logOutBtn/change organization button starts here  -->
         <div class="px-8 py-8">
-          <v-btn
+          <!-- <v-btn
             :to="{ name: 'organizationList' }"
             outlined
             class="text-capitalize"
           >
             Switch Organization
             <v-icon> mdi-menu-down </v-icon>
-          </v-btn>
+          </v-btn> -->
         </div>
         <div class="ml-12 mb-13" v-if="$vuetify.breakpoint.mdAndUp">
           <v-menu open-on-hover offset-y>

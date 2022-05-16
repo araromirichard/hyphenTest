@@ -6,7 +6,7 @@
         <v-row align="center">
           <v-col class="d-flex justify-center align-center" cols="12">
             <h3
-              class="font-weight-bold text-md-h4 primary--text pl-md-14"
+              class="font-weight-bold text-md-h4 primary--text pl-md-15"
               style="line-height: 39px"
             >
               Receivables
@@ -38,14 +38,14 @@
           </v-col>
         </v-row>
 
-        <v-container fluid class="px-2">
+        <v-container class="px-2">
           <v-row class="ma-0 pa-0" align="center">
             <v-col class="pa-0 ma-0" cols="12" sm="12" md="6">
               <v-card
                 flat
                 height="180px"
                 :max-width="`${$vuetify.breakpoint.mdAndDown ? '100%' : '78%'}`"
-                class="d-flex flex-row mx-0"
+                class="d-flex flex-row ml-0 ml-md-14"
                 style="margin-top: 35px"
                 :style="{
                   marginLeft: `${$vuetify.breakpoint.mdAndUp ? '60px' : ''}`,
@@ -127,6 +127,7 @@
                 style="margin-top: 35px"
                 :style="{
                   marginLeft: `${$vuetify.breakpoint.mdAndUp ? '78px' : ''}`,
+                  marginRight: `${$vuetify.breakpoint.mdAndUp ? '78px' : ''}`,
                 }"
               >
                 <v-row>

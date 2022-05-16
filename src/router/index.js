@@ -38,7 +38,15 @@ const routes = [
     path: "/reset-password/:token",
     name: "reset-password",
     component: Formlayout,
-    meta: { middleware: ["guest"] },
+    // meta: { middleware: ["guest", "auth"] },
+  },
+  {
+    path: "/pending-activation",
+    name: "pending",
+    components: {
+      default: () => import("@/views/pending-activation.vue"),
+    },
+    meta: { middleware: ["auth"] },
   },
   {
     path: "/sign-up",

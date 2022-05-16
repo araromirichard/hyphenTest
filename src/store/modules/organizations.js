@@ -102,7 +102,7 @@ const actions = {
     console.log(rootState.auth.user);
     try {
       const response = await organization.getOrganizationToken(
-        rootState.auth.user.organization
+        rootState.auth.user.organization.id
       );
       commit("organizationToken", response.data);
       console.log(response.data);

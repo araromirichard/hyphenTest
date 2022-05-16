@@ -57,7 +57,7 @@
                         dark
                         color="#636b70"
                         class="mt-4 mx-md-5"
-                        >{{ card.entries.length }}</v-chip
+                        >{{ card.entries }}</v-chip
                       >
                       <h5 class="mx-md-5 text--disabled text-caption">
                         entries

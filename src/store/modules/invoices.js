@@ -52,9 +52,11 @@ const mutations = {
 const actions = {
   //
 
-  async FetchAllInvoices({ commit }, orgId) {
+  async FetchAllInvoices({ commit, rootState }) {
     try {
-      const response = await invoices.getAll(orgId);
+      const response = await invoices.getAll(
+        rootState.auth.user.organization.id
+      );
       commit("setInvoices", response.data);
       console.log(JSON.stringify(response.data, null, 2));
       return response;

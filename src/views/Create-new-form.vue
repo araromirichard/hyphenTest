@@ -205,6 +205,7 @@ export default {
         formId: "",
       },
       formData: null,
+     
     };
   },
 
@@ -254,7 +255,8 @@ export default {
 
       const newArray = Object.keys(controlsObject).map((key) => {
         return {
-          name: controlsObject[key].name,
+          label: controlsObject[key].label,
+          key: controlsObject[key].name,
         };
       });
       console.log(JSON.stringify(newArray, null, 2));

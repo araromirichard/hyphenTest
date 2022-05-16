@@ -2,13 +2,13 @@
   <div ref="compose">
     <div class="vertical-line"></div>
 
-    <div class="loader" v-if="isLoadingFormFields">
+    <div class="loader" v-if="isLoadingEntries">
       <v-progress-circular color="primary" indeterminate></v-progress-circular>
     </div>
 
     <div v-else class="form-trigger">
       <div class="header" @click="showTriggers = !showTriggers">
-        <span class="title"> Compose the conditions {{ isVisable }} </span>
+        <span class="title"> Compose the conditions </span>
 
         <v-btn color="primary" icon
           ><v-icon size="33" v-if="!showTriggers">mdi-chevron-down</v-icon>
@@ -21,28 +21,27 @@
           >Design the conditions for which this workflow’ data will be
           proccessed</span
         >
-
         <transition name="animate-down">
           <workflow-parent-group
-            :group-type="schema.condition.properties.type"
-            @update-group-type="schema.condition.properties.type = $event"
+            v-if="conditions"
+            :group-type="conditions.properties.type"
+            @update-group-type="conditions.properties.type = $event"
           >
-            <div v-for="(card, i) in selectedCompareGroup" :key="i">
+            <div v-for="(card, i) in conditions.properties.conditions" :key="i">
               <workflow-child-group
-                :is-last="i == selectedCompareGroup.length - 1"
+                :is-first="i == 0"
+                :is-last="i == conditions.properties.conditions.length - 1"
+                v-model="conditions.properties.conditions[i]"
                 :group-index="i"
-                :group-type="selectedCompareGroup[i]"
-                @remove-condition="removeCondition($event, i)"
-                @update-group="updateGroupCondition($event, i)"
-                @add-new-group="addNewGroup($event, i)"
-                @update-group-type="updateGroupType($event, i)"
+                @selected-field="$emit('selected-field', $event)"
                 :index="i"
                 :inputs="inputs"
+                @add-new-group="addNewGroup"
               />
             </div>
 
             <v-btn
-              @click="$emit('input', schema)"
+              @click="$emit('input', conditions)"
               large
               elevation="0"
               color="primary"
@@ -59,7 +58,7 @@
 <script>
 //  <workflow-parent-group> components holds the parent condition
 // ..it holds childen conditions/group (slot components)
-import { comparisonType } from "@/utils/ManagerApprovalOptions.js";
+import { comparisonType, operators } from "@/utils/ManagerApprovalOptions.js";
 import WorkflowChildGroup from "./workflow-child-group.vue";
 import WorkflowParentGroup from "./workflow-parent-group.vue";
 export default {
@@ -69,84 +68,173 @@ export default {
       type: Boolean,
       default: false,
     },
-    inputs: {
+
+    trigger: {
       default: null,
+    },
+
+    triggerData: {
+      default: null,
+    },
+
+    value: {
+      default: {
+        type: "group",
+        properties: {
+          type: "and",
+          conditions: [
+            {
+              type: "comparison",
+              properties: {
+                type: "",
+                field: "",
+                target: "",
+              },
+            },
+          ],
+        },
+      },
     },
   },
   data() {
     return {
-      isLoadingFormFields: false,
+      isLoadingEntries: false,
       showTriggers: true,
       comparisonType,
-      selectedCompareGroup: ["and"], // we are using this to store the whole group condition
-      schema: {
-        condition: {
-          type: "group",
-          properties: {
-            type: "and",
-            conditions: [],
-          },
+      conditions: {
+        type: "group",
+        properties: {
+          type: "and",
+          conditions: [
+            {
+              type: "comparison",
+              properties: {
+                type: "",
+                field: "",
+                target: "",
+              },
+            },
+          ],
         },
       },
+
       scrollOptions: {
         duration: 500,
         offset: 0,
         easing: "easeInOutCubic",
         container: ".flows",
       },
+      inputs: {
+        fields: [],
+        operators: operators,
+      },
+      selctedFields: [],
     };
   },
   methods: {
-    addNewGroup(item, i) {
-      if (this.selectedCompareGroup.length - 1 === i) {
-        // if it called from last condition, add new group to list
-        this.selectedCompareGroup.push(item);
-      } else {
-        // just add condition to current group
-        this.selectedCompareGroup[i + 1] = item;
+    addSelectedField(field) {
+      if (this.selctedFields.indexOf(field) == -1) {
+        this.selctedFields.push(field);
+      }
+
+      this.$emit(
+        "selected-field",
+        this.selctedFields.filter((field) => field != "")
+      );
+    },
+    addNewGroup(grouptype) {
+      this.conditions.properties.conditions.push({
+        type: "group",
+        properties: {
+          type: grouptype,
+          conditions: [
+            {
+              type: "comparison",
+              properties: {
+                type: "",
+                field: "",
+                target: "",
+              },
+            },
+          ],
+        },
+      });
+    },
+
+    async fetchFormEntries() {
+      try {
+        this.isLoadingEntries = true;
+        const { data } = await this.$store.dispatch(
+          "formBuilder/getSingleForm",
+          this.triggerData
+        );
+        this.inputs.fields = data.data.field_names;
+      } catch (err) {
+        console.log("err", JSON.stringify(err, null, 2));
+      } finally {
+        this.isLoadingEntries = false;
       }
     },
-    removeCondition(e, i) {
-      if (!e) {
-        if (this.selectedCompareGroup.length === 1) {
-          // we can't remove the first group
-          return;
-        }
-        this.selectedCompareGroup.splice(i, 1);
-        this.schema.condition.properties.conditions.splice(i, 1);
+
+    async fetchInvoiceEntries() {
+      try {
+        this.isLoadingEntries = true;
+        const { data } = await this.$store.dispatch(
+          "workflow/getAllInvoiceFieldsOptions"
+        );
+        this.inputs.fields = data;
+      } catch (err) {
+        console.log("err", JSON.stringify(err, null, 2));
+      } finally {
+        this.isLoadingEntries = false;
       }
     },
 
-    updateGroupCondition(e, i) {
-      this.schema.condition.properties.conditions.splice(i, 1, e);
-    },
-
-    updateGroupType(e, i) {
-      this.selectedCompareGroup.splice(i, 1, e);
-    },
-
-    fetchFormFields() {
-      this.isLoadingFormFields = true;
-      setTimeout(() => {
-        this.isLoadingFormFields = false;
-      }, 1000);
+    async fetchPaymentEntries() {
+      try {
+        this.isLoadingEntries = true;
+        const data = await this.$store.dispatch(
+          "workflow/getPaymentFieldsOptions",
+          this.triggerData
+        );
+        this.inputs.fields = data;
+      } catch (err) {
+        console.log("err", JSON.stringify(err, null, 2));
+      } finally {
+        this.isLoadingEntries = false;
+      }
     },
   },
   watch: {
-    schema: {
+    value: {
       immediate: true,
       deep: true,
       handler(val) {
-        this.$store.dispatch("workflow/updateSchema", val);
-        //console.log(JSON.stringify(val, null, 2));
+        if (JSON.stringify(val) !== JSON.stringify(this.conditions) && val) {
+          this.conditions = val;
+        }
       },
     },
 
-    isVisable: {
+    // conditions: {
+    //   immediate: true,
+    //   deep: true,
+    //   handler(val) {
+    //     this.$emit("input", val);
+    //   },
+    // },
+
+    trigger: {
       immediate: true,
       handler(val) {
         if (val) {
-          this.fetchFormFields();
+          if (this.trigger === "invoice") {
+            this.fetchInvoiceEntries();
+          } else if (this.trigger === "form") {
+            this.fetchFormEntries();
+          } else if (this.trigger === "payment") {
+            this.fetchPaymentEntries();
+          }
         }
       },
     },

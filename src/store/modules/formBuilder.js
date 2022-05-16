@@ -168,7 +168,7 @@ const actions = {
 
   async updateForm({ commit }, data) {
     try {
-      const response = await formbuilder.updateForm(data.id, data);
+      const response = await formbuilder.updateForm(data.id, data.payload);
       commit("updateForm", response.data);
       console.log(JSON.stringify(response.data, null, 2));
       return response;

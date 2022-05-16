@@ -40,7 +40,7 @@
       <v-col class="pa-0 my-4 my-md-0" cols="12" md="4">
         <v-card
           elevation="3"
-          class="ml-md-16 mr-md-6 mx-auto py-md-6"
+          class="ml-md-16 mr-md-2 mx-auto py-md-6"
           flat
           :width="cardWidth[$vuetify.breakpoint.name]"
         >
@@ -677,7 +677,7 @@ export default {
       try {
         const response = await this.$store.dispatch(
           "invoices/FetchAllInvoices",
-          this.organizationToken.data.organization
+          this.user.organization.id
         );
         this.invoiceArray = response.data;
         console.log(JSON.stringify(this.invoiceArray, null, 2));
@@ -687,7 +687,7 @@ export default {
     },
   },
   async mounted() {
-    this.getOrganizationToken();
+    await this.getOrganizationToken();
     this.loading = true;
     setTimeout(
       () => {
@@ -696,7 +696,7 @@ export default {
       3000,
       this.getAllInvocies()
     );
-    await this.getAllInvocies();
+    //await this.getAllInvocies();
     console.log(JSON.stringify(this.organizationToken, null, 2));
     console.log(JSON.stringify(this.user, null, 2));
   },
@@ -735,7 +735,7 @@ export default {
           //console.log(JSON.stringify(val, null, 2));
           this.$store.dispatch(
             "invoices/FetchAllInvoices",
-            val.data.organization
+            val.organization.id
           );
         }
       },

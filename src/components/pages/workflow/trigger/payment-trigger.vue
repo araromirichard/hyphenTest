@@ -1,7 +1,10 @@
 <template>
   <div>
     <div class="vertical-line"></div>
-    <div class="payment-trigger">
+    <div class="loader" v-if="isLoadingTypes">
+      <v-progress-circular color="primary" indeterminate></v-progress-circular>
+    </div>
+    <div v-else class="payment-trigger">
       <span class="header"
         >Select payment type which will trigger this workflow</span
       >
@@ -12,15 +15,16 @@
             outlined
             :items="items"
             v-model="selectedPayment"
+            item-text="label"
+            item-value="key"
             color="primary"
             hide-details="auto"
             placeholder="Select type"
           ></v-select>
         </div>
-
         <v-btn
           elevation="0"
-          @click="$emit('input', selectedPayment)"
+          @click="proceed"
           :disabled="selectedPayment == null"
           color="primary"
         >
@@ -35,40 +39,55 @@
 export default {
   props: {
     value: {
-      type: Object,
-      default: () => ({}),
+      default: "",
+    },
+
+    isVisable: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {
     return {
       selectedPayment: null,
-      items: [
-        {
-          text: "Custom payment",
-          value: "custom-payment",
-        },
-        {
-          text: "Flutterwave",
-          value: "flutterwave",
-        },
-      ],
+      isLoadingTypes: false,
+      items: [],
     };
   },
-  watch: {
-    // selectedPayment: {
-    //   deep: true,
-    //   immediate: true,
-    //   handler(val) {
-    //     this.$emit("input", val);
-    //   },
-    // },
+  methods: {
+    async fetchPaymentTypes() {
+      try {
+        this.isLoadingTypes = true;
+        const options = await this.$store.dispatch("workflow/getPaymentTypes");
+        console.log(options);
+        this.items = options;
+      } catch (err) {
+        console.log(err);
+      } finally {
+        this.isLoadingTypes = false;
+      }
+    },
 
+    proceed() {
+      this.$emit("input", this.selectedPayment);
+    },
+  },
+  watch: {
     value: {
       deep: true,
       immediate: true,
       handler(val) {
         if (val !== this.selectedPayment) {
           this.selectedPayment = val;
+        }
+      },
+    },
+
+    isVisable: {
+      immediate: true,
+      handler(val) {
+        if (val) {
+          this.fetchPaymentTypes();
         }
       },
     },
@@ -92,6 +111,16 @@ export default {
   margin: auto;
   height: 80px;
   width: 2px;
+}
+
+.loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  background: #ffffff;
+  box-shadow: 0px 4px 16px rgba(204, 188, 252, 0.15);
+  border-radius: 6px;
 }
 
 .payment-trigger {
