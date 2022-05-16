@@ -52,15 +52,25 @@
           <form-trigger
             ref="formTrigger"
             v-model="workflow.form"
+            @hypn_id="hypn_id = $event"
+            :isVisable="isFormTrigger"
             v-if="isFormTrigger"
           />
 
           <compose-workflow
             ref="conditions"
-            :inputs="inputItems"
             v-model="workflow.conditions"
             :isVisable="canShowConditions"
+            :trigger="workflow.trigger"
+            :trigger-data="
+              isFormTrigger
+                ? hypn_id
+                : isPaymentTrigger
+                ? workflow.payment
+                : null
+            "
             v-if="canShowConditions"
+            @selected-field="workflow.fields = $event"
           />
 
           <execute-actions-workflow
@@ -186,9 +196,6 @@ import detailsTabWorkflow from "../../components/pages/workflow/details-tab-work
 import TriggerWorkflow from "../../components/pages/workflow/trigger-workflow.vue";
 import FormTrigger from "../../components/pages/workflow/trigger/form-trigger.vue";
 import PaymentTrigger from "../../components/pages/workflow/trigger/payment-trigger.vue";
-
-import { operators } from "@/utils/ManagerApprovalOptions.js";
-
 export default {
   components: {
     detailsTabWorkflow,
@@ -227,26 +234,75 @@ export default {
           },
         ],
         showAdvance: false,
+        hypn_id: "",
         workflow: {
           title: this.$route.query.name || "untitled",
-          trigger: null,
+          trigger: "invoice",
           runs: 0,
-          conditions: null,
+          conditions: {
+            type: "group",
+            properties: {
+              type: "and",
+              conditions: [
+                {
+                  type: "group",
+                  properties: {
+                    type: "and",
+                    conditions: [
+                      {
+                        type: "comparison",
+                        properties: {
+                          type: "=",
+                          field: "vendor_name",
+                          target: "Overcomer",
+                        },
+                      },
+                      {
+                        type: "comparison",
+                        properties: {
+                          type: "=",
+                          field: "due_date",
+                          target: "01/09/2022",
+                        },
+                      },
+                      {
+                        type: "comparison",
+                        properties: {
+                          type: "=",
+                          field: "invoicenumber",
+                          target: "DJDJ465SCS",
+                        },
+                      },
+                    ],
+                  },
+                },
+                {
+                  type: "comparison",
+                  properties: {
+                    type: ">",
+                    field: "total",
+                    target: "50000",
+                  },
+                },
+              ],
+            },
+          },
+          fields: null,
           payment: null,
           form: null,
           actions: [
-            // {
-            //   type: "PbotApproval",
-            //   properties: {
-            //     keys: ["identity", "organization id", "type", "name"],
-            //     values: [
-            //       "musk@mail.com",
-            //       "organization id value",
-            //       "human",
-            //       "approval",
-            //     ],
-            //   },
-            // },
+            {
+              type: "PbotApproval",
+              properties: {
+                keys: ["identity", "organization id", "type", "name"],
+                values: [
+                  "musk@mail.com",
+                  "organization id value",
+                  "human",
+                  "approval",
+                ],
+              },
+            },
             // {
             //   type: "hyphenEmail",
             //   properties: {
@@ -334,7 +390,6 @@ export default {
   watch: {
     "workflow.trigger": {
       deep: true,
-      immediate: true,
       handler() {
         this.workflow.form = null;
         this.workflow.payment = null;
@@ -386,37 +441,11 @@ export default {
   },
 
   computed: {
-    inputItems() {
-      if (this.workflow.trigger && this.workflow.trigger.value == "INVOICE") {
-        return {
-          fields: [
-            "Invoice Total",
-            "Invoice Number",
-            "Vendor Name",
-            "Invoice Date",
-            "PO Number",
-            "Invoice Type",
-            "Net Term",
-            "Due Date",
-          ],
-          operators: operators,
-        };
-      } else {
-        return {
-          fields: [
-            "email",
-            "Total",
-            "PO Number",
-            "Registered Date",
-            "Due Date",
-          ],
-          operators: operators,
-        };
-      }
-    },
     canShowConditions() {
       return (
-        this.isInvoiceTrigger || this.workflow.payment || this.workflow.form
+        this.isInvoiceTrigger ||
+        this.workflow.payment !== null ||
+        this.workflow.form !== null
       );
     },
 
@@ -425,21 +454,21 @@ export default {
     },
 
     isPaymentTrigger() {
-      if (this.workflow.trigger && this.workflow.trigger.value == "PAYMENT") {
+      if (this.workflow.trigger && this.workflow.trigger == "payment") {
         return true;
       }
       return false;
     },
 
     isFormTrigger() {
-      if (this.workflow.trigger && this.workflow.trigger.value == "FORM") {
+      if (this.workflow.trigger && this.workflow.trigger == "form") {
         return true;
       }
       return false;
     },
 
     isInvoiceTrigger() {
-      if (this.workflow.trigger && this.workflow.trigger.value == "INVOICE") {
+      if (this.workflow.trigger && this.workflow.trigger == "invoice") {
         return true;
       }
       return false;
@@ -447,13 +476,18 @@ export default {
 
     workflowPayload() {
       return {
-        id: this.workflow.id, // rand it by time stamp for now
-        name: this.workflow.title,
-        trigger: this.workflow.trigger?.value || "",
-        schema: {
+        user: "id",
+        source: this.workflow.trigger,
+        organization: this.orgId,
+        workflow_schema: {
           ...this.workflow.conditions,
-          actions: this.workflow.actions, // data gotten from workflo actions component
+          actions: this.workflow.actions,
         },
+        trigger_schema: this.workflow.fields,
+        form: this.workflow.form,
+        payment: this.workflow.payment,
+        is_active: 1,
+        workflow_title: this.workflow.title,
       };
     },
   },
