@@ -170,6 +170,7 @@ export default {
         );
         this.inputs.fields = data.data.field_names;
       } catch (err) {
+        console.log("err", JSON.stringify(err, null, 2));
       } finally {
         this.isLoadingEntries = false;
       }
