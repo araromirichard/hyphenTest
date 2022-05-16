@@ -72,10 +72,6 @@ export default {
     proceed() {
       this.$emit("input", this.selectedForm);
       this.$nextTick();
-      this.$emit(
-        "hypn_id",
-        this.items.find((item) => item.id === this.selectedForm).hypn_id
-      );
     },
   },
   watch: {
