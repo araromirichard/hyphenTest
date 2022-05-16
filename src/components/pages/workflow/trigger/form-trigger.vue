@@ -1,7 +1,10 @@
 <template>
   <div>
     <div class="vertical-line"></div>
-    <div class="form-trigger">
+    <div class="loader" v-if="isLoadingForms">
+      <v-progress-circular color="primary" indeterminate></v-progress-circular>
+    </div>
+    <div v-else class="form-trigger">
       <span class="header">
         Select a form which entries will trigger this workflow
       </span>
@@ -11,6 +14,8 @@
           <v-select
             outlined
             :items="items"
+            item-text="form_title"
+            item-value="id"
             v-model="selectedForm"
             color="primary"
             hide-details="auto"
@@ -20,7 +25,7 @@
 
         <v-btn
           elevation="0"
-          @click="$emit('input', selectedForm)"
+          @click="proceed"
           :disabled="selectedForm == null"
           color="primary"
         >
@@ -35,40 +40,60 @@
 export default {
   props: {
     value: {
-      type: Object,
-      default: () => ({}),
+      default: "",
+    },
+    isVisable: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {
     return {
+      isLoadingForms: false,
       selectedForm: null,
-      items: [
-        {
-          text: "Form 1",
-          value: "form1",
-        },
-        {
-          text: "Form 2",
-          value: "form2",
-        },
-      ],
+      items: [],
     };
   },
-  watch: {
-    // selectedForm: {
-    //   deep: true,
-    //   immediate: true,
-    //   handler(val) {
-    //     // this.$emit("input", val);
-    //   },
-    // },
+  methods: {
+    async fetchOrgForms() {
+      try {
+        this.isLoadingForms = true;
+        const { data } = await this.$store.dispatch(
+          "formBuilder/FetchAllForms"
+        );
+        this.items = data;
+      } catch (err) {
+        console.log(err);
+      } finally {
+        this.isLoadingForms = false;
+      }
+    },
 
+    proceed() {
+      this.$emit("input", this.selectedForm);
+      this.$nextTick();
+      this.$emit(
+        "hypn_id",
+        this.items.find((item) => item.id === this.selectedForm).hypn_id
+      );
+    },
+  },
+  watch: {
     value: {
       deep: true,
       immediate: true,
       handler(val) {
         if (val !== this.selectedForm) {
           this.selectedForm = val;
+        }
+      },
+    },
+
+    isVisable: {
+      immediate: true,
+      handler(val) {
+        if (val) {
+          this.fetchOrgForms();
         }
       },
     },
@@ -92,6 +117,16 @@ export default {
   margin: auto;
   height: 80px;
   width: 2px;
+}
+
+.loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  background: #ffffff;
+  box-shadow: 0px 4px 16px rgba(204, 188, 252, 0.15);
+  border-radius: 6px;
 }
 
 .form-trigger {

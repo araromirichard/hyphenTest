@@ -8,11 +8,11 @@
 
     <div class="trigger__content">
       <div
-        @click="selected = trigger"
+        @click="selected = trigger.value"
         class="option"
         v-for="(trigger, index) in triggers"
         :key="index"
-        :class="{ 'option--selected': selected == trigger }"
+        :class="{ 'option--selected': selected === trigger.value }"
       >
         <img :src="trigger.icon" :alt="trigger.name" />
         <span>{{ trigger.name }}</span>
@@ -25,8 +25,7 @@
 export default {
   props: {
     value: {
-      type: Object,
-      default: () => ({}),
+      default: "",
     },
   },
   data() {
@@ -35,17 +34,17 @@ export default {
         {
           name: "Form",
           icon: require("@/assets/form-trigger.svg"),
-          value: "FORM",
+          value: "form",
         },
         {
           name: "Invoice",
           icon: require("@/assets/invoice-trigger.svg"),
-          value: "INVOICE",
+          value: "invoice",
         },
         {
           name: "Payment",
           icon: require("@/assets/payment-trigger.svg"),
-          value: "PAYMENT",
+          value: "payment",
         },
       ],
       selected: null,

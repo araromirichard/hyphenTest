@@ -29,7 +29,7 @@
 
         <div class="trigger" v-if="trigger">
           <span class="t">Trigger: </span>
-          <span class="n"> {{ trigger.name }}</span>
+          <span class="n capitalize"> {{ trigger }}</span>
         </div>
 
         <div v-if="schema" class="schema">
@@ -100,8 +100,7 @@ export default {
       default: 0,
     },
     trigger: {
-      type: Object,
-      default: null,
+      default:""
     },
   },
   data() {

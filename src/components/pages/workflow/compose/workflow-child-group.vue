@@ -1,6 +1,7 @@
 <template>
   <div>
     <v-card
+      v-if="value"
       style="
         mix-blend-mode: normal;
         opacity: 0.8;
@@ -21,14 +22,6 @@
       class="mb-5 mt-5"
     >
       <div class="text-left mt-5">
-        <!-- 
-          this would show only if
-          condition is more than one(which means it is a group) or
-          it is the last or only condition in that space/group
-
-
-          basically we decide a group only occurs when it has more than one condition
-         -->
         <div
           v-if="
             groupConditions.length > 1 ||
@@ -70,7 +63,7 @@
                     class="py-2"
                     v-for="(item, i) in comparisonType"
                     :key="i"
-                    @click="collectGroupType(item)"
+                    @click="groupType = item.val"
                   >
                     <v-list-item-title>{{ item.string }}</v-list-item-title>
                   </v-list-item>
@@ -86,10 +79,11 @@
           <workflow-condition-input
             class="my-4"
             :rule="rule"
+            @selected-schema="$emit('selected-field', $event)"
+            @delete="deleteCondition"
             :index="i"
             :inputs="inputs"
-            @updateField="updateGroupCondition($event, i)"
-            @delete="deleteGroupCondition($event)"
+            v-model="groupConditions[i].properties"
           />
         </div>
       </div>
@@ -105,6 +99,7 @@
       >
     </v-card>
 
+    <div class=""></div>
     <v-card
       v-if="isLast"
       style="
@@ -188,8 +183,8 @@ import { comparisonType } from "@/utils/ManagerApprovalOptions.js";
 import WorkflowConditionInput from "./workflow-condition-input.vue";
 export default {
   props: {
-    groupType: {
-      default: "and",
+    isFirst: {
+      default: true,
     },
     isLast: {
       default: true,
@@ -200,95 +195,65 @@ export default {
     inputs: {
       default: null,
     },
+
+    value: {
+      default: null,
+    },
   },
   components: { WorkflowConditionInput },
   data() {
     return {
       comparisonType,
-      groupConditions: [
-        {
-          type: "",
-          field: "",
-          target: "",
-        },
-      ],
+      groupConditions: [],
       newGroup: "and",
+      groupType: "and",
     };
   },
   watch: {
-    groupConditions: {
+    value: {
       immediate: true,
       deep: true,
-      handler() {
-        this.sendOutGroup();
+      handler(val) {
+        if (JSON.stringify(val) !== JSON.stringify(this.conditions)) {
+          if (val.type === "comparison") {
+            this.groupConditions = [val];
+          } else if (val.type === "group") {
+            this.groupConditions = val.properties.conditions;
+            this.groupType = val.properties.type;
+          }
+        }
       },
     },
 
-    group_Type: {
+    condition: {
       immediate: true,
       deep: true,
-      handler() {
-        this.sendOutGroup();
+      handler(val) {
+        if (JSON.stringify(val) !== JSON.stringify(this.value)) {
+          this.$emit("input", val);
+        }
       },
     },
   },
 
   methods: {
-    updateGroupCondition(e) {
-      this.groupConditions[e.index].type = e.data.type;
-      this.groupConditions[e.index].field = e.data.field;
-      this.groupConditions[e.index].target = e.data.target;
-    },
-
     addGroupCondition() {
       this.groupConditions.push({
-        field: "",
-        type: "",
-        target: "",
+        type: "comparison",
+        properties: { type: "", field: "", target: "" },
       });
     },
 
-    deleteGroupCondition(i) {
-      if (this.groupConditions.length == 1 && this.groupIndex == 0) {
+    deleteCondition(index) {
+      if (this.isFirst && this.groupConditions === 1) {
         return;
       }
 
-      this.groupConditions.splice(i, 1);
-      this.$emit("remove-condition", i);
+      this.groupConditions.splice(index, 1);
     },
 
     collectGroupType(type) {
       this.$emit("update-group-type", type.val);
-    },
-
-    sendOutGroup() {
-      let payload = {};
-      const isGroup = this.groupConditions.length > 1;
-      // i decide it is a group if condition is more than one
-      if (!isGroup) {
-        //not a group
-        this.$set(payload, "type", "comparison");
-        this.$set(payload, "properties", this.groupConditions[0]);
-      } else {
-        // this is a group hence this structure bellow
-        this.$set(payload, "type", "group");
-        this.$set(payload, "properties", {
-          type: this.groupType,
-          conditions: this.groupConditions.map((flow) => {
-            return {
-              type: "comparison",
-              properties: {
-                type: flow.type,
-                field: flow.field,
-                target: flow.target,
-              },
-            };
-          }),
-        });
-      }
-
-      // now push the group/condition out
-      this.$emit("update-group", payload);
     },
   },
 
@@ -315,6 +280,19 @@ export default {
       });
 
       return t;
+    },
+
+    condition() {
+      if (this.groupConditions.length === 1) {
+        return this.groupConditions[0];
+      }
+      return {
+        type: "group",
+        properties: {
+          type: this.groupType,
+          conditions: this.groupConditions,
+        },
+      };
     },
   },
 };
