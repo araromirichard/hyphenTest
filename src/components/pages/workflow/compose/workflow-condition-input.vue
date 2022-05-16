@@ -5,6 +5,8 @@
         v-model="form.field"
         :menu-props="{ bottom: true, offsetY: true }"
         :items="inputs.fields"
+        item-text="label"
+        item-value="key"
         style="background: #ffffff; box-sizing: border-box; border-radius: 3px"
         class="justify-center my-2 mr-2"
         flat
@@ -42,7 +44,6 @@
     <v-col cols="12" md="3">
       <v-text-field
         v-model="form.target"
-        :value="rule.inputField"
         hide-details="auto"
         class="mr-2 my-2"
         outlined
@@ -68,21 +69,20 @@
 </template>
 
 <script>
-// this component holds the input field for each condition
-//import { formItems, operators } from "@/utils/ManagerApprovalOptions.js";
 export default {
   props: {
-    rule: {},
-    index: {},
+    index:{
+      default:-1,
+    },
     inputs: {
       default: null,
     },
+    value:{
+      default: null,
+    }
   },
   data() {
     return {
-      // formItems,
-      // operators,
-
       form: {
         field: "",
         type: "",
@@ -97,15 +97,22 @@ export default {
     }
   },
   watch: {
+    value:{
+       immediate: true,
+      deep: true,
+      handler(val) {
+        if(JSON.stringify(val) !== JSON.stringify(this.form)){
+          this.form = val;
+        }
+      },
+  
+    },
     form: {
       immediate: true,
       deep: true,
       handler(val) {
         this.$emit('selected-schema',val.field)
-        this.$emit("updateField", {
-          index: this.index,
-          data: val,
-        });
+        this.$emit('input',val)
         // console.log(JSON.stringify(val, null, 2));
       },
     },

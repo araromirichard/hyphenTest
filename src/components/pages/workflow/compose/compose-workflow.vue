@@ -21,29 +21,27 @@
           >Design the conditions for which this workflow’ data will be
           proccessed</span
         >
-
         <transition name="animate-down">
           <workflow-parent-group
-            :group-type="schema.condition.properties.type"
-            @update-group-type="schema.condition.properties.type = $event"
+            v-if="conditions"
+            :group-type="conditions.properties.type"
+            @update-group-type="conditions.properties.type = $event"
           >
-            <div v-for="(card, i) in selectedCompareGroup" :key="i">
+            <div v-for="(card, i) in conditions.properties.conditions" :key="i">
               <workflow-child-group
-                :is-last="i == selectedCompareGroup.length - 1"
+                :is-first="i == 0"
+                :is-last="i == conditions.properties.conditions.length - 1"
+                v-model="conditions.properties.conditions[i]"
                 :group-index="i"
-                :group-type="selectedCompareGroup[i]"
-                @remove-condition="removeCondition($event, i)"
-                @update-group="updateGroupCondition($event, i)"
-                @add-new-group="addNewGroup($event, i)"
-                @update-group-type="updateGroupType($event, i)"
-                @selected-field="addSelectedField"
+                @selected-field="$emit('selected-field', $event)"
                 :index="i"
                 :inputs="inputs"
+                @add-new-group="addNewGroup"
               />
             </div>
 
             <v-btn
-              @click="$emit('input', schema)"
+              @click="$emit('input', conditions)"
               large
               elevation="0"
               color="primary"
@@ -78,22 +76,48 @@ export default {
     triggerData: {
       default: null,
     },
+
+    value: {
+      default: {
+        type: "group",
+        properties: {
+          type: "and",
+          conditions: [
+            {
+              type: "comparison",
+              properties: {
+                type: "",
+                field: "",
+                target: "",
+              },
+            },
+          ],
+        },
+      },
+    },
   },
   data() {
     return {
       isLoadingEntries: false,
       showTriggers: true,
       comparisonType,
-      selectedCompareGroup: ["and"], // we are using this to store the whole group condition
-      schema: {
-        condition: {
-          type: "group",
-          properties: {
-            type: "and",
-            conditions: [],
-          },
+      conditions: {
+        type: "group",
+        properties: {
+          type: "and",
+          conditions: [
+            {
+              type: "comparison",
+              properties: {
+                type: "",
+                field: "",
+                target: "",
+              },
+            },
+          ],
         },
       },
+
       scrollOptions: {
         duration: 500,
         offset: 0,
@@ -118,44 +142,23 @@ export default {
         this.selctedFields.filter((field) => field != "")
       );
     },
-    addNewGroup(item, i) {
-      if (this.selectedCompareGroup.length - 1 === i) {
-        // if it called from last condition, add new group to list
-        this.selectedCompareGroup.push(item);
-      } else {
-        // just add condition to current group
-        this.selectedCompareGroup[i + 1] = item;
-      }
-    },
-    removeCondition(e, i) {
-      if (!e) {
-        if (this.selectedCompareGroup.length === 1) {
-          // we can't remove the first group
-          return;
-        }
-
-        // const row = this.schema.condition.properties.conditions[i]
-        //   if(row.type === 'comparison'){
-        //     console.log(row.properties.field)
-        //   }else if(type === 'group'){
-        //     for(let i = 0; i < row.properties.conditions.length; i++){
-        //       console.log(row.properties.conditions[i].properties.field)
-        //     }
-        //   }
-
-        console.log("removing", JSON.stringify(this.schema.condition.properties.conditions, null, 2));
-        this.selectedCompareGroup.splice(i, 1);
-        this.schema.condition.properties.conditions.splice(i, 1);
-      }
-    },
-
-    updateGroupCondition(e, i) {
-      console.log('adding',JSON.stringify(e));
-      this.schema.condition.properties.conditions.splice(i, 1, e);
-    },
-
-    updateGroupType(e, i) {
-      this.selectedCompareGroup.splice(i, 1, e);
+    addNewGroup(grouptype) {
+      this.conditions.properties.conditions.push({
+        type: "group",
+        properties: {
+          type: grouptype,
+          conditions: [
+            {
+              type: "comparison",
+              properties: {
+                type: "",
+                field: "",
+                target: "",
+              },
+            },
+          ],
+        },
+      });
     },
 
     async fetchFormEntries() {
@@ -180,26 +183,73 @@ export default {
 
     async fetchInvoiceEntries() {
       this.inputs.fields = [
-        "Invoice Total",
-        "Invoice Number",
-        "Vendor Name",
-        "Invoice Date",
-        "PO Number",
-        "Invoice Type",
-        "Net Term",
-        "Due Date",
+        {
+          label: "Invoice Total",
+          key: "total",
+        },
+        {
+          label: "Invoice Number",
+          key: "invoicenumber",
+        },
+        {
+          label: "Vendor Name",
+          key: "vendor_name",
+        },
+        {
+          label: "Invoice Date",
+          key: "post_date",
+        },
+        {
+          label: "PO Number",
+          key: "po",
+        },
+        {
+          label: "Invoice Type",
+          key: "invoicetype",
+        },
+        {
+          label: "Net Term",
+          key: "net_term",
+        },
+        {
+          label: "Due Date",
+          key: "due_date",
+        },
+        {
+          label: "Customer Name",
+          key: "customer_name",
+        },
+        {
+          label: "vat",
+          key: "vat",
+        },
+        {
+          label: "Invoice Type",
+          key: "invoicetype",
+        },
       ];
     },
   },
   watch: {
-    schema: {
+    value: {
       immediate: true,
       deep: true,
       handler(val) {
-        this.$store.dispatch("workflow/updateSchema", val);
-        //console.log(JSON.stringify(val, null, 2));
+        if (
+          JSON.stringify(val) !== JSON.stringify(this.conditions) 
+        ) {
+          this.conditions = val;
+        }
       },
     },
+
+    // conditions: {
+    //   immediate: true,
+    //   deep: true,
+    //   handler(val) {
+    //     this.$emit("input", val);
+    //   },
+    // },
 
     trigger: {
       immediate: true,

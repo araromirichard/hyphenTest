@@ -237,25 +237,72 @@ export default {
         hypn_id: "",
         workflow: {
           title: this.$route.query.name || "untitled",
-          trigger: null,
+          trigger: "invoice",
           runs: 0,
-          conditions: null,
+          conditions: {
+            type: "group",
+            properties: {
+              type: "and",
+              conditions: [
+                {
+                  type: "group",
+                  properties: {
+                    type: "and",
+                    conditions: [
+                      {
+                        type: "comparison",
+                        properties: {
+                          type: "=",
+                          field: "vendor_name",
+                          target: "Overcomer",
+                        },
+                      },
+                      {
+                        type: "comparison",
+                        properties: {
+                          type: "=",
+                          field: "due_date",
+                          target: "01/09/2022",
+                        },
+                      },
+                      {
+                        type: "comparison",
+                        properties: {
+                          type: "=",
+                          field: "invoicenumber",
+                          target: "DJDJ465SCS",
+                        },
+                      },
+                    ],
+                  },
+                },
+                {
+                  type: "comparison",
+                  properties: {
+                    type: ">",
+                    field: "total",
+                    target: "50000",
+                  },
+                },
+              ],
+            },
+          },
           fields: null,
           payment: null,
           form: null,
           actions: [
-            // {
-            //   type: "PbotApproval",
-            //   properties: {
-            //     keys: ["identity", "organization id", "type", "name"],
-            //     values: [
-            //       "musk@mail.com",
-            //       "organization id value",
-            //       "human",
-            //       "approval",
-            //     ],
-            //   },
-            // },
+            {
+              type: "PbotApproval",
+              properties: {
+                keys: ["identity", "organization id", "type", "name"],
+                values: [
+                  "musk@mail.com",
+                  "organization id value",
+                  "human",
+                  "approval",
+                ],
+              },
+            },
             // {
             //   type: "hyphenEmail",
             //   properties: {
@@ -343,7 +390,6 @@ export default {
   watch: {
     "workflow.trigger": {
       deep: true,
-      immediate: true,
       handler() {
         this.workflow.form = null;
         this.workflow.payment = null;
@@ -355,7 +401,7 @@ export default {
       deep: true,
       immediate: true,
       handler(val) {
-        //console.log(JSON.stringify(val, null, 2));
+        console.log(JSON.stringify(val, null, 2));
       },
     },
 
