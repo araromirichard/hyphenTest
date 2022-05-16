@@ -31,7 +31,6 @@
           <span class="t">Trigger: </span>
           <span class="n capitalize"> {{ trigger }}</span>
         </div>
-
         <div v-if="schema" class="schema">
           <div v-if="schema">
             When <span class="type">{{ groupType(parentGroup) }}</span> of the
@@ -100,7 +99,12 @@ export default {
       default: 0,
     },
     trigger: {
-      default:""
+      default: "",
+    },
+
+    schema: {
+      type: Object,
+      default: null,
     },
   },
   data() {
@@ -127,18 +131,18 @@ export default {
   },
   computed: {
     ...mapGetters({
-      schema: "workflow/schema",
+      // schema: "workflow/schema",
       operators: "workflow/operators",
       comparisonType: "workflow/comparisonType",
     }),
 
     parentGroup() {
-      if (this.schema) return this.schema.condition.properties.type;
+      if (this.schema) return this.schema.properties.type;
       else return null;
     },
 
     conditions() {
-      if (this.schema) return this.schema.condition.properties.conditions;
+      if (this.schema) return this.schema.properties.conditions;
       else return null;
     },
   },

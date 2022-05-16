@@ -165,15 +165,10 @@ export default {
       try {
         this.isLoadingEntries = true;
         const { data } = await this.$store.dispatch(
-          "formBuilder/getFormEntries",
+          "formBuilder/getSingleForm",
           this.triggerData
         );
-
-        this.inputs.fields = Object.keys(data.form_fields.controls).map(
-          (key) => {
-            return data.form_fields.controls[key].name;
-          }
-        );
+        this.inputs.fields = data.data.field_names;
       } catch (err) {
         console.log("err", JSON.stringify(err, null, 2));
       } finally {
@@ -182,52 +177,32 @@ export default {
     },
 
     async fetchInvoiceEntries() {
-      this.inputs.fields = [
-        {
-          label: "Invoice Total",
-          key: "total",
-        },
-        {
-          label: "Invoice Number",
-          key: "invoicenumber",
-        },
-        {
-          label: "Vendor Name",
-          key: "vendor_name",
-        },
-        {
-          label: "Invoice Date",
-          key: "post_date",
-        },
-        {
-          label: "PO Number",
-          key: "po",
-        },
-        {
-          label: "Invoice Type",
-          key: "invoicetype",
-        },
-        {
-          label: "Net Term",
-          key: "net_term",
-        },
-        {
-          label: "Due Date",
-          key: "due_date",
-        },
-        {
-          label: "Customer Name",
-          key: "customer_name",
-        },
-        {
-          label: "vat",
-          key: "vat",
-        },
-        {
-          label: "Invoice Type",
-          key: "invoicetype",
-        },
-      ];
+      try {
+        this.isLoadingEntries = true;
+        const { data } = await this.$store.dispatch(
+          "workflow/getAllInvoiceFieldsOptions"
+        );
+        this.inputs.fields = data;
+      } catch (err) {
+        console.log("err", JSON.stringify(err, null, 2));
+      } finally {
+        this.isLoadingEntries = false;
+      }
+    },
+
+    async fetchPaymentEntries() {
+      try {
+        this.isLoadingEntries = true;
+        const data = await this.$store.dispatch(
+          "workflow/getPaymentFieldsOptions",
+          this.triggerData
+        );
+        this.inputs.fields = data;
+      } catch (err) {
+        console.log("err", JSON.stringify(err, null, 2));
+      } finally {
+        this.isLoadingEntries = false;
+      }
     },
   },
   watch: {
@@ -235,9 +210,7 @@ export default {
       immediate: true,
       deep: true,
       handler(val) {
-        if (
-          JSON.stringify(val) !== JSON.stringify(this.conditions) 
-        ) {
+        if (JSON.stringify(val) !== JSON.stringify(this.conditions) && val) {
           this.conditions = val;
         }
       },
@@ -259,6 +232,8 @@ export default {
             this.fetchInvoiceEntries();
           } else if (this.trigger === "form") {
             this.fetchFormEntries();
+          } else if (this.trigger === "payment") {
+            this.fetchPaymentEntries();
           }
         }
       },

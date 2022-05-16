@@ -5,6 +5,7 @@
         <details-tab-workflow
           :runs="workflow.runs"
           :trigger="workflow.trigger"
+          :schema="workflow.conditions"
         />
       </div>
 
@@ -46,13 +47,13 @@
           <payment-trigger
             ref="paymentTrigger"
             v-model="workflow.payment"
+            :isVisable="isPaymentTrigger"
             v-if="isPaymentTrigger"
           />
 
           <form-trigger
             ref="formTrigger"
             v-model="workflow.form"
-            @hypn_id="hypn_id = $event"
             :isVisable="isFormTrigger"
             v-if="isFormTrigger"
           />
@@ -64,7 +65,7 @@
             :trigger="workflow.trigger"
             :trigger-data="
               isFormTrigger
-                ? hypn_id
+                ? workflow.form
                 : isPaymentTrigger
                 ? workflow.payment
                 : null
@@ -237,72 +238,25 @@ export default {
         hypn_id: "",
         workflow: {
           title: this.$route.query.name || "untitled",
-          trigger: "invoice",
+          trigger: "",
           runs: 0,
-          conditions: {
-            type: "group",
-            properties: {
-              type: "and",
-              conditions: [
-                {
-                  type: "group",
-                  properties: {
-                    type: "and",
-                    conditions: [
-                      {
-                        type: "comparison",
-                        properties: {
-                          type: "=",
-                          field: "vendor_name",
-                          target: "Overcomer",
-                        },
-                      },
-                      {
-                        type: "comparison",
-                        properties: {
-                          type: "=",
-                          field: "due_date",
-                          target: "01/09/2022",
-                        },
-                      },
-                      {
-                        type: "comparison",
-                        properties: {
-                          type: "=",
-                          field: "invoicenumber",
-                          target: "DJDJ465SCS",
-                        },
-                      },
-                    ],
-                  },
-                },
-                {
-                  type: "comparison",
-                  properties: {
-                    type: ">",
-                    field: "total",
-                    target: "50000",
-                  },
-                },
-              ],
-            },
-          },
+          conditions: null,
           fields: null,
           payment: null,
           form: null,
           actions: [
-            {
-              type: "PbotApproval",
-              properties: {
-                keys: ["identity", "organization id", "type", "name"],
-                values: [
-                  "musk@mail.com",
-                  "organization id value",
-                  "human",
-                  "approval",
-                ],
-              },
-            },
+            // {
+            //   type: "PbotApproval",
+            //   properties: {
+            //     keys: ["identity", "organization id", "type", "name"],
+            //     values: [
+            //       "musk@mail.com",
+            //       "organization id value",
+            //       "human",
+            //       "approval",
+            //     ],
+            //   },
+            // },
             // {
             //   type: "hyphenEmail",
             //   properties: {
