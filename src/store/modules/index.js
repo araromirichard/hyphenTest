@@ -4,6 +4,7 @@ import auth from "./auth";
 import organizations from "./organizations";
 import formBuilder from "./formBuilder";
 import invoices from "./invoices";
+import contacts from "./contacts";
 
 export default {
   ui,
@@ -12,4 +13,5 @@ export default {
   organizations,
   formBuilder,
   invoices,
+  contacts,
 };

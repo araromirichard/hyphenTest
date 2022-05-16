@@ -289,7 +289,6 @@
               ref="dataTable"
             ></component>
           </v-skeleton-loader>
-      
         </v-card>
       </v-col>
     </v-row>
