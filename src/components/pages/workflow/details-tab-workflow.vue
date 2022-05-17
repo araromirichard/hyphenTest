@@ -59,7 +59,7 @@
                   v-if="innerConditions.type == 'comparison'"
                 >
                   <span class="field">{{
-                    innerConditions.properties.field
+                    getFieldLabel(innerConditions.properties.field)
                   }}</span>
                   is
                   <span class="operator">{{
@@ -73,7 +73,7 @@
             </div>
 
             <div class="comparison" v-if="condition.type == 'comparison'">
-              <span class="field">{{ condition.properties.field }}</span> is
+              <span class="field">{{ getFieldLabel(condition.properties.field) }}</span> is
               <span class="operator">{{
                 operator(condition.properties.type)
               }}</span>
@@ -106,6 +106,10 @@ export default {
       type: Object,
       default: null,
     },
+
+    inputs:{
+      default:null
+    }
   },
   data() {
     return {
@@ -127,6 +131,13 @@ export default {
         return this.comparisonType.find((groupType) => groupType.val === type)
           ?.string;
       }
+    },
+
+      getFieldLabel(inputField){
+        if(this.inputs){
+         return this.inputs.fields.find((field) => field.key === inputField).label
+        }
+        return inputField
     },
   },
   computed: {

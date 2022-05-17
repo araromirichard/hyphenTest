@@ -33,7 +33,7 @@
                 :is-last="i == conditions.properties.conditions.length - 1"
                 v-model="conditions.properties.conditions[i]"
                 :group-index="i"
-                @selected-field="$emit('selected-field', $event)"
+                @selected-fields="addSelectedField"
                 :index="i"
                 :inputs="inputs"
                 @add-new-group="addNewGroup"
@@ -41,12 +41,12 @@
             </div>
 
             <v-btn
-              @click="$emit('input', conditions)"
+              @click="$emit('continue')"
               large
               elevation="0"
               color="primary"
             >
-              <v-icon size="27" left>mdi-chevron-right</v-icon> Continue
+              Continue  <v-icon size="27" right>mdi-chevron-down</v-icon>
             </v-btn>
           </workflow-parent-group>
         </transition>
@@ -117,6 +117,7 @@ export default {
           ],
         },
       },
+      selectedFields:[],
 
       scrollOptions: {
         duration: 500,
@@ -133,15 +134,11 @@ export default {
   },
   methods: {
     addSelectedField(field) {
-      if (this.selctedFields.indexOf(field) == -1) {
-        this.selctedFields.push(field);
-      }
-
-      this.$emit(
-        "selected-field",
-        this.selctedFields.filter((field) => field != "")
-      );
+      this.selectedFields = this.selectedFields.concat(field).filter(item=>item!=="");
+      this.selectedFields = [...new Set(this.selectedFields)];
+      this.$emit("selected-fields", this.selectedFields);
     },
+    
     addNewGroup(grouptype) {
       this.conditions.properties.conditions.push({
         type: "group",
@@ -216,13 +213,13 @@ export default {
       },
     },
 
-    // conditions: {
-    //   immediate: true,
-    //   deep: true,
-    //   handler(val) {
-    //     this.$emit("input", val);
-    //   },
-    // },
+    conditions: {
+      immediate: true,
+      deep: true,
+      handler(val) {
+        this.$emit("input", val);
+      },
+    },
 
     trigger: {
       immediate: true,
@@ -248,6 +245,14 @@ export default {
             this.$vuetify.goTo(this.$refs.compose, this.scrollOptions);
           }, 1500);
         }
+      },
+    },
+
+    inputs: {
+      immediate: true,
+      deep: true,
+      handler(val) {
+        this.$emit("inputs", val);
       },
     },
   },

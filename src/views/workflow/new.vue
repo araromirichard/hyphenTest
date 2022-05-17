@@ -6,6 +6,7 @@
           :runs="workflow.runs"
           :trigger="workflow.trigger"
           :schema="workflow.conditions"
+          :inputs="workflow.inputs"
         />
       </div>
 
@@ -63,6 +64,8 @@
             v-model="workflow.conditions"
             :isVisable="canShowConditions"
             :trigger="workflow.trigger"
+            @continue="workflow.composerIsReady = true"
+            @inputs="workflow.inputs = $event"
             :trigger-data="
               isFormTrigger
                 ? workflow.form
@@ -71,7 +74,7 @@
                 : null
             "
             v-if="canShowConditions"
-            @selected-field="workflow.fields = $event"
+            @selected-fields="workflow.fields = $event"
           />
 
           <execute-actions-workflow
@@ -244,6 +247,8 @@ export default {
           fields: null,
           payment: null,
           form: null,
+          composerIsReady: false,
+          inputs: null,
           actions: [
             // {
             //   type: "PbotApproval",
@@ -404,7 +409,7 @@ export default {
     },
 
     canShowActions() {
-      return this.workflow.conditions !== null;
+      return this.workflow.composerIsReady;
     },
 
     isPaymentTrigger() {
@@ -430,7 +435,7 @@ export default {
 
     workflowPayload() {
       return {
-        user: "id",
+        user: this.$store.getters["auth/user"].id,
         source: this.workflow.trigger,
         organization: this.orgId,
         workflow_schema: {
