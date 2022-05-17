@@ -98,7 +98,6 @@
         <v-icon>mdi-plus</v-icon> add new condition</v-btn
       >
     </v-card>
-
     <div class=""></div>
     <v-card
       v-if="isLast"
@@ -234,6 +233,14 @@ export default {
         }
       },
     },
+
+    selectedFields: {
+      immediate: true,
+      deep: true,
+      handler(val) {
+          this.$emit("selected-fields", val);
+      },
+    },
   },
 
   methods: {
@@ -294,6 +301,14 @@ export default {
         },
       };
     },
+
+    selectedFields(){
+    return  this.groupConditions.map(condition=>{
+        if(condition.type == "comparison"){
+          return condition.properties.field
+        }
+      })
+    }
   },
 };
 </script>
