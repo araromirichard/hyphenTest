@@ -224,7 +224,7 @@ export default {
     {
       return {
         publishDialog: false,
-        publishDialogSucessful: true,
+        publishDialogSucessful: false,
         showTriggers: false,
         scrollOptions: {
           duration: 500,

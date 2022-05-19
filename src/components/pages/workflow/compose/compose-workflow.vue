@@ -58,7 +58,7 @@
 <script>
 //  <workflow-parent-group> components holds the parent condition
 // ..it holds childen conditions/group (slot components)
-import { comparisonType, operators } from "@/utils/ManagerApprovalOptions.js";
+import { comparisonType } from "@/utils/ManagerApprovalOptions.js";
 import WorkflowChildGroup from "./workflow-child-group.vue";
 import WorkflowParentGroup from "./workflow-parent-group.vue";
 export default {
@@ -127,10 +127,13 @@ export default {
       },
       inputs: {
         fields: [],
-        operators: operators,
+        operators:[],
       },
       selctedFields: [],
     };
+  },
+  mounted(){
+    this.fetchOperators();
   },
   methods: {
     addSelectedField(field) {
@@ -157,6 +160,20 @@ export default {
         },
       });
     },
+      async fetchOperators() {
+      try {
+        this.isLoadingEntries = true;
+        const { data } = await this.$store.dispatch(
+          "workflow/getAllOperators"
+        );
+        this.inputs.operators = data;
+      } catch (err) {
+        console.log("err", JSON.stringify(err, null, 2));
+      } finally {
+        this.isLoadingEntries = false;
+      }
+    },
+
 
     async fetchFormEntries() {
       try {

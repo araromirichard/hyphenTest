@@ -112,6 +112,15 @@ const actions = {
     commit("SET_SCHEMA", payload);
   },
 
+  async getAllOperators() {
+    try {
+      const { data } = await Workflow.getAllOperators();
+      return data;
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  },
+
   async getAllInvoiceFieldsOptions() {
     try {
       const { data } = await Workflow.getAllInvoiceFieldsOptions();
@@ -127,7 +136,9 @@ const actions = {
       commit("SET_PAYMENT", data.options);
       return Object.keys(data.options).map((key) => {
         return {
-          label: data.options[key].charAt(0).toUpperCase() + data.options[key].slice(1),
+          label:
+            data.options[key].charAt(0).toUpperCase() +
+            data.options[key].slice(1),
           key: data.options[key],
         };
       });
@@ -140,12 +151,14 @@ const actions = {
     try {
       const { data } = await Workflow.getPaymentFieldsOptions(paymentType);
       commit("SET_PAYMENT_OPTIONS", data.data);
-      return data.data.filter((item) => item.option === paymentType).map((item) => {
-        return {
-          label: item.label.charAt(0).toUpperCase() + item.label.slice(1),
-          key: item.key,
-        };
-      });
+      return data.data
+        .filter((item) => item.option === paymentType)
+        .map((item) => {
+          return {
+            label: item.label.charAt(0).toUpperCase() + item.label.slice(1),
+            key: item.key,
+          };
+        });
     } catch (error) {
       return Promise.reject(error);
     }
