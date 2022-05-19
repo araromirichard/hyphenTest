@@ -29,7 +29,7 @@
               >{{ id }}</span
             >
           </v-flex>
-          <v-flex md1 class="d-flex justify-start">
+          <v-flex md2 class="d-flex justify-start">
             <span
               class="mb-0 ml-5"
               style="
@@ -40,7 +40,7 @@
                 line-height: 14px;
                 color: #596a73;
               "
-              >{{ company }}</span
+              >{{ vendorname }}</span
             >
           </v-flex>
           <v-flex md1>
@@ -56,12 +56,12 @@
                   color: #596a73;
                 "
               >
-                {{ name }}
+                {{ hyphnId }}
               </div>
             </div>
           </v-flex>
 
-          <v-flex md1>
+          <v-flex md2>
             <div class="d-flex align-center">
               <span
                 class="ms-1"
@@ -73,7 +73,7 @@
                   line-height: 14px;
                   color: #596a73;
                 "
-                >{{ due }}</span
+                >{{ bankAccount }}</span
               >
             </div>
           </v-flex>
@@ -94,7 +94,7 @@
               >
             </div>
           </v-flex>
-          <v-flex md2>
+          <v-flex md1>
             <div class="d-flex align-center">
               <span
                 class="mb-0"
@@ -110,7 +110,7 @@
               >
             </div>
           </v-flex>
-          <v-flex md2>
+          <v-flex md1>
             <div class="d-flex justify-center">
               <span
                 class="mx-auto"
@@ -122,7 +122,7 @@
                   line-height: 14px;
                   color: #596a73;
                 "
-                >{{ outstanding }}</span
+                >{{ state }}</span
               >
             </div>
           </v-flex>
@@ -186,14 +186,14 @@ export default {
     id: {
       type: Number,
     },
-    company: {
+    vendorname: {
       type: String,
     },
-    name: {
+    hyphnId: {
       type: String,
     },
 
-    due: {
+    bankAccount: {
       type: Number,
     },
     phone: {
@@ -202,7 +202,7 @@ export default {
     email: {
       type: String,
     },
-    outstanding: {
+    state: {
       type: String,
     },
   },

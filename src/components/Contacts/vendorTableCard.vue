@@ -8,7 +8,7 @@
           query: { vendor: true },
         })
       "
-      max-height="40vh"
+ 
       min-width="90%"
       elevation="3"
       class="my-4 rounded-lg"
@@ -22,7 +22,7 @@
           primary--text
         "
       >
-        Company {{ company }}
+        name {{ vendorname }}
       </h5>
       <template>
         <v-simple-table dense>
@@ -30,27 +30,24 @@
             <thead class="px-0">
               <tr class="px-0">
                 <th class="px-0 text-center primary--text text-subtitle-2">
-                  First Name
+                  Hyphn Id
                 </th>
+
                 <th class="px-0 text-center primary--text text-subtitle-2">
-                  Last Name
-                </th>
-                <th class="px-0 text-center primary--text text-subtitle-2">
-                  Email
+                  Bank Account
                 </th>
               </tr>
             </thead>
             <tbody class="px-1">
               <tr class="px-1">
                 <td class="px-1 text-center">
-                  {{ firstName }}
+                  {{ hyphnId }}
                 </td>
-                <td class="px-1 text-center">{{ lastName }}</td>
                 <td
                   class="px-1 text-center text-truncate"
                   style="max-width: 60px"
                 >
-                  {{ email }}
+                  {{ bankAccount }}
                 </td>
               </tr>
             </tbody>
@@ -65,23 +62,23 @@
                 <thead class="px-0">
                   <tr class="px-0">
                     <th class="px-0 text-center primary--text text-subtitle-2">
-                      Due
+                      Email
                     </th>
                     <th class="px-0 text-center primary--text text-subtitle-2">
                       Phone
                     </th>
                     <th class="px-0 text-center primary--text text-subtitle-2">
-                      Outstanding(N)
+                      State
                     </th>
                   </tr>
                 </thead>
                 <tbody class="px-2">
                   <tr class="px-2">
                     <td class="px-2 text-center">
-                      {{ due }}
+                      {{ email }}
                     </td>
                     <td class="px-2 text-center">{{ phone }}</td>
-                    <td class="px-2 text-center">{{ outstanding }}</td>
+                    <td class="px-2 text-center">{{ state }}</td>
                   </tr>
                 </tbody>
               </template>
@@ -159,25 +156,25 @@ export default {
     id: {
       type: Number,
     },
-    company: {
+    vendorname: {
       type: String,
     },
-    firstName: {
+    hyphnId: {
       type: String,
     },
     lastName: {
       type: String,
     },
-    due: {
+    email: {
       type: Number,
     },
     phone: {
       type: String,
     },
-    email: {
+    bankAccount: {
       type: String,
     },
-    outstanding: {
+    state: {
       type: String,
     },
   },
