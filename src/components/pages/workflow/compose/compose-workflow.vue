@@ -46,7 +46,7 @@
               elevation="0"
               color="primary"
             >
-              Continue  <v-icon size="27" right>mdi-chevron-down</v-icon>
+              Continue <v-icon size="27" right>mdi-chevron-down</v-icon>
             </v-btn>
           </workflow-parent-group>
         </transition>
@@ -117,7 +117,7 @@ export default {
           ],
         },
       },
-      selectedFields:[],
+      selectedFields: [],
 
       scrollOptions: {
         duration: 500,
@@ -127,21 +127,23 @@ export default {
       },
       inputs: {
         fields: [],
-        operators:[],
+        operators: [],
       },
       selctedFields: [],
     };
   },
-  mounted(){
+  mounted() {
     this.fetchOperators();
   },
   methods: {
     addSelectedField(field) {
-      this.selectedFields = this.selectedFields.concat(field).filter(item=>item!=="");
+      this.selectedFields = this.selectedFields
+        .concat(field)
+        .filter((item) => item !== "");
       this.selectedFields = [...new Set(this.selectedFields)];
       this.$emit("selected-fields", this.selectedFields);
     },
-    
+
     addNewGroup(grouptype) {
       this.conditions.properties.conditions.push({
         type: "group",
@@ -160,12 +162,10 @@ export default {
         },
       });
     },
-      async fetchOperators() {
+    async fetchOperators() {
       try {
         this.isLoadingEntries = true;
-        const { data } = await this.$store.dispatch(
-          "workflow/getAllOperators"
-        );
+        const { data } = await this.$store.dispatch("workflow/getAllOperators");
         this.inputs.operators = data;
       } catch (err) {
         console.log("err", JSON.stringify(err, null, 2));
@@ -173,7 +173,6 @@ export default {
         this.isLoadingEntries = false;
       }
     },
-
 
     async fetchFormEntries() {
       try {
