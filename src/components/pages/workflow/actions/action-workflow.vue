@@ -30,9 +30,8 @@
         </button>
       </div>
     </div>
-
-    <v-timeline>
-      <div class="d-flex mt-1">
+    <v-timeline v-if="canShow">
+      <div class="d-flex mt-1" >
         <v-btn
           v-if="isLast"
           @click="$emit('add-new-action')"
@@ -158,6 +157,10 @@ export default {
       type: Boolean,
       default: false,
     },
+
+    isBeenDragged:{
+      default:false
+    }
   },
   data() {
     return {
@@ -167,11 +170,9 @@ export default {
     };
   },
   mounted() {
-    this.data = this.value;
     if (this.value?.fresh) {
       this.showDialog(this.value.type);
     }
-    this.actionModal = this.value.type;
   },
   methods: {
     async showDialog(ref) {
@@ -191,6 +192,11 @@ export default {
         return this.actionsMeta.find((action) => action.type === this.value);
       }
     },
+
+    canShow(){
+      if(!this.isLast) return true
+      return !this.isBeenDragged
+    } 
   },
   watch: {
     data: {
@@ -208,6 +214,7 @@ export default {
       deep: true,
       handler(newValue) {
         this.data = newValue;
+        this.actionModal = this.value.type;
         // reset the modal form data
       },
     },
