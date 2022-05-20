@@ -75,7 +75,7 @@ export default {
             },
           },
         },
-       
+
         {
           text: "Update Vendor",
           type: "hyphenUpdateVendor",
@@ -136,9 +136,16 @@ export default {
         },
         {
           text: "Send to Webhook",
-          type: "sendToWebhook",
+          type: "hyphenToWebhook",
           icon: require("@/assets/actions-send-to-webhook.svg"),
           active: true,
+          meta: {
+            type: "hyphenToWebhook",
+            properties: {
+              keys: ["webhook_url", "organization", "name"],
+              values: ["", "", "", "webhook"],
+            },
+          },
         },
         {
           text: "Send Invoice",
