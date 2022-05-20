@@ -131,14 +131,14 @@ export default {
     groupType(type) {
       if (this.comparisonType) {
         return this.comparisonType.find((groupType) => groupType.val === type)
-          ?.string;
+          ?.string || type;
       }
     },
 
     getFieldLabel(inputField) {
       if (this.inputs) {
         return this.inputs.fields.find((field) => field.key === inputField)
-          .label;
+          ?.label || inputField;
       }
       return inputField;
     },
