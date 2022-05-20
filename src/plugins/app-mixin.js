@@ -75,11 +75,19 @@ export default {
             },
           },
         },
+       
         {
           text: "Update Vendor",
-          type: "updateVendor",
+          type: "hyphenUpdateVendor",
           icon: require("@/assets/actions-update-vendor.svg"),
           active: true,
+          meta: {
+            type: "hyphenUpdateVendor",
+            properties: {
+              keys: ["attribute", "tag", "term", "organization", "name"],
+              values: ["", "", "", "", "update vendor"],
+            },
+          },
         },
         {
           text: "Send form",

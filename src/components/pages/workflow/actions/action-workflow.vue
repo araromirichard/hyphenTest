@@ -83,6 +83,13 @@
       ref="hyphenUpdateCustomer"
     />
 
+     <update-vendor-action
+      v-if="actionModal == 'hyphenUpdateVendor'"
+      v-model="data"
+      @channel="channel = $event"
+      ref="hyphenUpdateVendor"
+    />
+
     <send-form-action
       v-if="actionModal == 'hyphenForm'"
       v-model="data"
@@ -115,6 +122,8 @@ import sendEmailAction from "./sendEmailAction.vue";
 import SendFormAction from "./sendFormAction.vue";
 import SendPaymentAction from "./sendPaymentAction.vue";
 import UpdateCustomerAction from "./updateCustomerAction.vue";
+import UpdateVendorAction from "./updateVendorAction.vue";
+
 export default {
   components: {
     GetApprovalAction,
@@ -123,6 +132,7 @@ export default {
     SendFormAction,
     AddDelayAction,
     UpdateCustomerAction,
+    UpdateVendorAction,
     SendPaymentAction,
     ConnectWorkflowAction,
   },
