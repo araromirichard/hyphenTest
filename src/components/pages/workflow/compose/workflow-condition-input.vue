@@ -1,5 +1,6 @@
 <template>
-  <v-row class="mx-2 pl-4" style="align-items: center" no-gutters>
+  <div>
+    <v-row class="mx-2 pl-4" style="align-items: center" no-gutters>
     <v-col cols="12" md="4">
       <v-select
         v-model="form.field"
@@ -25,10 +26,10 @@
         color="#96EAD7"
         v-model="form.type"
         id="operators"
-        item-value="val"
+        item-value="key"
         :menu-props="{ bottom: true, offsetY: true }"
         :items="inputs.operators"
-        item-text="string"
+        item-text="label"
         style="border-radius: 3px"
         class="justify-center highlight my-2 mr-2"
         flat
@@ -66,6 +67,7 @@
       </v-btn>
     </v-col>
   </v-row>
+  </div>
 </template>
 
 <script>

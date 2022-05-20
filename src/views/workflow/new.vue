@@ -153,18 +153,29 @@
             </v-btn>
 
             <div v-if="showAdvance">
-              <span style="color: #19283dcc" class="mb-2 mt-1 d-block">
+              <span
+                style="color: #19283dcc; font-size: 16px"
+                class="mb-2 mt-1 d-block"
+              >
                 To trigger this workflow using an external API or webhook
                 service, make a POST request to the endpoint below
               </span>
 
-              <v-text-field
+              <!-- <v-text-field
                 prefix="POST"
                 v-model="workflow.webhook"
                 disabled
                 outlined
                 append-icon="mdi-content-copy"
-              ></v-text-field>
+              ></v-text-field> -->
+
+              <div class="api-cover">
+                <button class="api-cover__req">POST</button>
+                <div class="api-cover__url">{{ workflow.webhook }}</div>
+                <v-btn icon style="margin-right: 15px"
+                  ><v-icon>mdi-content-copy</v-icon></v-btn
+                >
+              </div>
 
               <span
                 class="mt-1 d-block"
@@ -555,11 +566,11 @@ export default {
 
   &__content {
     background-color: #fefcf8;
-    padding: 60px 120px;
+    padding: 30px 50px;
     text-align: center;
 
     .msg {
-      font-size: 17px;
+      font-size: 16px;
       color: #757575;
       line-height: 24px;
       display: block;
@@ -568,7 +579,7 @@ export default {
 
     #add-to-draft {
       display: block;
-      margin: 20px auto 0px auto;
+      margin: 50px auto 0px auto;
       background: transparent;
       color: #d7a47b;
       cursor: pointer;
@@ -611,7 +622,7 @@ export default {
 
   &__content {
     background-color: #f8f7f4;
-    padding: 20px;
+    padding: 20px 50px;
 
     .msg {
       font-size: 16px;
@@ -624,6 +635,33 @@ export default {
     .cta {
       display: flex;
       justify-content: end;
+    }
+  }
+
+  .api-cover {
+    display: flex;
+    align-items: center;
+    border: 1px solid #19283d1a;
+    box-sizing: border-box;
+    background: #ffffff;
+    border: 1px solid rgba(25, 40, 61, 0.1);
+    border-radius: 3px;
+    margin: 10px 0px;
+
+    &__req {
+      height: 55px;
+      padding: 0px 20px;
+      background-color: #f4f5f6;
+      color: #00233880;
+      font-weight: bold;
+      border-radius: 3px;
+      font-family: "Inter";
+    }
+
+    &__url {
+      padding: 0px 25px;
+      flex: 1;
+      color: #596a73;
     }
   }
 }

@@ -73,7 +73,10 @@
             </div>
 
             <div class="comparison" v-if="condition.type == 'comparison'">
-              <span class="field">{{ getFieldLabel(condition.properties.field) }}</span> is
+              <span class="field">{{
+                getFieldLabel(condition.properties.field)
+              }}</span>
+              is
               <span class="operator">{{
                 operator(condition.properties.type)
               }}</span>
@@ -107,22 +110,21 @@ export default {
       default: null,
     },
 
-    inputs:{
-      default:null
-    }
+    inputs: {
+      default: null,
+    },
   },
   data() {
-    return {
-      test: ">",
-      text: "and",
-    };
+    return {};
   },
 
   methods: {
     operator(operand) {
-      if (this.operators) {
-        return this.operators.find((operator) => operator.val == operand)
-          ?.string;
+      if (this.inputs.operators) {
+        return (
+          this.inputs.operators.find((operator) => operator.key == operand)
+            ?.label || operand
+        );
       }
     },
 
@@ -133,17 +135,16 @@ export default {
       }
     },
 
-      getFieldLabel(inputField){
-        if(this.inputs){
-         return this.inputs.fields.find((field) => field.key === inputField).label
-        }
-        return inputField
+    getFieldLabel(inputField) {
+      if (this.inputs) {
+        return this.inputs.fields.find((field) => field.key === inputField)
+          .label;
+      }
+      return inputField;
     },
   },
   computed: {
     ...mapGetters({
-      // schema: "workflow/schema",
-      operators: "workflow/operators",
       comparisonType: "workflow/comparisonType",
     }),
 

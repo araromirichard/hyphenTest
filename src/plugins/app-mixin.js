@@ -75,11 +75,19 @@ export default {
             },
           },
         },
+
         {
           text: "Update Vendor",
-          type: "updateVendor",
+          type: "hyphenUpdateVendor",
           icon: require("@/assets/actions-update-vendor.svg"),
           active: true,
+          meta: {
+            type: "hyphenUpdateVendor",
+            properties: {
+              keys: ["attribute", "tag", "term", "organization", "name"],
+              values: ["", "", "", "", "update vendor"],
+            },
+          },
         },
         {
           text: "Send form",
@@ -128,9 +136,16 @@ export default {
         },
         {
           text: "Send to Webhook",
-          type: "sendToWebhook",
+          type: "hyphenToWebhook",
           icon: require("@/assets/actions-send-to-webhook.svg"),
           active: true,
+          meta: {
+            type: "hyphenToWebhook",
+            properties: {
+              keys: ["webhook_url", "organization", "name"],
+              values: ["", "", "", "webhook"],
+            },
+          },
         },
         {
           text: "Send Invoice",

@@ -63,10 +63,6 @@
           </v-row>
         </div>
 
-        <!-- <span class="note">
-          <b>Note:</b> Approval request will be sent to the selected co-worker,
-          along with details of this workflow
-        </span> -->
 
         <div class="bottom">
           <v-btn @click="close" large color="primary" outlined>

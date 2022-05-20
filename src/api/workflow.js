@@ -1,7 +1,6 @@
 import api from "./Api";
 
 export default {
-  
   getAllInvoiceFieldsOptions() {
     return api().get("/workflows/options?type=invoice", {
       headers: {
@@ -12,6 +11,14 @@ export default {
 
   getPaymentFieldsOptions() {
     return api().get("/workflows/options?type=payment", {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    });
+  },
+
+  getAllOperators() {
+    return api().get("/workflows/options?type=operator", {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("token"),
       },
