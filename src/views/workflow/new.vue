@@ -371,8 +371,8 @@ export default {
     workflowPayload: {
       deep: true,
       immediate: true,
-      handler() {
-        //console.log(JSON.stringify(val, null, 2));
+      handler(val) {
+        console.log(JSON.stringify(val, null, 2));
       },
     },
 
