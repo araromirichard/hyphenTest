@@ -69,6 +69,7 @@
           <v-card
             max-width=""
             height="300"
+            @keyup.enter="startWorkflow"
             flat
             class="m-0"
             style="background: #f8f7f4; border-radius: 8px"
@@ -132,7 +133,7 @@
               ></v-text-field>
             </template>
             <template class="mt-6">
-              <v-card-actions class="d-flex justify-end mt-2 mr-9">
+              <v-card-actions class="d-flex justify-end mt-2 mr-5">
                 <v-btn
                   link
                   @click="startWorkflow"
