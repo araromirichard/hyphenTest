@@ -52,6 +52,7 @@ export default {
       selectedPayment: null,
       isLoadingTypes: false,
       items: [],
+      proceeded: false,
     };
   },
   methods: {
@@ -69,6 +70,7 @@ export default {
     },
 
     proceed() {
+      this.proceeded = true;
       this.$emit("input", this.selectedPayment);
     },
   },
@@ -77,7 +79,7 @@ export default {
       deep: true,
       immediate: true,
       handler(val) {
-        if (val !== this.selectedPayment) {
+        if (val !== this.selectedPayment && val !== null) {
           this.selectedPayment = val;
         }
       },
@@ -90,6 +92,12 @@ export default {
           this.fetchPaymentTypes();
         }
       },
+    },
+
+    selectedPayment() {
+      if (this.proceeded) {
+        this.$emit("input", null);
+      }
     },
   },
 };

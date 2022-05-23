@@ -52,6 +52,7 @@ export default {
       isLoadingForms: false,
       selectedForm: null,
       items: [],
+      proceeded: false,
     };
   },
   methods: {
@@ -70,8 +71,8 @@ export default {
     },
 
     proceed() {
+      this.proceeded = true;
       this.$emit("input", this.selectedForm);
-      this.$nextTick();
     },
   },
   watch: {
@@ -79,7 +80,7 @@ export default {
       deep: true,
       immediate: true,
       handler(val) {
-        if (val !== this.selectedForm) {
+        if (val !== this.selectedForm && val !== null) {
           this.selectedForm = val;
         }
       },
@@ -92,6 +93,12 @@ export default {
           this.fetchOrgForms();
         }
       },
+    },
+
+    selectedForm() {
+      if (this.proceeded) {
+        this.$emit("input", null);
+      }
     },
   },
 };

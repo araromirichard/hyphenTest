@@ -52,13 +52,14 @@
             v-if="isPaymentTrigger"
           />
 
+
           <form-trigger
             ref="formTrigger"
             v-model="workflow.form"
             :isVisable="isFormTrigger"
             v-if="isFormTrigger"
           />
-
+          
           <compose-workflow
             ref="conditions"
             v-model="workflow.conditions"
