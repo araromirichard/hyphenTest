@@ -52,13 +52,14 @@
             v-if="isPaymentTrigger"
           />
 
+
           <form-trigger
             ref="formTrigger"
             v-model="workflow.form"
             :isVisable="isFormTrigger"
             v-if="isFormTrigger"
           />
-
+          
           <compose-workflow
             ref="conditions"
             v-model="workflow.conditions"
@@ -370,8 +371,8 @@ export default {
     workflowPayload: {
       deep: true,
       immediate: true,
-      handler(val) {
-        console.log(JSON.stringify(val, null, 2));
+      handler() {
+        //console.log(JSON.stringify(val, null, 2));
       },
     },
 

@@ -9,7 +9,6 @@
     <div v-else class="form-trigger">
       <div class="header" @click="showTriggers = !showTriggers">
         <span class="title"> Compose the conditions </span>
-
         <v-btn color="primary" icon
           ><v-icon size="33" v-if="!showTriggers">mdi-chevron-down</v-icon>
           <v-icon size="33" v-else>mdi-chevron-up</v-icon>
@@ -168,7 +167,7 @@ export default {
         const { data } = await this.$store.dispatch("workflow/getAllOperators");
         this.inputs.operators = data;
       } catch (err) {
-        console.log("err", JSON.stringify(err, null, 2));
+        this.isLoadingEntries = false;
       } finally {
         this.isLoadingEntries = false;
       }
@@ -183,7 +182,7 @@ export default {
         );
         this.inputs.fields = data.data.field_names;
       } catch (err) {
-        console.log("err", JSON.stringify(err, null, 2));
+        this.isLoadingEntries = false;
       } finally {
         this.isLoadingEntries = false;
       }
@@ -197,7 +196,7 @@ export default {
         );
         this.inputs.fields = data;
       } catch (err) {
-        console.log("err", JSON.stringify(err, null, 2));
+        this.isLoadingEntries = false;
       } finally {
         this.isLoadingEntries = false;
       }
@@ -212,7 +211,7 @@ export default {
         );
         this.inputs.fields = data;
       } catch (err) {
-        console.log("err", JSON.stringify(err, null, 2));
+        this.isLoadingEntries = false;
       } finally {
         this.isLoadingEntries = false;
       }
@@ -240,7 +239,25 @@ export default {
     trigger: {
       immediate: true,
       handler(val) {
+        console.log("trigger data", val);
         if (val) {
+          this.conditions = {
+            type: "group",
+            properties: {
+              type: "and",
+              conditions: [
+                {
+                  type: "comparison",
+                  properties: {
+                    type: "",
+                    field: "",
+                    target: "",
+                  },
+                },
+              ],
+            },
+          };
+
           if (this.trigger === "invoice") {
             this.fetchInvoiceEntries();
           } else if (this.trigger === "form") {
@@ -255,6 +272,7 @@ export default {
     showTriggers: {
       immediate: true,
       handler(val) {
+        console.log("show trigger", val);
         if (val) {
           this.$nextTick();
           setTimeout(() => {
