@@ -238,7 +238,7 @@ export default {
       immediate: true,
       deep: true,
       handler(val) {
-          this.$emit("selected-fields", val);
+        this.$emit("selected-fields", val);
       },
     },
   },
@@ -302,13 +302,13 @@ export default {
       };
     },
 
-    selectedFields(){
-    return  this.groupConditions.map(condition=>{
-        if(condition.type == "comparison"){
-          return condition.properties.field
+    selectedFields() {
+      return this.groupConditions.map((condition) => {
+        if (condition.type == "comparison") {
+          return condition.properties.field;
         }
-      })
-    }
+      });
+    },
   },
 };
 </script>

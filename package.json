@@ -21,6 +21,7 @@
         "pure-vue-chart": "^0.4.0",
         "simple-line-icons": "^2.5.5",
         "skeleton-loader-vue": "^1.0.10",
+        "v-clipboard": "^2.2.3",
         "v-form-builder": "^2.1.1",
         "vee-validate": "^3.4.13",
         "vue": "^2.6.11",

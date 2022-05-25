@@ -964,11 +964,11 @@
                 width="100%"
                 style="border-bottom: 1px solid rgba(127, 145, 155, 0.3)"
               >
-                <v-tabs v-model="tab1" align-with-title slider-size="4">
+                <v-tabs v-model="tab" align-with-title slider-size="4">
                   <v-tab
                     class="mt-2"
-                    v-for="item in items"
-                    :key="item.tab1"
+                    v-for="item in vendorItems"
+                    :key="item.tab"
                     style="
                       font-family: Inter;
                       font-style: normal;
@@ -977,13 +977,13 @@
                       line-height: 15px;
                       text-transform: uppercase;
                     "
-                    >{{ item.tab1 }}</v-tab
+                    >{{ item.tab }}</v-tab
                   >
                 </v-tabs>
               </v-card>
               <v-card width="100%" class="pb-12" flat>
                 <component
-                  v-bind:is="items[tab1].content"
+                  v-bind:is="vendorItems[tab].content"
                   class="ml-0"
                 ></component>
               </v-card>
@@ -997,12 +997,12 @@
                     center-active
                     class="ma-0"
                     background-color="primary"
-                    v-model="tab1"
+                    v-model="tab"
                   >
                     <v-tab
                       class="mt-2"
-                      v-for="item in items"
-                      :key="item.tab1"
+                      v-for="item in vendorItems"
+                      :key="item.tab"
                       style="
                         font-family: Inter;
                         font-style: normal;
@@ -1011,7 +1011,7 @@
                         line-height: 15px;
                         text-transform: uppercase;
                       "
-                      >{{ item.tab1 }}</v-tab
+                      >{{ item.tab }}</v-tab
                     >
                   </v-tabs>
                 </v-bottom-navigation>
@@ -1029,8 +1029,11 @@
 <script>
 import ContactDropDown from "@/includes/ContactDropdown";
 import CustomerInvoice from "@/components/Contacts/Customer/Customer-Invoice.vue";
+import vendorInvoice from "@/components/Contacts/vendor/vendor-invoice.vue";
 import CustomerPayment from "@/components/Contacts/Customer/Customer-Payment.vue";
+import vendorPayment from "@/components/Contacts/vendor/vendor-payment.vue";
 import CustomerMandate from "@/components/Contacts/Customer/Customer-Mandate.vue";
+import vendorMandate from "@/components/Contacts/vendor/vendor-mandate.vue";
 import EditVendor from "../../includes/overlays/ContactsMenuModals/EditVendor.vue";
 import EditCustomer from "../../includes/overlays/ContactsMenuModals/EditCustomer.vue";
 
@@ -1076,10 +1079,18 @@ export default {
         { tab1: "Payments", content: "CustomerPayment" },
         { tab1: "Mandates", content: "CustomerMandate" },
       ],
+      vendorItems: [
+        { tab: "Invoices", content: "vendorInvoice" },
+        { tab: "Payments", content: "vendorPayment" },
+        { tab: "Mandates", content: "vendorMandate" },
+      ],
     };
   },
   components: {
     ContactDropDown,
+    vendorInvoice,
+    vendorPayment,
+    vendorMandate,
     CustomerInvoice,
     CustomerPayment,
     CustomerMandate,

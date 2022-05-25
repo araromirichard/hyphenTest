@@ -196,6 +196,7 @@ export default {
     return {
       isLoading: false,
       formInputData: null,
+      field_names: null,
       formData: null,
       configuration: {
         formTitle: "",
@@ -224,38 +225,80 @@ export default {
       console.log(this.configuration.isPrivate);
     },
     async updateFormData() {
-      console.log(JSON.stringify(this.updateRequestData, null, 2));
+      this.checkFieldNames();
       const payload = {
         form_fields: this.formData.form_fields,
+        field_names: this.field_names,
         is_private: this.configuration.isPrivate,
       };
       // console.log(JSON.stringify(payload, null, 2));
 
-      try {
-        await this.$store
-          .dispatch("formBuilder/updateForm", {
-            id: this.form_id,
-            payload: payload,
-          })
-          .then(
-            this.showToast({
-              sclass: "success",
-              show: true,
-              message: "Form " + this.formData.form_title + " Updated",
-              timeout: 3000,
+      if (this.checkGridClassAndFormActions()) {
+        try {
+          await this.$store
+            .dispatch("formBuilder/updateForm", {
+              id: this.form_id,
+              payload: payload,
             })
-          );
-        //console.log(JSON.stringify(payload, null, 2));
-      } catch (error) {
-        console.log(error);
+            .then(
+              this.showToast({
+                sclass: "success",
+                show: true,
+                message: "Form " + this.formData.form_title + " Updated",
+                timeout: 3000,
+              })
+            );
+          //console.log(JSON.stringify(payload, null, 2));
+        } catch (error) {
+          console.log(error);
 
-        this.showToast({
-          sclass: "error",
-          show: true,
-          message: "Form " + this.formData.form_title + " could not Updated",
-          timeout: 3000,
-        });
+          this.showToast({
+            sclass: "error",
+            show: true,
+            message: "Form " + this.formData.form_title + " could not Updated",
+            timeout: 3000,
+          });
+        }
       }
+    },
+    checkFieldNames() {
+      var controlsObject = this.formData.form_fields.controls;
+      console.log(JSON.stringify(controlsObject, null, 2));
+      console.log(JSON.stringify(this.formData, null, 2));
+
+      const newArray = Object.keys(controlsObject).map((key) => {
+        return {
+          label: controlsObject[key].label,
+          key: controlsObject[key].name,
+          type: controlsObject[key].type,
+          options: controlsObject[key].items,
+        };
+      });
+      // console.log(JSON.stringify(newArray, null, 2));
+
+      const newObj = Object.assign({}, newArray);
+      // if (this.field_names == null) {
+      //   this.field_names = Object.values(newObj);
+      // }
+      this.field_names = Object.values(newObj);
+      //   console.log(this.field_names);
+    },
+
+    checkGridClassAndFormActions() {
+      //check that the formData array is not empty...
+      if (this.formData == null && this.formData == undefined) return;
+
+      //set the grid class of all fields to always be cols-12 and md-size-100
+      for (const key in this.formData.form_fields.controls) {
+        this.formData.form_fields.controls[key].containerClass =
+          "col-md-12 md-layout-item md-size-100";
+        this.formData.form_fields.controls[key].name = this.formData.form_fields.controls[key].name
+          .toLowerCase()
+          .replaceAll(" ", "_");
+      }
+
+      return true;
+      //format the name value and replace spaces with underscore
     },
   },
 

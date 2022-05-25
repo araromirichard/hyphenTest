@@ -8,7 +8,6 @@
           query: { vendor: true },
         })
       "
- 
       min-width="90%"
       elevation="3"
       class="my-4 rounded-lg"

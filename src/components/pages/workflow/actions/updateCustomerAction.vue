@@ -63,7 +63,6 @@
           </v-row>
         </div>
 
-
         <div class="bottom">
           <v-btn @click="close" large color="primary" outlined>
             <v-icon left>mdi-close</v-icon> Cancel

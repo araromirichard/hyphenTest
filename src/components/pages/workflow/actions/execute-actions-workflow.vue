@@ -54,7 +54,7 @@
             <div>
               <draggable
                 v-model="selectedActions"
-                  v-bind="dragOptions"
+                v-bind="dragOptions"
                 @start="drag = true"
                 @end="drag = false"
               >

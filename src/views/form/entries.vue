@@ -72,6 +72,35 @@
               {{ formName }}
             </span>
             <v-spacer></v-spacer>
+            <download-csv class="btn btn-default" :data="dataEntries">
+              <v-hover v-slot="{ hover }">
+                <v-btn
+                  outlined
+                  @click="alertCSVDownload"
+                  color="primary"
+                  class="export-btn mr-9 hover-btn"
+                  :style="{
+                    'background-color': hover ? '#2bd5ae' : '',
+                    border: hover ? 'none' : '',
+                  }"
+                  elevation="2"
+                  ><span class="material-icons pr-1"> import_export </span
+                  ><span
+                    class="primary--text"
+                    style="
+                      font-family: Inter;
+                      font-style: normal;
+                      font-weight: 500;
+                      font-size: 11px;
+                      line-height: 12px;
+                      text-align: center;
+                      letter-spacing: 0.636364px;
+                    "
+                    >Export</span
+                  >
+                </v-btn>
+              </v-hover>
+            </download-csv>
             <div style="width = 10px">
               <v-autocomplete
                 class="px-8"
@@ -209,6 +238,16 @@ export default {
       } else {
         this.selectedHeaders = headers;
       }
+    },
+
+    //download entries as cvs file
+    alertCSVDownload() {
+      this.showToast({
+        sclass: "success",
+        show: true,
+        message: "CSV downloaded!",
+        timeout: 3000,
+      });
     },
   },
   computed: {

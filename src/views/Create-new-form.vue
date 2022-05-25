@@ -187,6 +187,7 @@
 <script>
 //import formBuider from "@/api/formbuilder.js";
 import { mapActions, mapGetters, mapState } from "vuex";
+//import formFormat from "../mixins/functions";
 export default {
   name: "Create-form",
   components: {
@@ -195,9 +196,9 @@ export default {
   data() {
     return {
       switch1: true,
+      field_names: null,
       formInputData: null,
       creatingForm: false,
-      field_names: null,
       configuration: {
         formTitle: "",
         isPrivate: false,
@@ -205,7 +206,70 @@ export default {
         formId: "",
       },
       formData: null,
-     
+      // formData: {
+      //   formConfig: {
+      //     headline: "",
+      //     subHeadline: "",
+      //     isShowHeadline: false,
+      //     renderFormTag: false,
+      //     formActionURL: "",
+      //     formMethod: "POST",
+      //     enableServerSideValidation: false,
+      //     serverSideValidationEndpoint: "",
+      //   },
+      //   sections: {
+      //     "section-dc52b8cb-3e2a-47cc-a0aa-d6534b5b1099": {
+      //       uniqueId: "section-dc52b8cb-3e2a-47cc-a0aa-d6534b5b1099",
+      //       headline: "New Section",
+      //       headlineAdditionalClass: "",
+      //       subHeadline: "This is the sub-headline of the new section",
+      //       subHeadlineAdditionalClass: "",
+      //       isShowHeadline: true,
+      //       sortOrder: 1,
+      //       type: "normal",
+      //       rows: [],
+      //       controls: [
+      //         "control-d7c34562-6675-451c-963a-98f48be78c26",
+      //         "control-2b6ddb06-8718-4995-a2fb-5f1f6e2736b9",
+      //       ],
+      //     },
+      //   },
+      //   rows: {},
+      //   controls: {
+      //     "control-d7c34562-6675-451c-963a-98f48be78c26": {
+      //       uniqueId: "control-d7c34562-6675-451c-963a-98f48be78c26",
+      //       type: "input",
+      //       name: "first name",
+      //       label: "Your name",
+      //       subLabel: "",
+      //       isShowLabel: true,
+      //       placeholderText: "",
+      //       containerClass: "col-md-4 md-layout-item md-size-33",
+      //       additionalContainerClass: "",
+      //       additionalFieldClass: "",
+      //       additionalLabelClass: "",
+      //       defaultValue: "",
+      //       validations: [],
+      //       typeAttribute: "text",
+      //     },
+      //     "control-2b6ddb06-8718-4995-a2fb-5f1f6e2736b9": {
+      //       uniqueId: "control-2b6ddb06-8718-4995-a2fb-5f1f6e2736b9",
+      //       type: "input",
+      //       name: "last name",
+      //       label: "Last Name",
+      //       subLabel: "",
+      //       isShowLabel: true,
+      //       placeholderText: "",
+      //       containerClass: "col-md-4 md-layout-item md-size-33",
+      //       additionalContainerClass: "",
+      //       additionalFieldClass: "",
+      //       additionalLabelClass: "",
+      //       defaultValue: "",
+      //       validations: [],
+      //       typeAttribute: "text",
+      //     },
+      //   },
+      // },
     };
   },
 
@@ -215,24 +279,26 @@ export default {
     async saveData() {
       this.checkFieldNames();
       const formPayload = this.createRequestData;
-      console.log(JSON.stringify(formPayload), null, 2);
-      //console.log(this.formData);
+      console.log(JSON.stringify(formPayload, null, 2));
+      console.log("hello");
       if (this.checkGridClassAndFormActions()) {
         try {
           this.creatingForm = true;
-          await this.$store
-            .dispatch("formBuilder/createForm", formPayload)
-            .then(
-              this.showToast({
-                sclass: "success",
-                show: true,
-                message:
-                  "created Form " +
-                  this.configuration.formName +
-                  " successfully",
-                timeout: 3000,
-              })
-            );
+          const resp = await this.$store.dispatch(
+            "formBuilder/createForm",
+            formPayload
+          );
+
+          console.log(JSON.stringify(resp, null, 2));
+          // if (resp.status == "success") {
+          this.showToast({
+            sclass: "success",
+            show: true,
+            message:
+              "created Form " + this.configuration.formName + " successfully",
+            timeout: 3000,
+          });
+          // }
         } catch (error) {
           console.log(error);
           if (error) {
@@ -246,7 +312,7 @@ export default {
           }
         } finally {
           this.creatingForm = false;
-          this.formData = null;
+          // this.formData = null;
         }
       }
     },
@@ -257,17 +323,20 @@ export default {
         return {
           label: controlsObject[key].label,
           key: controlsObject[key].name,
+          type: controlsObject[key].type,
+          options: controlsObject[key].items,
         };
       });
-      console.log(JSON.stringify(newArray, null, 2));
+      // console.log(JSON.stringify(newArray, null, 2));
 
       const newObj = Object.assign({}, newArray);
       // if (this.field_names == null) {
       //   this.field_names = Object.values(newObj);
       // }
       this.field_names = Object.values(newObj);
-      console.log(this.field_names);
+      //   console.log(this.field_names);
     },
+
     checkGridClassAndFormActions() {
       //check that the formData array is not empty...
       if (this.formData == null && this.formData == undefined) return;
@@ -277,24 +346,26 @@ export default {
       this.formData.formConfig.formActionURL = `https://api.onpbot.com/v1/forms/${organId}/submit`;
       this.formData.sections[Object.keys(this.formData.sections)].headline =
         this.configuration.formName;
-      console.log(this.formData.formConfig.formActionURL);
+      // console.log(this.formData.formConfig.formActionURL);
 
       //set the grid class of all fields to always be cols-12 and md-size-100
       for (const key in this.formData.controls) {
         this.formData.controls[key].containerClass =
           "col-md-12 md-layout-item md-size-100";
+        this.formData.controls[key].name = this.formData.controls[key].name
+          .toLowerCase()
+          .replaceAll(" ", "_");
       }
 
-      console.log();
-
       return true;
+      //format the name value and replace spaces with underscore
     },
   },
-
   computed: {
     ...mapGetters({
       user: "auth/user",
       token: "auth/token",
+      formDescription: "formBuilder/getFormDescription",
     }),
     ...mapState({
       organization: "organization",
@@ -311,9 +382,11 @@ export default {
         has_signature: this.$store.state.formBuilder.needSignature,
         form_type: this.$store.state.formBuilder.selectedFormType,
         field_names: this.field_names,
+        form_description: this.formDescription,
       };
     },
   },
+  // mixins: [formFormat],
 };
 </script>
 

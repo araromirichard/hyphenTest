@@ -31,7 +31,7 @@
       </div>
     </div>
     <v-timeline v-if="canShow">
-      <div class="d-flex mt-1" >
+      <div class="d-flex mt-1">
         <v-btn
           v-if="isLast"
           @click="$emit('add-new-action')"
@@ -158,9 +158,9 @@ export default {
       default: false,
     },
 
-    isBeenDragged:{
-      default:false
-    }
+    isBeenDragged: {
+      default: false,
+    },
   },
   data() {
     return {
@@ -193,10 +193,10 @@ export default {
       }
     },
 
-    canShow(){
-      if(!this.isLast) return true
-      return !this.isBeenDragged
-    } 
+    canShow() {
+      if (!this.isLast) return true;
+      return !this.isBeenDragged;
+    },
   },
   watch: {
     data: {
