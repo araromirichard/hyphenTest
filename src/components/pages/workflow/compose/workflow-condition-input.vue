@@ -13,7 +13,7 @@
         flat
         outlined
         hide-details="auto"
-        placeholder="Select a form"
+        placeholder="Select a field"
       >
         <template slot="append">
           <v-icon class="pl-2">mdi-menu-down</v-icon>

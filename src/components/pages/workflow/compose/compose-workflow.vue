@@ -33,14 +33,18 @@
                 v-model="conditions.properties.conditions[i]"
                 :group-index="i"
                 @selected-fields="addSelectedField"
+                @delete-empty-group="conditions.properties.conditions.splice(i, 1)"
+                 @valid-group="groups.splice(index,1,$event)"
                 :index="i"
                 :inputs="inputs"
                 @add-new-group="addNewGroup"
               />
             </div>
 
+
             <v-btn
               @click="$emit('continue')"
+              :disabled="!canContinue"
               large
               elevation="0"
               color="primary"
@@ -117,7 +121,7 @@ export default {
         },
       },
       selectedFields: [],
-
+      groups:[],
       scrollOptions: {
         duration: 500,
         offset: 0,
@@ -228,6 +232,8 @@ export default {
       },
     },
 
+    
+
     conditions: {
       immediate: true,
       deep: true,
@@ -294,6 +300,10 @@ export default {
     isCompleted() {
       return true;
     },
+
+        canContinue(){
+      return this.groups.every(action => action) && this.groups.length > 0
+    }
   },
 };
 </script>
