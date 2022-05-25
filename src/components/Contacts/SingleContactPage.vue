@@ -87,7 +87,7 @@
                     Block
                   </v-btn>
                   <v-btn
-                    @click="editForm"
+                    @click="editCustomer"
                     outlined
                     depressed
                     small
@@ -205,25 +205,18 @@
                       >
                     </v-col>
                     <v-col cols="12" md="8" class="pa-0">
-                      <validation-provider
-                        v-slot="{ errors }"
-                        name="companyName"
-                        rules="required"
-                      >
-                        <v-text-field
-                          class="px-0"
-                          :error-messages="errors"
-                          v-model="singleCustomerDetails.companyName"
-                          hide-details="auto"
-                          :disabled="disabledField"
-                          :background-color="backgroundColor"
-                          solo
-                          flat
-                          dense
-                          reverse
-                          placeholder="Enter Company Name"
-                        ></v-text-field>
-                      </validation-provider>
+                      <v-text-field
+                        class="px-0"
+                        v-model="singleCustomerDetails.companyName"
+                        hide-details="auto"
+                        readonly
+                        :background-color="backgroundColor"
+                        solo
+                        flat
+                        dense
+                        reverse
+                        placeholder="Enter Company Name"
+                      ></v-text-field>
                     </v-col>
                     <v-divider
                       inset
@@ -246,25 +239,18 @@
                       >
                     </v-col>
                     <v-col cols="12" md="8" class="pa-0">
-                      <validation-provider
-                        v-slot="{ errors }"
-                        name="contactEmail"
-                        rules="required"
-                      >
-                        <v-text-field
-                          class="px-0"
-                          :error-messages="errors"
-                          v-model="singleCustomerDetails.contactEmail"
-                          hide-details="auto"
-                          :disabled="disabledField"
-                          :background-color="backgroundColor"
-                          solo
-                          flat
-                          dense
-                          reverse
-                          placeholder="Enter Email"
-                        ></v-text-field>
-                      </validation-provider>
+                      <v-text-field
+                        class="px-0"
+                        v-model="singleCustomerDetails.contactEmail"
+                        hide-details="auto"
+                        readonly
+                        :background-color="backgroundColor"
+                        solo
+                        flat
+                        dense
+                        reverse
+                        placeholder="Enter Email"
+                      ></v-text-field>
                     </v-col>
                     <v-divider
                       inset
@@ -287,25 +273,18 @@
                       >
                     </v-col>
                     <v-col cols="12" md="8" class="pa-0">
-                      <validation-provider
-                        v-slot="{ errors }"
-                        name="contactPhone"
-                        rules="required"
-                      >
-                        <v-text-field
-                          class="px-0"
-                          :error-messages="errors"
-                          v-model="singleCustomerDetails.contactPhone"
-                          hide-details="auto"
-                          :disabled="disabledField"
-                          :background-color="backgroundColor"
-                          solo
-                          flat
-                          dense
-                          reverse
-                          placeholder="Contact Phone"
-                        ></v-text-field>
-                      </validation-provider>
+                      <v-text-field
+                        class="px-0"
+                        v-model="singleCustomerDetails.contactPhone"
+                        hide-details="auto"
+                        readonly
+                        :background-color="backgroundColor"
+                        solo
+                        flat
+                        dense
+                        reverse
+                        placeholder="Contact Phone"
+                      ></v-text-field>
                     </v-col>
                     <v-divider
                       inset
@@ -328,25 +307,18 @@
                       >
                     </v-col>
                     <v-col cols="12" md="8" class="pa-0">
-                      <validation-provider
-                        v-slot="{ errors }"
-                        name="accountingCode"
-                        rules="required"
-                      >
-                        <v-text-field
-                          class="px-0"
-                          :error-messages="errors"
-                          v-model="singleCustomerDetails.accountingCode"
-                          hide-details="auto"
-                          :disabled="disabledField"
-                          :background-color="backgroundColor"
-                          solo
-                          flat
-                          dense
-                          reverse
-                          placeholder="Accounting Code"
-                        ></v-text-field>
-                      </validation-provider>
+                      <v-text-field
+                        class="px-0"
+                        v-model="singleCustomerDetails.accountingCode"
+                        hide-details="auto"
+                        readonly
+                        :background-color="backgroundColor"
+                        solo
+                        flat
+                        dense
+                        reverse
+                        placeholder="Accounting Code"
+                      ></v-text-field>
                     </v-col>
                     <v-divider
                       inset
@@ -369,25 +341,18 @@
                       >
                     </v-col>
                     <v-col cols="12" md="8" class="pa-0">
-                      <validation-provider
-                        v-slot="{ errors }"
-                        name="paymentTerms"
-                        rules="required"
-                      >
-                        <v-text-field
-                          class="px-0"
-                          :error-messages="errors"
-                          v-model="singleCustomerDetails.defaultPaymentTerms"
-                          hide-details="auto"
-                          :disabled="disabledField"
-                          :background-color="backgroundColor"
-                          solo
-                          flat
-                          dense
-                          reverse
-                          placeholder="Default Payment Terms"
-                        ></v-text-field>
-                      </validation-provider>
+                      <v-text-field
+                        class="px-0"
+                        v-model="singleCustomerDetails.defaultPaymentTerms"
+                        hide-details="auto"
+                        readonly
+                        :background-color="backgroundColor"
+                        solo
+                        flat
+                        dense
+                        reverse
+                        placeholder="Default Payment Terms"
+                      ></v-text-field>
                     </v-col>
                     <v-divider
                       inset
@@ -550,15 +515,15 @@
                   >
                 </v-tabs>
               </v-card>
-              <v-card
-                tile
-                flat
-                width="100%"
-                height="100px"
-                color="seperate-div"
-              >
-                <v-row>
-                  <v-col class="ps-3">
+              <div tile flat width="100%" height="100px" color="seperate-div">
+                <div
+                  class="d-flex align-center"
+                  style="
+                    height: 60px;
+                    background: rgba(127, 145, 155, 0.052607);
+                  "
+                >
+                  <!-- <div>
                     <p
                       class="
                         text-caption
@@ -589,17 +554,19 @@
                     >
                       {{ totalOutstanding }}
                     </p>
-                  </v-col>
-                  <v-col>
+                  </div>
+                  <v-spacer></v-spacer>
+                  <div>
                     <p
                       class="
                         text-right text-caption
-                        pt-4
                         px-2
-                        pa-0
+                        mt-4
+                        mb-1
+                        pa-md-0
                         mt-sm-1 mt-md-3
                         mb-sm-0 mb-md-0
-                        mr-sm-6 mr-md-8
+                        mr-sm-6 mr-md-9
                         grey--text
                         darken-1
                       "
@@ -610,7 +577,6 @@
                       class="
                         text-right text-caption
                         px-2
-                        pa-0
                         mt-1
                         mb-sm-0 mb-md-0
                         mr-sm-6 mr-md-8
@@ -619,8 +585,8 @@
                     >
                       {{ earliestDueDate | date }}
                     </p>
-                  </v-col>
-                </v-row>
+                  </div> -->
+                </div>
                 <div>
                   <v-row class="mx-8 mt-6">
                     <v-col class="pa-0" cols="12" md="4">
@@ -635,25 +601,52 @@
                       >
                     </v-col>
                     <v-col cols="12" md="8" class="pa-0">
-                      <validation-provider
-                        v-slot="{ errors }"
-                        name="companyName"
-                        rules="required"
+                      <v-text-field
+                        class="px-0"
+                        v-model="singleVendorDetails.company_name"
+                        hide-details="auto"
+                        readonly
+                        :background-color="backgroundColor"
+                        solo
+                        flat
+                        dense
+                        reverse
+                        placeholder="Vendor Name"
+                      ></v-text-field>
+                    </v-col>
+                    <v-divider
+                      inset
+                      style="
+                        border: 1px solid rgba(48, 31, 120, 0.1);
+                        transform: rotate(-0.65deg);
+                      "
+                    ></v-divider>
+                  </v-row>
+                  <v-row class="mx-8 mt-6">
+                    <v-col class="pa-0" cols="12" md="4">
+                      <v-subheader
+                        class="primary--text font-weight-bolder px-0"
+                        :style="{
+                          fontSize: `${
+                            $vuetify.breakpoint.smAndDown ? '0.86rem' : '1rem'
+                          }`,
+                        }"
+                        >Contact Person</v-subheader
                       >
-                        <v-text-field
-                          class="px-0"
-                          :error-messages="errors"
-                          v-model="singleCustomerDetails.companyName"
-                          hide-details="auto"
-                          :disabled="disabledField"
-                          :background-color="backgroundColor"
-                          solo
-                          flat
-                          dense
-                          reverse
-                          placeholder="Enter Company Name"
-                        ></v-text-field>
-                      </validation-provider>
+                    </v-col>
+                    <v-col cols="12" md="8" class="pa-0">
+                      <v-text-field
+                        class="px-0"
+                        v-model="singleVendorDetails.contact_full_name"
+                        hide-details="auto"
+                        readonly
+                        :background-color="backgroundColor"
+                        solo
+                        flat
+                        dense
+                        reverse
+                        placeholder="Contact Full Name"
+                      ></v-text-field>
                     </v-col>
                     <v-divider
                       inset
@@ -676,25 +669,18 @@
                       >
                     </v-col>
                     <v-col cols="12" md="8" class="pa-0">
-                      <validation-provider
-                        v-slot="{ errors }"
-                        name="contactEmail"
-                        rules="required"
-                      >
-                        <v-text-field
-                          class="px-0"
-                          :error-messages="errors"
-                          v-model="singleCustomerDetails.contactEmail"
-                          hide-details="auto"
-                          :disabled="disabledField"
-                          :background-color="backgroundColor"
-                          solo
-                          flat
-                          dense
-                          reverse
-                          placeholder="Enter Email"
-                        ></v-text-field>
-                      </validation-provider>
+                      <v-text-field
+                        class="px-0"
+                        v-model="singleVendorDetails.contact_email"
+                        hide-details="auto"
+                        readonly
+                        :background-color="backgroundColor"
+                        solo
+                        flat
+                        dense
+                        reverse
+                        placeholder="Enter Email"
+                      ></v-text-field>
                     </v-col>
                     <v-divider
                       inset
@@ -717,25 +703,18 @@
                       >
                     </v-col>
                     <v-col cols="12" md="8" class="pa-0">
-                      <validation-provider
-                        v-slot="{ errors }"
-                        name="contactPhone"
-                        rules="required"
-                      >
-                        <v-text-field
-                          class="px-0"
-                          :error-messages="errors"
-                          v-model="singleCustomerDetails.contactPhone"
-                          hide-details="auto"
-                          :disabled="disabledField"
-                          :background-color="backgroundColor"
-                          solo
-                          flat
-                          dense
-                          reverse
-                          placeholder="Contact Phone"
-                        ></v-text-field>
-                      </validation-provider>
+                      <v-text-field
+                        class="px-0"
+                        v-model="singleVendorDetails.contact_phone"
+                        hide-details="auto"
+                        readonly
+                        :background-color="backgroundColor"
+                        solo
+                        flat
+                        dense
+                        reverse
+                        placeholder="Contact Phone"
+                      ></v-text-field>
                     </v-col>
                     <v-divider
                       inset
@@ -758,25 +737,18 @@
                       >
                     </v-col>
                     <v-col cols="12" md="8" class="pa-0">
-                      <validation-provider
-                        v-slot="{ errors }"
-                        name="accountingCode"
-                        rules="required"
-                      >
-                        <v-text-field
-                          class="px-0"
-                          :error-messages="errors"
-                          v-model="singleCustomerDetails.accountingCode"
-                          hide-details="auto"
-                          :disabled="disabledField"
-                          :background-color="backgroundColor"
-                          solo
-                          flat
-                          dense
-                          reverse
-                          placeholder="Accounting Code"
-                        ></v-text-field>
-                      </validation-provider>
+                      <v-text-field
+                        class="px-0"
+                        v-model="singleVendorDetails.accounting_code"
+                        hide-details="auto"
+                        readonly
+                        :background-color="backgroundColor"
+                        solo
+                        flat
+                        dense
+                        reverse
+                        placeholder="Accounting Code"
+                      ></v-text-field>
                     </v-col>
                     <v-divider
                       inset
@@ -799,25 +771,18 @@
                       >
                     </v-col>
                     <v-col cols="12" md="8" class="pa-0">
-                      <validation-provider
-                        v-slot="{ errors }"
-                        name="paymentTerms"
-                        rules="required"
-                      >
-                        <v-text-field
-                          class="px-0"
-                          :error-messages="errors"
-                          v-model="singleCustomerDetails.defaultPaymentTerms"
-                          hide-details="auto"
-                          :disabled="disabledField"
-                          :background-color="backgroundColor"
-                          solo
-                          flat
-                          dense
-                          reverse
-                          placeholder="Default Payment Terms"
-                        ></v-text-field>
-                      </validation-provider>
+                      <v-text-field
+                        class="px-0"
+                        v-model="singleVendorDetails.default_payment_terms"
+                        hide-details="auto"
+                        readonly
+                        :background-color="backgroundColor"
+                        solo
+                        flat
+                        dense
+                        reverse
+                        placeholder="Default Payment Terms"
+                      ></v-text-field>
                     </v-col>
                     <v-divider
                       inset
@@ -842,9 +807,9 @@
                     <v-col cols="12" md="8" class="pa-0 d-flex justify-end">
                       <v-chip-group>
                         <v-chip
-                          class="py-1"
+                          class="py-2"
                           x-small
-                          v-for="tag in tags"
+                          v-for="tag in singleVendorDetails.tags"
                           :key="tag"
                           style="
                             font-family: Lato;
@@ -882,25 +847,18 @@
                       >
                     </v-col>
                     <v-col cols="12" md="8" class="pa-0">
-                      <validation-provider
-                        v-slot="{ errors }"
-                        name="bankName"
-                        rules="required"
-                      >
-                        <v-text-field
-                          class="px-0"
-                          :error-messages="errors"
-                          v-model="singleVendorDetails.bankName"
-                          hide-details="auto"
-                          :disabled="disabledField"
-                          :background-color="backgroundColor"
-                          solo
-                          flat
-                          dense
-                          reverse
-                          placeholder="Enter Bank Name"
-                        ></v-text-field>
-                      </validation-provider>
+                      <v-text-field
+                        class="px-0"
+                        v-model="singleVendorDetails.bankname"
+                        hide-details="auto"
+                        readonly
+                        :background-color="backgroundColor"
+                        solo
+                        flat
+                        dense
+                        reverse
+                        placeholder="Enter Bank Name"
+                      ></v-text-field>
                     </v-col>
                     <v-divider
                       inset
@@ -923,25 +881,18 @@
                       >
                     </v-col>
                     <v-col cols="12" md="8" class="pa-0">
-                      <validation-provider
-                        v-slot="{ errors }"
-                        name="bankAccount"
-                        rules="required"
-                      >
-                        <v-text-field
-                          class="px-0"
-                          :error-messages="errors"
-                          v-model="singleVendorDetails.bankAccount"
-                          hide-details="auto"
-                          :disabled="disabledField"
-                          :background-color="backgroundColor"
-                          solo
-                          flat
-                          dense
-                          reverse
-                          placeholder="Enter Bank Account"
-                        ></v-text-field>
-                      </validation-provider>
+                      <v-text-field
+                        class="px-0"
+                        v-model="singleVendorDetails.bank_account"
+                        hide-details="auto"
+                        readonly
+                        :background-color="backgroundColor"
+                        solo
+                        flat
+                        dense
+                        reverse
+                        placeholder="Enter Bank Account"
+                      ></v-text-field>
                     </v-col>
                     <v-divider
                       inset
@@ -964,45 +915,26 @@
                       >
                     </v-col>
                     <v-col cols="12" md="8" class="pa-0">
-                      <v-menu
-                        v-model="menu"
-                        :close-on-content-click="false"
-                        transition="scale-transition"
-                        offset-y
-                        min-width="auto"
+                      <v-text-field
+                        v-model="singleVendorDetails.date_added"
+                        hide-details="auto"
+                        readonly
+                        :background-color="backgroundColor"
+                        solo
+                        flat
+                        dense
+                        reverse
+                        style="
+                          font-family: Inter;
+                          font-style: normal;
+                          font-weight: normal;
+                          font-size: 15px;
+                          line-height: 15px;
+                          color: #7f919b;
+                        "
+                        placeholder="Enter Date"
                       >
-                        <template v-slot:activator="{ on, attrs }">
-                          <v-text-field
-                            v-model="singleVendorDetails.dateAdded"
-                            hide-details="auto"
-                            :disabled="disabledField"
-                            :background-color="backgroundColor"
-                            solo
-                            flat
-                            dense
-                            v-bind="attrs"
-                            v-on="on"
-                            reverse
-                            style="
-                              font-family: Inter;
-                              font-style: normal;
-                              font-weight: normal;
-                              font-size: 15px;
-                              line-height: 15px;
-                              color: #7f919b;
-                            "
-                            placeholder="Enter Date"
-                          ></v-text-field>
-                        </template>
-                        <v-date-picker
-                          v-model="singleVendorDetails.dateAdded"
-                          @input="menu = false"
-                          no-title
-                          scrollable
-                          :min="new Date() | date"
-                        >
-                        </v-date-picker>
-                      </v-menu>
+                      </v-text-field>
                     </v-col>
                     <v-divider
                       inset
@@ -1012,8 +944,16 @@
                       "
                     ></v-divider>
                   </v-row>
+                  <div class="mx-8 mt-6">
+                    <v-switch
+                      label="Approved"
+                      color="teal accent-3"
+                      v-model="singleVendorDetails.approved"
+                    >
+                    </v-switch>
+                  </div>
                 </div>
-              </v-card>
+              </div>
             </v-card>
           </v-col>
           <v-col cols="12" sm="12" md="7" class="">
@@ -1024,11 +964,11 @@
                 width="100%"
                 style="border-bottom: 1px solid rgba(127, 145, 155, 0.3)"
               >
-                <v-tabs v-model="tab1" align-with-title slider-size="4">
+                <v-tabs v-model="tab" align-with-title slider-size="4">
                   <v-tab
                     class="mt-2"
-                    v-for="item in items"
-                    :key="item.tab1"
+                    v-for="item in vendorItems"
+                    :key="item.tab"
                     style="
                       font-family: Inter;
                       font-style: normal;
@@ -1037,13 +977,13 @@
                       line-height: 15px;
                       text-transform: uppercase;
                     "
-                    >{{ item.tab1 }}</v-tab
+                    >{{ item.tab }}</v-tab
                   >
                 </v-tabs>
               </v-card>
               <v-card width="100%" class="pb-12" flat>
                 <component
-                  v-bind:is="items[tab1].content"
+                  v-bind:is="vendorItems[tab].content"
                   class="ml-0"
                 ></component>
               </v-card>
@@ -1057,12 +997,12 @@
                     center-active
                     class="ma-0"
                     background-color="primary"
-                    v-model="tab1"
+                    v-model="tab"
                   >
                     <v-tab
                       class="mt-2"
-                      v-for="item in items"
-                      :key="item.tab1"
+                      v-for="item in vendorItems"
+                      :key="item.tab"
                       style="
                         font-family: Inter;
                         font-style: normal;
@@ -1071,7 +1011,7 @@
                         line-height: 15px;
                         text-transform: uppercase;
                       "
-                      >{{ item.tab1 }}</v-tab
+                      >{{ item.tab }}</v-tab
                     >
                   </v-tabs>
                 </v-bottom-navigation>
@@ -1081,14 +1021,21 @@
         </v-row>
       </v-container>
     </v-row>
+    <edit-vendor ref="EditVendor" />
+    <edit-customer ref="EditCustomer" />
   </v-container>
 </template>
 
 <script>
 import ContactDropDown from "@/includes/ContactDropdown";
 import CustomerInvoice from "@/components/Contacts/Customer/Customer-Invoice.vue";
+import vendorInvoice from "@/components/Contacts/vendor/vendor-invoice.vue";
 import CustomerPayment from "@/components/Contacts/Customer/Customer-Payment.vue";
+import vendorPayment from "@/components/Contacts/vendor/vendor-payment.vue";
 import CustomerMandate from "@/components/Contacts/Customer/Customer-Mandate.vue";
+import vendorMandate from "@/components/Contacts/vendor/vendor-mandate.vue";
+import EditVendor from "../../includes/overlays/ContactsMenuModals/EditVendor.vue";
+import EditCustomer from "../../includes/overlays/ContactsMenuModals/EditCustomer.vue";
 
 export default {
   name: "singleContact",
@@ -1105,43 +1052,63 @@ export default {
       bankName: "bank name",
       CustomerWalletNumber: "30928292023",
       singleCustomerDetails: {
-        companyName: "",
-        contactPerson: "",
-        contactEmail: "",
+        company_name: "",
+        contact_person: "",
+        contact_email: "",
         contactPhone: "",
-        accountingCode: "",
-        defaultPaymentTerms: "",
+        accounting_code: "",
+        default_payment_terms: "",
         tags: [],
       },
       singleVendorDetails: {
-        companyName: "",
-        contactPerson: "",
-        contactEmail: "",
-        contactPhone: "",
-        accountingCode: "",
-        defaultPaymentTerms: "",
+        company_name: "",
+        contact_full_name: "",
+        contact_email: "",
+        contact_phone: "",
+        accounting_code: "",
+        default_payment_terms: "",
         tags: [],
-        bankName: "",
-        bankAccount: "",
-        dateAdded: null,
+        bankname: "",
+        bank_account: "",
+        date_added: null,
+        approved: null,
       },
-      tags: ["logistic", "Energy"],
+
       items: [
         { tab1: "Invoices", content: "CustomerInvoice" },
         { tab1: "Payments", content: "CustomerPayment" },
         { tab1: "Mandates", content: "CustomerMandate" },
       ],
+      vendorItems: [
+        { tab: "Invoices", content: "vendorInvoice" },
+        { tab: "Payments", content: "vendorPayment" },
+        { tab: "Mandates", content: "vendorMandate" },
+      ],
     };
   },
   components: {
     ContactDropDown,
+    vendorInvoice,
+    vendorPayment,
+    vendorMandate,
     CustomerInvoice,
     CustomerPayment,
     CustomerMandate,
+    EditVendor,
+    EditCustomer,
   },
   methods: {
     editForm() {
-      this.disabledField = false;
+      this.$refs.EditVendor.show(true);
+      console.log(this.$refs);
+    },
+    editCustomer() {
+      this.$refs.EditCustomer.show(true);
+      console.log(this.$refs);
+    },
+    formatDate(date) {
+      const options = { year: "numeric", month: "numeric", day: "numeric" };
+      return new Date(date).toLocaleDateString("en-GB", options);
     },
   },
 
@@ -1151,7 +1118,28 @@ export default {
     },
   },
   mounted() {
+    const id = this.$route.params.id;
     this.isVendor = this.$route.query.vendor || false;
+    this.$store.dispatch("contacts/getSingleVendor", id).then((response) => {
+      if (response.status == 200) {
+        this.singleVendorDetails.company_name = response.data.vendorname;
+        this.singleVendorDetails.contact_full_name =
+          response.data.contact.first_name +
+          " " +
+          response.data.contact.last_name;
+        this.singleVendorDetails.contact_email = response.data.contact.email;
+        this.singleVendorDetails.contact_phone = response.data.contact.phone;
+        this.singleVendorDetails.accounting_code = "";
+        this.singleVendorDetails.default_payment_terms = response.data.terms;
+        this.singleVendorDetails.tags = response.data.tags;
+        this.singleVendorDetails.bankname = response.data.bankname;
+        this.singleVendorDetails.bank_account = response.data.bankaccount;
+      }
+      this.singleVendorDetails.date_added = this.formatDate(
+        response.data.created_at
+      );
+      this.singleVendorDetails.approved = response.data.approved;
+    });
   },
 };
 </script>

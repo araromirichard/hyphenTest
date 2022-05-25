@@ -73,18 +73,18 @@
         </v-list-item-group>
       </v-card>
     </v-menu>
-    <AddVendor ref="AddVendor" />
+    <EditVendor ref="EditVendor" />
     <AddCustomer ref="AddCustomer" />
   </div>
 </template>
 
 <script>
-import AddVendor from "./overlays/ContactsMenuModals/AddVendor.vue";
-import AddCustomer from "./overlays/ContactsMenuModals/AddCustomer.vue";
+import EditVendor from "./overlays/ContactsMenuModals/EditVendor.vue";
+import AddCustomer from "./overlays/ContactsMenuModals/EditCustomer.vue";
 export default {
   name: "ContactDropDown",
   components: {
-    AddVendor,
+    EditVendor,
     AddCustomer,
 
     //
@@ -102,9 +102,9 @@ export default {
 
       contactMenus: [
         {
-          title: "Add Vendor",
+          title: "Edit Vendor",
           path: "#",
-          modalKey: "AddVendor",
+          modalKey: "EditVendor",
         },
 
         {

@@ -21,9 +21,10 @@
           >Design the conditions for which this workflow’ data will be
           proccessed</span
         >
-       // {{value}}//
+        // {{ value }}//
         <transition name="animate-down">
-          <workflow-parent-group v-if="conditions"
+          <workflow-parent-group
+            v-if="conditions"
             :group-type="conditions.properties.type"
             @update-group-type="conditions.properties.type = $event"
           >

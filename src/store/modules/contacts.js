@@ -2,6 +2,7 @@ import contact from "../../api/contact";
 
 const state = {
   vendors: [],
+  singleVendor: null,
 };
 const getters = {
   getAllVendors(state) {
@@ -25,10 +26,23 @@ const getters = {
   numberOfContacts(state) {
     return state.vendors.length;
   },
+  getVendor(state) {
+    if (state.singleVendor != null) {
+      return state.singleVendor;
+    }
+  },
+  getVendorInvoices(state) {
+    if (state.singleVendor != null) {
+      return state.singleVendor.invoices;
+    }
+  },
 };
 const mutations = {
   setVendors(state, vendors) {
     state.vendors = vendors;
+  },
+  SET_SINGLE_VENDOR(state, data) {
+    state.singleVendor = data;
   },
 };
 const actions = {
@@ -39,6 +53,26 @@ const actions = {
       );
       commit("setVendors", response.data);
       return response;
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  },
+
+  async getSingleVendor({ commit }, id) {
+    try {
+      const response = await contact.getVendorById(id);
+      commit("SET_SINGLE_VENDOR", response.data);
+      return response;
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  },
+
+  async updateVendorDetails({ commit }, data) {
+    try {
+      const response = await contact.updateVendorById(data.id, data.payload);
+
+      commit("SET_SINGLE_VENDOR", response.data);
     } catch (error) {
       return Promise.reject(error);
     }

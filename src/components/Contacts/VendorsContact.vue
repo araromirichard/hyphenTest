@@ -58,25 +58,27 @@
           </v-btn>
         </div>
       </v-flex>
-      <v-flex md1>
+      <v-flex md2>
         <div class="d-flex align-center pa-0 ma-0">
-          <p class="mb-0 mx-1 pa-0 primary--text font-weight-bold">Company</p>
+          <p class="mb-0 mx-1 pa-0 primary--text font-weight-bold">
+            vendor Name
+          </p>
           <v-btn class="" color="grey lighten-1" icon>
             <v-icon>mdi-chevron-down</v-icon>
           </v-btn>
         </div>
       </v-flex>
-      <v-flex md2 class="d-flex flex-row">
+      <v-flex md1 class="d-flex flex-row">
         <div class="d-flex align-center">
-          <p class="mb-0 primary--text font-weight-bold">Name</p>
+          <p class="mb-0 primary--text font-weight-bold">Hyphn Id</p>
           <v-btn class="" color="grey lighten-1" icon>
             <v-icon>mdi-chevron-down</v-icon>
           </v-btn>
         </div>
       </v-flex>
-      <v-flex md1>
+      <v-flex md2>
         <div class="d-flex align-center">
-          <p class="mb-0 primary--text font-weight-bold">Due</p>
+          <p class="mb-0 primary--text font-weight-bold">Bank Account</p>
         </div>
       </v-flex>
       <v-flex md2>
@@ -95,11 +97,9 @@
           </v-btn>
         </div>
       </v-flex>
-      <v-flex md2>
+      <v-flex md1>
         <div class="d-flex justify-center">
-          <p class="mb-0 pl-md-4 primary--text font-weight-bold">
-            Outstanding (N)
-          </p>
+          <p class="mb-0 pl-md-4 primary--text font-weight-bold">State</p>
         </div>
       </v-flex>
       <v-flex md2>
@@ -120,30 +120,24 @@
             v-if="$vuetify.breakpoint.mdAndUp"
             :index="i"
             :id="vendor.id"
-            :company="
-              vendor.organization[Object.keys(vendor.organization)].company
-                .company_name
-            "
-            :name="vendor.vendorname"
-            :due="vendor.due"
+            :hyphnId="vendor.hypn_id"
+            :vendorname="vendor.vendorname"
+            :bankAccount="vendor.bankaccount"
             :email="vendor.email"
             :phone="vendor.phone"
-            :outstanding="vendor.outstanding"
+            :state="vendor.state"
           />
           <!-- Data table for mobile -->
           <vendorTableCard
             v-if="$vuetify.breakpoint.smAndDown"
             :index="i"
             :id="vendor.id"
-            :company="
-              vendor.organization[Object.keys(vendor.organization)].company
-                .company_name
-            "
-            :name="vendor.vendorname"
-            :due="vendor.due"
+            :hyphnId="vendor.hypn_id"
+            :vendorname="vendor.vendorname"
+            :state="vendor.state"
             :email="vendor.email"
             :phone="vendor.phone"
-            :outstanding="vendor.outstanding"
+            :bankAccount="vendor.bankaccount"
           />
         </v-col>
       </v-row>
@@ -299,11 +293,7 @@ export default {
       if (this.search) {
         return this.vendors.filter((vendor) => {
           return (
-            vendor.organization[
-              Object.keys(vendor.organization)
-            ].company.company_name
-              .toLowerCase()
-              .match(this.search.toLowerCase()) ||
+            vendor.bankaccount.toLowerCase().match(this.search.toLowerCase()) ||
             vendor.email.toLowerCase().match(this.search.toLowerCase()) ||
             vendor.vendorname.toLowerCase().match(this.search.toLowerCase())
           );
