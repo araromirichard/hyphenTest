@@ -115,7 +115,7 @@
                 style=""
                 class="d-flex align-center"
               >
-                <v-icon small color="disabled" class="px-2"
+                <v-icon @click="copy" small color="disabled" class="px-2"
                   >mdi-clipboard-text-outline</v-icon
                 >
                 <span
@@ -292,13 +292,26 @@ export default {
       for (const key in this.formData.form_fields.controls) {
         this.formData.form_fields.controls[key].containerClass =
           "col-md-12 md-layout-item md-size-100";
-        this.formData.form_fields.controls[key].name = this.formData.form_fields.controls[key].name
-          .toLowerCase()
-          .replaceAll(" ", "_");
+        this.formData.form_fields.controls[key].name =
+          this.formData.form_fields.controls[key].name
+            .toLowerCase()
+            .replaceAll(" ", "_");
       }
 
       return true;
       //format the name value and replace spaces with underscore
+    },
+    //copy to clipboard function using the v-clipboard plugin from npm
+    copy() {
+      const value = `https://hypn.so/${this.formData.hypn_id}`;
+      this.$clipboard(value).then(
+        this.showToast({
+          sclass: "success",
+          show: true,
+          message: `copied ${value} to clipboard`,
+          timeout: 3000,
+        })
+      );
     },
   },
 
