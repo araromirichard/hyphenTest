@@ -33,15 +33,14 @@
                 v-model="conditions.properties.conditions[i]"
                 :group-index="i"
                 @selected-fields="addSelectedField"
-                @delete-empty-group="conditions.properties.conditions.splice(i, 1)"
-                 @valid-group="groups.splice(index,1,$event)"
+                @delete-empty-group="deleteEmptyGroup(i)"
+                @valid-group="groups.splice(i, 1, $event)"
                 :index="i"
                 :inputs="inputs"
                 @add-new-group="addNewGroup"
               />
             </div>
-
-
+            
             <v-btn
               @click="$emit('continue')"
               :disabled="!canContinue"
@@ -121,7 +120,7 @@ export default {
         },
       },
       selectedFields: [],
-      groups:[],
+      groups: [],
       scrollOptions: {
         duration: 500,
         offset: 0,
@@ -165,6 +164,12 @@ export default {
         },
       });
     },
+
+    deleteEmptyGroup(i) {
+      this.conditions.properties.conditions.splice(i, 1);
+      this.groups.splice(i, 1);
+    },
+
     async fetchOperators() {
       try {
         this.isLoadingEntries = true;
@@ -231,8 +236,6 @@ export default {
         }
       },
     },
-
-    
 
     conditions: {
       immediate: true,
@@ -301,9 +304,9 @@ export default {
       return true;
     },
 
-        canContinue(){
-      return this.groups.every(action => action) && this.groups.length > 0
-    }
+    canContinue() {
+      return this.groups.every((action) => action) && this.groups.length > 0;
+    },
   },
 };
 </script>

@@ -42,27 +42,6 @@
       </v-select>
     </v-col>
 
-      <v-col cols="12" md="4">
-        <v-select
-          color="#96EAD7"
-          v-model="form.type"
-          id="operators"
-          item-value="key"
-          :menu-props="{ bottom: true, offsetY: true }"
-          :items="inputs.operators"
-          item-text="label"
-          style="border-radius: 3px"
-          class="justify-center highlight my-2 mr-2"
-          flat
-          outlined
-          hide-details="auto"
-        >
-          <template slot="append">
-            <v-icon class="pl-2">mdi-menu-down</v-icon>
-          </template>
-        </v-select>
-      </v-col>
-
       <v-col cols="12" md="3">
         <v-text-field
           v-model="form.target"
