@@ -241,6 +241,28 @@ export default {
         this.$emit("selected-fields", val);
       },
     },
+
+    groupConditions: {
+      immediate: true,
+      deep: true,
+      handler() {
+        this.$emit(
+          "valid-group",
+          this.groupConditions.every((condition) => {
+            if (condition.type === "comparison") {
+              if (
+                condition.properties.field === "" ||
+                condition.properties.target === "" ||
+                condition.properties.type === ""
+              ) {
+                return false;
+              }
+            }
+            return true;
+          })
+        );
+      },
+    },
   },
 
   methods: {
@@ -252,11 +274,15 @@ export default {
     },
 
     deleteCondition(index) {
-      if (this.isFirst && this.groupConditions === 1) {
+      if (this.isFirst && this.groupConditions.length === 1) {
         return;
       }
 
       this.groupConditions.splice(index, 1);
+
+      if (this.groupConditions.length === 0 && !this.isFirst) {
+        this.$emit("delete-empty-group");
+      }
     },
 
     collectGroupType(type) {
@@ -300,6 +326,20 @@ export default {
           conditions: this.groupConditions,
         },
       };
+    },
+    validCondition() {
+      return this.groupConditions.every((condition) => {
+        if (condition.type === "comparison") {
+          if (
+            condition.properties.field === "" ||
+            condition.properties.target === "" ||
+            condition.properties.type === ""
+          ) {
+            return false;
+          }
+        }
+        return true;
+      });
     },
 
     selectedFields() {

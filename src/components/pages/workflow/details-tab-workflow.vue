@@ -29,7 +29,7 @@
 
         <div class="trigger" v-if="trigger">
           <span class="t">Trigger: </span>
-          <span class="n capitalize"> {{ trigger }}</span>
+          <span class="n "> {{ trigger }}</span>
         </div>
         <div v-if="schema" class="schema">
           <div v-if="schema">
@@ -218,6 +218,7 @@ export default {
 
     .n {
       color: #19283d;
+      text-transform: capitalize;
     }
   }
 

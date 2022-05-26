@@ -193,10 +193,10 @@ export default {
       }
     },
 
-    canShow() {
-      if (!this.isLast) return true;
-      return !this.isBeenDragged;
-    },
+    canShow(){
+      if(!this.isLast) return true
+      return !this.isBeenDragged && this.channel !== "N/A" && this.channel !== "" && this.channel !== null && this.channel !== undefined
+    } 
   },
   watch: {
     data: {
@@ -218,6 +218,14 @@ export default {
         // reset the modal form data
       },
     },
+    channel:{
+      immediate:true,
+      deep:true,
+      handler(){
+        this.$emit("channel", this.channel !== "N/A" && this.channel !== "" && this.channel !== null && this.channel !== undefined)
+      }
+      
+    }
   },
 };
 </script>
