@@ -174,11 +174,13 @@
         </v-row>
       </v-container>
     </v-item-group>
+    <delete-form ref="deleteForm" />
   </div>
 </template>
 
 <script>
 import { mapActions, mapState } from "vuex";
+import DeleteForm from "../includes/overlays/deleteForm.vue";
 
 export default {
   data() {
@@ -195,6 +197,9 @@ export default {
       loading: true,
       submitUrl: "",
     };
+  },
+  components: {
+    DeleteForm,
   },
   methods: {
     ...mapActions("formBuilder", ["deleteForm"]),
@@ -235,42 +240,8 @@ export default {
           path: `/form/${this.formCards[parentIndex].id}`,
         });
       } else if (index === 2) {
-        //get the index of the particula form card
-        //pass this index to a variable
-        const id = this.$store.state.formBuilder.formCards[parentIndex].id;
 
-        console.log(this.$store.state.formBuilder.formCards[parentIndex].id);
-
-        //delete card from vue data object to reflect on UI
-        this.formCards.splice(parentIndex, 1);
-
-        // this.deleteForm(id);
-
-        console.log(id);
-
-        //delete from server....
-        try {
-          await this.$store.dispatch("formBuilder/deleteForm", id).then(
-            this.showToast({
-              sclass: "success",
-              show: true,
-              message:
-                "deleted Form " + this.configuration.formName + " successfully",
-              timeout: 3000,
-            })
-          );
-        } catch (error) {
-          console.log(error);
-          if (error) {
-            this.showToast({
-              sclass: "error",
-              show: true,
-              message:
-                "Form " + this.configuration.formName + " could not be deleted",
-              timeout: 3000,
-            });
-          }
-        }
+        this.$refs.deleteForm.openDialog(parentIndex);
       }
     },
 
