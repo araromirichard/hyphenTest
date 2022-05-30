@@ -630,8 +630,8 @@ export default {
         email: this.stakeholder.email,
         organization: this.organizationToken.data.organization,
       };
-      console.log(JSON.stringify(payload, null, 2));
-      console.log(orgId);
+      // console.log(JSON.stringify(payload, null, 2));
+       console.log(orgId);
 
       //       {
       //     "first_name":"Michael",
@@ -680,7 +680,7 @@ export default {
           this.user.organization.id
         );
         this.invoiceArray = response.data;
-        console.log(JSON.stringify(this.invoiceArray, null, 2));
+        //console.log(JSON.stringify(this.invoiceArray, null, 2));
       } catch (error) {
         console.log(JSON.stringify(error, null, 2));
       }

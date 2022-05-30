@@ -38,7 +38,7 @@
           </v-icon>
         </v-card-title>
         <div class="px-16 mt-10 mb-8">
-          <span class="py-14 text-h6">
+          <span class="py-14 text-h6" style="color: #9e9ebd">
             Are you sure you want to permanently delete this form?
           </span>
         </div>
@@ -46,11 +46,11 @@
         <template class="mt-6">
           <v-card-actions class="d-flex justify-end mt-2 mr-14">
             <v-btn
-              @click="show = false"
+              @click="closeFormDialog"
               dark
               width="121"
               height="45"
-              color="#F4F5F6"
+              color="#acb2b6"
               elevation="0"
               class="text-capitalize mt-8 mb-16 mr-5"
             >
@@ -61,13 +61,12 @@
               link
               @click="deleteForm"
               dark
-              width="121"
               height="45"
               color="primary"
-              class="text-capitalize mt-8 mb-16"
+              class="text-capitalize mt-8 mb-16 px-4"
             >
               <v-icon>mdi-chevron-right</v-icon>
-              <span>Delete Form</span>
+              <span class="px-1">Delete Form</span>
             </v-btn>
           </v-card-actions>
         </template>
