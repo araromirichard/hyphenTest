@@ -177,14 +177,10 @@ export default {
             target.options.find((option) => option.value === inputTarget)
               .text || inputTarget
           );
-        } else {
-          return inputTarget;
-        }
-      } else if (target.type === "number") {
-        return Intl.NumberFormat().format(inputTarget);
-      } else {
-        return inputTarget;
-      }
+        } else if (target.type === "number") {
+          return Intl.NumberFormat().format(inputTarget);
+        } else return inputTarget;
+      } else return inputTarget;
     },
   },
   computed: {
