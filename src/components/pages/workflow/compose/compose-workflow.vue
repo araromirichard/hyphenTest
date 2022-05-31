@@ -190,6 +190,8 @@ export default {
           this.triggerData
         );
         this.inputs.fields = data.data.field_names;
+
+        //console.log(JSON.stringify(this.inputs.fields, null, 2));
       } catch (err) {
         this.isLoadingEntries = false;
       } finally {

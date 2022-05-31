@@ -29,7 +29,7 @@
 
         <div class="trigger" v-if="trigger">
           <span class="t">Trigger: </span>
-          <span class="n "> {{ trigger }}</span>
+          <span class="n"> {{ trigger }}</span>
         </div>
         <div v-if="schema" class="schema">
           <div v-if="schema">
@@ -66,7 +66,10 @@
                     operator(innerConditions.properties.type)
                   }}</span>
                   <span class="target">{{
-                    innerConditions.properties.target
+                    getFieldTarget(
+                      innerConditions.properties.target,
+                      innerConditions.properties.field
+                    )
                   }}</span>
                 </div>
               </span>
@@ -80,7 +83,12 @@
               <span class="operator">{{
                 operator(condition.properties.type)
               }}</span>
-              <span class="target">{{ condition.properties.target }}</span>
+              <span class="target">{{
+                getFieldTarget(
+                  condition.properties.target,
+                  condition.properties.field
+                )
+              }}</span>
             </div>
           </div>
         </div>
@@ -145,6 +153,38 @@ export default {
         );
       }
       return inputField;
+    },
+
+    getFieldTarget(inputTarget, inputField) {
+      const target = this.inputs.fields.find(
+        (field) => field.key === inputField
+      );
+
+      if (target) {
+        if (target.type === "dropDown" || target.type === "checkbox") {
+          // multi values
+          return inputTarget
+            .map((item) => {
+              return (
+                target.options.find((option) => option.value === item).text ||
+                item
+              );
+            })
+            .join(", ");
+        } else if (target.type === "radio") {
+          // filter out just one
+          return (
+            target.options.find((option) => option.value === inputTarget)
+              .text || inputTarget
+          );
+        } else {
+          return inputTarget;
+        }
+      } else if (target.type === "number") {
+        return Intl.NumberFormat().format(inputTarget);
+      } else {
+        return inputTarget;
+      }
     },
   },
   computed: {
