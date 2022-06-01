@@ -302,9 +302,9 @@ export default {
     },
   },
 
-  mounted() {
+  async mounted() {
     try {
-      return this.$store.dispatch("contacts/fetchAllVendors");
+      return await this.$store.dispatch("contacts/fetchAllVendors");
     } catch (error) {
       console.log(JSON.stringify(error, null, 2));
     }

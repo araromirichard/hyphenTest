@@ -101,110 +101,124 @@
       </div>
 
       <!-- inbox tabs for desktop screens -->
-      <v-layout
-        row
-        wrap
-        class="align-center my-2 px-8"
-        v-if="$vuetify.breakpoint.mdAndUp"
-      >
-        <v-flex md1>
-          <div class="d-flex align-center justify-center">
-            <p class="mb-0 primary--text font-weight-bold text-center">ID</p>
-          </div>
-        </v-flex>
-        <v-flex md1>
-          <div class="d-flex align-center justify-center">
-            <p class="mb-0 primary--text font-weight-bold text-center">Type</p>
-          </div>
-        </v-flex>
-
-        <v-flex md1>
-          <div class="d-flex align-center">
-            <p class="mb-0 pl-4 primary--text font-weight-bold">Amount</p>
-            <v-btn class="ml-1" color="grey lighten-1" icon>
-              <v-icon>mdi-chevron-down</v-icon>
-            </v-btn>
-          </div>
-        </v-flex>
-        <v-flex md2>
-          <div class="d-flex align-center justify-center">
-            <p class="mb-0 pl-4 primary--text font-weight-bold text-center">
-              Category
-            </p>
-            <v-btn class="ml-1" color="grey lighten-1" icon>
-              <v-icon>mdi-chevron-down</v-icon>
-            </v-btn>
-          </div>
-        </v-flex>
-        <v-flex md1>
-          <div class="d-flex align-center">
-            <p class="mb-0 primary--text font-weight-bold">Ref No.</p>
-          </div>
-        </v-flex>
-        <v-flex md1>
-          <div class="d-flex align-center">
-            <p class="mb-0 primary--text font-weight-bold">Status</p>
-            <v-btn class="ml-1" color="grey lighten-1" icon>
-              <v-icon>mdi-chevron-down</v-icon>
-            </v-btn>
-          </div>
-        </v-flex>
-        <v-flex md2>
-          <div class="d-flex align-center">
-            <p class="mb-0 primary--text font-weight-bold">Requester</p>
-            <v-btn class="ml-1" color="grey lighten-1" icon>
-              <v-icon>mdi-chevron-down</v-icon>
-            </v-btn>
-          </div>
-        </v-flex>
-        <v-flex md1>
-          <div>
-            <p class="mb-0 pl-md-4 primary--text font-weight-bold">Date</p>
-          </div>
-        </v-flex>
-        <v-flex md2>
-          <div class="d-flex align-center">
-            <p class="mb-0 pl-md-8 primary--text font-weight-bold">Actions</p>
-          </div>
-        </v-flex>
-      </v-layout>
-      <v-row>
-        <v-col
-          cols="12"
-          v-for="(invoice, i) in filteredInvoices"
-          :key="i"
-          class="py-0 ma-md-0"
+      <v-skeleton-loader type="table" :loading="isLoading">
+        <v-layout
+          row
+          wrap
+          class="align-center my-2 px-8"
+          v-if="$vuetify.breakpoint.mdAndUp"
         >
-          <DataTable
-            v-if="$vuetify.breakpoint.mdAndUp"
-            :index="invoice.id"
-            :invoiceRef="invoice.invoicenumber"
-            :type="invoice.invoicetype"
-            :requester="invoice.vendor.vendorname"
-            :date="invoice.created_at | date"
-            :amount="invoice.total"
-            :status="invoice.status"
-            :category="invoice.category"
-            :textColor="
-              invoice.invoicetype === 'expense' ? '#E3AA1C' : '#2BD5AE'
-            "
-          />
+          <v-flex md1>
+            <div class="d-flex align-center justify-center">
+              <p class="mb-0 primary--text font-weight-bold text-center">ID</p>
+            </div>
+          </v-flex>
+          <v-flex md1>
+            <div class="d-flex align-center justify-center">
+              <p class="mb-0 primary--text font-weight-bold text-center">
+                Type
+              </p>
+            </div>
+          </v-flex>
 
-          <!-- Data table for mobile -->
-          <DataTableCard
-            v-if="$vuetify.breakpoint.smAndDown"
-            :index="invoice.id"
-            :invoiceRef="invoice.invoicenumber"
-            :type="invoice.invoicetype"
-            :requester="invoice.vendor.vendorname"
-            :date="invoice.created_at | date"
-            :amount="invoice.total"
-            :status="invoice.status"
-            :category="invoice.category"
-            :chipColor="invoice.type === 'expense' ? '#2BD5AE' : '#E3AA1C'"
-          />
-        </v-col>
-      </v-row>
+          <v-flex md1>
+            <div class="d-flex align-center">
+              <p class="mb-0 pl-4 primary--text font-weight-bold">Amount</p>
+              <v-btn class="ml-1" color="grey lighten-1" icon>
+                <v-icon>mdi-chevron-down</v-icon>
+              </v-btn>
+            </div>
+          </v-flex>
+          <v-flex md2>
+            <div class="d-flex align-center justify-center">
+              <p class="mb-0 pl-4 primary--text font-weight-bold text-center">
+                Category
+              </p>
+              <v-btn class="ml-1" color="grey lighten-1" icon>
+                <v-icon>mdi-chevron-down</v-icon>
+              </v-btn>
+            </div>
+          </v-flex>
+          <v-flex md1>
+            <div class="d-flex align-center">
+              <p class="mb-0 primary--text font-weight-bold">Ref No.</p>
+            </div>
+          </v-flex>
+          <v-flex md1>
+            <div class="d-flex align-center">
+              <p class="mb-0 primary--text font-weight-bold">Status</p>
+              <v-btn class="ml-1" color="grey lighten-1" icon>
+                <v-icon>mdi-chevron-down</v-icon>
+              </v-btn>
+            </div>
+          </v-flex>
+          <v-flex md2>
+            <div class="d-flex align-center">
+              <p class="mb-0 primary--text font-weight-bold">Requester</p>
+              <v-btn class="ml-1" color="grey lighten-1" icon>
+                <v-icon>mdi-chevron-down</v-icon>
+              </v-btn>
+            </div>
+          </v-flex>
+          <v-flex md1>
+            <div>
+              <p class="mb-0 pl-md-4 primary--text font-weight-bold">Date</p>
+            </div>
+          </v-flex>
+          <v-flex md2>
+            <div class="d-flex align-center">
+              <p class="mb-0 pl-md-8 primary--text font-weight-bold">Actions</p>
+            </div>
+          </v-flex>
+        </v-layout>
+        <v-row>
+          <v-col
+            cols="12"
+            v-for="(
+              {
+                id,
+                invoicenumber,
+                invoicetype,
+                vendor,
+                created_at,
+                total,
+                status,
+                category,
+              },
+              i
+            ) in filteredInvoices"
+            :key="i"
+            class="py-0 ma-md-0"
+          >
+            <DataTable
+              v-if="$vuetify.breakpoint.mdAndUp"
+              :index="id"
+              :invoiceRef="invoicenumber"
+              :type="invoicetype"
+              :requester="vendor.vendorname || ''"
+              :date="created_at | date"
+              :amount="total"
+              :status="status"
+              :category="category"
+              :textColor="invoicetype === 'expense' ? '#E3AA1C' : '#2BD5AE'"
+            />
+
+            <!-- Data table for mobile -->
+            <DataTableCard
+              v-if="$vuetify.breakpoint.smAndDown"
+              :index="invoice.id"
+              :invoiceRef="invoice.invoicenumber"
+              :type="invoice.invoicetype"
+              :requester="invoice.vendor.vendorname"
+              :date="invoice.created_at | date"
+              :amount="invoice.total"
+              :status="invoice.status"
+              :category="invoice.category"
+              :chipColor="invoice.type === 'expense' ? '#2BD5AE' : '#E3AA1C'"
+            />
+          </v-col>
+        </v-row>
+      </v-skeleton-loader>
     </v-container>
   </div>
 </template>
@@ -229,6 +243,7 @@ export default {
       sendToWorkflow: true,
       workflowName: "workflow name…",
       switchState: false,
+      isLoading: false,
     };
   },
   methods: {
@@ -265,7 +280,6 @@ export default {
       organisationId: "auth/organizationId",
     }),
     filteredInvoices() {
-      
       if (this.search) {
         return this.allInvoices.filter((invoice) => {
           return (
@@ -280,6 +294,15 @@ export default {
     },
   },
   mounted() {
+    //make skeleton loader stop
+    this.isLoading = true;
+    setTimeout(
+      () => {
+        this.isLoading = false;
+      },
+      3000,
+      this.allInvoices
+    );
     const response = this.$store.dispatch(
       "invoices/FetchAllInvoices",
       this.organisationId
