@@ -72,6 +72,27 @@
               {{ formName }}
             </span>
             <v-spacer></v-spacer>
+
+            <div style="width = 10px">
+              <v-autocomplete
+                class="px-8"
+                dense
+                hide-details="true"
+                v-model="selectedColumns"
+                :items="headers"
+                multiple
+                return-object
+              >
+                <template v-slot:selection="{ item, index }">
+                  <v-chip small v-if="index < 2">
+                    <span>{{ item.text }}</span>
+                  </v-chip>
+                  <span v-if="index === 2" class="grey--text caption"
+                    >(+{{ selectedColumns.length - 2 }} others)</span
+                  >
+                </template>
+              </v-autocomplete>
+            </div>
             <download-csv class="btn btn-default" :data="dataEntries">
               <v-hover v-slot="{ hover }">
                 <v-btn
@@ -101,26 +122,6 @@
                 </v-btn>
               </v-hover>
             </download-csv>
-            <div style="width = 10px">
-              <v-autocomplete
-                class="px-8"
-                dense
-                hide-details="true"
-                v-model="selectedColumns"
-                :items="headers"
-                multiple
-                return-object
-              >
-                <template v-slot:selection="{ item, index }">
-                  <v-chip small v-if="index < 2">
-                    <span>{{ item.text }}</span>
-                  </v-chip>
-                  <span v-if="index === 2" class="grey--text caption"
-                    >(+{{ selectedColumns.length - 2 }} others)</span
-                  >
-                </template>
-              </v-autocomplete>
-            </div>
           </v-card>
           <div class="ma-0 pa-0">
             <template>

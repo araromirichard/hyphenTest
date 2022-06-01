@@ -265,6 +265,7 @@ export default {
       organisationId: "auth/organizationId",
     }),
     filteredInvoices() {
+      
       if (this.search) {
         return this.allInvoices.filter((invoice) => {
           return (
@@ -284,7 +285,7 @@ export default {
       this.organisationId
     );
     this.invoiceArray = response.data;
-    console.log(JSON.stringify(this.user, null, 2));
+    //console.log(JSON.stringify(this.user, null, 2));
   },
   watch: {
     allInvoices: {

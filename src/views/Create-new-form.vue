@@ -290,7 +290,7 @@ export default {
           );
 
           console.log(JSON.stringify(resp, null, 2));
-          // if (resp.status == "success") {
+
           this.showToast({
             sclass: "success",
             show: true,
@@ -298,7 +298,6 @@ export default {
               "created Form " + this.configuration.formName + " successfully",
             timeout: 3000,
           });
-          // }
         } catch (error) {
           console.log(error);
           if (error) {
