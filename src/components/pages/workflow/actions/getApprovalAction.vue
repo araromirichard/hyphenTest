@@ -26,6 +26,7 @@
             label="Co-worker"
             v-model="worker"
             :items="workers"
+            :loading="isLoadingWorkers"
             item-text="name"
             item-value="email"
             hide-details="auto"
@@ -68,25 +69,14 @@ export default {
   data() {
     return {
       dialog: false,
-      workers: [
-        {
-          name: "John Doe",
-          email: "johndoe@gmail.com",
-        },
-        {
-          name: "Jane Doe",
-          email: "janedoe@gmail.com",
-        },
-        {
-          name: "Elon musk",
-          email: "musk@mail.com",
-        },
-      ],
+      workers: [],
       worker: null,
+      isLoadingWorkers: false,
     };
   },
   mounted() {
     this.mapForm();
+    this.getCoworkers();
   },
   methods: {
     open() {
@@ -95,6 +85,27 @@ export default {
     close() {
       this.dialog = false;
     },
+
+    async getCoworkers() {
+      try {
+        this.isLoadingWorkers = true;
+        const response = await this.$store.dispatch(
+          "organizations/fetchCoWorkers"
+        );
+        this.workers = response.map((worker) => {
+          return {
+            id:worker.id,
+            name:worker.first_name +' '+ worker.last_name,
+            email:worker.email
+          };
+        });
+      } catch (err) {
+        console.log(JSON.stringify(err, null, 2));
+      }finally{
+        this.isLoadingWorkers = false;
+      }
+    },
+
     addToWorkflow() {
       const payload = {
         type: "PbotApproval",
@@ -109,9 +120,9 @@ export default {
     },
     sendOutChannel() {
       let channel =
-        this.workers.find((worker) => worker.email == this.worker)?.name ||
+        this.workers.find((worker) => worker.email == this.worker)?.name  ||
         "N/A";
-      this.$emit("channel", channel);
+      this.$emit("channel",channel);
     },
     mapForm() {
       if (this.value) {

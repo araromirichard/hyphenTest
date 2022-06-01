@@ -155,6 +155,15 @@ export default {
       },
     });
   },
+
+   getCoWorkers(organizationId) {
+    return  api().get(`/organizations/${organizationId}/members`, {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    });
+  },
+
   sendEmail(email) {
     return api().post("/organizations/email", email);
     //   email:{
