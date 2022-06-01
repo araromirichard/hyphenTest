@@ -366,11 +366,12 @@ export default {
     async CREATE_WORKFLOW() {
       this.isPublishingWorkflow = true;
       try {
-        const response = await this.$store.dispatch(
+        const { data } = await this.$store.dispatch(
           "workflow/createWorkflow",
           this.workflowPayload
         );
-        console.log(JSON.stringify(response, null, 2));
+        this.workflow.webhook = "http://flow.hypn.so/" + data.workflow_id;
+        console.log(JSON.stringify(data, null, 2));
         this.publishDialog = false;
         this.publishDialogSucessful = true;
       } catch (error) {

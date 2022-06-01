@@ -56,7 +56,7 @@
             "
             v-model="form.target"
             :items="target.options"
-            :multiple="target.type === 'dropDown' || target.type === 'checkbox'"
+            
             item-text="text"
             item-value="value"
             max-height="60px"
@@ -67,6 +67,7 @@
             outlined
           >
           </v-select>
+          <!-- :multiple="target.type === 'dropDown' || target.type === 'checkbox'" -->
 
           <v-text-field
             v-else-if="target.type && target.type === 'input'"

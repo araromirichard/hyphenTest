@@ -138,10 +138,10 @@ const actions = {
     }
   },
 
-  async fetchCoWorkers({ rootState }) {
+  async fetchCoWorkers({ rootGetters }) {
     try {
       const {data} = await organization.getCoWorkers(
-        rootState.auth.user.organization,
+        rootGetters["auth/organizationId"],
       );
 
       return data.data;
