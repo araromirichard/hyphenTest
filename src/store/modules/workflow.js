@@ -6,42 +6,7 @@ const state = () => ({
   schema: null,
   payment: null,
   paymentOptions: null,
-  operators: [
-    {
-      string: "Equal to",
-      val: "=",
-    },
-    {
-      string: "Not Equal to",
-      val: "!=",
-    },
-    {
-      string: "Less than",
-      val: "<",
-    },
-    {
-      string: "Less than or Equal to",
-      val: "<=",
-    },
-    {
-      string: "Greater than",
-      val: ">",
-    },
-    {
-      string: "Greater than",
-      val: ">=",
-    },
-  ],
-  comparisonType: [
-    {
-      string: "ALL",
-      val: "and",
-    },
-    {
-      string: "ANY",
-      val: "or",
-    },
-  ],
+  newWorkflow: null,
 });
 
 const getters = {
@@ -97,6 +62,10 @@ const mutations = {
   SET_PAYMENT_OPTIONS(state, payload) {
     state.paymentOptions = payload;
   },
+
+  NEW_WORKFLOW(state, payload) {
+    state.newWorkflow = payload;
+  }
 };
 
 const actions = {
@@ -159,6 +128,16 @@ const actions = {
             key: item.key,
           };
         });
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  },
+
+  async createWorkflow({ commit }, payload) {
+    try {
+      const {data} = await Workflow.createWorkflow(payload);
+      commit("NEW_WORKFLOW", data);
+      return data;
     } catch (error) {
       return Promise.reject(error);
     }

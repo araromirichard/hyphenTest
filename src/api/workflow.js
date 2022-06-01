@@ -1,6 +1,14 @@
 import api from "./Api";
 
 export default {
+  createWorkflow(payload) {
+    return api().post("/workflows", payload, {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    });
+  },
+
   getAllInvoiceFieldsOptions() {
     return api().get("/workflows/options?type=invoice", {
       headers: {

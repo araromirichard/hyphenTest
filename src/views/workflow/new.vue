@@ -90,6 +90,7 @@
 
     <v-dialog
       v-model="publishDialog"
+      :persistent="isPublishingWorkflow"
       max-width="550px"
       transition="dialog-transition"
     >
@@ -105,10 +106,20 @@
             >Confirm this workflow is completed and ready for use</span
           >
 
-          <v-btn color="primary" @click="CREATE_WORKFLOW" elevation="1" x-large>
+          <v-btn
+            color="primary"
+            @click="CREATE_WORKFLOW"
+            elevation="1"
+            x-large
+            :loading="isPublishingWorkflow"
+          >
             <v-icon left>mdi-chevron-right</v-icon> Save</v-btn
           >
-          <button id="add-to-draft" @click="addWorkflowToDraft">
+          <button
+            v-if="!isPublishingWorkflow"
+            id="add-to-draft"
+            @click="addWorkflowToDraft"
+          >
             No, Add to draft
           </button>
         </div>
@@ -211,6 +222,8 @@ import detailsTabWorkflow from "../../components/pages/workflow/details-tab-work
 import TriggerWorkflow from "../../components/pages/workflow/trigger-workflow.vue";
 import FormTrigger from "../../components/pages/workflow/trigger/form-trigger.vue";
 import PaymentTrigger from "../../components/pages/workflow/trigger/payment-trigger.vue";
+import { mapActions } from "vuex";
+
 export default {
   components: {
     detailsTabWorkflow,
@@ -336,8 +349,9 @@ export default {
             //   },
             // },
           ],
-          webhook: "https://flow.hypn.so/weri23mno49mc",
+          webhook: "",
         },
+        isPublishingWorkflow: false,
       };
     }
   },
@@ -347,9 +361,29 @@ export default {
   },
 
   methods: {
-    CREATE_WORKFLOW() {
-      this.publishDialog = false;
-      this.publishDialogSucessful = true;
+    ...mapActions({ showToast: "ui/showToast" }),
+
+    async CREATE_WORKFLOW() {
+      this.isPublishingWorkflow = true;
+      try {
+        const response = await this.$store.dispatch(
+          "workflow/createWorkflow",
+          this.workflowPayload
+        );
+        console.log(JSON.stringify(response, null, 2));
+        this.publishDialog = false;
+        this.publishDialogSucessful = true;
+      } catch (error) {
+        console.log(JSON.stringify(error, null, 2));
+        this.showToast({
+          sclass: "error",
+          show: true,
+          message: error.msg,
+          timeout: 3000,
+        });
+      } finally {
+        this.isPublishingWorkflow = false;
+      }
     },
 
     addWorkflowToDraft() {

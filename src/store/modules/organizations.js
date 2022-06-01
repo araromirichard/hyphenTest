@@ -137,6 +137,18 @@ const actions = {
       return Promise.reject(error);
     }
   },
+
+  async fetchCoWorkers({ rootState }) {
+    try {
+      const {data} = await organization.getCoWorkers(
+        rootState.auth.user.organization,
+      );
+
+      return data.data;
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  },
 };
 
 export default {
