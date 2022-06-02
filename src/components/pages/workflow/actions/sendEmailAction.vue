@@ -35,33 +35,34 @@
               ></v-text-field>
             </v-col>
             <v-col cols="12" sm="6">
-              <v-autocomplete
+              <v-combobox
                 outlined
                 color="primary"
                 label="To:"
                 :items="workers"
-                item-text="name"
-                item-value="email"
+                hide-no-data
+                height="60px"
+                search-input="search"
                 v-model="data.to"
                 hide-details="auto"
                 placeholder="To:"
-              ></v-autocomplete>
+              ></v-combobox>
             </v-col>
             <v-col cols="12" sm="6">
-              <v-autocomplete
+              <v-combobox
                 multiple
                 :items="workers"
-                item-text="name"
-                item-value="email"
                 name="CC"
+                chips
+                hide-no-data
+                height="60px"
                 label="CC"
-                sele
                 v-model="data.cc"
                 placeholder="Subject"
                 hide-details="auto"
                 outlined
                 primary
-              ></v-autocomplete>
+              ></v-combobox>
             </v-col>
 
             <v-col cols="12">
@@ -88,7 +89,13 @@
             <v-icon left>mdi-close</v-icon> Cancel
           </v-btn>
 
-          <v-btn @click="addToWorkflow" large color="primary" elevation="0">
+          <v-btn
+            @click="addToWorkflow"
+            :disabled="!canAddToWorkflow"
+            large
+            color="primary"
+            elevation="0"
+          >
             <v-icon left>mdi-chevron-right</v-icon> Add to workflow
           </v-btn>
         </div>
@@ -119,20 +126,8 @@ export default {
   data() {
     return {
       dialog: false,
-      workers: [
-        {
-          name: "John Doe",
-          email: "johndoe@gmail.com",
-        },
-        {
-          name: "Jane Doe",
-          email: "janedoe@gmail.com",
-        },
-        {
-          name: "Elon musk",
-          email: "musk@mail.com",
-        },
-      ],
+      workers: [],
+      isLoadingWorkers: false,
       data: {
         subject: "",
         to: null,
@@ -143,6 +138,7 @@ export default {
   },
   mounted() {
     this.mapForm();
+    this.getCoworkers();
   },
   methods: {
     open() {
@@ -197,6 +193,28 @@ export default {
     },
     sendOutChannel() {
       this.$emit("channel", this.data.to);
+    },
+
+    async getCoworkers() {
+      try {
+        this.isLoadingWorkers = true;
+        const response = await this.$store.dispatch(
+          "organizations/fetchCoWorkers"
+        );
+        this.workers = response.map((worker) => worker.email);
+      } catch (err) {
+        console.log(JSON.stringify(err, null, 2));
+      } finally {
+        this.isLoadingWorkers = false;
+      }
+    },
+  },
+
+  computed: {
+    canAddToWorkflow() {
+      return (
+        this.data.subject && this.data.message && this.data.to && this.data.cc
+      );
     },
   },
   watch: {

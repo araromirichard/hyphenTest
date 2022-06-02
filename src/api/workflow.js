@@ -32,4 +32,12 @@ export default {
       },
     });
   },
+
+  getAllWorkflows() {
+    return api().get("/workflows", {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    });
+  },
 };
