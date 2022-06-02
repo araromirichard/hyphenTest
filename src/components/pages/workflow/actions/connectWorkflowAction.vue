@@ -29,10 +29,11 @@
             label="Select Workflow"
             :items="workflows"
             v-model="workflow"
-            item-text="name"
+            :loading="isLoadingWorkflows"
+            item-text="workflow_title"
             item-value="id"
             hide-details="auto"
-            placeholder="Select one"
+            placeholder="Select Workflow"
           ></v-select>
         </div>
 
@@ -47,7 +48,13 @@
             <v-icon left>mdi-close</v-icon> Cancel
           </v-btn>
 
-          <v-btn @click="addToWorkflow" large color="primary" elevation="0">
+          <v-btn
+            @click="addToWorkflow"
+            :disabled="!workflow"
+            large
+            color="primary"
+            elevation="0"
+          >
             <v-icon left>mdi-chevron-right</v-icon> Add to workflow
           </v-btn>
         </div>
@@ -72,29 +79,14 @@ export default {
   data() {
     return {
       dialog: false,
-      workflows: [
-        {
-          name: "Workflow 1",
-          id: "1",
-        },
-        {
-          name: "Workflow 2",
-          id: "2",
-        },
-        {
-          name: "Workflow 3",
-          id: "3",
-        },
-        {
-          name: "Workflow 4",
-          id: "4",
-        },
-      ],
+      workflows: [],
       workflow: "",
+      isLoadingWorkflows: false,
     };
   },
   mounted() {
     this.mapForm();
+    this.getWorkflows();
   },
   methods: {
     open() {
@@ -130,10 +122,23 @@ export default {
     },
 
     sendOutChannel() {
-      let channel = this.workflows.find(
-        (workflow) => workflow.id == this.workflow
-      ).name;
+      let channel =
+        this.workflows.find((workflow) => workflow.id == this.workflow)
+          ?.workflow_title || "N/A";
       this.$emit("channel", channel);
+    },
+
+    async getWorkflows() {
+      try {
+        this.isLoadingWorkflows = true;
+        const { data } = await this.$store.dispatch("workflow/getAllWorkflows");
+
+        this.workflows = data;
+      } catch (err) {
+        console.log(JSON.stringify(err, null, 2));
+      } finally {
+        this.isLoadingWorkflows = false;
+      }
     },
   },
   watch: {
