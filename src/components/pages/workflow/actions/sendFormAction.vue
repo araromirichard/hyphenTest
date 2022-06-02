@@ -30,22 +30,26 @@
                 label="Form"
                 v-model="data.form"
                 :items="forms"
-                item-text="name"
-                item-value="id"
+                :loading="isLoadingForms"
+                 item-text="form_title"
+                 item-value="id"
                 hide-details="auto"
                 placeholder="Form"
               ></v-select>
             </v-col>
             <v-col cols="12" sm="6">
-              <v-text-field
+              <v-combobox
                 name="Recipient"
                 label="Recipient"
+                type="email"
                 v-model="data.recipient"
+                :items="emailLists"
+                :loading="isLoadingEmails"
                 placeholder="Recipient"
                 hide-details="auto"
                 outlined
                 primary
-              ></v-text-field>
+              ></v-combobox>
             </v-col>
           </v-row>
         </div>
@@ -61,7 +65,7 @@
             <v-icon left>mdi-close</v-icon> Cancel
           </v-btn>
 
-          <v-btn @click="addToWorkflow" large color="primary" elevation="0">
+          <v-btn @click="addToWorkflow" :disabled="!canAddToWorkflow" large color="primary" elevation="0">
             <v-icon left>mdi-chevron-right</v-icon> Add to FLow
           </v-btn>
         </div>
@@ -87,31 +91,21 @@ export default {
     return {
       dialog: false,
       forms: [
-        {
-          name: "Form 1",
-          id: 1,
-        },
-        {
-          name: "Form 2",
-          id: 2,
-        },
-        {
-          name: "Form 3",
-          id: 3,
-        },
-        {
-          name: "Form 4",
-          id: 4,
-        },
+       
       ],
       data: {
         form: "",
         recipient: "",
       },
+      emailLists:[],
+      isLoadingEmails: false,
+      isLoadingForms:false
     };
   },
   mounted() {
     this.mapForm();
+    this.fetchOrgForms()
+    this.getCoworkers()
   },
   methods: {
     open() {
@@ -128,7 +122,7 @@ export default {
           keys: ["form id", "form name", "identity", "organization", "name"],
           values: [
             this.data.form,
-            this.forms.find((form) => form.id == this.data.form).name,
+            this.forms.find((form) => form.id == this.data.form).form_title,
             this.data.recipient,
             this.orgId,
             "form",
@@ -158,10 +152,47 @@ export default {
 
     sendOutChannel() {
       let channel =
-        this.forms.find((form) => form.id == this.data.form)?.name || "N/A";
+        this.forms.find((form) => form.id == this.data.form)?.form_title || "N/A";
       this.$emit("channel", channel);
     },
+
+
+     async fetchOrgForms() {
+      try {
+        this.isLoadingForms = true;
+        const { data } = await this.$store.dispatch(
+          "formBuilder/FetchAllForms"
+        );
+        this.forms = data;
+      } catch (err) {
+        console.log(err);
+      } finally {
+        this.isLoadingForms = false;
+      }
+    },
+
+      async getCoworkers() {
+      try {
+        this.isLoadingEmails = true;
+        const response = await this.$store.dispatch(
+          "organizations/fetchCoWorkers"
+        );
+        this.emailLists = response.map((worker) => worker.email);
+      } catch (err) {
+        console.log(JSON.stringify(err, null, 2));
+      } finally {
+        this.isLoadingEmails = false;
+      }
+    },
   },
+  computed: {
+    canAddToWorkflow() {
+      return (
+        this.data.form && this.data.recipient && this.data.form != "" && this.data.recipient != ""
+      );
+    },
+  },
+
   watch: {
     dialog(val) {
       if (val) {
