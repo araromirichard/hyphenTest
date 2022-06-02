@@ -68,7 +68,7 @@
             <v-icon left>mdi-close</v-icon> Cancel
           </v-btn>
 
-          <v-btn large @click="addToWorkflow" color="primary" elevation="0">
+          <v-btn large @click="addToWorkflow" :disabled="!canAddToWorkflow" color="primary" elevation="0">
             <v-icon left>mdi-chevron-right</v-icon> Add to workflow
           </v-btn>
         </div>
@@ -153,6 +153,12 @@ export default {
     sendOutChannel() {
       this.$emit("channel", this.selectedAttribute);
     },
+  },
+   computed:{
+    canAddToWorkflow(){
+      if(this.selectedAttribute === "Balance") return true;
+      return  this.selectedAttribute && (this.selectedTerms || this.selectedTags)
+    }
   },
   watch: {
     dialog(val) {
