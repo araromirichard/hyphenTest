@@ -133,10 +133,21 @@ const actions = {
     }
   },
 
+  
+
   async createWorkflow({ commit }, payload) {
     try {
       const {data} = await Workflow.createWorkflow(payload);
       commit("NEW_WORKFLOW", data);
+      return data;
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  },
+
+  async getAllWorkflows() {
+    try {
+      const  data  = await Workflow.getAllWorkflows();
       return data;
     } catch (error) {
       return Promise.reject(error);
