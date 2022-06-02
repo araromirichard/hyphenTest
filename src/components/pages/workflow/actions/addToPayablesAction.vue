@@ -24,27 +24,59 @@
         <div class="a-wrapper">
           <v-row>
             <v-col cols="12" sm="6">
-              <v-select
+              <v-text-field
                 outlined
                 color="primary"
-                :items="totals"
-                v-model="total"
-                label="Total"
+                v-model="invoice_no"
+                label="Invoice No"
                 hide-details="auto"
                 placeholder="Total"
-              ></v-select>
+              ></v-text-field>
             </v-col>
             <v-col cols="12" sm="6">
-              <v-select
+              <v-text-field
                 name="Amount Due"
                 label="Amount Due"
-                :items="amounts_due"
                 v-model="amount_due"
-                placeholder="Amount Due"
+                placeholder="Enter value"
                 hide-details="auto"
                 outlined
                 primary
-              ></v-select>
+              ></v-text-field>
+            </v-col>
+
+            <v-col cols="12" sm="6">
+              <v-menu
+                ref="menu1"
+                v-model="menu1"
+                :close-on-content-click="false"
+                transition="scale-transition"
+                offset-y
+                max-width="290px"
+                min-width="auto"
+              >
+                <template v-slot:activator="{ on, attrs }">
+                  <v-text-field
+                    v-model="dateFormatted"
+                    label="Due Date"
+                    v-bind="attrs"
+                    outlined
+                    @blur="due_date = parseDate(dateFormatted)"
+                    v-on="on"
+                  ></v-text-field>
+                </template>
+                <v-date-picker
+                  name="Due date"
+                  label="Due Date"
+                  v-model="due_date"
+                  placeholder="Calendar"
+                  hide-details="auto"
+                  outlined
+                  no-title
+                  @input="menu1 = false"
+                  color="primary"
+                ></v-date-picker>
+              </v-menu>
             </v-col>
           </v-row>
         </div>
@@ -59,7 +91,7 @@
             <v-icon left>mdi-close</v-icon> Cancel
           </v-btn>
 
-          <v-btn large color="primary" elevation="0" @click="addToWorkflow">
+          <v-btn large color="primary" elevation="0" :disabled="!canAddToWorkflow" @click="addToWorkflow">
             <v-icon left>mdi-chevron-right</v-icon> SAVE
           </v-btn>
         </div>
@@ -75,7 +107,13 @@ export default {
       default: {
         type: "hyphenAddToPayables",
         properties: {
-          keys: ["total", "amount_due", "organization", "name"],
+          keys: [
+            "invoice_no",
+            "amount_due",
+            "due_date",
+            "organization",
+            "name",
+          ],
           values: [],
         },
       },
@@ -84,10 +122,11 @@ export default {
   data() {
     return {
       dialog: false,
-      totals: ["5000", "5,600", "8,000"],
-      amounts_due: ["5,000", "5,600", "8,000"],
-      total: "",
+      invoice_no: "@invoiceNumber",
       amount_due: "",
+      due_date: "",
+      menu1: null,
+      dateFormatted: "",
     };
   },
   mounted() {
@@ -105,8 +144,20 @@ export default {
       const payload = {
         type: "hyphenAddToPayables",
         properties: {
-          keys: ["total", "amount_due", "organization", "name"],
-          values: [this.total, this.amount_due, this.orgId, "payables"],
+          keys: [
+            "invoice_no",
+            "amount_due",
+            "due_date",
+            "organization",
+            "name",
+          ],
+          values: [
+            this.invoice_no,
+            this.amount_due,
+            this.due_date,
+            this.orgId,
+            "payables",
+          ],
         },
       };
 
@@ -116,14 +167,14 @@ export default {
     },
 
     sendOutChannel() {
-      this.$emit("channel", this.amount_due);
+      this.$emit("channel", "₦" + this.amount_due);
     },
 
     mapForm() {
       if (this.value) {
-        this.total =
+        this.invoice_no =
           this.value.properties.values[
-            this.value.properties.keys.indexOf("total")
+            this.value.properties.keys.indexOf("invoice_no")
           ];
 
         this.amount_due =
@@ -131,10 +182,36 @@ export default {
             this.value.properties.keys.indexOf("amount_due")
           ];
 
+        this.due_date =
+          this.value.properties.values[
+            this.value.properties.keys.indexOf("due_date")
+          ];
+
         this.sendOutChannel();
       }
     },
+
+    parseDate(date) {
+      if (!date) return null;
+
+      const [month, day, year] = date.split("/");
+      return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
+    },
+
+    formatDate(date) {
+      if (!date) return null;
+
+      const [year, month, day] = date.split("-");
+      return `${month}/${day}/${year}`;
+    },
   },
+
+  computed:{
+    canAddToWorkflow() {
+      return this.invoice_no && this.amount_due && this.due_date;
+    }
+  },
+
   watch: {
     dialog(val) {
       if (val) {
@@ -143,6 +220,10 @@ export default {
       } else {
         this.$emit("close");
       }
+    },
+
+    due_date(val) {
+      this.dateFormatted = this.formatDate(val);
     },
   },
 };
@@ -207,9 +288,9 @@ export default {
     }
 
     .a-wrapper {
-      background-color: transparent;
+      background-color: #fff;
       padding: 20px;
-      //border: 1px solid #d9dee1;
+      border: 1px solid #d9dee1;
       border-radius: 4px;
     }
 
