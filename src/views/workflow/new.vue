@@ -428,7 +428,6 @@ export default {
 
     isPaymentTrigger(val) {
       if (val) {
-        console.log("payment scroll");
         this.$nextTick(() => {
           this.$vuetify.goTo(this.$refs.paymentTrigger, this.scrollOptions);
         });
@@ -437,7 +436,6 @@ export default {
 
     isFormTrigger(val) {
       if (val) {
-        console.log("form scroll");
         this.$nextTick(() => {
           this.$vuetify.goTo(this.$refs.formTrigger, this.scrollOptions);
         });

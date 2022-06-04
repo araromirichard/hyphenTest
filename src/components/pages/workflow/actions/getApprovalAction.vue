@@ -110,7 +110,7 @@ export default {
       const payload = {
         type: "PbotApproval",
         properties: {
-          keys: ["identity", "organization id", "type", "name"],
+          keys: ["identity", "organization", "type", "name"],
           values: [this.worker, this.orgId, "human", "approval"],
         },
       };
@@ -122,6 +122,7 @@ export default {
       let channel =
         this.workers.find((worker) => worker.email == this.worker)?.name  ||
         "N/A";
+
       this.$emit("channel",channel);
     },
     mapForm() {
@@ -143,7 +144,7 @@ export default {
       } else {
         this.$emit("close");
       }
-    },
+    }
   },
 };
 </script>

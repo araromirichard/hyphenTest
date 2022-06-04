@@ -31,7 +31,7 @@
             v-model="workflow"
             :loading="isLoadingWorkflows"
             item-text="workflow_title"
-            item-value="id"
+            item-value="workflow_id"
             hide-details="auto"
             placeholder="Select Workflow"
           ></v-select>
@@ -123,7 +123,7 @@ export default {
 
     sendOutChannel() {
       let channel =
-        this.workflows.find((workflow) => workflow.id == this.workflow)
+        this.workflows.find((workflow) => workflow.workflow_id == this.workflow)
           ?.workflow_title || "N/A";
       this.$emit("channel", channel);
     },
@@ -149,7 +149,7 @@ export default {
       } else {
         this.$emit("close");
       }
-    },
+    }
   },
 };
 </script>

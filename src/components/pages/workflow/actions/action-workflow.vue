@@ -49,69 +49,69 @@
     </v-timeline>
 
     <get-approval-action
-      v-if="actionModal == 'PbotApproval'"
+      v-show="actionModal == 'PbotApproval'"
       @channel="channel = $event"
       v-model="data"
       ref="PbotApproval"
     />
 
     <send-email-action
-      v-if="actionModal == 'hyphenEmail'"
+      v-show="actionModal == 'hyphenEmail'"
       @channel="channel = $event"
       v-model="data"
       ref="hyphenEmail"
     />
 
     <add-to-payables-action
-      v-if="actionModal == 'hyphenAddToPayables'"
+      v-show="actionModal == 'hyphenAddToPayables'"
       @channel="channel = $event"
       v-model="data"
       ref="hyphenAddToPayables"
     />
     <send-payment-action
-      v-if="actionModal == 'hyphenSendPayment'"
+      v-show="actionModal == 'hyphenSendPayment'"
       @channel="channel = $event"
       v-model="data"
       ref="hyphenSendPayment"
     />
 
     <update-customer-action
-      v-if="actionModal == 'hyphenUpdateCustomer'"
+      v-show="actionModal == 'hyphenUpdateCustomer'"
       v-model="data"
       @channel="channel = $event"
       ref="hyphenUpdateCustomer"
     />
 
     <update-vendor-action
-      v-if="actionModal == 'hyphenUpdateVendor'"
+      v-show="actionModal == 'hyphenUpdateVendor'"
       v-model="data"
       @channel="channel = $event"
       ref="hyphenUpdateVendor"
     />
 
     <send-form-action
-      v-if="actionModal == 'hyphenForm'"
+      v-show="actionModal == 'hyphenForm'"
       v-model="data"
       @channel="channel = $event"
       ref="hyphenForm"
     />
 
     <add-delay-action
-      v-if="actionModal == 'hyphenDelay'"
+      v-show="actionModal == 'hyphenDelay'"
       @channel="channel = $event"
       v-model="data"
       ref="hyphenDelay"
     />
 
     <connect-workflow-action
-      v-if="actionModal == 'hyphenToWorkFlow'"
+      v-show="actionModal == 'hyphenToWorkFlow'"
       @channel="channel = $event"
       v-model="data"
       ref="hyphenToWorkFlow"
     />
 
     <send-to-webhook-action
-      v-if="actionModal == 'hyphenToWebhook'"
+      v-show="actionModal == 'hyphenToWebhook'"
       @channel="channel = $event"
       v-model="data"
       ref="hyphenToWebhook"
@@ -225,6 +225,12 @@ export default {
         this.$emit("channel", this.channel !== "N/A" && this.channel !== "" && this.channel !== null && this.channel !== undefined)
       }
       
+    },
+
+    isBeenDragged(val){
+     if(!val){
+        this.$refs[this.value.type].mapForm();
+     }
     }
   },
 };
