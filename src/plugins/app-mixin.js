@@ -11,7 +11,7 @@ export default {
           meta: {
             type: "PbotApproval",
             properties: {
-              keys: ["identity", "organization id", "type", "name"],
+              keys: ["identity", "organization", "type", "name"],
               values: ["", "", "human", "approval"],
             },
           },

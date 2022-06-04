@@ -60,7 +60,7 @@ export default {
       default: {
         type: "PbotApproval",
         properties: {
-          keys: ["identity", "organization id", "type", "name"],
+          keys: ["identity", "organization", "type", "name"],
           values: ["", "", "human", "approval"],
         },
       },
@@ -110,7 +110,7 @@ export default {
       const payload = {
         type: "PbotApproval",
         properties: {
-          keys: ["identity", "organization id", "type", "name"],
+          keys: ["identity", "organization", "type", "name"],
           values: [this.worker, this.orgId, "human", "approval"],
         },
       };
