@@ -142,14 +142,14 @@ export default {
     },
   },
   watch: {
-    dialog(val) { 
+    dialog(val) {
       if (val) {
         this.$emit("open");
         this.mapForm();
       } else {
         this.$emit("close");
       }
-    },
+    }
   },
 };
 </script>

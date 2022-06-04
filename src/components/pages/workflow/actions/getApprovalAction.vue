@@ -60,7 +60,7 @@ export default {
       default: {
         type: "PbotApproval",
         properties: {
-          keys: ["identity", "organization", "type", "name"],
+          keys: ["identity", "organization id", "type", "name"],
           values: ["", "", "human", "approval"],
         },
       },
@@ -122,6 +122,7 @@ export default {
       let channel =
         this.workers.find((worker) => worker.email == this.worker)?.name  ||
         "N/A";
+
       this.$emit("channel",channel);
     },
     mapForm() {
@@ -143,7 +144,7 @@ export default {
       } else {
         this.$emit("close");
       }
-    },
+    }
   },
 };
 </script>
