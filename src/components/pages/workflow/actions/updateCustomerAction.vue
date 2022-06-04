@@ -213,6 +213,8 @@ export default {
     selectedAttribute() {
       this.selectedTags = "";
       this.selectedTerms = "";
+      this.selectedUpdateType = "";
+      this.updateValue = "";
     },
   },
 };
