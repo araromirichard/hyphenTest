@@ -213,7 +213,7 @@ export default {
   computed: {
     canAddToWorkflow() {
       return (
-        this.data.subject && this.data.message && this.data.to && this.data.cc
+        this.data.subject && this.data.message && this.data.to
       );
     },
   },
