@@ -166,10 +166,10 @@
           <template v-if="$vuetify.breakpoint.mdAndUp">
             <v-card width="100%" height="46">
               <template>
-                <v-tabs slider-size="4">
-                  <v-tab>RULES</v-tab>
+                <v-tabs v-model="tabIndex" slider-size="4">
+                  <v-tab>WORKFLOWS</v-tab>
+                  <v-tab>TEMPLATES</v-tab>
                   <v-tab>ACTIONS</v-tab>
-                  <v-tab>STAKEHOLDERS</v-tab>
                   <v-tab>LOG</v-tab>
                   <v-spacer></v-spacer>
                   <v-btn
@@ -208,164 +208,61 @@
                     >
                     </v-text-field>
                   </v-expand-x-transition>
+                  <v-tab-item>
+                    <div class="workflows">
+                      <div class="template-banner">
+                        <span class="template-banner__header"
+                          >Template workflows</span
+                        >
+
+                        <div class="d-flex template-banner__desc">
+                          <v-icon color="primary">mdi-vector-link</v-icon>
+                          <span
+                            >Use templates to get started quickly with
+                            workflows. Take advantage of usecases we have
+                            collected from experts</span
+                          >
+                        </div>
+
+                        <v-btn color="primary" @click="tabIndex = 1" outlined>Go to Templates</v-btn>
+                      </div>
+                      <div class="saved-workflow">
+                        <span class="saved-workflow__header"
+                          >Saved workflows</span
+                        >
+                        <div class="saved-workflow__container">
+                          <div class="saved-workflow__container__workflow" v-for="(workflow,index) in workflows" :key="index">
+                            <span class="titlex"
+                              >{{workflow.workflow_title}}</span
+                            >
+                            <span class="trigger">{{workflow.source}}</span>
+
+                            <div
+                              class="d-flex justify-space-between align-center"
+                            >
+                              <span class="runs">0</span>
+                              <v-switch disabled v-model="workflow.is_active"></v-switch>
+                            </div>
+                            <v-divider></v-divider>
+                            <div class="footerx">
+                              <div>
+                                <span class="footerx__icon--published"></span>
+                                <span class="footerx__state">created {{workflow.created_at}}</span>
+                              </div>
+                              <div>
+                                <v-btn icon small color="#8F96A1"><v-icon>mdi-pencil-outline</v-icon></v-btn>
+                                 <v-btn icon small color="#8F96A1"><v-icon>mdi-format-list-bulleted</v-icon></v-btn>
+                                  <v-btn icon small color="#8F96A1"><v-icon>mdi-trash-can-outline</v-icon></v-btn>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </v-tab-item>
                 </v-tabs>
               </template>
             </v-card>
-          </template>
-          <div
-            v-if="$vuetify.breakpoint.mdAndUp"
-            style="
-              width: 100%;
-              height: 53px;
-              background: rgba(127, 145, 155, 0.052607);
-            "
-          >
-            <h5
-              v-if="Rules"
-              class="mr-5"
-              style="
-                padding-left: 40px;
-                padding-top: 21px;
-                font-family: Inter;
-                font-style: normal;
-                font-weight: normal;
-                font-size: 16px;
-                line-height: 24px;
-                color: #596a73;
-              "
-            >
-              Start with a template or Make your own rules below
-            </h5>
-          </div>
-          <!-- -----------------------expansion-panel begins ------------------------------->
-          <ExpansionPanel style="margin-bottom: 35px" />
-          <!-- -----------------------expansion-panel ends ------------------------------->
-
-          <span
-            class="noWorkFlowTitle pl-3 px-md-14"
-            style="font-weight: 700; font-size: 24px"
-          >
-            {{ Rules ? `Your rules` : `Your workflow(s)` }}
-          </span>
-          <span class="pl-3 px-md-14 mt-4">
-            Build your custom finance process rules
-          </span>
-          <v-card
-            v-if="!Rules"
-            elevation="0"
-            class="mx-auto"
-            style="
-              width: 96%;
-              height: 361px;
-              margin-top: 27px;
-              background: #ffffff;
-              border: 1px solid rgba(89, 106, 115, 0.087877);
-              box-sizing: border-box;
-              border-radius: 8px;
-            "
-          >
-            <v-row>
-              <img
-                style="margin-left: 50%; margin-top: 67px; margin-bottom: 16px"
-                :src="require('@/assets/pbot_icons/noWorkflowArrow.svg')"
-                alt=""
-              />
-            </v-row>
-            <v-row class="mx-auto justify-center mt-4 mb-5">
-              <v-card
-                class="d-flex flex-row"
-                elevation="0"
-                style="
-                  width: 414px;
-                  height: 94px;
-                  background: #ffffff;
-                  border: 1px solid #fbf4e4;
-                  box-sizing: border-box;
-                  border-radius: 4px;
-                "
-              >
-                <v-btn
-                  color="#F9EED2"
-                  fab
-                  depressed
-                  class="d-flex justify-center align-content-center"
-                  style="
-                    margin-top: 21px;
-                    margin-left: 26px;
-                    background-color: #f9eed2;
-                  "
-                >
-                  <v-avatar
-                    class="d-flex align-center mx-auto my-auto"
-                    color="#F9EED2"
-                    size="20"
-                  >
-                    <img :src="require('@/assets/info.svg')" alt="" />
-                  </v-avatar>
-                </v-btn>
-                <v-card-text
-                  style="
-                    margin-top: 16px;
-                    marging-left: 18px;
-                    font-style: normal;
-                    font-weight: normal;
-                    font-size: 12px;
-                    line-height: 20px;
-                    color: #596a73;
-                  "
-                >
-                  Select any of the templates above to create a workflow or
-                  click the button below
-                </v-card-text>
-              </v-card>
-            </v-row>
-            <v-row class="mx-auto justify-center mt-4">
-              <v-btn
-                dark
-                width="121"
-                height="45"
-                style="
-                  background: var(--v-primary-base);
-                  box-shadow: 0px 12px 22px rgba(0, 0, 0, 0.24);
-                  border-radius: 4px;
-                "
-              >
-                <simple-line-icons
-                  icon="arrow-right"
-                  color="#FFFFFF"
-                  style="
-                    font-family: simple-line-icons;
-                    font-style: normal;
-                    font-weight: normal;
-                    font-size: 16px;
-                    line-height: 16px;
-                  "
-                  no-svg
-                />
-                <span
-                  class="text-capitalize pl-3"
-                  style="
-                    font-family: Inter;
-                    font-style: normal;
-                    font-weight: 500;
-                    font-size: 14px;
-                    line-height: 17px;
-                    text-align: center;
-                    letter-spacing: 0.636364px;
-                    color: #ffffff;
-                  "
-                  >next</span
-                >
-              </v-btn>
-            </v-row>
-          </v-card>
-
-          <template v-else>
-            <SingleRule
-              class="px-md-10 px-4"
-              style="margin-left: 0px; margin-top: 16px"
-              :createdAt="dateValue() | date"
-            />
           </template>
         </v-card>
       </v-row>
@@ -374,12 +271,8 @@
 </template>
 
 <script>
-import ExpansionPanel from "../../includes/ExpansionPanel.vue";
-import SingleRule from "../../includes/SingleRule.vue";
-import SimpleLineIcons from "vue-simple-line";
 import { mapActions } from "vuex";
 export default {
-  components: { ExpansionPanel, SimpleLineIcons, SingleRule },
   data() {
     return {
       dialog: false,
@@ -387,7 +280,13 @@ export default {
       isClicked: true,
       search: "",
       name: "",
+      workflows: [],
+      isLoadingWorkflows: false,
+      tabIndex: 0,
     };
+  },
+  mounted(){
+    this.getWorkflows();
   },
   methods: {
     ...mapActions({ showToast: "ui/showToast" }),
@@ -413,6 +312,19 @@ export default {
         });
       }
     },
+
+      async getWorkflows() {
+      try {
+        this.isLoadingWorkflows = true;
+        const { data } = await this.$store.dispatch("workflow/getAllWorkflows");
+
+        this.workflows = data;
+      } catch (err) {
+        console.log(JSON.stringify(err, null, 2));
+      } finally {
+        this.isLoadingWorkflows = false;
+      }
+    },
     // pushRoute() {
     //   $router.push("/workflow/rules-edit");
     // },
@@ -420,7 +332,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .noWorkFlowTitle {
   display: block;
   margin-left: 0px;
@@ -447,5 +359,114 @@ export default {
 .v-application .elevation-4 {
   box-shadow: 0px 3px 5px -1px rgb(0 0 0 / 3%), 0px 6px 10px 0px rgb(0 0 0 / 3%),
     0px 1px 18px 0px rgb(0 0 0 / 3%) !important;
+}
+
+.workflows {
+  .template-banner {
+    background-color: #f4f5f6;
+    padding: 60px 30px;
+
+    &__header {
+      font-weight: bold;
+      font-size: 23px;
+      color: var(--v-primary-base);
+    }
+
+    &__desc {
+      gap: 20px;
+      margin: 30px 0;
+      color: var(--v-primary-base);
+      font-weight: 400;
+      line-height: 28px;
+    }
+  }
+
+  .saved-workflow {
+    background-color: #fff;
+    padding: 30px;
+
+    &__header {
+      font-weight: bold;
+      font-size: 23px;
+      color: var(--v-primary-base);
+    }
+
+    &__container {
+      display: flex;
+      flex-wrap: wrap; 
+      gap: 20px;
+      margin-top: 30px;
+
+      &__workflow {
+        display: inline-block;
+        border: 1px solid #d9dee1;
+        border-radius: 8px;
+        width: 320px;
+        box-sizing: border-box;
+        padding: 20px;
+        cursor: pointer;
+
+        .titlex {
+          font-weight: 600;
+          font-size: 15px;
+          color: var(--v-primary-base);
+          display: block;
+          margin-bottom: 10px;
+           text-transform: capitalize;
+        }
+
+        .trigger {
+          background: #e9ebf6;
+          border-radius: 10px;
+          padding: 0px 12px;
+          color: var(--v-primary-base);
+          display: inline-block;
+          margin-bottom: 20px;
+          text-transform: capitalize;
+        }
+
+        .runs {
+          background-color: #646a6f;
+          padding: 8px 10px;
+          color: #fff;
+          border-radius: 4px;
+          display: inline-block;
+          margin: 20px 0px;
+        }
+
+        .footerx {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-top: 20px;
+          color: var(--v-primary-base);
+
+          &__icon {
+            &--draft {
+              height: 10px;
+              width: 10px;
+              border-radius: 100%;
+              margin-right: 5px;
+              display: inline-block;
+              background-color: #e3aa1c;
+            }
+
+            &--published {
+              height: 10px;
+              width: 10px;
+              border-radius: 100%;
+              margin-right: 5px;
+              display: inline-block;
+              background-color: #23d2aa;
+            }
+          }
+
+          &__state {
+            color: #8f96a1;
+          }
+        }
+      }
+    }
+  }
 }
 </style>
