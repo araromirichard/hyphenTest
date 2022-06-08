@@ -224,36 +224,107 @@
                           >
                         </div>
 
-                        <v-btn color="primary" @click="tabIndex = 1" outlined>Go to Templates</v-btn>
+                        <v-btn color="primary" @click="tabIndex = 1" outlined
+                          >Go to Templates</v-btn
+                        >
                       </div>
                       <div class="saved-workflow">
                         <span class="saved-workflow__header"
                           >Saved workflows</span
                         >
                         <div class="saved-workflow__container">
-                          <div class="saved-workflow__container__workflow" v-for="(workflow,index) in workflows" :key="index">
-                            <span class="titlex"
-                              >{{workflow.workflow_title}}</span
-                            >
-                            <span class="trigger">{{workflow.source}}</span>
+                          <div
+                            class="saved-workflow__container__workflow"
+                            v-for="(workflow, index) in workflows"
+                            :key="index"
+                          >
+                            <span class="titlex">{{
+                              workflow.workflow_title
+                            }}</span>
+                            <span class="trigger">{{ workflow.source }}</span>
 
                             <div
                               class="d-flex justify-space-between align-center"
                             >
-                              <span class="runs">{{Intl.NumberFormat().format(Number(workflow.run))}}</span>
-                              <v-switch disabled v-model="workflow.is_active"></v-switch>
+                              <span class="runs">{{
+                                Intl.NumberFormat().format(Number(workflow.run))
+                              }}</span>
+                              <v-switch
+                                disabled
+                                v-model="workflow.is_active"
+                              ></v-switch>
                             </div>
                             <v-divider></v-divider>
                             <div class="footerx">
                               <div>
                                 <span class="footerx__icon--published"></span>
-                                <span class="footerx__state">created {{format(new Date(workflow.created_at), 'dd/MM/Y')}} </span>
+                                <span class="footerx__state"
+                                  >created
+                                  {{
+                                    format(
+                                      new Date(workflow.created_at),
+                                      "dd/MM/Y"
+                                    )
+                                  }}
+                                </span>
                               </div>
                               <div>
-                                <v-btn icon small color="#8F96A1"><v-icon>mdi-pencil-outline</v-icon></v-btn>
-                                 <v-btn icon small color="#8F96A1"><v-icon>mdi-format-list-bulleted</v-icon></v-btn>
-                                  <v-btn icon small color="#8F96A1"><v-icon>mdi-trash-can-outline</v-icon></v-btn>
+                                <v-btn icon small color="#8F96A1"
+                                  ><v-icon>mdi-pencil-outline</v-icon></v-btn
+                                >
+                                <v-btn icon small color="#8F96A1"
+                                  ><v-icon
+                                    >mdi-format-list-bulleted</v-icon
+                                  ></v-btn
+                                >
+                                <v-btn icon small color="#8F96A1"
+                                  ><v-icon>mdi-trash-can-outline</v-icon></v-btn
+                                >
                               </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </v-tab-item>
+
+                  <v-tab-item>
+                    <div class="templates">
+                      <div class="template-banner">
+                        <span class="template-banner__header"
+                          >Template workflows</span
+                        >
+
+                        <div class="template-banner__desc">
+                          <v-icon color="primary">mdi-vector-link</v-icon>
+                          <span
+                            >Use templates to get started quickly with
+                            workflows. Take advantage of usecases we have
+                            collected from experts</span
+                          >
+                        </div>
+                      </div>
+                      <div class="template-banner__container">
+                        <div
+                          class="template-banner__container__template"
+                          v-for="(workflow, index) in workflows"
+                          :key="index"
+                        >
+                          <span class="titlex">{{
+                            workflow.workflow_title
+                          }}</span>
+                          <span class="trigger">{{ workflow.source }}</span>
+                          <div class="description">template description</div>
+                          <v-divider></v-divider>
+                          <div class="footerx">
+                            <span class="footerx__state">Template </span>
+                            <div style="display: flex; gap: 5px">
+                              <v-btn small outlined color="#8F96A1">
+                                Use
+                              </v-btn>
+                              <v-btn icon small color="primary"
+                                ><v-icon>mdi-eye-outline</v-icon></v-btn
+                              >
                             </div>
                           </div>
                         </div>
@@ -271,12 +342,12 @@
 </template>
 
 <script>
-import { format } from 'date-fns'
+import { format } from "date-fns";
 import { mapActions } from "vuex";
 export default {
   data() {
     return {
-      format:format,
+      format: format,
       dialog: false,
       Rules: true,
       isClicked: true,
@@ -287,7 +358,7 @@ export default {
       tabIndex: 0,
     };
   },
-  mounted(){
+  mounted() {
     this.getWorkflows();
   },
   methods: {
@@ -315,7 +386,7 @@ export default {
       }
     },
 
-      async getWorkflows() {
+    async getWorkflows() {
       try {
         this.isLoadingWorkflows = true;
         const { data } = await this.$store.dispatch("workflow/getAllWorkflows");
@@ -327,9 +398,6 @@ export default {
         this.isLoadingWorkflows = false;
       }
     },
-    // pushRoute() {
-    //   $router.push("/workflow/rules-edit");
-    // },
   },
 };
 </script>
@@ -394,16 +462,18 @@ export default {
     }
 
     &__container {
-      display: flex;
-      flex-wrap: wrap; 
-      gap: 20px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 30px;
+      justify-content: center;
+      align-items: center;
       margin-top: 30px;
 
       &__workflow {
         display: inline-block;
         border: 1px solid #d9dee1;
         border-radius: 8px;
-        width: 320px;
+
         box-sizing: border-box;
         padding: 20px;
         cursor: pointer;
@@ -414,7 +484,7 @@ export default {
           color: var(--v-primary-base);
           display: block;
           margin-bottom: 10px;
-           text-transform: capitalize;
+          text-transform: capitalize;
         }
 
         .trigger {
@@ -462,6 +532,94 @@ export default {
               background-color: #23d2aa;
             }
           }
+
+          &__state {
+            color: #8f96a1;
+          }
+        }
+      }
+    }
+  }
+}
+
+.templates {
+  background-color: #f4f5f6;
+  min-height: 100vh;
+  .template-banner {
+    padding: 60px 30px;
+
+    &__header {
+      font-weight: bold;
+      font-size: 23px;
+      color: var(--v-primary-base);
+    }
+
+    &__desc {
+      display: flex;
+      gap: 20px;
+      margin: 30px 0;
+      color: var(--v-primary-base);
+      font-weight: 400;
+      line-height: 28px;
+    }
+
+    &__container {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 30px;
+      justify-content: center;
+      align-items: center;
+      padding: 30px;
+
+      &__template {
+        display: inline-block;
+        border: 1px solid #d9dee1;
+        border-radius: 8px;
+        background-color: #fff;
+
+        box-sizing: border-box;
+        padding: 20px;
+        cursor: pointer;
+
+        .titlex {
+          font-weight: 600;
+          font-size: 15px;
+          color: var(--v-primary-base);
+          display: block;
+          margin-bottom: 10px;
+          text-transform: capitalize;
+        }
+
+        .trigger {
+          background: #e9ebf6;
+          border-radius: 10px;
+          padding: 0px 12px;
+          color: var(--v-primary-base);
+          display: inline-block;
+          margin-bottom: 20px;
+          text-transform: capitalize;
+        }
+
+        .runs {
+          background-color: #646a6f;
+          padding: 8px 10px;
+          color: #fff;
+          border-radius: 4px;
+          display: inline-block;
+          margin: 20px 0px;
+        }
+
+        .description {
+          min-height: 70px;
+          color: #8f96a1;
+        }
+
+        .footerx {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-top: 20px;
+          color: var(--v-primary-base);
 
           &__state {
             color: #8f96a1;
