@@ -240,14 +240,14 @@
                             <div
                               class="d-flex justify-space-between align-center"
                             >
-                              <span class="runs">0</span>
+                              <span class="runs">{{Intl.NumberFormat().format(Number(workflow.run))}}</span>
                               <v-switch disabled v-model="workflow.is_active"></v-switch>
                             </div>
                             <v-divider></v-divider>
                             <div class="footerx">
                               <div>
                                 <span class="footerx__icon--published"></span>
-                                <span class="footerx__state">created {{workflow.created_at}}</span>
+                                <span class="footerx__state">created {{format(new Date(workflow.created_at), 'dd/MM/Y')}} </span>
                               </div>
                               <div>
                                 <v-btn icon small color="#8F96A1"><v-icon>mdi-pencil-outline</v-icon></v-btn>
@@ -271,10 +271,12 @@
 </template>
 
 <script>
+import { format } from 'date-fns'
 import { mapActions } from "vuex";
 export default {
   data() {
     return {
+      format:format,
       dialog: false,
       Rules: true,
       isClicked: true,
