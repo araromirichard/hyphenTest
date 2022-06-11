@@ -32,7 +32,6 @@
                 :is-last="i == conditions.properties.conditions.length - 1"
                 v-model="conditions.properties.conditions[i]"
                 :group-index="i"
-                @selected-fields="addSelectedField"
                 @delete-empty-group="deleteEmptyGroup(i)"
                 @valid-group="groups.splice(i, 1, $event)"
                 :index="i"
@@ -40,7 +39,7 @@
                 @add-new-group="addNewGroup"
               />
             </div>
-            
+
             <v-btn
               @click="$emit('continue')"
               :disabled="!canContinue"
@@ -97,6 +96,11 @@ export default {
         },
       },
     },
+
+    isEdit: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
@@ -119,7 +123,6 @@ export default {
           ],
         },
       },
-      selectedFields: [],
       groups: [],
       scrollOptions: {
         duration: 500,
@@ -131,21 +134,13 @@ export default {
         fields: [],
         operators: [],
       },
-      selctedFields: [],
+      isLoaded: false,
     };
   },
   mounted() {
     this.fetchOperators();
   },
   methods: {
-    addSelectedField(field) {
-      this.selectedFields = this.selectedFields
-        .concat(field)
-        .filter((item) => item !== "");
-      this.selectedFields = [...new Set(this.selectedFields)];
-      this.$emit("selected-fields", this.selectedFields);
-    },
-
     addNewGroup(grouptype) {
       this.conditions.properties.conditions.push({
         type: "group",
@@ -191,7 +186,6 @@ export default {
         );
         this.inputs.fields = data.data.field_names;
 
-        //console.log(JSON.stringify(this.inputs.fields, null, 2));
       } catch (err) {
         this.isLoadingEntries = false;
       } finally {
@@ -227,6 +221,25 @@ export default {
         this.isLoadingEntries = false;
       }
     },
+
+    arrangeTriggerSchema() {
+      let fields = [];
+      this.conditions.properties.conditions.forEach((condition, i) => {
+        if (condition.type === "comparison") {
+          fields.push(condition.properties.field);
+        }
+
+        if (condition.type === "group") {
+          condition.properties.conditions.forEach((condition2, i) => {
+            if (condition2.type === "comparison") {
+              fields.push(condition2.properties.field);
+            }
+          });
+        }
+      });
+
+      this.$emit("selected-fields", [...new Set(fields)]);
+    },
   },
   watch: {
     value: {
@@ -244,6 +257,7 @@ export default {
       deep: true,
       handler(val) {
         this.$emit("input", val);
+        this.arrangeTriggerSchema();
       },
     },
 
@@ -252,22 +266,22 @@ export default {
       handler(val) {
         console.log("trigger data", val);
         if (val) {
-          this.conditions = {
-            type: "group",
-            properties: {
-              type: "and",
-              conditions: [
-                {
-                  type: "comparison",
-                  properties: {
-                    type: "",
-                    field: "",
-                    target: "",
-                  },
-                },
-              ],
-            },
-          };
+          // this.conditions = {
+          //   type: "group",
+          //   properties: {
+          //     type: "and",
+          //     conditions: [
+          //       {
+          //         type: "comparison",
+          //         properties: {
+          //           type: "",
+          //           field: "",
+          //           target: "",
+          //         },
+          //       },
+          //     ],
+          //   },
+          // };
 
           if (this.trigger === "invoice") {
             this.fetchInvoiceEntries();
@@ -283,7 +297,6 @@ export default {
     showTriggers: {
       immediate: true,
       handler(val) {
-        console.log("show trigger", val);
         if (val) {
           this.$nextTick();
           setTimeout(() => {
@@ -300,6 +313,12 @@ export default {
         this.$emit("inputs", val);
       },
     },
+
+    canContinue(val){
+      if(val && this.isEdit){
+        this.$emit('continue')
+      }
+    }
   },
   computed: {
     isCompleted() {

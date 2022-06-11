@@ -79,7 +79,6 @@
           <workflow-condition-input
             class="my-4"
             :rule="rule"
-            @selected-schema="$emit('selected-field', $event)"
             @delete="deleteCondition"
             :index="i"
             :inputs="inputs"
@@ -231,14 +230,6 @@ export default {
         if (JSON.stringify(val) !== JSON.stringify(this.value)) {
           this.$emit("input", val);
         }
-      },
-    },
-
-    selectedFields: {
-      immediate: true,
-      deep: true,
-      handler(val) {
-        this.$emit("selected-fields", val);
       },
     },
 
