@@ -491,7 +491,7 @@ export default {
 }
 
 .navIcon {
-  width: 12px;
+  width: 14px;
   fill: currentColor;
   color: #7f919b;
 }
@@ -499,8 +499,8 @@ export default {
 .navTxt {
   font-family: "Inter";
   font-style: normal;
-  font-weight: bold;
-  font-size: 12px;
+  font-weight: normal;
+  font-size: 14px;
   line-height: 15px;
   color: #7f919b;
 }

@@ -421,6 +421,8 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
+
 //import { mapActions } from "vuex";
 export default {
   data() {
@@ -502,6 +504,8 @@ export default {
     };
   },
   methods: {
+    ...mapActions({ showToast: "ui/showToast" }),
+
     viewActiveTab(e) {
       console.log({ e });
     },
@@ -509,7 +513,7 @@ export default {
       // console.log(direction);
       switch (direction) {
         case "next":
-          if (this.tab <= this.CustomerType.length - 2 && this.validate()) {
+          if (this.tab <= this.CustomerType.length - 2) {
             this.tab++;
             return;
           }
@@ -528,38 +532,31 @@ export default {
     async saveAction() {
       const id = this.$route.params.id;
 
-      if (this.validate()) {
-        //console.log(JSON.stringify(this.vendorDetails, null, 2));
+      //console.log(JSON.stringify(this.vendorDetails, null, 2));
 
-        try {
-          const response = await this.$store
-            .dispatch("contacts/updateVendorDetails", {
-              id: id,
-              payload: this.vendorDetails,
-            })
-            .then(console.log(JSON.stringify(response, null, 2)))
+      try {
+        await this.$store.dispatch("contacts/updateVendorDetails", {
+          id: id,
+          payload: this.vendorDetails,
+        });
 
-            .then(
-              this.showToast({
-                sclass: "success",
-                show: true,
-                message: "Vendor details Updated successfully..",
-                timeout: 3000,
-              })
-            );
-        } catch (error) {
-          console.log(error);
-          if (error) {
-            this.showToast({
-              sclass: "error",
-              show: true,
-              message: "failed to Update",
-              timeout: 3000,
-            });
-          }
-        }
+        this.showToast({
+          sclass: "success",
+          show: true,
+          message: "Vendor details Updated successfully..",
+          timeout: 3000,
+        });
 
         this.dialog = false;
+      } catch (error) {
+        console.log(error);
+
+        this.showToast({
+          sclass: "error",
+          show: true,
+          message: "failed to Update",
+          timeout: 3000,
+        });
       }
     },
     show(value) {
@@ -568,7 +565,35 @@ export default {
   },
 
   computed: {
-    //
+    ...mapGetters({
+      singleVendor: "contacts/getVendor",
+    }),
+  },
+  mounted() {
+    const id = this.$route.params.id;
+    this.$store.dispatch("contacts/getSingleVendor", id).then((response) => {
+      if (response.status == 200) {
+        this.vendorDetails.vendorname = response.data.vendorname;
+        this.vendorDetails.contact.first_name =
+          response.data.contact.first_name;
+        this.vendorDetails.contact.last_name = response.data.contact.last_name;
+        this.vendorDetails.email = response.data.email;
+        this.vendorDetails.contact.phone = response.data.contact.phone;
+        this.vendorDetails.contact.role = response.data.contact.role;
+        this.vendorDetails.terms = response.data.terms;
+        this.vendorDetails.zip = response.data.zip;
+        this.vendorDetails.city = response.data.city;
+        this.vendorDetails.state = response.data.state;
+        this.vendorDetails.category = response.data.category;
+        this.vendorDetails.WHT.category = response.data.WHT.category;
+        this.vendorDetails.apply_tax = response.data.apply_tax;
+        this.vendorDetails.bankname = response.data.bankname;
+        this.vendorDetails.taxid = response.data.taxid;
+        this.vendorDetails.bankaccount = response.data.bankaccount;
+        this.vendorDetails.currency = response.data.currency;
+        this.vendorDetails.approved = response.data.approved;
+      }
+    });
   },
 };
 </script>

@@ -26,7 +26,7 @@
               paddingRight: `${$vuetify.breakpoint.smAndUp ? '78px' : '34px'}`,
             }"
           >
-            <v-form @submit="submitForm" class="ma-auto" ref="form">
+            <v-form class="ma-auto" ref="form">
               <v-card-text class="pa-0">
                 <v-text-field
                   ref="email"
@@ -81,6 +81,7 @@
 
 <script>
 import { mapActions } from "vuex";
+import auth from "../api/auth";
 export default {
   name: "forgot-password",
 
@@ -105,22 +106,21 @@ export default {
   methods: {
     ...mapActions({ showToast: "ui/showToast" }),
 
-    async submitForm() {
+    submitForm() {
+      const payload = {
+        email: this.email,
+      };
       this.$refs.form.validate();
-      const payload = JSON.stringify(this.email, null, 2);
-      console.log(payload);
       try {
         this.isSending = true;
-        await this.$store
-          .dispatch("auth/sendResetPasswordEmailLink", payload)
-          .then(
-            this.showToast({
-              sclass: "success",
-              show: true,
-              message: "Email Sent, Please Check Your Email",
-              timeout: 5000,
-            })
-          );
+        auth.forgotPassword(payload).then(
+          this.showToast({
+            sclass: "success",
+            show: true,
+            message: "Email Sent, Please Check Your Email",
+            timeout: 5000,
+          })
+        );
       } catch (error) {
         this.showToast({
           sclass: "error",
