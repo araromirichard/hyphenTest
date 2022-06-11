@@ -104,6 +104,15 @@ const routes = [
     meta: { middleware: ["auth"] },
   },
   {
+    path: "/workflow/:id",
+    name: "EditWorkflow",
+    components: {
+      default: () => import("@/views/workflow/view.vue"),
+      MainLayout,
+    },
+    meta: { middleware: ["auth"] },
+  },
+  {
     path: "/workflow/old",
     name: "NewWorkFlow",
     components: {
@@ -112,15 +121,15 @@ const routes = [
     },
     meta: { middleware: ["auth"] },
   },
-  {
-    path: "/workflow/:id",
-    name: "WorkflowRulesEdit",
-    components: {
-      default: () => import("@/views/workflow/RulesEdit.vue"),
-      MainLayout,
-    },
-    meta: { middleware: ["auth"] },
-  },
+  // {
+  //   path: "/workflow/:id",
+  //   name: "WorkflowRulesEdit",
+  //   components: {
+  //     default: () => import("@/views/workflow/RulesEdit.vue"),
+  //     MainLayout,
+  //   },
+  //   meta: { middleware: ["auth"] },
+  // },
   {
     path: "/form/create-new-form",
     name: "Create-form",

@@ -99,6 +99,8 @@ export default {
             email:worker.email
           };
         });
+
+        this.sendOutChannel();
       } catch (err) {
         console.log(JSON.stringify(err, null, 2));
       }finally{

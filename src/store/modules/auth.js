@@ -7,10 +7,10 @@ const state = {
 };
 
 const getters = {
-    isLoggedIn: (state) => !!state.user,
-    user: (state) => state.user,
-    token: () => localStorage.getItem("token"),
-    organizationId: (state) => (state.user ? state.user.organization : ""),
+  isLoggedIn: (state) => !!state.user,
+  user: (state) => state.user,
+  token: () => localStorage.getItem("token"),
+  organizationId: (state) => (state.user ? state.user.organization.id : ""),
 };
 
 const mutations = {

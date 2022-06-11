@@ -152,7 +152,6 @@ export default {
   methods: {
     deleteInput() {
       this.$emit("delete", this.index);
-      this.$emit("deleted-schema", this.form.field);
     },
   },
   watch: {
@@ -169,7 +168,6 @@ export default {
       immediate: true,
       deep: true,
       handler(val) {
-        this.$emit("selected-schema", val.field);
         this.$emit("input", val);
       },
     },

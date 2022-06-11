@@ -232,7 +232,31 @@
                         <span class="saved-workflow__header"
                           >Saved workflows</span
                         >
-                        <div class="saved-workflow__container">
+
+                        <div
+                          v-if="errorLoadingWorkflow"
+                          class="text-center"
+                          style="padding: 100px"
+                        >
+                          <v-btn color="primary" outlined @click="getWorkflows"
+                            ><v-icon>mdi-refresh</v-icon> Retry</v-btn
+                          >
+                        </div>
+
+                        <div
+                          v-if="isLoadingWorkflows"
+                          class="saved-workflow__container"
+                        >
+                          <v-skeleton-loader
+                            v-for="loader in 6"
+                            :key="loader"
+                            height="200px"
+                            width="100%"
+                            type="card"
+                          />
+                        </div>
+
+                        <div v-else class="saved-workflow__container">
                           <div
                             class="saved-workflow__container__workflow"
                             v-for="(workflow, index) in workflows"
@@ -250,7 +274,7 @@
                                 Intl.NumberFormat().format(Number(workflow.run))
                               }}</span>
                               <v-switch
-                                disabled
+                                 @change="toggleWorkflow(workflow)"
                                 v-model="workflow.is_active"
                               ></v-switch>
                             </div>
@@ -269,7 +293,7 @@
                                 </span>
                               </div>
                               <div>
-                                <v-btn icon small color="#8F96A1"
+                                <v-btn :to="`/workflow/${workflow.id}`" icon small color="#8F96A1"
                                   ><v-icon>mdi-pencil-outline</v-icon></v-btn
                                 >
                                 <v-btn icon small color="#8F96A1"
@@ -355,6 +379,7 @@ export default {
       name: "",
       workflows: [],
       isLoadingWorkflows: false,
+      errorLoadingWorkflow: true,
       tabIndex: 0,
     };
   },
@@ -386,14 +411,19 @@ export default {
       }
     },
 
+    toggleWorkflow(workflow){
+      console.log('wok..',workflow)
+    },
+
     async getWorkflows() {
       try {
+        this.errorLoadingWorkflow = false;
         this.isLoadingWorkflows = true;
         const { data } = await this.$store.dispatch("workflow/getAllWorkflows");
 
         this.workflows = data;
       } catch (err) {
-        console.log(JSON.stringify(err, null, 2));
+        this.errorLoadingWorkflow = true;
       } finally {
         this.isLoadingWorkflows = false;
       }
@@ -461,6 +491,15 @@ export default {
       color: var(--v-primary-base);
     }
 
+    &__loader {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 30px;
+      justify-content: center;
+      align-items: center;
+      margin-top: 30px;
+    }
+
     &__container {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -499,11 +538,14 @@ export default {
 
         .runs {
           background-color: #646a6f;
-          padding: 8px 10px;
+          box-sizing: border-box;
+          padding: 4px 0px;
           color: #fff;
           border-radius: 4px;
           display: inline-block;
           margin: 20px 0px;
+          text-align: center;
+          width: 40px;
         }
 
         .footerx {
@@ -602,7 +644,7 @@ export default {
 
         .runs {
           background-color: #646a6f;
-          padding: 8px 10px;
+          padding: 4px 10px;
           color: #fff;
           border-radius: 4px;
           display: inline-block;
