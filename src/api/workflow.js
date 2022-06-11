@@ -40,4 +40,12 @@ export default {
       },
     });
   },
+
+  getWorkflowById(id){
+    return api().get("/workflows/"+id, {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token")
+      },
+    });
+  }
 };

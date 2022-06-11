@@ -65,7 +65,7 @@ const mutations = {
 
   NEW_WORKFLOW(state, payload) {
     state.newWorkflow = payload;
-  }
+  },
 };
 
 const actions = {
@@ -133,11 +133,9 @@ const actions = {
     }
   },
 
-  
-
   async createWorkflow({ commit }, payload) {
     try {
-      const {data} = await Workflow.createWorkflow(payload);
+      const { data } = await Workflow.createWorkflow(payload);
       commit("NEW_WORKFLOW", data);
       return data;
     } catch (error) {
@@ -147,7 +145,16 @@ const actions = {
 
   async getAllWorkflows() {
     try {
-      const  data  = await Workflow.getAllWorkflows();
+      const data = await Workflow.getAllWorkflows();
+      return data;
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  },
+
+  async getAllWorkflowById({},id) {
+    try {
+      const data = await Workflow.getWorkflowById(id);
       return data;
     } catch (error) {
       return Promise.reject(error);
