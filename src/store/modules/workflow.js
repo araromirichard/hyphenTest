@@ -7,6 +7,16 @@ const state = () => ({
   payment: null,
   paymentOptions: null,
   newWorkflow: null,
+  comparisonType: [
+    {
+      string: "ALL",
+      val: "and",
+    },
+    {
+      string: "ANY",
+      val: "or",
+    },
+  ],
 });
 
 const getters = {
