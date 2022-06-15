@@ -11,11 +11,18 @@
       </div>
 
       <div class="flow-setup">
-        <v-breadcrumbs :items="breadcrumbs" style="font-weight: 600">
-          <template v-slot:divider>
-            <v-icon class="px-0">mdi-chevron-right</v-icon>
-          </template>
-        </v-breadcrumbs>
+        <div class="d-flex pr-5" style="align-items: center">
+          <v-breadcrumbs :items="breadcrumbs" style="font-weight: 600">
+            <template v-slot:divider>
+              <v-icon class="px-0">mdi-chevron-right</v-icon>
+            </template>
+          </v-breadcrumbs>
+          <v-spacer></v-spacer>
+
+          <v-btn @click="$router.go(-1)" text rounded large>
+            <v-icon left>mdi-chevron-left</v-icon> Back
+          </v-btn>
+        </div>
 
         <div class="flows">
           <div class="flow-setup__trigger">
@@ -90,6 +97,7 @@
 
     <v-dialog
       v-model="publishDialog"
+      :persistent="isPublishingWorkflow"
       max-width="550px"
       transition="dialog-transition"
     >
@@ -105,10 +113,21 @@
             >Confirm this workflow is completed and ready for use</span
           >
 
-          <v-btn color="primary" @click="CREATE_WORKFLOW" elevation="1" x-large>
+          <v-btn
+            color="primary"
+            @click="CREATE_WORKFLOW"
+            elevation="1"
+            x-large
+            :loading="isPublishingWorkflow"
+          >
             <v-icon left>mdi-chevron-right</v-icon> Save</v-btn
           >
-          <button id="add-to-draft" @click="addWorkflowToDraft">
+          <button
+            v-if="!isPublishingWorkflow"
+            id="add-to-draft"
+            disabled
+            @click="addWorkflowToDraft"
+          >
             No, Add to draft
           </button>
         </div>
@@ -130,7 +149,7 @@
           </v-btn>
         </div>
         <div class="publish-sucessful__top">
-          <v-btn color="success" fab outlined>
+          <v-btn color="success" small fab outlined>
             <v-icon>check</v-icon>
           </v-btn>
           <span>Workflow published successfully</span>
@@ -153,18 +172,29 @@
             </v-btn>
 
             <div v-if="showAdvance">
-              <span style="color: #19283dcc" class="mb-2 mt-1 d-block">
+              <span
+                style="color: #19283dcc; font-size: 16px"
+                class="mb-2 mt-1 d-block"
+              >
                 To trigger this workflow using an external API or webhook
                 service, make a POST request to the endpoint below
               </span>
 
-              <v-text-field
+              <!-- <v-text-field
                 prefix="POST"
                 v-model="workflow.webhook"
                 disabled
                 outlined
                 append-icon="mdi-content-copy"
-              ></v-text-field>
+              ></v-text-field> -->
+
+              <div class="api-cover">
+                <button class="api-cover__req">POST</button>
+                <div class="api-cover__url">{{ workflow.webhook }}</div>
+                <v-btn icon style="margin-right: 15px"
+                  ><v-icon>mdi-content-copy</v-icon></v-btn
+                >
+              </div>
 
               <span
                 class="mt-1 d-block"
@@ -180,7 +210,7 @@
           <div class="mt-5 cta">
             <v-btn
               color="primary"
-              @click="publishDialogSucessful = false"
+             to="/workflow"
               elevation="0"
               large
             >
@@ -200,6 +230,8 @@ import detailsTabWorkflow from "../../components/pages/workflow/details-tab-work
 import TriggerWorkflow from "../../components/pages/workflow/trigger-workflow.vue";
 import FormTrigger from "../../components/pages/workflow/trigger/form-trigger.vue";
 import PaymentTrigger from "../../components/pages/workflow/trigger/payment-trigger.vue";
+import { mapActions } from "vuex";
+
 export default {
   components: {
     detailsTabWorkflow,
@@ -325,8 +357,9 @@ export default {
             //   },
             // },
           ],
-          webhook: "https://flow.hypn.so/weri23mno49mc",
+          webhook: "",
         },
+        isPublishingWorkflow: false,
       };
     }
   },
@@ -336,9 +369,30 @@ export default {
   },
 
   methods: {
-    CREATE_WORKFLOW() {
-      this.publishDialog = false;
-      this.publishDialogSucessful = true;
+    ...mapActions({ showToast: "ui/showToast" }),
+
+    async CREATE_WORKFLOW() {
+      this.isPublishingWorkflow = true;
+      try {
+        const { data } = await this.$store.dispatch(
+          "workflow/createWorkflow",
+          this.workflowPayload
+        );
+        this.workflow.webhook = "http://flow.hypn.so/" + data.workflow_id;
+        console.log(JSON.stringify(data, null, 2));
+        this.publishDialog = false;
+        this.publishDialogSucessful = true;
+      } catch (error) {
+        console.log(JSON.stringify(error, null, 2));
+        this.showToast({
+          sclass: "error",
+          show: true,
+          message: error.msg,
+          timeout: 3000,
+        });
+      } finally {
+        this.isPublishingWorkflow = false;
+      }
     },
 
     addWorkflowToDraft() {
@@ -382,7 +436,6 @@ export default {
 
     isPaymentTrigger(val) {
       if (val) {
-        console.log("payment scroll");
         this.$nextTick(() => {
           this.$vuetify.goTo(this.$refs.paymentTrigger, this.scrollOptions);
         });
@@ -391,7 +444,6 @@ export default {
 
     isFormTrigger(val) {
       if (val) {
-        console.log("form scroll");
         this.$nextTick(() => {
           this.$vuetify.goTo(this.$refs.formTrigger, this.scrollOptions);
         });
@@ -555,11 +607,11 @@ export default {
 
   &__content {
     background-color: #fefcf8;
-    padding: 60px 120px;
+    padding: 30px 50px;
     text-align: center;
 
     .msg {
-      font-size: 17px;
+      font-size: 16px;
       color: #757575;
       line-height: 24px;
       display: block;
@@ -568,7 +620,7 @@ export default {
 
     #add-to-draft {
       display: block;
-      margin: 20px auto 0px auto;
+      margin: 50px auto 0px auto;
       background: transparent;
       color: #d7a47b;
       cursor: pointer;
@@ -611,7 +663,7 @@ export default {
 
   &__content {
     background-color: #f8f7f4;
-    padding: 20px;
+    padding: 20px 50px;
 
     .msg {
       font-size: 16px;
@@ -624,6 +676,33 @@ export default {
     .cta {
       display: flex;
       justify-content: end;
+    }
+  }
+
+  .api-cover {
+    display: flex;
+    align-items: center;
+    border: 1px solid #19283d1a;
+    box-sizing: border-box;
+    background: #ffffff;
+    border: 1px solid rgba(25, 40, 61, 0.1);
+    border-radius: 3px;
+    margin: 10px 0px;
+
+    &__req {
+      height: 55px;
+      padding: 0px 20px;
+      background-color: #f4f5f6;
+      color: #00233880;
+      font-weight: bold;
+      border-radius: 3px;
+      font-family: "Inter";
+    }
+
+    &__url {
+      padding: 0px 25px;
+      flex: 1;
+      color: #596a73;
     }
   }
 }

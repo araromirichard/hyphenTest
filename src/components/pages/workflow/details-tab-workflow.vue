@@ -29,7 +29,7 @@
 
         <div class="trigger" v-if="trigger">
           <span class="t">Trigger: </span>
-          <span class="n capitalize"> {{ trigger }}</span>
+          <span class="n"> {{ trigger }}</span>
         </div>
         <div v-if="schema" class="schema">
           <div v-if="schema">
@@ -66,18 +66,29 @@
                     operator(innerConditions.properties.type)
                   }}</span>
                   <span class="target">{{
-                    innerConditions.properties.target
+                    getFieldTarget(
+                      innerConditions.properties.target,
+                      innerConditions.properties.field
+                    )
                   }}</span>
                 </div>
               </span>
             </div>
 
             <div class="comparison" v-if="condition.type == 'comparison'">
-              <span class="field">{{ getFieldLabel(condition.properties.field) }}</span> is
+              <span class="field">{{
+                getFieldLabel(condition.properties.field)
+              }}</span>
+              is
               <span class="operator">{{
                 operator(condition.properties.type)
               }}</span>
-              <span class="target">{{ condition.properties.target }}</span>
+              <span class="target">{{
+                getFieldTarget(
+                  condition.properties.target,
+                  condition.properties.field
+                )
+              }}</span>
             </div>
           </div>
         </div>
@@ -107,43 +118,73 @@ export default {
       default: null,
     },
 
-    inputs:{
-      default:null
-    }
+    inputs: {
+      default: null,
+    },
   },
   data() {
-    return {
-      test: ">",
-      text: "and",
-    };
+    return {};
   },
 
   methods: {
     operator(operand) {
-      if (this.operators) {
-        return this.operators.find((operator) => operator.val == operand)
-          ?.string;
+      if (this.inputs.operators) {
+        return (
+          this.inputs.operators.find((operator) => operator.key == operand)
+            ?.label || operand
+        );
       }
     },
 
     groupType(type) {
       if (this.comparisonType) {
-        return this.comparisonType.find((groupType) => groupType.val === type)
-          ?.string;
+        return (
+          this.comparisonType.find((groupType) => groupType.val === type)
+            ?.string || type
+        );
       }
     },
 
-      getFieldLabel(inputField){
-        if(this.inputs){
-         return this.inputs.fields.find((field) => field.key === inputField).label
-        }
-        return inputField
+    getFieldLabel(inputField) {
+      if (this.inputs) {
+        return (
+          this.inputs.fields.find((field) => field.key === inputField)?.label ||
+          inputField
+        );
+      }
+      return inputField;
+    },
+
+    getFieldTarget(inputTarget, inputField) {
+      const target = this.inputs.fields.find(
+        (field) => field.key === inputField
+      );
+
+      if (target) {
+        if (target.type === "dropDown" || target.type === "checkbox") {
+          // multi values
+          return inputTarget
+            .map((item) => {
+              return (
+                target.options.find((option) => option.value === item).text ||
+                item
+              );
+            })
+            .join(", ");
+        } else if (target.type === "radio") {
+          // filter out just one
+          return (
+            target.options.find((option) => option.value === inputTarget)
+              .text || inputTarget
+          );
+        } else if (target.type === "number") {
+          return Intl.NumberFormat().format(inputTarget);
+        } else return inputTarget;
+      } else return inputTarget;
     },
   },
   computed: {
     ...mapGetters({
-      // schema: "workflow/schema",
-      operators: "workflow/operators",
       comparisonType: "workflow/comparisonType",
     }),
 
@@ -213,6 +254,7 @@ export default {
 
     .n {
       color: #19283d;
+      text-transform: capitalize;
     }
   }
 

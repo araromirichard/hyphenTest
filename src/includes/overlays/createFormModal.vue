@@ -228,21 +228,16 @@
                         >
                           <template>
                             <span class="field__title mx-0">Bearer Token</span>
-                            <validation-provider
-                              v-slot="{ errors }"
-                              name="Token"
-                              rules="required"
+
                             >
-                              <v-text-field
-                                :error-messages="errors"
-                                v-model="API.token"
-                                background-color="#ffffff"
-                                outlined
-                                placeholder="Token"
-                                hint="Note: You get this from your API provider if required, otherwise leave blank"
-                              >
-                              </v-text-field>
-                            </validation-provider>
+                            <v-text-field
+                              v-model="API.token"
+                              background-color="#ffffff"
+                              outlined
+                              placeholder="Token"
+                              hint="Note: You get this from your API provider if required, otherwise leave blank"
+                            >
+                            </v-text-field>
                           </template>
                         </v-col>
                       </v-row>
@@ -367,7 +362,6 @@ export default {
         if (!this.show) {
           this.show === true;
         }
-        console.log("hello World");
         this.$router.push({
           name: "Create-form",
           query: { data: this.formName },
@@ -383,9 +377,20 @@ export default {
         if (this.API.endpoint != "" && this.API.token != "") {
           this.$store.dispatch("formBuilder/getApiObject", this.API);
         }
-        if (this.selectedFormType == "API") {
+        if (
+          Object.keys(this.selectedFormType).length === 0 &&
+          this.selectedFormType.constructor === Object
+        ) {
+          this.selectedFormType = "standard";
+          console.log(JSON.stringify(this.selectedFormType, null, 2));
+          this.$store.dispatch(
+            "formBuilder/updateSelectedFormType",
+            this.selectedFormType
+          );
+        } else if (this.selectedFormType == "API") {
           this.$store.dispatch("formBuilder/updateSelectedFormType", this.API);
         } else {
+          console.log(JSON.stringify(this.selectedFormType, null, 2));
           this.$store.dispatch(
             "formBuilder/updateSelectedFormType",
             this.selectedFormType
@@ -415,7 +420,7 @@ export default {
   font-size: 12px !important;
 }
 .field__title {
-  padding-bottom: 10px;
+  margin-bottom: 20px;
   margin-top: 30px;
   margin-left: 67px;
   font-family: "Inter";
@@ -427,6 +432,7 @@ export default {
   color: #7f919b;
 }
 .form__field {
+  margin-top: 12px;
   margin-left: 67px;
   margin-right: 67px;
   margin-bottom: 30px;

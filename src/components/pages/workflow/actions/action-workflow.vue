@@ -30,8 +30,7 @@
         </button>
       </div>
     </div>
-
-    <v-timeline>
+    <v-timeline v-if="canShow">
       <div class="d-flex mt-1">
         <v-btn
           v-if="isLast"
@@ -50,58 +49,72 @@
     </v-timeline>
 
     <get-approval-action
-      v-if="actionModal == 'PbotApproval'"
+      v-show="actionModal == 'PbotApproval'"
       @channel="channel = $event"
       v-model="data"
       ref="PbotApproval"
     />
 
     <send-email-action
-      v-if="actionModal == 'hyphenEmail'"
+      v-show="actionModal == 'hyphenEmail'"
       @channel="channel = $event"
       v-model="data"
       ref="hyphenEmail"
     />
 
     <add-to-payables-action
-      v-if="actionModal == 'hyphenAddToPayables'"
+      v-show="actionModal == 'hyphenAddToPayables'"
       @channel="channel = $event"
       v-model="data"
       ref="hyphenAddToPayables"
     />
     <send-payment-action
-      v-if="actionModal == 'hyphenSendPayment'"
+      v-show="actionModal == 'hyphenSendPayment'"
       @channel="channel = $event"
       v-model="data"
       ref="hyphenSendPayment"
     />
 
     <update-customer-action
-      v-if="actionModal == 'hyphenUpdateCustomer'"
+      v-show="actionModal == 'hyphenUpdateCustomer'"
       v-model="data"
       @channel="channel = $event"
       ref="hyphenUpdateCustomer"
     />
 
+    <update-vendor-action
+      v-show="actionModal == 'hyphenUpdateVendor'"
+      v-model="data"
+      @channel="channel = $event"
+      ref="hyphenUpdateVendor"
+    />
+
     <send-form-action
-      v-if="actionModal == 'hyphenForm'"
+      v-show="actionModal == 'hyphenForm'"
       v-model="data"
       @channel="channel = $event"
       ref="hyphenForm"
     />
 
     <add-delay-action
-      v-if="actionModal == 'hyphenDelay'"
+      v-show="actionModal == 'hyphenDelay'"
       @channel="channel = $event"
       v-model="data"
       ref="hyphenDelay"
     />
 
     <connect-workflow-action
-      v-if="actionModal == 'hyphenToWorkFlow'"
+      v-show="actionModal == 'hyphenToWorkFlow'"
       @channel="channel = $event"
       v-model="data"
       ref="hyphenToWorkFlow"
+    />
+
+    <send-to-webhook-action
+      v-show="actionModal == 'hyphenToWebhook'"
+      @channel="channel = $event"
+      v-model="data"
+      ref="hyphenToWebhook"
     />
   </div>
 </template>
@@ -114,7 +127,10 @@ import GetApprovalAction from "./getApprovalAction.vue";
 import sendEmailAction from "./sendEmailAction.vue";
 import SendFormAction from "./sendFormAction.vue";
 import SendPaymentAction from "./sendPaymentAction.vue";
+import sendToWebhookAction from "./sendToWebhookAction.vue";
 import UpdateCustomerAction from "./updateCustomerAction.vue";
+import UpdateVendorAction from "./updateVendorAction.vue";
+
 export default {
   components: {
     GetApprovalAction,
@@ -123,7 +139,9 @@ export default {
     SendFormAction,
     AddDelayAction,
     UpdateCustomerAction,
+    UpdateVendorAction,
     SendPaymentAction,
+    sendToWebhookAction,
     ConnectWorkflowAction,
   },
   props: {
@@ -139,6 +157,10 @@ export default {
       type: Boolean,
       default: false,
     },
+
+    isBeenDragged: {
+      default: false,
+    },
   },
   data() {
     return {
@@ -148,11 +170,9 @@ export default {
     };
   },
   mounted() {
-    this.data = this.value;
     if (this.value?.fresh) {
       this.showDialog(this.value.type);
     }
-    this.actionModal = this.value.type;
   },
   methods: {
     async showDialog(ref) {
@@ -172,6 +192,11 @@ export default {
         return this.actionsMeta.find((action) => action.type === this.value);
       }
     },
+
+    canShow(){
+      if(!this.isLast) return true
+      return !this.isBeenDragged && this.channel !== "N/A" && this.channel !== "" && this.channel !== null && this.channel !== undefined
+    } 
   },
   watch: {
     data: {
@@ -189,9 +214,24 @@ export default {
       deep: true,
       handler(newValue) {
         this.data = newValue;
+        this.actionModal = this.value.type;
         // reset the modal form data
       },
     },
+    channel:{
+      immediate:true,
+      deep:true,
+      handler(){
+        this.$emit("channel", this.channel !== "N/A" && this.channel !== "" && this.channel !== null && this.channel !== undefined)
+      }
+      
+    },
+
+    isBeenDragged(val){
+     if(!val){
+        this.$refs[this.value.type].mapForm();
+     }
+    }
   },
 };
 </script>

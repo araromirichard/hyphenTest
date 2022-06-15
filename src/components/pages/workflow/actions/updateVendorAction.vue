@@ -4,7 +4,7 @@
       <div class="action__header">
         <div class="b">
           <img class="i" src="@/assets/actions-update-customer.svg" alt="" />
-          <span class="t">Update Customer</span>
+          <span class="t">Update Vendor</span>
         </div>
 
         <v-btn @click="close" icon color="primary">
@@ -13,7 +13,7 @@
       </div>
       <div class="action__content">
         <div class="top">
-          <span class="action-title">CUSTOMER</span>
+          <span class="action-title">VENDOR</span>
         </div>
 
         <span class="action-description">
@@ -60,33 +60,6 @@
                 placeholder="Net Terms"
               ></v-select>
             </v-col>
-
-             <v-col cols="12" v-if="selectedAttribute == 'Balance'">
-                 <v-row>
-                   <v-col cols="6">
-                        <v-select
-                outlined
-                color="primary"
-                label="Update Type"
-                :items="updateTypes"
-                v-model="selectedUpdateType"
-                hide-details="auto"
-                placeholder="Update Type"
-                        ></v-select>
-                       </v-col>
-                       <v-col cols="6">
-                      <v-text-field
-                outlined
-                color="primary"
-                label="Update Value"
-                v-model="updateValue"
-                type="number"
-                hide-details="auto"
-                placeholder="Enter amount"
-                       ></v-text-field>
-                      </v-col>
-                 </v-row>
-             </v-col>
           </v-row>
         </div>
 
@@ -95,13 +68,7 @@
             <v-icon left>mdi-close</v-icon> Cancel
           </v-btn>
 
-          <v-btn
-            large
-            @click="addToWorkflow"
-            :disabled="!canAddToWorkflow"
-            color="primary"
-            elevation="0"
-          >
+          <v-btn large @click="addToWorkflow" :disabled="!canAddToWorkflow" color="primary" elevation="0">
             <v-icon left>mdi-chevron-right</v-icon> Add to workflow
           </v-btn>
         </div>
@@ -115,10 +82,10 @@ export default {
   props: {
     value: {
       default: {
-        type: "hyphenUpdateCustomer",
+        type: "hyphenUpdateVendor",
         properties: {
           keys: ["attribute", "tag", "term", "organization", "name"],
-          values: ["", "", "", "", "customer"],
+          values: ["", "", "", "", "vendor"],
         },
       },
     },
@@ -132,9 +99,6 @@ export default {
       selectedTags: "",
       terms: ["Net 30", "Net 45", "Net 60", "Net 90"],
       selectedTerms: "",
-       updateTypes: ["Add", "Subtract"],
-      selectedUpdateType: "",
-      updateValue: "",
     };
   },
   mounted() {
@@ -151,7 +115,7 @@ export default {
 
     addToWorkflow() {
       const payload = {
-        type: "hyphenUpdateCustomer",
+        type: "hyphenUpdateVendor",
         properties: {
           keys: ["attribute", "tag", "term", "organization", "name"],
           values: [
@@ -159,7 +123,7 @@ export default {
             this.selectedTags,
             this.selectedTerms,
             this.orgId,
-            "customer",
+            "vendor",
           ],
         },
       };
@@ -190,15 +154,11 @@ export default {
       this.$emit("channel", this.selectedAttribute);
     },
   },
-  computed: {
-    canAddToWorkflow() {
-      if (this.selectedAttribute === "Balance"){
-        return this.selectedUpdateType && this.updateValue;
-      };
-      return (
-        this.selectedAttribute && (this.selectedTerms || this.selectedTags)
-      );
-    },
+   computed:{
+    canAddToWorkflow(){
+      if(this.selectedAttribute === "Balance") return true;
+      return  this.selectedAttribute && (this.selectedTerms || this.selectedTags)
+    }
   },
   watch: {
     dialog(val) {
@@ -213,8 +173,6 @@ export default {
     selectedAttribute() {
       this.selectedTags = "";
       this.selectedTerms = "";
-      this.selectedUpdateType = "";
-      this.updateValue = "";
     },
   },
 };

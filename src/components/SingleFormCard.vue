@@ -46,9 +46,17 @@
                     "
                     >{{ card.form_title }}</v-card-title
                   >
-                  <v-card-subtitle class="mx-2 pb-2 indigo--text darken-4"
-                    >https://hypn.so/{{ card.hypn_id }}</v-card-subtitle
+                  <v-card-subtitle
+                    class="mx-2 pb-2 indigo--text darken-4"
+                    style="cursor: pointer"
                   >
+                    <span @click="copy(j)">
+                      https://hypn.so/{{ card.hypn_id }}
+                    </span>
+
+                    <v-icon x-small class="px-2">mdi-content-copy</v-icon>
+                  </v-card-subtitle>
+
                   <div class="d-flex justify-space-between my-4">
                     <div class="mx-4 mx-md-1">
                       <v-chip
@@ -166,11 +174,13 @@
         </v-row>
       </v-container>
     </v-item-group>
+    <delete-form ref="deleteForm" />
   </div>
 </template>
 
 <script>
 import { mapActions, mapState } from "vuex";
+import DeleteForm from "../includes/overlays/deleteForm.vue";
 
 export default {
   data() {
@@ -188,6 +198,9 @@ export default {
       submitUrl: "",
     };
   },
+  components: {
+    DeleteForm,
+  },
   methods: {
     ...mapActions("formBuilder", ["deleteForm"]),
     ...mapActions({ showToast: "ui/showToast" }),
@@ -197,6 +210,18 @@ export default {
       this.$parent.$emit("open-modal");
     },
 
+    //copy to clipboard function using the v-clipboard plugin from npm
+    copy(j) {
+      const value = `https://hypn.so/${this.formCards[j].hypn_id}`;
+      this.$clipboard(value).then(
+        this.showToast({
+          sclass: "success",
+          show: true,
+          message: `copied ${value} to clipboard`,
+          timeout: 3000,
+        })
+      );
+    },
     async showForm(index, parentIndex) {
       console.log(index);
       if (index === 0) {
@@ -214,65 +239,9 @@ export default {
         this.$router.push({
           path: `/form/${this.formCards[parentIndex].id}`,
         });
-
-        // iterate over the formCards controls and get the name and label of each  field
-
-        // const controlsObject = this.formCards[parentIndex].form_fields.controls;
-
-        // const nameLabelsArray = [];
-        // const nameArray = [];
-        // for (const key in controlsObject) {
-        //   const newNameLabel = {};
-        //   newNameLabel.name = controlsObject[key]["name"];
-        //   newNameLabel.label = controlsObject[key]["label"];
-        //   //push it into a new array
-        //   nameLabelsArray.push(newNameLabel);
-        //   nameArray.push(newNameLabel.name);
-        // }
-        // var filteredNameLabelArray = nameLabelsArray.filter(
-        //   (item) => item.label !== "Submit" || item.name !== ""
-        // );
-        // var filteredNameArray = nameArray.filter((item) => item !== "");
-        // this.$emit("send-entries", filteredNameLabelArray);
-        // console.log(filteredNameArray);
-        // console.log(filteredNameLabelArray);
       } else if (index === 2) {
-        //get the index of the particula form card
-        //pass this index to a variable
-        const id = this.$store.state.formBuilder.formCards[parentIndex].id;
 
-        console.log(this.$store.state.formBuilder.formCards[parentIndex].id);
-
-        //delete card from vue data object to reflect on UI
-        this.formCards.splice(parentIndex, 1);
-
-        // this.deleteForm(id);
-
-        console.log(id);
-
-        //delete from server....
-        try {
-          await this.$store.dispatch("formBuilder/deleteForm", id).then(
-            this.showToast({
-              sclass: "success",
-              show: true,
-              message:
-                "deleted Form " + this.configuration.formName + " successfully",
-              timeout: 3000,
-            })
-          );
-        } catch (error) {
-          console.log(error);
-          if (error) {
-            this.showToast({
-              sclass: "error",
-              show: true,
-              message:
-                "Form " + this.configuration.formName + " could not be deleted",
-              timeout: 3000,
-            });
-          }
-        }
+        this.$refs.deleteForm.openDialog(parentIndex);
       }
     },
 
@@ -318,5 +287,9 @@ export default {
 px
 ; */
   padding-top: 4px !important;
+}
+.v-card--link {
+  /* cursor: pointer; */
+  cursor: default !important;
 }
 </style>

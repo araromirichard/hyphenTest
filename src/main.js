@@ -12,6 +12,7 @@ import "../src/assets/styles/formbuilder.css";
 import "v-form-builder/dist/v-form-builder.css";
 import JsonCSV from "vue-json-csv";
 import VueSkeletonLoader from "skeleton-loader-vue";
+import Clipboard from "v-clipboard";
 
 import SimpleLineIcons from "vue-simple-line";
 Vue.config.productionTip = false;
@@ -31,15 +32,15 @@ Vue.component("vue-skeleton-loader", VueSkeletonLoader);
 
 // install now
 Vue.use(VueFormBuilderPlugin);
-
+Vue.use(Clipboard);
 //register date filter
 Vue.filter("date", DateFilter);
 
 Vue.mixin(appMixin);
 
 new Vue({
-  router,
-  store,
-  vuetify,
-  render: (h) => h(App),
+    router,
+    store,
+    vuetify,
+    render: (h) => h(App),
 }).$mount("#app");

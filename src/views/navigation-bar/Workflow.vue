@@ -69,6 +69,7 @@
           <v-card
             max-width=""
             height="300"
+            @keyup.enter="startWorkflow"
             flat
             class="m-0"
             style="background: #f8f7f4; border-radius: 8px"
@@ -132,7 +133,7 @@
               ></v-text-field>
             </template>
             <template class="mt-6">
-              <v-card-actions class="d-flex justify-end mt-2 mr-9">
+              <v-card-actions class="d-flex justify-end mt-2 mr-5">
                 <v-btn
                   link
                   @click="startWorkflow"
@@ -165,10 +166,10 @@
           <template v-if="$vuetify.breakpoint.mdAndUp">
             <v-card width="100%" height="46">
               <template>
-                <v-tabs slider-size="4">
-                  <v-tab>RULES</v-tab>
+                <v-tabs v-model="tabIndex" slider-size="4">
+                  <v-tab>WORKFLOWS</v-tab>
+                  <v-tab>TEMPLATES</v-tab>
                   <v-tab>ACTIONS</v-tab>
-                  <v-tab>STAKEHOLDERS</v-tab>
                   <v-tab>LOG</v-tab>
                   <v-spacer></v-spacer>
                   <v-btn
@@ -207,186 +208,221 @@
                     >
                     </v-text-field>
                   </v-expand-x-transition>
+                  <v-tab-item>
+                    <div class="workflows">
+                      <div class="template-banner">
+                        <span class="template-banner__header"
+                          >Template workflows</span
+                        >
+
+                        <div class="d-flex template-banner__desc">
+                          <v-icon color="primary">mdi-vector-link</v-icon>
+                          <span
+                            >Use templates to get started quickly with
+                            workflows. Take advantage of usecases we have
+                            collected from experts</span
+                          >
+                        </div>
+
+                        <v-btn color="primary" @click="tabIndex = 1" outlined
+                          >Go to Templates</v-btn
+                        >
+                      </div>
+                      <div class="saved-workflow">
+                        <span class="saved-workflow__header"
+                          >Saved workflows</span
+                        >
+
+                        <div
+                          v-if="errorLoadingWorkflow"
+                          class="text-center"
+                          style="padding: 100px"
+                        >
+                          <v-btn color="primary" outlined @click="getWorkflows"
+                            ><v-icon>mdi-refresh</v-icon> Retry</v-btn
+                          >
+                        </div>
+
+                        <div
+                          v-if="isLoadingWorkflows"
+                          class="saved-workflow__container"
+                        >
+                          <v-skeleton-loader
+                            v-for="loader in 6"
+                            :key="loader"
+                            height="200px"
+                            width="100%"
+                            type="card"
+                          />
+                        </div>
+
+                        <div v-else class="saved-workflow__container">
+                          <div
+                            class="saved-workflow__container__workflow"
+                            v-for="(workflow, index) in workflows"
+                            :key="index"
+                          >
+                            <span class="titlex">{{
+                              workflow.workflow_title
+                            }}</span>
+                            <span class="trigger">{{ workflow.source }}</span>
+
+                            <div
+                              class="d-flex justify-space-between align-center"
+                            >
+                              <span class="runs">{{
+                                Intl.NumberFormat().format(Number(workflow.run))
+                              }}</span>
+                              <v-switch
+                                @change="toggleWorkflow(workflow)"
+                                v-model="workflow.is_active"
+                              ></v-switch>
+                            </div>
+                            <v-divider></v-divider>
+                            <div class="footerx">
+                              <div>
+                                <span class="footerx__icon--published"></span>
+                                <span class="footerx__state"
+                                  >created
+                                  {{
+                                    format(
+                                      new Date(workflow.created_at),
+                                      "dd/MM/Y"
+                                    )
+                                  }}
+                                </span>
+                              </div>
+                              <div>
+                                <v-btn
+                                  :to="`/workflow/${workflow.id}`"
+                                  icon
+                                  small
+                                  color="#8F96A1"
+                                  ><v-icon>mdi-pencil-outline</v-icon></v-btn
+                                >
+                                <v-btn icon small color="#8F96A1"
+                                  ><v-icon
+                                    >mdi-format-list-bulleted</v-icon
+                                  ></v-btn
+                                >
+                                <v-btn @click="deleteWorkflow(workflow)" icon small color="#8F96A1"
+                                  ><v-icon>mdi-trash-can-outline</v-icon></v-btn
+                                >
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </v-tab-item>
+
+                  <v-tab-item>
+                    <div class="templates">
+                      <div class="template-banner">
+                        <span class="template-banner__header"
+                          >Template workflows</span
+                        >
+
+                        <div class="template-banner__desc">
+                          <v-icon color="primary">mdi-vector-link</v-icon>
+                          <span
+                            >Use templates to get started quickly with
+                            workflows. Take advantage of usecases we have
+                            collected from experts</span
+                          >
+                        </div>
+                      </div>
+                      <div class="template-banner__container">
+                        <div
+                          class="template-banner__container__template"
+                          v-for="(workflow, index) in workflows"
+                          :key="index"
+                        >
+                          <span class="titlex">{{
+                            workflow.workflow_title
+                          }}</span>
+                          <span class="trigger">{{ workflow.source }}</span>
+                          <div class="description">template description</div>
+                          <v-divider></v-divider>
+                          <div class="footerx">
+                            <span class="footerx__state">Template </span>
+                            <div style="display: flex; gap: 5px">
+                              <v-btn small outlined color="#8F96A1">
+                                Use
+                              </v-btn>
+                              <v-btn icon small color="primary"
+                                ><v-icon>mdi-eye-outline</v-icon></v-btn
+                              >
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </v-tab-item>
                 </v-tabs>
               </template>
             </v-card>
           </template>
-          <div
-            v-if="$vuetify.breakpoint.mdAndUp"
-            style="
-              width: 100%;
-              height: 53px;
-              background: rgba(127, 145, 155, 0.052607);
-            "
-          >
-            <h5
-              v-if="Rules"
-              class="mr-5"
-              style="
-                padding-left: 40px;
-                padding-top: 21px;
-                font-family: Inter;
-                font-style: normal;
-                font-weight: normal;
-                font-size: 16px;
-                line-height: 24px;
-                color: #596a73;
-              "
-            >
-              Start with a template or Make your own rules below
-            </h5>
-          </div>
-          <!-- -----------------------expansion-panel begins ------------------------------->
-          <ExpansionPanel style="margin-bottom: 35px" />
-          <!-- -----------------------expansion-panel ends ------------------------------->
-
-          <span
-            class="noWorkFlowTitle pl-3 px-md-14"
-            style="font-weight: 700; font-size: 24px"
-          >
-            {{ Rules ? `Your rules` : `Your workflow(s)` }}
-          </span>
-          <span class="pl-3 px-md-14 mt-4">
-            Build your custom finance process rules
-          </span>
-          <v-card
-            v-if="!Rules"
-            elevation="0"
-            class="mx-auto"
-            style="
-              width: 96%;
-              height: 361px;
-              margin-top: 27px;
-              background: #ffffff;
-              border: 1px solid rgba(89, 106, 115, 0.087877);
-              box-sizing: border-box;
-              border-radius: 8px;
-            "
-          >
-            <v-row>
-              <img
-                style="margin-left: 50%; margin-top: 67px; margin-bottom: 16px"
-                :src="require('@/assets/pbot_icons/noWorkflowArrow.svg')"
-                alt=""
-              />
-            </v-row>
-            <v-row class="mx-auto justify-center mt-4 mb-5">
-              <v-card
-                class="d-flex flex-row"
-                elevation="0"
-                style="
-                  width: 414px;
-                  height: 94px;
-                  background: #ffffff;
-                  border: 1px solid #fbf4e4;
-                  box-sizing: border-box;
-                  border-radius: 4px;
-                "
-              >
-                <v-btn
-                  color="#F9EED2"
-                  fab
-                  depressed
-                  class="d-flex justify-center align-content-center"
-                  style="
-                    margin-top: 21px;
-                    margin-left: 26px;
-                    background-color: #f9eed2;
-                  "
-                >
-                  <v-avatar
-                    class="d-flex align-center mx-auto my-auto"
-                    color="#F9EED2"
-                    size="20"
-                  >
-                    <img :src="require('@/assets/info.svg')" alt="" />
-                  </v-avatar>
-                </v-btn>
-                <v-card-text
-                  style="
-                    margin-top: 16px;
-                    marging-left: 18px;
-                    font-style: normal;
-                    font-weight: normal;
-                    font-size: 12px;
-                    line-height: 20px;
-                    color: #596a73;
-                  "
-                >
-                  Select any of the templates above to create a workflow or
-                  click the button below
-                </v-card-text>
-              </v-card>
-            </v-row>
-            <v-row class="mx-auto justify-center mt-4">
-              <v-btn
-                dark
-                width="121"
-                height="45"
-                style="
-                  background: var(--v-primary-base);
-                  box-shadow: 0px 12px 22px rgba(0, 0, 0, 0.24);
-                  border-radius: 4px;
-                "
-              >
-                <simple-line-icons
-                  icon="arrow-right"
-                  color="#FFFFFF"
-                  style="
-                    font-family: simple-line-icons;
-                    font-style: normal;
-                    font-weight: normal;
-                    font-size: 16px;
-                    line-height: 16px;
-                  "
-                  no-svg
-                />
-                <span
-                  class="text-capitalize pl-3"
-                  style="
-                    font-family: Inter;
-                    font-style: normal;
-                    font-weight: 500;
-                    font-size: 14px;
-                    line-height: 17px;
-                    text-align: center;
-                    letter-spacing: 0.636364px;
-                    color: #ffffff;
-                  "
-                  >next</span
-                >
-              </v-btn>
-            </v-row>
-          </v-card>
-
-          <template v-else>
-            <SingleRule
-              class="px-md-10 px-4"
-              style="margin-left: 0px; margin-top: 16px"
-              :createdAt="dateValue() | date"
-            />
-          </template>
         </v-card>
       </v-row>
     </div>
+
+    <v-dialog
+      v-model="deleteWorkflowDialog"
+      :persistent="isDeletingWorkflow"
+      max-width="550px"
+      transition="dialog-transition"
+    >
+      <div class="delete">
+        <div class="delete__header">
+          <span class="t">Delete Workflow</span>
+          <v-btn @click="deleteWorkflowDialog = false" icon color="primary">
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
+        </div>
+        <div class="delete__content">
+          <span class="msg"
+            >Are you sure you want to delete this workflow?</span
+          >
+
+          <v-btn
+            color="primary"
+            @click="confirmDeleteWorkflow"
+            elevation="1"
+            x-large
+            :loading="isDeletingWorkflow"
+          >
+            <v-icon left>mdi-chevron-right</v-icon> Proceed</v-btn
+          >
+        </div>
+      </div>
+    </v-dialog>
   </v-container>
 </template>
 
 <script>
-import ExpansionPanel from "../../includes/ExpansionPanel.vue";
-import SingleRule from "../../includes/SingleRule.vue";
-import SimpleLineIcons from "vue-simple-line";
+import { format } from "date-fns";
 import { mapActions } from "vuex";
 export default {
-  components: { ExpansionPanel, SimpleLineIcons, SingleRule },
   data() {
     return {
+      format: format,
+      deleteWorkflowDialog: false,
+      selectedWorkflow: null,
+      isDeletingWorkflow: false,
       dialog: false,
       Rules: true,
       isClicked: true,
       search: "",
       name: "",
+      workflows: [],
+      isLoadingWorkflows: false,
+      errorLoadingWorkflow: true,
+      tabIndex: 0,
     };
+  },
+  mounted() {
+    this.getWorkflows();
   },
   methods: {
     ...mapActions({ showToast: "ui/showToast" }),
@@ -412,14 +448,80 @@ export default {
         });
       }
     },
-    // pushRoute() {
-    //   $router.push("/workflow/rules-edit");
-    // },
+
+    async toggleWorkflow(workflow) {
+      try {
+        await this.$store.dispatch("workflow/updateWorkflow", {
+          id: workflow.id,
+          is_active: workflow.is_active,
+        });
+        this.showToast({
+          sclass: "success",
+          show: true,
+          message:
+            "Workflow" + workflow.is_active ? "deactivated!" : "activated!",
+          timeout: 3000,
+        });
+      } catch (err) {
+        this.showToast({
+          sclass: "error",
+          show: true,
+          message: err.msg || "An error occurred",
+          timeout: 3000,
+        });
+      }
+    },
+
+    deleteWorkflow(workflow) {
+      this.deleteWorkflowDialog = true;
+      this.selectedWorkflow = workflow;
+    },
+
+    async confirmDeleteWorkflow() {
+      try {
+        this.isDeletingWorkflow = true;
+        await this.$store.dispatch(
+          "workflow/deleteWorkflow",
+          this.selectedWorkflow.id
+        );
+        this.showToast({
+          sclass: "success",
+          show: true,
+          message: "Workflow deleted!",
+          timeout: 3000,
+        });
+        await this.getWorkflows();
+        this.deleteWorkflowDialog = false;
+      } catch (error) {
+        this.showToast({
+          sclass: "error",
+          show: true,
+          message: "Error deleting workflow!",
+          timeout: 3000,
+        });
+      } finally {
+        this.isDeletingWorkflow = false;
+      }
+    },
+
+    async getWorkflows() {
+      try {
+        this.errorLoadingWorkflow = false;
+        this.isLoadingWorkflows = true;
+        const { data } = await this.$store.dispatch("workflow/getAllWorkflows");
+
+        this.workflows = data;
+      } catch (err) {
+        this.errorLoadingWorkflow = true;
+      } finally {
+        this.isLoadingWorkflows = false;
+      }
+    },
   },
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .noWorkFlowTitle {
   display: block;
   margin-left: 0px;
@@ -446,5 +548,258 @@ export default {
 .v-application .elevation-4 {
   box-shadow: 0px 3px 5px -1px rgb(0 0 0 / 3%), 0px 6px 10px 0px rgb(0 0 0 / 3%),
     0px 1px 18px 0px rgb(0 0 0 / 3%) !important;
+}
+
+.delete {
+  border-radius: 8px;
+  background-color: #fff;
+  &__header {
+    padding: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .t {
+      color: var(--v-primary-base);
+      font-weight: 600;
+      font-size: 20px;
+    }
+  }
+
+  &__content {
+    background-color: #fefcf8;
+    padding: 30px 50px;
+    text-align: center;
+
+    .msg {
+      font-size: 16px;
+      color: #757575;
+      line-height: 24px;
+      display: block;
+      margin-bottom: 30px;
+    }
+
+    #add-to-draft {
+      display: block;
+      margin: 50px auto 0px auto;
+      background: transparent;
+      color: #d7a47b;
+      cursor: pointer;
+      font-size: 17px;
+      border-bottom: 1px solid #d7a47b;
+    }
+  }
+}
+
+.workflows {
+  .template-banner {
+    background-color: #f4f5f6;
+    padding: 60px 30px;
+
+    &__header {
+      font-weight: bold;
+      font-size: 23px;
+      color: var(--v-primary-base);
+    }
+
+    &__desc {
+      gap: 20px;
+      margin: 30px 0;
+      color: var(--v-primary-base);
+      font-weight: 400;
+      line-height: 28px;
+    }
+  }
+
+  .saved-workflow {
+    background-color: #fff;
+    padding: 30px;
+
+    &__header {
+      font-weight: bold;
+      font-size: 23px;
+      color: var(--v-primary-base);
+    }
+
+    &__loader {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 30px;
+      justify-content: center;
+      align-items: center;
+      margin-top: 30px;
+    }
+
+    &__container {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 30px;
+      justify-content: center;
+      align-items: center;
+      margin-top: 30px;
+
+      &__workflow {
+        display: inline-block;
+        border: 1px solid #d9dee1;
+        border-radius: 8px;
+
+        box-sizing: border-box;
+        padding: 20px;
+        cursor: pointer;
+
+        .titlex {
+          font-weight: 600;
+          font-size: 15px;
+          color: var(--v-primary-base);
+          display: block;
+          margin-bottom: 10px;
+          text-transform: capitalize;
+        }
+
+        .trigger {
+          background: #e9ebf6;
+          border-radius: 10px;
+          padding: 0px 12px;
+          color: var(--v-primary-base);
+          display: inline-block;
+          margin-bottom: 20px;
+          text-transform: capitalize;
+        }
+
+        .runs {
+          background-color: #646a6f;
+          box-sizing: border-box;
+          padding: 4px 0px;
+          color: #fff;
+          border-radius: 4px;
+          display: inline-block;
+          margin: 20px 0px;
+          text-align: center;
+          width: 40px;
+        }
+
+        .footerx {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-top: 20px;
+          color: var(--v-primary-base);
+
+          &__icon {
+            &--draft {
+              height: 10px;
+              width: 10px;
+              border-radius: 100%;
+              margin-right: 5px;
+              display: inline-block;
+              background-color: #e3aa1c;
+            }
+
+            &--published {
+              height: 10px;
+              width: 10px;
+              border-radius: 100%;
+              margin-right: 5px;
+              display: inline-block;
+              background-color: #23d2aa;
+            }
+          }
+
+          &__state {
+            color: #8f96a1;
+          }
+        }
+      }
+    }
+  }
+}
+
+.templates {
+  background-color: #f4f5f6;
+  min-height: 100vh;
+  .template-banner {
+    padding: 60px 30px;
+
+    &__header {
+      font-weight: bold;
+      font-size: 23px;
+      color: var(--v-primary-base);
+    }
+
+    &__desc {
+      display: flex;
+      gap: 20px;
+      margin: 30px 0;
+      color: var(--v-primary-base);
+      font-weight: 400;
+      line-height: 28px;
+    }
+
+    &__container {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 30px;
+      justify-content: center;
+      align-items: center;
+      padding: 30px;
+
+      &__template {
+        display: inline-block;
+        border: 1px solid #d9dee1;
+        border-radius: 8px;
+        background-color: #fff;
+
+        box-sizing: border-box;
+        padding: 20px;
+        cursor: pointer;
+
+        .titlex {
+          font-weight: 600;
+          font-size: 15px;
+          color: var(--v-primary-base);
+          display: block;
+          margin-bottom: 10px;
+          text-transform: capitalize;
+        }
+
+        .trigger {
+          background: #e9ebf6;
+          border-radius: 10px;
+          padding: 0px 12px;
+          color: var(--v-primary-base);
+          display: inline-block;
+          margin-bottom: 20px;
+          text-transform: capitalize;
+        }
+
+        .runs {
+          background-color: #646a6f;
+          padding: 4px 10px;
+          color: #fff;
+          border-radius: 4px;
+          display: inline-block;
+          margin: 20px 0px;
+        }
+
+        .description {
+          min-height: 70px;
+          color: #8f96a1;
+        }
+
+        .footerx {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-top: 20px;
+          color: var(--v-primary-base);
+
+          &__state {
+            color: #8f96a1;
+          }
+        }
+      }
+    }
+  }
 }
 </style>

@@ -26,32 +26,36 @@
               paddingRight: `${$vuetify.breakpoint.smAndUp ? '78px' : '34px'}`,
             }"
           >
-            <v-form @submit="submitForm" class="ma-auto" ref="form">
+            <v-form class="ma-auto" ref="form">
               <v-card-text class="pa-0">
                 <v-text-field
+                  :append-icon="showPass ? 'mdi-eye' : 'mdi-eye-off'"
+                  @click:append="showPass = !showPass"
                   ref="password"
                   color="primary"
                   label="Enter a New Password"
                   outlined
                   :disabled="isSending"
-                  type="password"
+                  :type="showPass ? ' type' : 'password'"
                   required
-                  v-model="password"
+                  v-model.trim="password"
                   prepend-inner-icon="mdi-lock-outline"
                   :rules="rules.Password"
                 ></v-text-field>
-                <!-- <v-text-field
+                <v-text-field
+                  :append-icon="showPass2 ? 'mdi-eye' : 'mdi-eye-off'"
+                  @click:append="showPass2 = !showPass2"
                   ref="confirm_password"
                   color="primary"
                   label="Comfirm Your Password"
                   outlined
                   :disabled="isSending"
-                  type="password"
+                  :type="showPass2 ? 'type' : 'password'"
                   required
                   v-model="confirm_password"
-                  prepend-inner-icon="mdi-eye-outline"
-                  :rules="rules.confirm_password"
-                ></v-text-field> -->
+                  prepend-inner-icon="mdi-lock-outline"
+                  :rules="rules.password_confirmation"
+                ></v-text-field>
               </v-card-text>
 
               <v-card-actions class="justify-center px-0">
@@ -96,14 +100,21 @@
 export default {
   name: "reset-password",
 
-  mounted() {},
+  mounted() {
+    // if (!this.$route.query.token) {
+    //   this.$router.push("/login");
+    // }
+    console.log(this.$route);
+  },
 
   data() {
     return {
       showPass: false,
+      showPass2: false,
       password: "",
-      // confirm_password: "",
+      confirm_password: "",
       isSending: false,
+      token: this.$route.query.code,
 
       errorMsg: "",
       rules: {
@@ -117,11 +128,20 @@ export default {
             "At least 1 Special Character/Symbol",
           (v) => /.{6,}/.test(v) || "At least 6 Characters",
         ],
+        password_confirmation: [
+          (v) => !!v || "Confirm password is required",
+          (v) => v === this.password || "Passwords must match",
+        ],
       },
     };
   },
 
   methods: {
+    submitForm() {
+      this.$refs.form.validate();
+      console.log(JSON.stringify(this.form, null, 2));
+    },
+
     // ...mapActions({ showToast: "ui/showToast" }),
     // async submitForm() {
     //   this.$refs.form.validate();
@@ -154,6 +174,13 @@ export default {
 
   computed: {
     //
+
+    form() {
+      return {
+        password: this.password,
+        token: this.token,
+      };
+    },
   },
 };
 </script>

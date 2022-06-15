@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-dialog v-model="dialog" max-width="574">
-      <v-card min-height="722" color="#f8f7f4" class="rounded-lg">
+      <v-card height="722" color="#f8f7f4" class="rounded-lg">
         <v-card-title
           class="mb-8"
           style="background: #ffffff; border-radius: 8px 8px 0px 0px"
@@ -13,9 +13,9 @@
               font-weight: 600;
               font-size: 16px;
               line-height: 19px;
-              color: #301f78;
+              color: #19283d;
             "
-            >Edit Vendor</span
+            >Add Customer</span
           >
           <v-spacer></v-spacer>
           <v-icon
@@ -28,11 +28,7 @@
           </v-icon>
         </v-card-title>
         <div class="px-8 d-flex" style="background: #fdfaf2">
-          <v-tabs
-            @change="viewActiveTab"
-            v-model="tab"
-            background-color="#fdfaf2"
-          >
+          <v-tabs v-model="tab" background-color="#fdfaf2">
             <v-tab v-for="item in CustomerType" :key="item">
               {{ item }}
             </v-tab>
@@ -43,7 +39,7 @@
             <v-card style="background-color: transparent" flat>
               <div class="my-7 mx-10">
                 <p class="pa-0 ma-0 text--disabled text-subtitle-2">
-                  Include details about this vendor, contact person, business
+                  Include details about this customer, contact person, business
                   address, default payment terms, etc
                 </p>
               </div>
@@ -51,7 +47,7 @@
                 <v-row class="mx-10">
                   <v-col cols="12"
                     ><v-text-field
-                      v-model="vendorDetails.companyAddress"
+                      v-model="contactDetails.companyAddress"
                       background-color="#ffffff"
                       outlined
                       hide-details="auto"
@@ -60,7 +56,7 @@
                   ></v-col>
                   <v-col cols="6" class="pl-0"
                     ><v-text-field
-                      v-model="vendorDetails.firstName"
+                      v-model="contactDetails.firstName"
                       background-color="#ffffff"
                       outlined
                       hide-details="auto"
@@ -69,7 +65,7 @@
                   ></v-col>
                   <v-col cols="6"
                     ><v-text-field
-                      v-model="vendorDetails.lastName"
+                      v-model="contactDetails.lastName"
                       background-color="#ffffff"
                       outlined
                       hide-details="auto"
@@ -78,7 +74,7 @@
                   ></v-col>
                   <v-col cols="6" class="pl-0"
                     ><v-text-field
-                      v-model="vendorDetails.email"
+                      v-model="contactDetails.email"
                       background-color="#ffffff"
                       type="email"
                       outlined
@@ -88,7 +84,7 @@
                   ></v-col>
                   <v-col cols="6"
                     ><v-text-field
-                      v-model="vendorDetails.phone"
+                      v-model="contactDetails.phone"
                       background-color="#ffffff"
                       outlined
                       hide-details="auto"
@@ -97,7 +93,7 @@
                   ></v-col>
                   <v-col cols="6" class="pl-0"
                     ><v-select
-                      v-model="vendorDetails.role"
+                      v-model="contactDetails.role"
                       :items="role"
                       background-color="#ffffff"
                       outlined
@@ -162,7 +158,7 @@
                       background-color="#ffffff"
                       outlined
                       hide-details="auto"
-                      placeholder="Company Name"
+                      placeholder="Company Street Address"
                     ></v-text-field
                   ></v-col>
                   <v-col cols="6" class="pl-0"
@@ -187,7 +183,7 @@
                   ></v-col>
                   <v-col cols="6" class="pl-0"
                     ><v-text-field
-                      v-model="businessDetails.businessAddress"
+                      v-model="businessDetails.firstAddress"
                       background-color="#ffffff"
                       outlined
                       hide-details="auto"
@@ -196,7 +192,7 @@
                   ></v-col>
                   <v-col cols="6"
                     ><v-text-field
-                      v-model="businessDetails.postalCode"
+                      v-model="businessDetails.secondAddress"
                       background-color="#ffffff"
                       outlined
                       hide-details="auto"
@@ -205,7 +201,7 @@
                   ></v-col>
                   <v-col cols="6" class="pl-0"
                     ><v-text-field
-                      v-model="businessDetails.businessCity"
+                      v-model="businessDetails.city"
                       background-color="#ffffff"
                       type="email"
                       outlined
@@ -215,7 +211,7 @@
                   ></v-col>
                   <v-col cols="6"
                     ><v-text-field
-                      v-model="businessDetails.businessState"
+                      v-model="businessDetails.state"
                       background-color="#ffffff"
                       outlined
                       hide-details="auto"
@@ -242,153 +238,6 @@
                       placeholder="Business Category"
                     ></v-select
                   ></v-col>
-                  <v-col cols="6" class="pl-0"
-                    ><v-select
-                      v-model="businessDetails.selectedTaxCategory"
-                      :items="taxCategory"
-                      background-color="#ffffff"
-                      outlined
-                      hide-details="auto"
-                      placeholder="Tax Category"
-                    ></v-select
-                  ></v-col>
-                  <v-col cols="6"
-                    ><v-select
-                      v-model="businessDetails.selectedApplyWithholding"
-                      :items="applyWithholding"
-                      background-color="#ffffff"
-                      outlined
-                      hide-details="auto"
-                      placeholder="Apply Withholding"
-                    ></v-select
-                  ></v-col>
-                </v-row>
-                <v-card-actions class="justify-end pa-8 mb-8">
-                  <v-btn
-                    @click="switchTabs('next')"
-                    dark
-                    width="121"
-                    height="45"
-                    class="mr-5"
-                    style="
-                      background: var(--v-primary-base);
-                      box-shadow: 0px 12px 22px rgba(0, 0, 0, 0.24);
-                      border-radius: 4px;
-                    "
-                  >
-                    <simple-line-icons
-                      icon="arrow-right"
-                      color="#FFFFFF"
-                      style="
-                        font-family: simple-line-icons;
-                        font-style: normal;
-                        font-weight: normal;
-                        font-size: 12px;
-                        line-height: 16px;
-                      "
-                      no-svg
-                    />
-                    <span
-                      class="text-capitalize pl-3"
-                      style="
-                        font-family: Inter;
-                        font-style: normal;
-                        font-weight: 500;
-                        font-size: 14px;
-                        line-height: 17px;
-                        text-align: center;
-                        letter-spacing: 0.636364px;
-                        color: #ffffff;
-                      "
-                      >next</span
-                    >
-                  </v-btn>
-                </v-card-actions>
-              </v-form>
-            </v-card>
-          </v-tab-item>
-
-          <!-- BANK TAB -->
-          <v-tab-item>
-            <v-card style="background-color: transparent" flat>
-              <v-form class="mt-10">
-                <v-row class="mx-10">
-                  <v-col cols="12"
-                    ><v-text-field
-                      v-model="vendorBankDetails.bankName"
-                      background-color="#ffffff"
-                      outlined
-                      hide-details="auto"
-                      placeholder="Enter Bank Name"
-                    ></v-text-field
-                  ></v-col>
-                  <v-col cols="6" class="pl-0"
-                    ><v-text-field
-                      v-model="vendorBankDetails.bankAccountNumber"
-                      background-color="#ffffff"
-                      outlined
-                      hide-details="auto"
-                      placeholder="Bank Acccount Number"
-                    ></v-text-field
-                  ></v-col>
-                  <v-col cols="6"
-                    ><v-text-field
-                      v-model="vendorBankDetails.tin"
-                      background-color="#ffffff"
-                      outlined
-                      hide-details="auto"
-                      placeholder="Address 2"
-                    ></v-text-field
-                  ></v-col>
-                  <v-col cols="6" class="pl-0"
-                    ><v-text-field
-                      v-model="vendorBankDetails.bankCity"
-                      background-color="#ffffff"
-                      type="email"
-                      outlined
-                      hide-details="auto"
-                      placeholder="City"
-                    ></v-text-field
-                  ></v-col>
-                  <v-col cols="6"
-                    ><v-text-field
-                      v-model="vendorBankDetails.bankState"
-                      background-color="#ffffff"
-                      outlined
-                      hide-details="auto"
-                      placeholder="State"
-                    ></v-text-field
-                  ></v-col>
-                  <v-col cols="6" class="pl-0"
-                    ><v-select
-                      v-model="vendorBankDetails.selectedBankCountry"
-                      :items="country"
-                      background-color="#ffffff"
-                      outlined
-                      hide-details="auto"
-                      placeholder="Country"
-                    ></v-select
-                  ></v-col>
-                  <v-col cols="6"
-                    ><v-select
-                      v-model="vendorBankDetails.selectedCurency"
-                      :items="businessCategory"
-                      background-color="#ffffff"
-                      outlined
-                      hide-details="auto"
-                      placeholder="Business Category"
-                    ></v-select
-                  ></v-col>
-                  <v-col cols="12"
-                    ><v-switch
-                      color="teal accent-3"
-                      v-model="switch1"
-                    ></v-switch>
-                    <p class="text-subtitle-2">
-                      This vendor is approved to do business with your
-                      organization
-                    </p>
-                  </v-col>
                 </v-row>
                 <v-card-actions class="justify-end pa-8">
                   <v-btn
@@ -445,8 +294,7 @@ export default {
   data() {
     return {
       dialog: false,
-      switch1: true,
-      vendorDetails: {
+      contactDetails: {
         companyAddress: "",
         firstName: "",
         lastName: "",
@@ -460,73 +308,22 @@ export default {
         selectedPaymentTerms: "",
         firstAddress: "",
         secondAddress: "",
-        businessCity: "",
-        businessState: "",
+        city: "",
+        state: "",
         selectedCountry: "",
         selectedBusinessCategory: "",
-        selectedTaxCategory: "",
-        selectedApplyWithhoding: "",
-      },
-      vendorBankDetails: {
-        bankName: "",
-        bankAccountNumber: "",
-        tin: "",
-        bankCity: "",
-        bankState: "",
-        selectedBankCountry: "",
-        selectedCurency: "",
       },
       role: ["Admin", "Member"],
-      accountingCode: ["Admin", "Member"],
-      paymentTerms: ["Admin", "Member"],
-      country: ["Nigeria", "Ghana", "USA"],
+      accountingCode: [],
+      paymentTerms: [],
+      country: [],
       businessCategory: [],
-      taxCategory: [],
-      applyWithholding: [],
       tab: null,
 
-      CustomerType: ["Contact", "Business", "Bank"],
-      contactRules: {
-        firstName: [(v) => !!v || "This field is required "],
-        lastName: [(v) => !!v || "This field is required "],
-        selectedRole: [(v) => !!v || "This field is required "],
-        companyAddress: [(v) => !!v || "This field is required "],
-        email: [
-          (v) => !!v || "E-mail is required",
-          (v) => /.+@.+\..+/.test(v) || "E-mail must be valid",
-        ],
-        phoneNumber: [
-          (v) => !!v || "This field is required ",
-          (v) => v.length == 14 || "Number is invalid",
-        ],
-      },
-      businessRules: {
-        companyName: [(v) => !!v || "This field is required "],
-        selectedAccountingCode: [(v) => !!v || "This field is required "],
-        selectedPaymentTerms: [(v) => !!v || "This field is required "],
-        firstAddress: [(v) => !!v || "This field is required "],
-        businessCity: [(v) => !!v || "This field is required "],
-        businessState: [(v) => !!v || "This field is required "],
-        selectedCountry: [(v) => !!v || "This field is required "],
-        selectedBusinessCategory: [(v) => !!v || "This field is required "],
-        selectedTaxCategory: [(v) => !!v || "This field is required "],
-        selectedApplyWithhoding: [(v) => !!v || "This field is required "],
-      },
-      vendorBankDetailsRule: {
-        bankName: [(v) => !!v || "This field is required "],
-        bankAccountNumber: [(v) => !!v || "This field is required "],
-        tin: [(v) => !!v || "This field is required "],
-        bankCity: [(v) => !!v || "This field is required "],
-        bankState: [(v) => !!v || "This field is required "],
-        selectedBankCountry: [(v) => !!v || "This field is required "],
-        selectedCurency: [(v) => !!v || "This field is required "],
-      },
+      CustomerType: ["Contact", "Business"],
     };
   },
   methods: {
-    viewActiveTab(e) {
-      console.log({ e });
-    },
     switchTabs(direction) {
       // console.log(direction);
       switch (direction) {
@@ -545,25 +342,11 @@ export default {
       }
     },
     saveAction() {
-      //console.log(this.vendorDetails);
-      //console.log(this.businessDetails);
-      console.log(this.vendorCompleteDetails, null, 2);
-      //push out the details entered
-      //this.$emit("input", data);
+      console.log(this.customerCompleteDetails, null, 2);
       this.dialog = false;
     },
     show(value) {
       this.dialog = value;
-    },
-  },
-
-  computed: {
-    vendorCompleteDetails() {
-      return Object.assign(
-        this.vendorDetails,
-        this.businessDetails,
-        this.vendorBankDetails
-      );
     },
   },
 };

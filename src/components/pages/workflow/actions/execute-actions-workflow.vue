@@ -52,22 +52,36 @@
             <!-- <div v-sortable="{ onUpdate: reOrder }"> -->
 
             <div>
-              <action-workflow
-                v-for="(action, index) in selectedActions"
-                :isLast="index == selectedActions.length - 1"
-                :key="index"
-                :index="index"
-                v-model="selectedActions[index]"
-                @add-new-action="showActionModal"
-                @remove-action="removeAction(index)"
-              />
+              <draggable
+                v-model="selectedActions"
+                v-bind="dragOptions"
+                @start="drag = true"
+                @end="drag = false"
+              >
+                <transition-group
+                  type="transition"
+                  :name="!drag ? 'flip-list' : null"
+                >
+                  <action-workflow
+                    v-for="(action, index) in selectedActions"
+                    :isLast="index == selectedActions.length - 1"
+                    :key="index"
+                    :isBeenDragged="drag"
+                    :index="index"
+                    v-model="selectedActions[index]"
+                    @channel="channels.splice(index,1,$event)"
+                    @add-new-action="showActionModal"
+                    @remove-action="removeAction(index)"
+                  />
+                </transition-group>
+              </draggable>
             </div>
           </div>
         </transition>
       </div>
 
       <div style="margin-top: 25px; width: 150px">
-        <v-btn color="primary" elevation="0" large @click="$emit('publish')"
+        <v-btn color="primary" elevation="0" :disabled="!canPublish" large @click="$emit('publish')"
           ><v-icon>mdi-chevron-right</v-icon> publish</v-btn
         >
       </div>
@@ -120,8 +134,9 @@
 
 <script>
 import actionWorkflow from "./action-workflow.vue";
+import draggable from "vuedraggable";
 export default {
-  components: { actionWorkflow },
+  components: { actionWorkflow, draggable },
   props: {
     isVisable: {
       type: Boolean,
@@ -137,6 +152,8 @@ export default {
       actionModal: false,
       searchQuery: "",
       selectedActions: [],
+      channels:[],
+      drag: false,
       scrollOptions: {
         duration: 500,
         offset: 0,
@@ -194,6 +211,19 @@ export default {
           .includes(this.searchQuery.toLowerCase());
       });
     },
+
+    dragOptions() {
+      return {
+        animation: 200,
+        group: "description",
+        disabled: false,
+        ghostClass: "ghost",
+      };
+    },
+
+    canPublish(){
+      return this.channels.every(action => action) && this.channels.length > 0
+    }
   },
   watch: {
     value: {
@@ -348,5 +378,16 @@ export default {
       }
     }
   }
+}
+
+.flip-list-move {
+  transition: transform 0.5s;
+}
+.no-move {
+  transition: transform 0s;
+}
+.ghost {
+  opacity: 0.5;
+  background: #f8f7f4;
 }
 </style>

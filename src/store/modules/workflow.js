@@ -6,32 +6,7 @@ const state = () => ({
   schema: null,
   payment: null,
   paymentOptions: null,
-  operators: [
-    {
-      string: "Equal to",
-      val: "=",
-    },
-    {
-      string: "Not Equal to",
-      val: "!=",
-    },
-    {
-      string: "Less than",
-      val: "<",
-    },
-    {
-      string: "Less than or Equal to",
-      val: "<=",
-    },
-    {
-      string: "Greater than",
-      val: ">",
-    },
-    {
-      string: "Greater than",
-      val: ">=",
-    },
-  ],
+  newWorkflow: null,
   comparisonType: [
     {
       string: "ALL",
@@ -97,6 +72,10 @@ const mutations = {
   SET_PAYMENT_OPTIONS(state, payload) {
     state.paymentOptions = payload;
   },
+
+  NEW_WORKFLOW(state, payload) {
+    state.newWorkflow = payload;
+  },
 };
 
 const actions = {
@@ -110,6 +89,15 @@ const actions = {
 
   updateSchema({ commit }, payload) {
     commit("SET_SCHEMA", payload);
+  },
+
+  async getAllOperators() {
+    try {
+      const { data } = await Workflow.getAllOperators();
+      return data;
+    } catch (error) {
+      return Promise.reject(error);
+    }
   },
 
   async getAllInvoiceFieldsOptions() {
@@ -127,7 +115,9 @@ const actions = {
       commit("SET_PAYMENT", data.options);
       return Object.keys(data.options).map((key) => {
         return {
-          label: data.options[key].charAt(0).toUpperCase() + data.options[key].slice(1),
+          label:
+            data.options[key].charAt(0).toUpperCase() +
+            data.options[key].slice(1),
           key: data.options[key],
         };
       });
@@ -140,12 +130,63 @@ const actions = {
     try {
       const { data } = await Workflow.getPaymentFieldsOptions(paymentType);
       commit("SET_PAYMENT_OPTIONS", data.data);
-      return data.data.filter((item) => item.option === paymentType).map((item) => {
-        return {
-          label: item.label.charAt(0).toUpperCase() + item.label.slice(1),
-          key: item.key,
-        };
-      });
+      return data.data
+        .filter((item) => item.option === paymentType)
+        .map((item) => {
+          return {
+            label: item.label.charAt(0).toUpperCase() + item.label.slice(1),
+            key: item.key,
+          };
+        });
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  },
+
+  async createWorkflow({ commit }, payload) {
+    try {
+      const { data } = await Workflow.createWorkflow(payload);
+      commit("NEW_WORKFLOW", data);
+      return data;
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  },
+
+  async updateWorkflow({ commit }, payload) {
+    try {
+      const { data } = await Workflow.updateworkflow(payload);
+      commit("NEW_WORKFLOW", data);
+      return data;
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  },
+
+  async deleteWorkflow({ commit }, id) {
+    try {
+      const { data } = await Workflow.deleteWorkflow(id);
+      commit("NEW_WORKFLOW", data);
+      return data;
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  },
+
+  async getAllWorkflows() {
+    try {
+      const data = await Workflow.getAllWorkflows();
+      return data;
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  },
+
+  async getAllWorkflowById({ commit }, id) {
+    try {
+      const data = await Workflow.getWorkflowById(id);
+      commit("NEW_WORKFLOW", data);
+      return data;
     } catch (error) {
       return Promise.reject(error);
     }

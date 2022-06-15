@@ -79,7 +79,6 @@
           <workflow-condition-input
             class="my-4"
             :rule="rule"
-            @selected-schema="$emit('selected-field', $event)"
             @delete="deleteCondition"
             :index="i"
             :inputs="inputs"
@@ -234,11 +233,25 @@ export default {
       },
     },
 
-    selectedFields: {
+    groupConditions: {
       immediate: true,
       deep: true,
-      handler(val) {
-          this.$emit("selected-fields", val);
+      handler() {
+        this.$emit(
+          "valid-group",
+          this.groupConditions.every((condition) => {
+            if (condition.type === "comparison") {
+              if (
+                condition.properties.field === "" ||
+                condition.properties.target === "" ||
+                condition.properties.type === ""
+              ) {
+                return false;
+              }
+            }
+            return true;
+          })
+        );
       },
     },
   },
@@ -252,11 +265,15 @@ export default {
     },
 
     deleteCondition(index) {
-      if (this.isFirst && this.groupConditions === 1) {
+      if (this.isFirst && this.groupConditions.length === 1) {
         return;
       }
 
       this.groupConditions.splice(index, 1);
+
+      if (this.groupConditions.length === 0 && !this.isFirst) {
+        this.$emit("delete-empty-group");
+      }
     },
 
     collectGroupType(type) {
@@ -301,14 +318,28 @@ export default {
         },
       };
     },
-
-    selectedFields(){
-    return  this.groupConditions.map(condition=>{
-        if(condition.type == "comparison"){
-          return condition.properties.field
+    validCondition() {
+      return this.groupConditions.every((condition) => {
+        if (condition.type === "comparison") {
+          if (
+            condition.properties.field === "" ||
+            condition.properties.target === "" ||
+            condition.properties.type === ""
+          ) {
+            return false;
+          }
         }
-      })
-    }
+        return true;
+      });
+    },
+
+    selectedFields() {
+      return this.groupConditions.map((condition) => {
+        if (condition.type == "comparison") {
+          return condition.properties.field;
+        }
+      });
+    },
   },
 };
 </script>
