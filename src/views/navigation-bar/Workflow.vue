@@ -274,7 +274,7 @@
                                 Intl.NumberFormat().format(Number(workflow.run))
                               }}</span>
                               <v-switch
-                                 @change="toggleWorkflow(workflow)"
+                                @change="toggleWorkflow(workflow)"
                                 v-model="workflow.is_active"
                               ></v-switch>
                             </div>
@@ -293,7 +293,11 @@
                                 </span>
                               </div>
                               <div>
-                                <v-btn :to="`/workflow/${workflow.id}`" icon small color="#8F96A1"
+                                <v-btn
+                                  :to="`/workflow/${workflow.id}`"
+                                  icon
+                                  small
+                                  color="#8F96A1"
                                   ><v-icon>mdi-pencil-outline</v-icon></v-btn
                                 >
                                 <v-btn icon small color="#8F96A1"
@@ -301,7 +305,7 @@
                                     >mdi-format-list-bulleted</v-icon
                                   ></v-btn
                                 >
-                                <v-btn icon small color="#8F96A1"
+                                <v-btn @click="deleteWorkflow(workflow)" icon small color="#8F96A1"
                                   ><v-icon>mdi-trash-can-outline</v-icon></v-btn
                                 >
                               </div>
@@ -362,6 +366,37 @@
         </v-card>
       </v-row>
     </div>
+
+    <v-dialog
+      v-model="deleteWorkflowDialog"
+      :persistent="isDeletingWorkflow"
+      max-width="550px"
+      transition="dialog-transition"
+    >
+      <div class="delete">
+        <div class="delete__header">
+          <span class="t">Delete Workflow</span>
+          <v-btn @click="deleteWorkflowDialog = false" icon color="primary">
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
+        </div>
+        <div class="delete__content">
+          <span class="msg"
+            >Are you sure you want to delete this workflow?</span
+          >
+
+          <v-btn
+            color="primary"
+            @click="confirmDeleteWorkflow"
+            elevation="1"
+            x-large
+            :loading="isDeletingWorkflow"
+          >
+            <v-icon left>mdi-chevron-right</v-icon> Proceed</v-btn
+          >
+        </div>
+      </div>
+    </v-dialog>
   </v-container>
 </template>
 
@@ -372,6 +407,9 @@ export default {
   data() {
     return {
       format: format,
+      deleteWorkflowDialog: false,
+      selectedWorkflow: null,
+      isDeletingWorkflow: false,
       dialog: false,
       Rules: true,
       isClicked: true,
@@ -411,8 +449,59 @@ export default {
       }
     },
 
-    toggleWorkflow(workflow){
-      console.log('wok..',workflow)
+    async toggleWorkflow(workflow) {
+      try {
+        await this.$store.dispatch("workflow/updateWorkflow", {
+          id: workflow.id,
+          is_active: workflow.is_active,
+        });
+        this.showToast({
+          sclass: "success",
+          show: true,
+          message:
+            "Workflow" + workflow.is_active ? "deactivated!" : "activated!",
+          timeout: 3000,
+        });
+      } catch (err) {
+        this.showToast({
+          sclass: "error",
+          show: true,
+          message: err.msg || "An error occurred",
+          timeout: 3000,
+        });
+      }
+    },
+
+    deleteWorkflow(workflow) {
+      this.deleteWorkflowDialog = true;
+      this.selectedWorkflow = workflow;
+    },
+
+    async confirmDeleteWorkflow() {
+      try {
+        this.isDeletingWorkflow = true;
+        await this.$store.dispatch(
+          "workflow/deleteWorkflow",
+          this.selectedWorkflow.id
+        );
+        this.showToast({
+          sclass: "success",
+          show: true,
+          message: "Workflow deleted!",
+          timeout: 3000,
+        });
+        await this.getWorkflows();
+        this.deleteWorkflowDialog = false;
+      } catch (error) {
+        this.showToast({
+          sclass: "error",
+          show: true,
+          message: "Error deleting workflow!",
+          timeout: 3000,
+        });
+      } finally {
+        this.isDeletingWorkflow = false;
+      }
     },
 
     async getWorkflows() {
@@ -459,6 +548,48 @@ export default {
 .v-application .elevation-4 {
   box-shadow: 0px 3px 5px -1px rgb(0 0 0 / 3%), 0px 6px 10px 0px rgb(0 0 0 / 3%),
     0px 1px 18px 0px rgb(0 0 0 / 3%) !important;
+}
+
+.delete {
+  border-radius: 8px;
+  background-color: #fff;
+  &__header {
+    padding: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .t {
+      color: var(--v-primary-base);
+      font-weight: 600;
+      font-size: 20px;
+    }
+  }
+
+  &__content {
+    background-color: #fefcf8;
+    padding: 30px 50px;
+    text-align: center;
+
+    .msg {
+      font-size: 16px;
+      color: #757575;
+      line-height: 24px;
+      display: block;
+      margin-bottom: 30px;
+    }
+
+    #add-to-draft {
+      display: block;
+      margin: 50px auto 0px auto;
+      background: transparent;
+      color: #d7a47b;
+      cursor: pointer;
+      font-size: 17px;
+      border-bottom: 1px solid #d7a47b;
+    }
+  }
 }
 
 .workflows {
