@@ -36,11 +36,18 @@
       </div>
 
       <div class="flow-setup">
-        <v-breadcrumbs :items="breadcrumbs" style="font-weight: 600">
-          <template v-slot:divider>
-            <v-icon class="px-0">mdi-chevron-right</v-icon>
-          </template>
-        </v-breadcrumbs>
+           <div class="d-flex pr-5" style="align-items: center;width:100%">
+          <v-breadcrumbs :items="breadcrumbs" style="font-weight: 600">
+            <template v-slot:divider>
+              <v-icon class="px-0">mdi-chevron-right</v-icon>
+            </template>
+          </v-breadcrumbs>
+          <v-spacer></v-spacer>
+
+          <v-btn @click="$router.go(-1)" text rounded large>
+            <v-icon left>mdi-chevron-left</v-icon> Back
+          </v-btn>
+        </div>
 
         <div class="flows">
           <div class="flow-setup__trigger">
@@ -122,32 +129,32 @@
     >
       <div class="publish">
         <div class="publish__header">
-          <span class="t">Confirm Workflow</span>
+          <span class="t">Update Workflow</span>
           <v-btn @click="publishDialog = false" icon color="primary">
             <v-icon>mdi-close</v-icon>
           </v-btn>
         </div>
         <div class="publish__content">
           <span class="msg"
-            >Confirm this workflow is completed and ready for use</span
+            >Confirm this workflow update is completed and ready for use</span
           >
 
           <v-btn
             color="primary"
-            @click="CREATE_WORKFLOW"
+            @click="UPDATE_WORKFLOW"
             elevation="1"
             x-large
             :loading="isPublishingWorkflow"
           >
             <v-icon left>mdi-chevron-right</v-icon> Save</v-btn
           >
-          <button
+          <!-- <button
             v-if="!isPublishingWorkflow"
             id="add-to-draft"
             @click="addWorkflowToDraft"
           >
             No, Add to draft
-          </button>
+          </button> -->
         </div>
       </div>
     </v-dialog>
@@ -167,10 +174,10 @@
           </v-btn>
         </div>
         <div class="publish-sucessful__top">
-          <v-btn color="success" fab outlined>
+          <v-btn color="success" small fab outlined>
             <v-icon>check</v-icon>
           </v-btn>
-          <span>Workflow published successfully</span>
+          <span>Workflow updated successfully</span>
         </div>
         <div class="publish-sucessful__content">
           <span class="msg">
@@ -228,7 +235,7 @@
           <div class="mt-5 cta">
             <v-btn
               color="primary"
-              @click="publishDialogSucessful = false"
+              to="/workflow"
               elevation="0"
               large
             >
@@ -315,12 +322,12 @@ export default {
   methods: {
     ...mapActions({ showToast: "ui/showToast" }),
 
-    async CREATE_WORKFLOW() {
+    async UPDATE_WORKFLOW() {
       this.isPublishingWorkflow = true;
       try {
         const { data } = await this.$store.dispatch(
-          "workflow/createWorkflow",
-          this.workflowPayload
+          "workflow/updateWorkflow",
+          {id:this.$route.params.id,...this.workflowPayload}
         );
         this.workflow.webhook = "http://flow.hypn.so/" + data.workflow_id;
         console.log(JSON.stringify(data, null, 2));
