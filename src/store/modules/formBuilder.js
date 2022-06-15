@@ -8,6 +8,7 @@ const state = {
     formDescription: "",
     entriesResponse: null,
     entries: null,
+    entriesCount: null,
     selectedFormType: {},
     API: {},
 };
@@ -19,7 +20,7 @@ const getters = {
             forms = state.formCards;
             console.log(forms);
         }
-        return forms;
+        return forms.reverse();
     },
     getSingleForm: (state) => {
         if (state.singleForm != null) {
@@ -55,6 +56,12 @@ const getters = {
     entriesResponse: (state) => {
         if (state.entriesResponse != null) {
             return state.entriesResponse;
+        }
+    },
+    entriesCount: (state) => {
+        if (state.entriesCount != null) {
+            console.log(JSON.stringify(state.entriesCount.data, null, 2));
+            return state.entriesCount.data;
         }
     },
 };
@@ -108,6 +115,10 @@ const mutations = {
     SET_FORM_DESCRIPTION(state, data) {
         console.log(data);
         state.formDescription = data;
+    },
+    SET_ENTRIES_COUNT(state, data) {
+        console.log(JSON.stringify(data, null, 2));
+        state.entriesCount = data;
     },
 };
 
@@ -194,6 +205,18 @@ const actions = {
 
             commit("deleteForm", id);
             return response.data;
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    },
+
+    async getFormEntriesCount({ commit, rootState }) {
+        try {
+            const response = await formbuilder.getFormEntrieCount(
+                rootState.auth.user.organization.id
+            );
+            commit("SET_ENTRIES_COUNT", response.data);
+            return response;
         } catch (error) {
             return Promise.reject(error);
         }

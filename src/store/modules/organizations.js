@@ -132,23 +132,23 @@ const actions = {
             );
             console.log(JSON.stringify(response, null, 2));
 
-      return response;
-    } catch (error) {
-      return Promise.reject(error);
-    }
-  },
+            return response;
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    },
 
-  async fetchCoWorkers({ rootGetters }) {
-    try {
-      const {data} = await organization.getCoWorkers(
-        rootGetters["auth/organizationId"],
-      );
+    async fetchCoWorkers({ rootGetters }) {
+        try {
+            const { data } = await organization.getCoWorkers(
+                rootGetters["auth/organizationId"],
+            );
 
-      return data.data;
-    } catch (error) {
-      return Promise.reject(error);
-    }
-  },
+            return data.data;
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    },
 };
 
 export default {

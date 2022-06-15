@@ -2,9 +2,9 @@
   <div class="d-flex align-center justify-center">
     <v-card
       max-height="40vh"
-      max-width="90vw"
+      min-width="97%"
       outlined
-      class="my-4 mx-8 rounded-lg"
+      class="my-4 mx-2 rounded-lg"
       @click="
         $router.push({
           name: 'inbox.invoice',
@@ -47,21 +47,18 @@
       </template>
       <v-row class="pa-0 ma-0">
         <v-col class="d-flex justify-space-around align-center px-2">
-          <v-chip
-            class="mx-2 pa-1 text-center"
-            outlined
-            x-small
-            :color="chipcolor"
+          <v-chip class="mx-2 pa-1 text-center" outlined x-small
             ><span class="text-caption">{{ type }}</span></v-chip
           >
           <v-chip
+            v-if="status"
             class="mx-2 pa-1 text-center"
             outlined
             x-small
             :color="statusIcon"
             ><span class="text-caption px-0 ma-0">{{ status }}</span></v-chip
           >
-          <v-chip class="mx-2" x-small
+          <v-chip class="mx-2 py-2" x-small outlined
             ><span class="text-caption">{{ date }}</span></v-chip
           >
           <template>

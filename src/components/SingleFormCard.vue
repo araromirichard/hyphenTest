@@ -179,7 +179,7 @@
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 import DeleteForm from "../includes/overlays/deleteForm.vue";
 
 export default {
@@ -240,7 +240,6 @@ export default {
           path: `/form/${this.formCards[parentIndex].id}`,
         });
       } else if (index === 2) {
-
         this.$refs.deleteForm.openDialog(parentIndex);
       }
     },
@@ -250,7 +249,7 @@ export default {
     },
   },
   mounted() {
-    //make skeleton loader stop
+    //make skeleton loader
     this.loading = true;
     setTimeout(() => {
       this.loading = false;
@@ -261,7 +260,9 @@ export default {
     //console.log(this.$store);
   },
   computed: {
-    ...mapState("formBuilder", ["formCards"]),
+    ...mapGetters({
+      formCards: "formBuilder/forms",
+    }),
 
     getFormById() {
       return this.forms.find((form) => form.id == this.$route.params.id).id;

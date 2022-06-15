@@ -12,34 +12,19 @@
           dark
           v-bind="attrs"
           v-on="on"
-          class="text-capitalize"
+          class="text-capitalize mt-6 mt-md-0"
           style="
-            width: 209px;
-            height: 54px;
             background: var(--v-primary-base);
             box-shadow: 0px 12px 22px rgba(0, 0, 0, 0.24);
             border-radius: 4px;
           "
           :style="{
-            width: `${$vuetify.breakpoint.mdAndDown ? '150px' : '209px'}`,
+            width: `${$vuetify.breakpoint.smAndDown ? '120px' : '209px'}`,
+            height: `${$vuetify.breakpoint.smAndDown ? '44px' : '54px'}`,
           }"
         >
           <img :src="require('@/assets/pbot_icons/file.svg')" />
-          <span
-            style="
-              padding-left: 8px;
-              font-family: Inter;
-              font-style: normal;
-              font-weight: 500;
-              font-size: 14px;
-              line-height: 17px;
-              text-align: center;
-              letter-spacing: 0.636364px;
-              color: #ffffff;
-            "
-          >
-            New Form
-          </span>
+          <span class="btn-text"> New Form </span>
         </v-btn>
       </template>
       <v-card
@@ -60,7 +45,6 @@
             width="20"
             height="20"
           />
-
           <span
             class="ml-5"
             style="
@@ -141,26 +125,45 @@
                 </template>
                 <div
                   id="switch__sect"
-                  class="d-flex justify-space-between pr-9 pl-10"
+                  class="d-flex justify-space-between px-4 pr-md-9 pl-md-10"
                 >
                   <v-switch
+                    v-if="$vuetify.breakpoint.mdAndUp"
                     dense
                     hide-details="auto"
                     @change="changeValue"
-                    class="ml-9"
+                    class="ml-md-9"
                     v-model="payment"
                     label="Take Payment"
                     style="font-size: 12px"
                   ></v-switch>
+                  <v-checkbox
+                    v-if="$vuetify.breakpoint.smAndDown"
+                    dense
+                    v-model="payment"
+                    label="Take Payment"
+                    @change="changeValue"
+                    hide-details="auto"
+                    style="font-size: 9px"
+                  ></v-checkbox>
                   <v-switch
+                    v-if="$vuetify.breakpoint.mdAndUp"
                     dense
                     hide-details="auto"
                     class="ml-4"
                     @change="allowSignature"
                     v-model="signature"
                     label="Take Signature"
-                    style="font-size: 12px"
                   ></v-switch>
+                  <v-checkbox
+                    v-if="$vuetify.breakpoint.smAndDown"
+                    dense
+                    v-model="signature"
+                    label="Take Signature"
+                    @change="allowSignature"
+                    hide-details="auto"
+                  ></v-checkbox>
+
                   <v-spacer></v-spacer>
                   <v-btn
                     text
@@ -176,16 +179,17 @@
                   <v-expand-transition>
                     <div v-show="show" class="mt-4">
                       <v-divider></v-divider>
-                      <v-row class="mx-14 mt-6">
-                        <v-col cols="6">
+                      <v-row class="mt-6 mx-6 mx-md-14">
+                        <v-col cols="12" md="6">
                           <template>
-                            <span class="field__title mx-0">Form type</span>
+                            <span class="">Form type</span>
                             <validation-provider
                               v-slot="{ errors }"
                               name="selectedFormType"
                               rules="required"
                             >
                               <v-select
+                                class="mt-4"
                                 :error-messages="errors"
                                 v-model="selectedFormType"
                                 hide-details="auto"
@@ -198,15 +202,20 @@
                             </validation-provider>
                           </template>
                         </v-col>
-                        <v-col cols="6" v-show="selectedFormType == 'api'">
+                        <v-col
+                          cols="12"
+                          md="6"
+                          v-show="selectedFormType == 'api'"
+                        >
                           <template>
-                            <span class="field__title mx-0">Endpoint</span>
+                            <span class="">Endpoint</span>
                             <validation-provider
                               v-slot="{ errors }"
                               name="Endpoint"
                               rules="required"
                             >
                               <v-text-field
+                                class="mt-4"
                                 :error-messages="errors"
                                 v-model="API.endpoint"
                                 hide-details="auto"
@@ -220,17 +229,17 @@
                           </template>
                         </v-col>
                       </v-row>
-                      <v-row class="mx-14 mt-4">
+                      <v-row class="mx-6 mx-md-14 mt-4">
                         <v-col
                           class="py-0"
                           cols="12"
                           v-show="selectedFormType == 'api'"
                         >
                           <template>
-                            <span class="field__title mx-0">Bearer Token</span>
+                            <span class="mb-4">Bearer Token</span>
 
-                            >
                             <v-text-field
+                              class="mt-4"
                               v-model="API.token"
                               background-color="#ffffff"
                               outlined
@@ -245,7 +254,9 @@
                   </v-expand-transition>
                 </div>
                 <template class="mt-6">
-                  <v-card-actions class="d-flex justify-end mt-2 mr-14">
+                  <v-card-actions
+                    class="d-flex justify-center justify-md-end mt-2 mr-md-14"
+                  >
                     <v-btn
                       @click="show = false"
                       dark
@@ -422,7 +433,7 @@ export default {
 .field__title {
   margin-bottom: 20px;
   margin-top: 30px;
-  margin-left: 67px;
+  margin-left: 32px;
   font-family: "Inter";
   font-style: normal;
   font-weight: normal;
@@ -433,11 +444,72 @@ export default {
 }
 .form__field {
   margin-top: 12px;
-  margin-left: 67px;
-  margin-right: 67px;
+  margin-left: 32px;
+  margin-right: 32px;
   margin-bottom: 30px;
   /* background: #ffffff; */
   /* border: 1px solid rgba(212, 216, 223, 0.377431); */
   border-radius: 3px;
+}
+
+.btn-text {
+  padding-left: 8px;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  letter-spacing: 0.636364px;
+  color: #ffffff;
+}
+@media only screen and (min-width: 600px) {
+  /* For tablets: */
+  .form__field {
+    margin-top: 12px;
+    margin-left: 67px;
+    margin-right: 67px;
+    margin-bottom: 30px;
+    /* background: #ffffff; */
+    /* border: 1px solid rgba(212, 216, 223, 0.377431); */
+    border-radius: 3px;
+  }
+  .field__title {
+    margin-bottom: 20px;
+    margin-top: 30px;
+    margin-left: 67px;
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 18px;
+    letter-spacing: 0.45px;
+    color: #7f919b;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  /* For desktop: */
+  .form__field {
+    margin-top: 12px;
+    margin-left: 67px;
+    margin-right: 67px;
+    margin-bottom: 30px;
+    /* background: #ffffff; */
+    /* border: 1px solid rgba(212, 216, 223, 0.377431); */
+    border-radius: 3px;
+  }
+  .field__title {
+    margin-bottom: 20px;
+    margin-top: 30px;
+    margin-left: 67px;
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 18px;
+    letter-spacing: 0.45px;
+    color: #7f919b;
+  }
 }
 </style>

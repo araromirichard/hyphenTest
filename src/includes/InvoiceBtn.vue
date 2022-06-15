@@ -348,11 +348,11 @@ export default {
 i.sli-font {
   font-size: 14px;
   display: inline-block;
-  color: #7e69d8;
+  color: #19283d;
 }
 
 .invoiceBtn {
-  color: #7e69d8;
+  color: #19283d;
 }
 .saveInvoiceBtn {
   color: #16be98;

@@ -1,7 +1,7 @@
 <template>
   <v-container fluid>
     <v-row class="d-flex justify-center">
-      <v-col cols="12" md="4" class="#faf2df" style="background-color: #fffbf1">
+      <v-col cols="12" md="4" class="#faf2df" style="background-color: #f8f7f4">
         <!-- title for mobile and desktop screen starts -->
         <div
           v-if="Object.keys(singleInvoice).length"
