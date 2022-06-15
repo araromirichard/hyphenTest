@@ -185,7 +185,6 @@ export default {
           this.triggerData
         );
         this.inputs.fields = data.data.field_names;
-
       } catch (err) {
         this.isLoadingEntries = false;
       } finally {
@@ -224,13 +223,13 @@ export default {
 
     arrangeTriggerSchema() {
       let fields = [];
-      this.conditions.properties.conditions.forEach((condition, i) => {
+      this.conditions.properties.conditions.forEach((condition) => {
         if (condition.type === "comparison") {
           fields.push(condition.properties.field);
         }
 
         if (condition.type === "group") {
-          condition.properties.conditions.forEach((condition2, i) => {
+          condition.properties.conditions.forEach((condition2) => {
             if (condition2.type === "comparison") {
               fields.push(condition2.properties.field);
             }
@@ -314,11 +313,11 @@ export default {
       },
     },
 
-    canContinue(val){
-      if(val && this.isEdit){
-        this.$emit('continue')
+    canContinue(val) {
+      if (val && this.isEdit) {
+        this.$emit("continue");
       }
-    }
+    },
   },
   computed: {
     isCompleted() {

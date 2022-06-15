@@ -7,6 +7,16 @@ const state = () => ({
   payment: null,
   paymentOptions: null,
   newWorkflow: null,
+  comparisonType: [
+    {
+      string: "ALL",
+      val: "and",
+    },
+    {
+      string: "ANY",
+      val: "or",
+    },
+  ],
 });
 
 const getters = {
@@ -143,6 +153,26 @@ const actions = {
     }
   },
 
+  async updateWorkflow({ commit }, payload) {
+    try {
+      const { data } = await Workflow.updateworkflow(payload);
+      commit("NEW_WORKFLOW", data);
+      return data;
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  },
+
+  async deleteWorkflow({ commit }, id) {
+    try {
+      const { data } = await Workflow.deleteWorkflow(id);
+      commit("NEW_WORKFLOW", data);
+      return data;
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  },
+
   async getAllWorkflows() {
     try {
       const data = await Workflow.getAllWorkflows();
@@ -152,9 +182,10 @@ const actions = {
     }
   },
 
-  async getAllWorkflowById({},id) {
+  async getAllWorkflowById({ commit }, id) {
     try {
       const data = await Workflow.getWorkflowById(id);
+      commit("NEW_WORKFLOW", data);
       return data;
     } catch (error) {
       return Promise.reject(error);

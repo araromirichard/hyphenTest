@@ -9,6 +9,22 @@ export default {
     });
   },
 
+  updateworkflow(payload) {
+    return api().put(`/workflows/${payload.id}`, payload, {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    });
+  },
+
+  deleteWorkflow(id) {
+    return api().delete(`/workflows/${id}`, {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    });
+  },
+
   getAllInvoiceFieldsOptions() {
     return api().get("/workflows/options?type=invoice", {
       headers: {
@@ -41,11 +57,11 @@ export default {
     });
   },
 
-  getWorkflowById(id){
-    return api().get("/workflows/"+id, {
+  getWorkflowById(id) {
+    return api().get("/workflows/" + id, {
       headers: {
-        Authorization: "Bearer " + localStorage.getItem("token")
+        Authorization: "Bearer " + localStorage.getItem("token"),
       },
     });
-  }
+  },
 };

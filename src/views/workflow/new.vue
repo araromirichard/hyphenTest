@@ -11,11 +11,18 @@
       </div>
 
       <div class="flow-setup">
-        <v-breadcrumbs :items="breadcrumbs" style="font-weight: 600">
-          <template v-slot:divider>
-            <v-icon class="px-0">mdi-chevron-right</v-icon>
-          </template>
-        </v-breadcrumbs>
+        <div class="d-flex pr-5" style="align-items: center">
+          <v-breadcrumbs :items="breadcrumbs" style="font-weight: 600">
+            <template v-slot:divider>
+              <v-icon class="px-0">mdi-chevron-right</v-icon>
+            </template>
+          </v-breadcrumbs>
+          <v-spacer></v-spacer>
+
+          <v-btn @click="$router.go(-1)" text rounded large>
+            <v-icon left>mdi-chevron-left</v-icon> Back
+          </v-btn>
+        </div>
 
         <div class="flows">
           <div class="flow-setup__trigger">
@@ -118,6 +125,7 @@
           <button
             v-if="!isPublishingWorkflow"
             id="add-to-draft"
+            disabled
             @click="addWorkflowToDraft"
           >
             No, Add to draft
@@ -141,7 +149,7 @@
           </v-btn>
         </div>
         <div class="publish-sucessful__top">
-          <v-btn color="success" fab outlined>
+          <v-btn color="success" small fab outlined>
             <v-icon>check</v-icon>
           </v-btn>
           <span>Workflow published successfully</span>
@@ -202,7 +210,7 @@
           <div class="mt-5 cta">
             <v-btn
               color="primary"
-              @click="publishDialogSucessful = false"
+             to="/workflow"
               elevation="0"
               large
             >
