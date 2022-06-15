@@ -878,7 +878,7 @@ export default {
       this.showToast({
         sclass: "success",
         show: true,
-        message: "Sign Up succesfully",
+        message: "Sent to Payables succesfully",
         timeout: 3000,
       });
       this.isSending = false;
