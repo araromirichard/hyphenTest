@@ -491,7 +491,7 @@ export default {
         source: this.workflow.trigger,
         organization: this.orgId,
         workflow_schema: {
-          ...this.workflow.conditions,
+          condition:this.workflow.conditions,
           actions: this.workflow.actions,
         },
         trigger_schema: this.workflow.fields,
