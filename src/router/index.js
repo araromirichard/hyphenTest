@@ -227,6 +227,14 @@ const routes = [
     meta: { middleware: ["auth"] },
   },
   {
+    path: "/approval",
+    name: "Approval",
+    components: {
+      default: () => import("@/views/approval.vue"),
+      Formlayout
+         } 
+   },
+  {
     path: "/settings",
     props: true,
     components: {
