@@ -368,7 +368,7 @@ export default {
         this.workflow.form = workflowx.form?.id;
         this.workflow.actions = workflowx.workflow_schema.actions;
 
-        let condition = workflowx.workflow_schema
+        let condition = workflowx.workflow_schema.condition
 
          console.log(JSON.stringify('conditon...',condition, null, 2));
         
@@ -474,7 +474,7 @@ export default {
         source: this.workflow.trigger,
         organization: this.orgId,
         workflow_schema: {
-          ...this.workflow.conditions,
+          condition: this.workflow.conditions,
           actions: this.workflow.actions,
         },
         trigger_schema: this.workflow.fields,
