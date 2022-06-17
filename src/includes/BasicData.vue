@@ -1,5 +1,9 @@
 <template>
   <div>
+    <!-- <pre>
+    {{ singleInvoice }}
+  </pre
+    > -->
     <!-- for desktop screen -->
     <div v-if="$vuetify.breakpoint.mdAndUp">
       <validation-observer v-slot="{ handleSubmit }">
@@ -869,20 +873,54 @@ export default {
     activateField() {
       return (this.changeState = !this.changeState);
     },
-    submitInput(e) {
+    async submitInput(e) {
+      // {
+      //   "amount_due": "40000",
+      //   "date_due": "2022,04,03",
+      //   "document_id": "ADE/ZARON/250118004",
+      //   "description": "",
+      //   "payee": "",
+      //   "total": "7300.00",
+      //   "organization": "3",
+      //   "currency": "",
+      // }
+      const formatted_due_date = this.basicDataInput.dueDate.replaceAll(
+        "-",
+        ","
+      );
+      const payload = {
+        amount_due: this.singleInvoice.total,
+        date_due: formatted_due_date,
+        document_id: this.singleInvoice.invoicenumber,
+        description: "",
+        payee: "",
+        total: this.singleInvoice.total,
+        organization: this.singleInvoice.organization.id.toString(),
+        currency: "",
+      };
+
       this.isSending = true;
       e.preventDefault();
-      console.log(JSON.stringify(this.payableData, null, 2));
-      // console.log("Basic Data", JSON.stringify(this.basicDataInput));
-      // console.log("Vendor Data", JSON.stringify(this.vendorData));
-      this.showToast({
-        sclass: "success",
-        show: true,
-        message: "Sent to Payables succesfully",
-        timeout: 3000,
-      });
-      this.isSending = false;
-      this.changeState = true;
+      console.log(JSON.stringify(payload, null, 2));
+
+       try {
+        if (payload.amount_due > payload.total) return;
+        const response = await this.$store.dispatch(
+          "payables/addToPayables",
+          payload
+        );
+        console.log(JSON.stringify(response, null, 2));
+        this.showToast({
+          sclass: "success",
+          show: true,
+          message: "Sent data to Payables succesfully",
+          timeout: 3000,
+        });
+        this.isSending = false;
+        this.changeState = true;
+      } catch (error) {
+        console.log(JSON.stringify(error, null, 2));
+      }
     },
   },
 

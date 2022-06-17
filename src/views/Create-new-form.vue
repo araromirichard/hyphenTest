@@ -400,4 +400,37 @@ export default {
   min-height: 100%;
   max-height: 100vh;
 }
+
+#app
+  > div
+  > main
+  > div
+  > div
+  > div
+  > div.d-flex.flex-column.justify-center.pa-2.col-md-9.col-12
+  > div:nth-child(1)
+  > div.container-fluid.md-layout.form-padding.vue-form-builder
+  > div.sidebar
+  > div
+  > div:nth-child(2)
+  > div:nth-child(2)
+  > div:nth-child(1) {
+  display: none !important;
+}
+
+#app
+  > div
+  > main
+  > div
+  > div
+  > div
+  > div.d-flex.flex-column.justify-center.pa-2.col-md-9.col-12
+  > div:nth-child(1)
+  > div.container-fluid.md-layout.form-padding.vue-form-builder
+  > div.sidebar
+  > div
+  > div:nth-child(5)
+  > div:nth-child(2) {
+  display: none !important;
+}
 </style>
