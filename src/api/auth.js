@@ -63,4 +63,7 @@ export default {
     forgotPassword(credentials) {
         return api().post("/auth/forgot-password", credentials);
     },
+    resetPassword(credentials) {
+        return api().post("/auth/reset-password", credentials);
+    },
 };

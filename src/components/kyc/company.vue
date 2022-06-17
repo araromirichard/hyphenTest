@@ -620,9 +620,9 @@ export default {
       const formData = new FormData();
       // add the data needed for uploading the cac doc...
       formData.append("files", this.cac);
-      formData.append("ref", "kyc.cac");
+      formData.append("ref", "kyc.company");
       formData.append("refId", this.user.organization);
-      formData.append("field", "cac");
+      formData.append("field", "registration_doc");
 
       console.log(this.cac);
       console.log(formData);

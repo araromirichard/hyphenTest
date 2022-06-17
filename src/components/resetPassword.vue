@@ -96,7 +96,8 @@
 </template>
 
 <script>
-//import { mapActions } from "vuex";
+import { mapActions } from "vuex";
+import auth from "../api/auth";
 export default {
   name: "reset-password",
 
@@ -104,7 +105,7 @@ export default {
     // if (!this.$route.query.token) {
     //   this.$router.push("/login");
     // }
-    console.log(this.$route);
+    console.log(this.$route.query.code);
   },
 
   data() {
@@ -137,39 +138,43 @@ export default {
   },
 
   methods: {
+    // submitForm() {
+    //   this.$refs.form.validate();
+    //   console.log(JSON.stringify(this.form, null, 2));
+    // },
+
+    ...mapActions({ showToast: "ui/showToast" }),
     submitForm() {
       this.$refs.form.validate();
+      // const payload = JSON.stringify(this.email, null, 2);
       console.log(JSON.stringify(this.form, null, 2));
+      try {
+        this.isSending = true;
+        auth
+          .resetPassword({
+            password: this.password,
+            passwordComfirmation: this.confirm_password,
+            token: this.token,
+          })
+          .then(
+            this.showToast({
+              sclass: "success",
+              show: true,
+              message: "",
+              timeout: 5000,
+            })
+          );
+      } catch (error) {
+        this.showToast({
+          sclass: "error",
+          show: true,
+          message: error.msg,
+          timeout: 3000,
+        });
+      } finally {
+        this.isSending = false;
+      }
     },
-
-    // ...mapActions({ showToast: "ui/showToast" }),
-    // async submitForm() {
-    //   this.$refs.form.validate();
-    //   const payload = JSON.stringify(this.email, null, 2);
-    //   console.log(payload);
-    //   try {
-    //     this.isSending = true;
-    //     await this.$store
-    //       .dispatch("auth/sendResetPasswordEmailLink", payload)
-    //       .then(
-    //         this.showToast({
-    //           sclass: "success",
-    //           show: true,
-    //           message: "Email Sent, Please Check Your Email",
-    //           timeout: 5000,
-    //         })
-    //       );
-    //   } catch (error) {
-    //     this.showToast({
-    //       sclass: "error",
-    //       show: true,
-    //       message: error.msg,
-    //       timeout: 3000,
-    //     });
-    //   } finally {
-    //     this.isSending = false;
-    //   }
-    // },
   },
 
   computed: {
@@ -178,7 +183,8 @@ export default {
     form() {
       return {
         password: this.password,
-        token: this.token,
+        passwordComfirmation: this.confirm_password,
+        code: this.token,
       };
     },
   },

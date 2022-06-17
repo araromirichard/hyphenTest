@@ -39,7 +39,7 @@
                 #7F919B;
               "
             >
-              {{ workflowName }}
+              {{ workflowName || "workflow name…" }}
             </span>
           </v-chip>
           <v-spacer></v-spacer>
@@ -78,7 +78,7 @@
           class="d-flex flex-column justify-center align-center"
         >
           <div class="py-3 ma-0 text-subtitle-1 text-center primary--text">
-            {{ workflowName }}
+            {{ workflowName || "workflow name…" }}
           </div>
           <div class="pa-0 ma-0 d-flex justify-center align-center">
             <v-checkbox
@@ -206,15 +206,15 @@
             <!-- Data table for mobile -->
             <DataTableCard
               v-if="$vuetify.breakpoint.smAndDown"
-              :index="invoice.id"
-              :invoiceRef="invoice.invoicenumber"
-              :type="invoice.invoicetype"
-              :requester="invoice.vendor.vendorname"
-              :date="invoice.created_at | date"
-              :amount="invoice.total"
-              :status="invoice.status"
-              :category="invoice.category"
-              :chipColor="invoice.type === 'expense' ? '#2BD5AE' : '#E3AA1C'"
+              :index="id"
+              :invoiceRef="invoicenumber"
+              :type="invoicetype"
+              :requester="vendor.vendorname || ''"
+              :date="created_at | date"
+              :amount="total"
+              :status="status"
+              :category="category"
+              :chipColor="invoicetype === 'expense' ? '#2BD5AE' : '#E3AA1C'"
             />
           </v-col>
         </v-row>
@@ -326,7 +326,7 @@ export default {
       },
     },
   },
-};
+}; 
 </script>
 
 <style>

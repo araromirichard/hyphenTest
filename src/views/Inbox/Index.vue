@@ -36,12 +36,18 @@
 
     <!-- inbox summary Info cards -->
 
-    <v-row class="mt-16 mx-2 mx-md-0" align="center" v-if="invoiceArray">
+    <v-row
+      class="mt-16 mx-2 mx-md-0"
+      align="center"
+      justify="center"
+      v-if="invoiceArray"
+    >
       <v-col class="pa-0 my-4 my-md-0" cols="12" md="4">
         <v-card
           elevation="3"
           class="ml-md-16 mr-md-2 mx-auto py-md-6"
           flat
+          min-height="174"
           :width="cardWidth[$vuetify.breakpoint.name]"
         >
           <v-skeleton-loader width="100%" type="card" :loading="loading">
@@ -84,6 +90,7 @@
           elevation="3"
           class="mr-md-6 mx-auto ml-md-6 py-md-8"
           flat
+          min-height="174"
           :width="cardWidth[$vuetify.breakpoint.name]"
         >
           <v-skeleton-loader width="100%" type="card" :loading="loading">
@@ -93,7 +100,7 @@
                   class="d-flex align-center justify-center"
                   style="width: 100%; height: 100%"
                 >
-                  <v-avatar style="background: #eef3fb" :size="56">
+                  <v-avatar style="background: #eef3fb" size="56">
                     <span
                       style="
                         font-family: Inter;
@@ -127,6 +134,7 @@
           elevation="3"
           class="ml-md-4 mr-md-16 mr-md-6 mx-auto py-md-8"
           flat
+          min-height="174"
           :width="cardWidth[$vuetify.breakpoint.name]"
         >
           <v-skeleton-loader width="100%" type="card" :loading="loading">
@@ -169,7 +177,7 @@
     </v-row>
 
     <!-- inbox table for desktop screen -->
-    <v-row v-if="invoiceArray.length > 0">
+    <v-row v-if="invoiceArray.length > 0" class="px-2 px-md-0">
       <v-col cols="12">
         <v-card
           flat
@@ -631,7 +639,7 @@ export default {
         organization: this.organizationToken.data.organization,
       };
       // console.log(JSON.stringify(payload, null, 2));
-       console.log(orgId);
+      console.log(orgId);
 
       //       {
       //     "first_name":"Michael",

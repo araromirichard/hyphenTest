@@ -4,16 +4,13 @@
     :timeout="toast.timeout"
     top
     right
-    text
     :color="toast.sclass"
   >
     {{ toast.message }}
-    <v-spacer></v-spacer>
-    <v-btn :color="toast.sclass" text click="showToast({ show: false })">
-      <v-icon left v-if="toast.sclass == 'success'"> mdi-check-bold </v-icon>
-      <v-icon left v-if="toast.sclass == 'error'"> mdi-close-box </v-icon>
-      <v-icon left v-if="toast.sclass == 'warning'"> mdi-alert </v-icon>
-      Close
+    <v-btn small outlined dark icon class="ml-4">
+      <v-icon small v-if="toast.sclass == 'success'"> mdi-check-bold </v-icon>
+      <v-icon small v-if="toast.sclass == 'error'"> mdi-close-box </v-icon>
+      <v-icon small v-if="toast.sclass == 'warning'"> mdi-alert </v-icon>
     </v-btn>
   </v-snackbar>
 </template>

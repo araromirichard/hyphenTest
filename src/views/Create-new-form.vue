@@ -205,71 +205,51 @@ export default {
         formName: this.$route.query.data,
         formId: "",
       },
-      formData: null,
-      // formData: {
-      //   formConfig: {
-      //     headline: "",
-      //     subHeadline: "",
-      //     isShowHeadline: false,
-      //     renderFormTag: false,
-      //     formActionURL: "",
-      //     formMethod: "POST",
-      //     enableServerSideValidation: false,
-      //     serverSideValidationEndpoint: "",
-      //   },
-      //   sections: {
-      //     "section-dc52b8cb-3e2a-47cc-a0aa-d6534b5b1099": {
-      //       uniqueId: "section-dc52b8cb-3e2a-47cc-a0aa-d6534b5b1099",
-      //       headline: "New Section",
-      //       headlineAdditionalClass: "",
-      //       subHeadline: "This is the sub-headline of the new section",
-      //       subHeadlineAdditionalClass: "",
-      //       isShowHeadline: true,
-      //       sortOrder: 1,
-      //       type: "normal",
-      //       rows: [],
-      //       controls: [
-      //         "control-d7c34562-6675-451c-963a-98f48be78c26",
-      //         "control-2b6ddb06-8718-4995-a2fb-5f1f6e2736b9",
-      //       ],
-      //     },
-      //   },
-      //   rows: {},
-      //   controls: {
-      //     "control-d7c34562-6675-451c-963a-98f48be78c26": {
-      //       uniqueId: "control-d7c34562-6675-451c-963a-98f48be78c26",
-      //       type: "input",
-      //       name: "first name",
-      //       label: "Your name",
-      //       subLabel: "",
-      //       isShowLabel: true,
-      //       placeholderText: "",
-      //       containerClass: "col-md-4 md-layout-item md-size-33",
-      //       additionalContainerClass: "",
-      //       additionalFieldClass: "",
-      //       additionalLabelClass: "",
-      //       defaultValue: "",
-      //       validations: [],
-      //       typeAttribute: "text",
-      //     },
-      //     "control-2b6ddb06-8718-4995-a2fb-5f1f6e2736b9": {
-      //       uniqueId: "control-2b6ddb06-8718-4995-a2fb-5f1f6e2736b9",
-      //       type: "input",
-      //       name: "last name",
-      //       label: "Last Name",
-      //       subLabel: "",
-      //       isShowLabel: true,
-      //       placeholderText: "",
-      //       containerClass: "col-md-4 md-layout-item md-size-33",
-      //       additionalContainerClass: "",
-      //       additionalFieldClass: "",
-      //       additionalLabelClass: "",
-      //       defaultValue: "",
-      //       validations: [],
-      //       typeAttribute: "text",
-      //     },
-      //   },
-      // },
+      formData: null || {
+        formConfig: {
+          headline: "",
+          subHeadline: "",
+          isShowHeadline: false,
+          renderFormTag: false,
+          formActionURL: "",
+          formMethod: "POST",
+          enableServerSideValidation: false,
+          serverSideValidationEndpoint: "",
+        },
+        sections: {
+          "section-232862ac-c95c-4221-ac71-d5d9a65bc605": {
+            uniqueId: "section-232862ac-c95c-4221-ac71-d5d9a65bc605",
+            headline: "New Section",
+            headlineAdditionalClass: "",
+            subHeadline: "This is the sub-headline of the new section",
+            subHeadlineAdditionalClass: "",
+            isShowHeadline: true,
+            sortOrder: 1,
+            type: "normal",
+            rows: [],
+            controls: ["control-859f84d7-fe9c-4870-89fa-12a2c080bf03"],
+          },
+        },
+        rows: {},
+        controls: {
+          "control-859f84d7-fe9c-4870-89fa-12a2c080bf03": {
+            uniqueId: "control-859f84d7-fe9c-4870-89fa-12a2c080bf03",
+            type: "input",
+            name: "standard input",
+            label: "Field 1",
+            subLabel: "",
+            isShowLabel: true,
+            placeholderText: "Enter a Placeholder",
+            containerClass: "col-md-4 md-layout-item md-size-33",
+            additionalContainerClass: "",
+            additionalFieldClass: "",
+            additionalLabelClass: "",
+            defaultValue: "",
+            validations: [],
+            typeAttribute: "text",
+          },
+        },
+      },
     };
   },
 
@@ -370,6 +350,8 @@ export default {
       organization: "organization",
     }),
 
+    //return a single field on load
+
     //return full object to send to
     createRequestData() {
       return {
@@ -417,5 +399,38 @@ export default {
 .full-height {
   min-height: 100%;
   max-height: 100vh;
+}
+
+#app
+  > div
+  > main
+  > div
+  > div
+  > div
+  > div.d-flex.flex-column.justify-center.pa-2.col-md-9.col-12
+  > div:nth-child(1)
+  > div.container-fluid.md-layout.form-padding.vue-form-builder
+  > div.sidebar
+  > div
+  > div:nth-child(2)
+  > div:nth-child(2)
+  > div:nth-child(1) {
+  display: none !important;
+}
+
+#app
+  > div
+  > main
+  > div
+  > div
+  > div
+  > div.d-flex.flex-column.justify-center.pa-2.col-md-9.col-12
+  > div:nth-child(1)
+  > div.container-fluid.md-layout.form-padding.vue-form-builder
+  > div.sidebar
+  > div
+  > div:nth-child(5)
+  > div:nth-child(2) {
+  display: none !important;
 }
 </style>

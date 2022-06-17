@@ -305,7 +305,11 @@
                                     >mdi-format-list-bulleted</v-icon
                                   ></v-btn
                                 >
-                                <v-btn @click="deleteWorkflow(workflow)" icon small color="#8F96A1"
+                                <v-btn
+                                  @click="deleteWorkflow(workflow)"
+                                  icon
+                                  small
+                                  color="#8F96A1"
                                   ><v-icon>mdi-trash-can-outline</v-icon></v-btn
                                 >
                               </div>
@@ -397,6 +401,107 @@
         </div>
       </div>
     </v-dialog>
+
+    <v-dialog v-if="selectedWorkflow && settingsDialog"
+      v-model="settingsDialog"
+      max-width="650px"
+      transition="dialog-transition"
+    >
+      <div class="summary">
+        <div class="summary__header">
+          <div class="b">
+             <v-icon color="primary">mdi-vector-link</v-icon>
+            <span class="t">Workflow:</span>
+          </div>
+
+          <v-btn @click="close" icon color="primary">
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
+        </div>
+        <v-tabs background-color="#F8F7F4">
+          <v-tab>SUMMARY</v-tab>
+          <v-tab>TRIGGERS</v-tab>
+          <v-tab>SETTINGS</v-tab>
+          <v-tab-item>
+           <div class="summary__content">
+
+            <div v-if="selectedWorkflow.workflow_schema" class="schema">
+          <div v-if="selectedWorkflow.workflow_schema">
+            When <span class="type">{{ groupType(parentGroup) }}</span> of the
+            following is <span class="operator">TRUE</span>
+          </div>
+
+          <div
+            style="margin-top: 10px"
+            v-for="(condition, index) in conditions"
+            :key="index"
+          >
+            <div class="group" v-if="condition.type == 'group'">
+              With
+              <span class="type">{{
+                groupType(condition.properties.type)
+              }}</span>
+              of the following
+
+              <span
+                v-for="(innerConditions, index) in condition.properties
+                  .conditions"
+                :key="index"
+              >
+                <div
+                  class="comparison"
+                  v-if="innerConditions.type == 'comparison'"
+                >
+                  <span class="field">{{
+                    getFieldLabel(innerConditions.properties.field)
+                  }}</span>
+                  is
+                  <span class="operator">{{
+                    operator(innerConditions.properties.type)
+                  }}</span>
+                  <span class="target">{{
+                    getFieldTarget(
+                      innerConditions.properties.target,
+                      innerConditions.properties.field
+                    )
+                  }}</span>
+                </div>
+              </span>
+            </div>
+
+            <div class="comparison" v-if="condition.type == 'comparison'">
+              <span class="field">{{
+                getFieldLabel(condition.properties.field)
+              }}</span>
+              is
+              <span class="operator">{{
+                operator(condition.properties.type)
+              }}</span>
+              <span class="target">{{
+                getFieldTarget(
+                  condition.properties.target,
+                  condition.properties.field
+                )
+              }}</span>
+            </div>
+          </div>
+        </div>
+
+           </div>
+          </v-tab-item>
+          <v-tab-item>
+            <div class="summary__content">
+
+           </div>
+          </v-tab-item>
+          <v-tab-item>
+            <div class="summary__content">
+
+           </div>
+          </v-tab-item>
+        </v-tabs>
+      </div>
+    </v-dialog>
   </v-container>
 </template>
 
@@ -407,6 +512,7 @@ export default {
   data() {
     return {
       format: format,
+      settingsDialog: false,
       deleteWorkflowDialog: false,
       selectedWorkflow: null,
       isDeletingWorkflow: false,
@@ -548,6 +654,44 @@ export default {
 .v-application .elevation-4 {
   box-shadow: 0px 3px 5px -1px rgb(0 0 0 / 3%), 0px 6px 10px 0px rgb(0 0 0 / 3%),
     0px 1px 18px 0px rgb(0 0 0 / 3%) !important;
+}
+
+.summary {
+  border-radius: 8px;
+  background-color: #fff;
+
+  &__header {
+    padding: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .b {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .i {
+      width: 26px;
+      height: 26px;
+      object-fit: fit;
+    }
+
+    .t {
+      color: var(--v-primary-base);
+      font-weight: 600;
+      font-size: 20px;
+    }
+  }
+
+  &__content {
+    padding: 20px;
+    width: 100%;
+    height: 400px;
+    background-color: #F8F7F4;
+  }
 }
 
 .delete {
