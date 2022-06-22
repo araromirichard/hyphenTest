@@ -117,7 +117,7 @@ export default {
         type: "hyphenDelay",
         properties: {
           keys: ["days", "organization", "type", "name"],
-          values: [this.day, this.orgId, "delay", "delay"],
+          values: [this.day, this.orgId.toString(), "delay", "delay"],
         },
       };
 

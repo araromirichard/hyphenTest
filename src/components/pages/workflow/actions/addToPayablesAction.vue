@@ -155,7 +155,7 @@ export default {
             this.invoice_no,
             this.amount_due,
             this.due_date,
-            this.orgId,
+            this.orgId.toString(),
             "payables",
           ],
         },
@@ -221,6 +221,14 @@ export default {
         this.$emit("close");
       }
     },
+
+    // value:{
+    //   handler() {
+    //     this.mapForm();
+    //   },
+    //   deep: true,
+    //   immediate: true
+    // },
 
     due_date(val) {
       this.dateFormatted = this.formatDate(val);
