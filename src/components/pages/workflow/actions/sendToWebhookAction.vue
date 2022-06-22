@@ -79,7 +79,7 @@ export default {
         type: "hyphenToWebhook",
         properties: {
           keys: ["webhook_url", "organization", "name"],
-          values: [this.webhook, this.orgId, "webhook"],
+          values: [this.webhook, this.orgId.toString(), "webhook"],
         },
       };
 

@@ -122,7 +122,7 @@ export default {
             this.selectedAttribute,
             this.selectedTags,
             this.selectedTerms,
-            this.orgId,
+            this.orgId.toString(),
             "vendor",
           ],
         },

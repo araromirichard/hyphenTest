@@ -124,7 +124,7 @@ export default {
             this.data.form,
             this.forms.find((form) => form.id == this.data.form).form_title,
             this.data.recipient,
-            this.orgId,
+            this.orgId.toString(),
             "form",
           ],
         },

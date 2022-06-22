@@ -60,7 +60,7 @@ export default {
       default: {
         type: "PbotApproval",
         properties: {
-          keys: ["identity", "organization id", "type", "name"],
+          keys: ["identity", "organization", "type", "name"],
           values: ["", "", "human", "approval"],
         },
       },
@@ -113,7 +113,7 @@ export default {
         type: "PbotApproval",
         properties: {
           keys: ["identity", "organization", "type", "name"],
-          values: [this.worker, this.orgId, "human", "approval"],
+          values: [this.worker, this.orgId.toString(), "human", "approval"],
         },
       };
       this.$emit("input", payload);
