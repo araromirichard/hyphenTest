@@ -927,8 +927,7 @@
         </v-card>
       </v-row>
 
-
-          <v-dialog
+      <v-dialog
         v-model="deleteWorkflowDialog"
         :persistent="isDeletingWorkflow"
         max-width="550px"
@@ -980,9 +979,9 @@
             </v-btn>
           </div>
           <v-tabs
-            background-color="#F6F3EE"
-            slider-size="4"
-            style="margin:0px auto auto auto;width:100% mix-blend-mode: normal;padding:10px 0"
+            background-color="#f8f7f4"
+            slider-size="5"
+            style="margin:0px auto auto auto;width:100% mix-blend-mode: normal;padding:10px 50px"
           >
             <v-tab>SUMMARY</v-tab>
             <v-tab>TRIGGERS</v-tab>
@@ -1099,10 +1098,10 @@
                   IT support)</span
                 >
 
-                <pre class="schema-structure">
-                {{ selectedWorkflow.workflow_schema }}
-              </pre
-                >
+                <pre
+                  class="schema-structure"
+                  v-html="JSON.stringify(getTriggerSchema,null,2)"
+                ></pre>
               </div>
             </v-tab-item>
             <v-tab-item>
@@ -1264,6 +1263,7 @@ export default {
     },
 
     summary(workflow) {
+      console.log(JSON.stringify(workflow, null, 2));
       this.selectedWorkflow = workflow;
       this.settingsDialog = true;
     },
@@ -1385,12 +1385,70 @@ export default {
           .conditions;
       else return null;
     },
+
+    selectedFieldNames() {
+      if (this.selectedWorkflow.form)
+        return this.selectedWorkflow.form.field_names;
+      else return null;
+    },
+
+    getTriggerSchema() {
+      if (this.selectedConditions) {
+        let fields = [];
+        this.selectedConditions.forEach((condition) => {
+          if (condition.type === "comparison") {
+            fields.push({
+              field: condition.properties.field,
+              value: condition.properties.target,
+            });
+          }
+
+          if (condition.type === "group") {
+            condition.properties.conditions.forEach((condition2) => {
+              if (condition2.type === "comparison") {
+                fields.push({
+                  field: condition2.properties.field,
+                  value: condition2.properties.target,
+                });
+              }
+            });
+          }
+        });
+
+        const xx = fields.map((obj) => {
+          return {
+            //  [this.selectedFieldNames.find(fd=>fd.key === obj.field ).label || obj.field]:[obj.value]
+            [this.getFieldLabel(obj.field)]: this.getFieldTarget(
+              obj.value,
+              this.field
+            ),
+          };
+        });
+
+        var cu = {};
+
+        xx.map((va) => {
+          Object.assign(cu, va);
+        });
+
+        return cu;
+      } else return {};
+    },
   },
   watch: {
-    selectedWorkflow: {
+    // selectedWorkflow: {
+    //   deep: true,
+    //   handler(val) {
+    //     //  console.log(JSON.stringify(val.form.field_names, null, 2));
+    //   },
+    // },
+
+    getTriggerSchema: {
       deep: true,
+      immediate: true,
       handler(val) {
-        console.log(JSON.stringify(val.form.field_names, null, 2));
+        console.log("trigger");
+        console.log(JSON.stringify(val, null, 2));
       },
     },
   },
@@ -1447,12 +1505,13 @@ export default {
 
 .summary {
   border-radius: 8px;
-  background-color: #fff;
+  background-color: #f8f7f4;
 
   &__header {
     padding: 20px;
     width: 100%;
     display: flex;
+    background-color: white;
     justify-content: space-between;
     align-items: center;
 
@@ -1476,7 +1535,7 @@ export default {
   }
 
   &__content {
-    padding: 35px;
+    padding: 20px ;
     width: 100%;
     min-height: 400px;
     max-height: 90vh;
