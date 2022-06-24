@@ -246,6 +246,7 @@
                     rules="required|alpha"
                   >
                     <v-text-field
+                      v-if="singleInvoice.vendor"
                       :error-messages="errors"
                       v-model="singleInvoice.vendor.vendorname"
                       hide-details="auto"
@@ -287,6 +288,7 @@
                     rules="required"
                   >
                     <v-text-field
+                      v-if="singleInvoice.vendor"
                       :error-messages="errors"
                       v-model="singleInvoice.vendor.address"
                       hide-details="auto"
@@ -328,6 +330,7 @@
                     rules="required"
                   >
                     <v-text-field
+                      v-if="singleInvoice.vendor"
                       :error-messages="errors"
                       v-model="singleInvoice.vendor.taxid"
                       hide-details="auto"
@@ -369,6 +372,7 @@
                     rules="required|email"
                   >
                     <v-text-field
+                      v-if="singleInvoice.vendor"
                       :error-messages="errors"
                       v-model="singleInvoice.vendor.email"
                       hide-details="auto"
@@ -414,6 +418,7 @@
                     }"
                   >
                     <v-text-field
+                      v-if="payableData.vendor"
                       :error-messages="errors"
                       v-model="payableData.vendor.phone"
                       hide-details="auto"
@@ -883,7 +888,6 @@ export default {
       // this.$refs.addtopayable.openDialog();
       console.log(this.$refs.addtopayable.openDialog());
     },
-   
   },
 
   computed: {
