@@ -155,7 +155,7 @@
           class="mb-16"
           width="100%"
           min-height="990"
-          elevation="4"
+          elevation="1"
           style="margin-top: 40px"
         >
           <template v-if="$vuetify.breakpoint.mdAndUp">
@@ -416,7 +416,7 @@
               >
             </div>
 
-            <v-btn @click="close" icon color="primary">
+            <v-btn @click="settingsDialog = false" icon color="primary">
               <v-icon>mdi-close</v-icon>
             </v-btn>
           </div>
@@ -430,7 +430,7 @@
             <v-tab>SETTINGS</v-tab>
             <v-tab-item>
               <div class="summary__content">
-                <template v-if="1 == 2">
+                <template>
                   <div v-if="selectedWorkflow.workflow_schema" class="schema">
                     <div v-if="selectedWorkflow.workflow_schema">
                       When
@@ -438,66 +438,75 @@
                       the following is <span class="operator">TRUE</span>
                     </div>
 
-                    <div
-                      style="margin-top: 10px"
-                      v-for="(condition, index) in selectedConditions"
-                      :key="index"
-                    >
-                      <div class="group" v-if="condition.type == 'group'">
-                        With
-                        <span class="type">{{
-                          groupType(condition.properties.type)
-                        }}</span>
-                        of the following
+                    <div>
+                      <div
+                        style="margin-top: 10px"
+                        v-for="(condition, index) in selectedConditions"
+                        :key="index"
+                      >
+                        <div class="group" v-if="condition.type == 'group'">
+                          With
+                          <span class="type">{{
+                            groupType(condition.properties.type)
+                          }}</span>
+                          of the following
 
-                        <span
-                          v-for="(innerConditions, index) in condition
-                            .properties.conditions"
-                          :key="index"
-                        >
-                          <div
-                            class="comparison"
-                            v-if="innerConditions.type == 'comparison'"
+                          <span
+                            v-for="(innerConditions, index) in condition
+                              .properties.conditions"
+                            :key="index"
                           >
-                            <span class="field">{{
-                              getFieldLabel(innerConditions.properties.field)
-                            }}</span>
-                            is {{ innerConditions.properties.type }}
-                            <span class="operator">{{
-                              operator(innerConditions.properties.type)
-                            }}</span>
-                            <span class="target">{{
-                              getFieldTarget(
-                                innerConditions.properties.target,
-                                innerConditions.properties.field
-                              )
-                            }}</span>
-                            {{
+                            <div
+                              class="comparison"
+                              v-if="innerConditions.type == 'comparison'"
+                            >
+                              <span class="field">
+                                {{
+                                  getFieldLabel(
+                                    innerConditions.properties.field
+                                  )
+                                }}
+                                <!-- {{ innerConditions.properties.field }} -->
+                              </span>
+                              is
+                              <span class="operator">{{
+                                operator(innerConditions.properties.type)
+                              }}</span>
+                              <span class="target">
+                                {{
+                                  getFieldTarget(
+                                    innerConditions.properties.target,
+                                    innerConditions.properties.field
+                                  )
+                                }}
+                              </span>
+                              <!-- {{
                               innerConditions.properties.target +
                               "," +
                               innerConditions.properties.field
-                            }}
-                          </div>
-                        </span>
-                      </div>
+                            }} -->
+                            </div>
+                          </span>
+                        </div>
 
-                      <div
-                        class="comparison"
-                        v-if="condition.type == 'comparison'"
-                      >
-                        <span class="field">{{
-                          getFieldLabel(condition.properties.field)
-                        }}</span>
-                        is
-                        <!-- <span class="operator">{{
-                operator(condition.properties.type)
-              }}</span>
-              <span class="target">{{
-                getFieldTarget(
-                  condition.properties.target,
-                  condition.properties.field
-                )
-              }}</span> -->
+                        <div
+                          class="comparison"
+                          v-if="condition.type == 'comparison'"
+                        >
+                          <span class="field">{{
+                            getFieldLabel(condition.properties.field)
+                          }}</span>
+                          is
+                          <span class="operator">{{
+                            operator(condition.properties.type)
+                          }}</span>
+                          <span class="target">{{
+                            getFieldTarget(
+                              condition.properties.target,
+                              condition.properties.field
+                            )
+                          }}</span>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -542,8 +551,23 @@
 
                 <pre
                   class="schema-structure"
+                  :class="{ 'schema-structure--expand': expandSchema }"
                   v-html="JSON.stringify(getTriggerSchema, null, 2)"
                 ></pre>
+                <div
+                  v-if="!expandSchema"
+                  class="d-flex"
+                  style="justify-content: end"
+                >
+                  <v-btn
+                    @click="expandSchema = true"
+                    color="primary"
+                    style="padding: 0"
+                    text
+                  >
+                    <v-icon>mdi-plus</v-icon> expand
+                  </v-btn>
+                </div>
               </div>
             </v-tab-item>
             <v-tab-item>
@@ -606,11 +630,16 @@ export default {
       tabIndex: 0,
       operators: [],
       isUpdatingWorkflowName: false,
+      expandSchema: false,
+      invoiceEntries: [],
+      paymentEntries: [],
     };
   },
   mounted() {
     this.getWorkflows();
     this.fetchOperators();
+    this.fetchInvoiceEntries();
+    this.fetchPaymentEntries();
   },
   methods: {
     ...mapActions({ showToast: "ui/showToast" }),
@@ -705,9 +734,38 @@ export default {
     },
 
     summary(workflow) {
-      console.log(JSON.stringify(workflow, null, 2));
+      // console.log(JSON.stringify(workflow, null, 2));
       this.selectedWorkflow = workflow;
       this.settingsDialog = true;
+    },
+
+    async fetchInvoiceEntries() {
+      try {
+        this.isLoadingEntries = true;
+        const { data } = await this.$store.dispatch(
+          "workflow/getAllInvoiceFieldsOptions"
+        );
+        this.invoiceEntries = data;
+      } catch (err) {
+        this.isLoadingEntries = false;
+      } finally {
+        this.isLoadingEntries = false;
+      }
+    },
+
+    async fetchPaymentEntries() {
+      try {
+        this.isLoadingEntries = true;
+        const data = await this.$store.dispatch(
+          "workflow/getPaymentFieldsOptions",
+          this.triggerData
+        );
+        this.paymentEntries = data;
+      } catch (err) {
+        this.isLoadingEntries = false;
+      } finally {
+        this.isLoadingEntries = false;
+      }
     },
 
     groupType(type) {
@@ -771,32 +829,51 @@ export default {
     },
 
     getFieldLabel(inputField) {
-      if (this.selectedWorkflow.form.field_names) {
+      if (
+        (this.selectedWorkflow.form && this.selectedWorkflow.form.names) ||
+        this.invoiceEntries ||
+        this.paymentEntries
+      ) {
         return (
-          this.selectedWorkflow.form.field_names.find(
-            (field) => field.key === inputField
-          )?.label || inputField
+          (this.selectedWorkflow.source == "form"
+            ? this.selectedWorkflow?.form?.field_names || []
+            : this.selectedWorkflow.source == "invoice"
+            ? this.invoiceEntries
+            : this.paymentEntries
+          ).find((field) => field.key === inputField)?.label || inputField
         );
       }
       return inputField;
     },
 
     getFieldTarget(inputTarget, inputField) {
-      const target = this.selectedWorkflow.form.field_names.find(
-        (field) => field.key === inputField
-      );
+      const target = [
+        this.selectedWorkflow.source == "form"
+          ? this.selectedWorkflow?.form?.field_names || []
+          : this.selectedWorkflow.source == "invoice"
+          ? this.invoiceEntries
+          : this.paymentEntries,
+      ].find((field) => field.key === inputField);
 
       if (target) {
         if (target.type === "dropDown" || target.type === "checkbox") {
           // multi values
-          return inputTarget
-            .map((item) => {
-              return (
-                target.options.find((option) => option.value === item).text ||
-                item
-              );
-            })
-            .join(", ");
+
+          if (typeof inputTarget === "string") {
+            return (
+              target.options.find((option) => option.value === inputTarget)
+                .text || inputTarget
+            );
+          } else {
+            return inputTarget
+              .map((item) => {
+                return (
+                  target.options.find((option) => option.value === item).text ||
+                  item
+                );
+              })
+              .join(", ");
+          }
         } else if (target.type === "radio") {
           // filter out just one
           return (
@@ -816,20 +893,20 @@ export default {
     }),
 
     parentGroup() {
-      if (this.selectedWorkflow.workflow_schema)
+      if (this.selectedWorkflow && this.selectedWorkflow.workflow_schema)
         return this.selectedWorkflow.workflow_schema.condition.properties.type;
       else return null;
     },
 
     selectedConditions() {
-      if (this.selectedWorkflow.workflow_schema)
+      if (this.selectedWorkflow && this.selectedWorkflow.workflow_schema)
         return this.selectedWorkflow.workflow_schema.condition.properties
           .conditions;
       else return null;
     },
 
     selectedFieldNames() {
-      if (this.selectedWorkflow.form)
+      if (this.selectedWorkflow && this.selectedWorkflow.form)
         return this.selectedWorkflow.form.field_names;
       else return null;
     },
@@ -859,7 +936,7 @@ export default {
 
         const xx = fields.map((obj) => {
           return {
-            [obj.field]:obj.value
+            [obj.field]: obj.value,
             //  [this.selectedFieldNames.find(fd=>fd.key === obj.field ).label || obj.field]:[obj.value]
             // [this.getFieldLabel(obj.field)]: this.getFieldTarget(
             //   obj.value,
@@ -886,27 +963,32 @@ export default {
     //   },
     // },
 
-    getTriggerSchema: {
-      deep: true,
-      immediate: true,
-      handler(val) {
-        console.log("trigger");
-        console.log(JSON.stringify(val, null, 2));
-      },
+    settingsDialog() {
+      this.expandSchema = false;
     },
+
+    // getTriggerSchema: {
+    //   deep: true,
+    //   immediate: true,
+    //   handler(val) {
+    //     console.log("trigger");
+    //     console.log(JSON.stringify(val, null, 2));
+    //   },
+    // },
   },
 };
 </script>
 
 <style lang="scss" scoped>
 .workflow {
-  padding: 20px;
+  padding: 0px 40px 20px 20px;
 
   &__header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 30px;
+    padding-left: 20px;
 
     .titlex {
       font-size: 21px;
@@ -1349,6 +1431,7 @@ export default {
 
 .schema-structure {
   max-height: 170px;
+  height: auto;
   padding: 15px;
   overflow: auto;
   background-color: #fff;
