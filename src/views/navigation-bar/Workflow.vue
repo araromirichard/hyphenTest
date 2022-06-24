@@ -1,610 +1,15 @@
 <template>
   <v-container class="pa-0">
-    <div v-if="1 == 2">
-      <div>
-        <v-row class="mx-14 primary--text">
-          <span
-            style="
-              margin-top: 35px;
-              font-family: Inter;
-              font-style: normal;
-              font-weight: bold;
-              line-height: 39px;
-            "
-            :style="{
-              fontSize: `${$vuetify.breakpoint.mdAndDown ? '24px' : '32px'}`,
-              marginTop: `${$vuetify.breakpoint.mdAndDown ? '58px' : '48px'}`,
-            }"
-            >Workflow</span
-          >
-          <v-spacer></v-spacer>
-          <v-dialog
-            elevation="0"
-            v-model="dialog"
-            max-width="590"
-            overlay-color="#301F78"
-            overlay-opacity="0.282397"
-          >
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn
-                dark
-                v-bind="attrs"
-                v-on="on"
-                class="text-capitalize"
-                style="
-                  width: 209px;
-                  height: 54px;
-                  margin-top: 30px;
-                  background: var(--v-primary-base);
-                  box-shadow: 0px 12px 22px rgba(0, 0, 0, 0.24);
-                  border-radius: 4px;
-                "
-                :style="{
-                  width: `${$vuetify.breakpoint.mdAndDown ? '150px' : '209px'}`,
-                  marginTop: `${
-                    $vuetify.breakpoint.mdAndDown ? '58px' : '48px'
-                  }`,
-                }"
-              >
-                <img :src="require('@/assets/pbot_icons/workflow_btn.svg')" />
-                <span
-                  style="
-                    padding-left: 8px;
-                    font-family: Inter;
-                    font-style: normal;
-                    font-weight: 500;
-                    font-size: 14px;
-                    line-height: 17px;
-                    text-align: center;
-                    letter-spacing: 0.636364px;
-                    color: #ffffff;
-                  "
-                  :style="{
-                    fontSize: `${
-                      $vuetify.breakpoint.mdAndDown ? '12px' : '14px'
-                    }`,
-                  }"
-                >
-                  New Workflow
-                </span>
-              </v-btn>
-            </template>
-            <v-card
-              max-width=""
-              height="300"
-              @keyup.enter="startWorkflow"
-              flat
-              class="m-0"
-              style="background: #f8f7f4; border-radius: 8px"
-            >
-              <v-card-title
-                class="mb-8"
-                style="background: #ffffff; border-radius: 8px 8px 0px 0px"
-              >
-                <span
-                  style="
-                    font-family: Inter;
-                    font-style: normal;
-                    font-weight: 600;
-                    font-size: 16px;
-                    line-height: 19px;
-                    color: #301f78;
-                  "
-                  >New Workflow</span
-                >
-                <v-spacer></v-spacer>
-                <v-icon
-                  tag="button"
-                  @click="closeWorkflowDialog"
-                  class="text-bolder"
-                  color="#596A73"
-                >
-                  mdi-close
-                </v-icon>
-              </v-card-title>
-              <template class="d-flex">
-                <span
-                  style="
-                    margin-top: 30px;
-                    margin-left: 37px;
-                    font-family: Inter;
-                    font-style: normal;
-                    font-weight: normal;
-                    font-size: 12px;
-                    line-height: 18px;
-                    letter-spacing: 0.45px;
-                    color: #7f919b;
-                  "
-                  >Workflow Name</span
-                >
-                <v-text-field
-                  style="
-                    margin-left: 37px;
-                    margin-right: 31px;
-                    margin-bottom: 30px;
-                    background: #ffffff;
-                    border: 1px solid rgba(212, 216, 223, 0.377431);
-                    border-radius: 3px;
-                  "
-                  dense
-                  :hide-details="true"
-                  label="Workflow Name"
-                  single-line
-                  outlined
-                  color="primary"
-                  v-model="name"
-                ></v-text-field>
-              </template>
-              <template class="mt-6">
-                <v-card-actions class="d-flex justify-end mt-2 mr-5">
-                  <v-btn
-                    link
-                    @click="startWorkflow"
-                    dark
-                    width="121"
-                    height="45"
-                    color="primary"
-                    class="text-capitalize"
-                    style="
-                      box-shadow: 0px 12px 22px rgba(0, 0, 0, 0.24);
-                      border-radius: 4px;
-                    "
-                  >
-                    <v-icon>mdi-chevron-right</v-icon>
-                    <span>Next</span>
-                  </v-btn>
-                </v-card-actions>
-              </template>
-            </v-card>
-          </v-dialog>
-        </v-row>
-        <v-row class="mx-14">
-          <v-card
-            class="mb-16"
-            width="100%"
-            min-height="990"
-            elevation="4"
-            style="margin-top: 40px"
-          >
-            <template v-if="$vuetify.breakpoint.mdAndUp">
-              <v-card width="100%" height="46">
-                <template>
-                  <v-tabs v-model="tabIndex" slider-size="4">
-                    <v-tab>WORKFLOWS</v-tab>
-                    <v-tab>TEMPLATES</v-tab>
-                    <v-tab>ACTIONS</v-tab>
-                    <v-tab>LOG</v-tab>
-                    <v-spacer></v-spacer>
-                    <v-btn
-                      v-if="isClicked"
-                      @click="toggleSearch"
-                      plain
-                      class="text-black pt-4"
-                      style="
-                        font-family: Inter;
-                        font-style: normal;
-                        font-weight: 500;
-                        font-size: 12px;
-                        line-height: 20px;
-                        letter-spacing: 0.55px;
-                        text-transform: uppercase;
-                        color: #7f919b;
-                      "
-                    >
-                      search
-                      <v-icon small right class="pr-1"> mdi-magnify </v-icon>
-                    </v-btn>
-
-                    <v-expand-x-transition v-else>
-                      <v-text-field
-                        v-model="search"
-                        @blur="isClicked = true && !search"
-                        class="seacrh-field mt-2 mr-2"
-                        dense
-                        clearable
-                        autofocus
-                        hide-details="true"
-                        persistent-placeholder
-                        placeholder="Search"
-                        append-icon="mdi-magnify"
-                        filled
-                      >
-                      </v-text-field>
-                    </v-expand-x-transition>
-                    <v-tab-item>
-                      <div class="workflows">
-                        <div class="template-banner">
-                          <span class="template-banner__header"
-                            >Template workflows</span
-                          >
-
-                          <div class="d-flex template-banner__desc">
-                            <v-icon color="primary">mdi-vector-link</v-icon>
-                            <span
-                              >Use templates to get started quickly with
-                              workflows. Take advantage of usecases we have
-                              collected from experts</span
-                            >
-                          </div>
-
-                          <v-btn color="primary" @click="tabIndex = 1" outlined
-                            >Go to Templates</v-btn
-                          >
-                        </div>
-                        <div class="saved-workflow">
-                          <span class="saved-workflow__header"
-                            >Saved workflows</span
-                          >
-
-                          <div
-                            v-if="errorLoadingWorkflow"
-                            class="text-center"
-                            style="padding: 100px"
-                          >
-                            <v-btn
-                              color="primary"
-                              outlined
-                              @click="getWorkflows"
-                              ><v-icon>mdi-refresh</v-icon> Retry</v-btn
-                            >
-                          </div>
-
-                          <div
-                            v-if="isLoadingWorkflows"
-                            class="saved-workflow__container"
-                          >
-                            <v-skeleton-loader
-                              v-for="loader in 6"
-                              :key="loader"
-                              height="200px"
-                              width="100%"
-                              type="card"
-                            />
-                          </div>
-
-                          <div v-else class="saved-workflow__container">
-                            <div
-                              class="saved-workflow__container__workflow"
-                              v-for="(workflow, index) in workflows"
-                              :key="index"
-                            >
-                              <span class="titlex">{{
-                                workflow.workflow_title
-                              }}</span>
-                              <span class="trigger">{{ workflow.source }}</span>
-
-                              <div
-                                class="
-                                  d-flex
-                                  justify-space-between
-                                  align-center
-                                "
-                              >
-                                <span class="runs">{{
-                                  Intl.NumberFormat().format(
-                                    Number(workflow.run)
-                                  )
-                                }}</span>
-                                <v-switch
-                                  @change="toggleWorkflow(workflow)"
-                                  v-model="workflow.is_active"
-                                ></v-switch>
-                              </div>
-                              <v-divider></v-divider>
-                              <div class="footerx">
-                                <div>
-                                  <span class="footerx__icon--published"></span>
-                                  <span class="footerx__state"
-                                    >created
-                                    {{
-                                      format(
-                                        new Date(workflow.created_at),
-                                        "dd/MM/Y"
-                                      )
-                                    }}
-                                  </span>
-                                </div>
-                                <div>
-                                  <v-btn
-                                    :to="`/workflow/${workflow.id}`"
-                                    icon
-                                    small
-                                    color="#8F96A1"
-                                    ><v-icon>mdi-pencil-outline</v-icon></v-btn
-                                  >
-                                  <v-btn
-                                    @click="summary(workflow)"
-                                    icon
-                                    small
-                                    color="#8F96A1"
-                                    ><v-icon
-                                      >mdi-format-list-bulleted</v-icon
-                                    ></v-btn
-                                  >
-                                  <v-btn
-                                    @click="deleteWorkflow(workflow)"
-                                    icon
-                                    small
-                                    color="#8F96A1"
-                                    ><v-icon
-                                      >mdi-trash-can-outline</v-icon
-                                    ></v-btn
-                                  >
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </v-tab-item>
-
-                    <v-tab-item>
-                      <div class="templates">
-                        <div class="template-banner">
-                          <span class="template-banner__header"
-                            >Template workflows</span
-                          >
-
-                          <div class="template-banner__desc">
-                            <v-icon color="primary">mdi-vector-link</v-icon>
-                            <span
-                              >Use templates to get started quickly with
-                              workflows. Take advantage of usecases we have
-                              collected from experts</span
-                            >
-                          </div>
-                        </div>
-                        <div class="template-banner__container">
-                          <div
-                            class="template-banner__container__template"
-                            v-for="(workflow, index) in workflows"
-                            :key="index"
-                          >
-                            <span class="titlex">{{
-                              workflow.workflow_title
-                            }}</span>
-                            <span class="trigger">{{ workflow.source }}</span>
-                            <div class="description">template description</div>
-                            <v-divider></v-divider>
-                            <div class="footerx">
-                              <span class="footerx__state">Template </span>
-                              <div style="display: flex; gap: 5px">
-                                <v-btn small outlined color="#8F96A1">
-                                  Use
-                                </v-btn>
-                                <v-btn icon small color="primary"
-                                  ><v-icon>mdi-eye-outline</v-icon></v-btn
-                                >
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </v-tab-item>
-                  </v-tabs>
-                </template>
-              </v-card>
-            </template>
-          </v-card>
-        </v-row>
-      </div>
-
-      <v-dialog
-        v-model="deleteWorkflowDialog"
-        :persistent="isDeletingWorkflow"
-        max-width="550px"
-        transition="dialog-transition"
-      >
-        <div class="delete">
-          <div class="delete__header">
-            <span class="t">Delete Workflow</span>
-            <v-btn @click="deleteWorkflowDialog = false" icon color="primary">
-              <v-icon>mdi-close</v-icon>
-            </v-btn>
-          </div>
-          <div class="delete__content">
-            <span class="msg"
-              >Are you sure you want to delete this workflow?</span
-            >
-
-            <v-btn
-              color="primary"
-              @click="confirmDeleteWorkflow"
-              elevation="1"
-              x-large
-              :loading="isDeletingWorkflow"
-            >
-              <v-icon left>mdi-chevron-right</v-icon> Proceed</v-btn
-            >
-          </div>
-        </div>
-      </v-dialog>
-
-      <v-dialog
-        v-if="selectedWorkflow && settingsDialog"
-        v-model="settingsDialog"
-        max-width="650px"
-        transition="dialog-transition"
-        :persistent="isUpdatingWorkflowName"
-      >
-        <div class="summary">
-          <div class="summary__header">
-            <div class="b">
-              <v-icon color="primary">mdi-vector-link</v-icon>
-              <span class="t"
-                >Workflow: {{ selectedWorkflow.workflow_title }}</span
-              >
-            </div>
-
-            <v-btn @click="close" icon color="primary">
-              <v-icon>mdi-close</v-icon>
-            </v-btn>
-          </div>
-          <v-tabs
-            background-color="#F6F3EE"
-            slider-size="4"
-            style="margin:0px auto auto auto;width:100% mix-blend-mode: normal;padding:10px 0"
-          >
-            <v-tab>SUMMARY</v-tab>
-            <v-tab>TRIGGERS</v-tab>
-            <v-tab>SETTINGS</v-tab>
-            <v-tab-item>
-              <div class="summary__content">
-                <template v-if="1 == 2">
-                  <div v-if="selectedWorkflow.workflow_schema" class="schema">
-                    <div v-if="selectedWorkflow.workflow_schema">
-                      When
-                      <span class="type">{{ groupType(parentGroup) }}</span> of
-                      the following is <span class="operator">TRUE</span>
-                    </div>
-
-                    <div
-                      style="margin-top: 10px"
-                      v-for="(condition, index) in selectedConditions"
-                      :key="index"
-                    >
-                      <div class="group" v-if="condition.type == 'group'">
-                        With
-                        <span class="type">{{
-                          groupType(condition.properties.type)
-                        }}</span>
-                        of the following
-
-                        <span
-                          v-for="(innerConditions, index) in condition
-                            .properties.conditions"
-                          :key="index"
-                        >
-                          <div
-                            class="comparison"
-                            v-if="innerConditions.type == 'comparison'"
-                          >
-                            <span class="field">{{
-                              getFieldLabel(innerConditions.properties.field)
-                            }}</span>
-                            is {{ innerConditions.properties.type }}
-                            <span class="operator">{{
-                              operator(innerConditions.properties.type)
-                            }}</span>
-                            <span class="target">{{
-                              getFieldTarget(
-                                innerConditions.properties.target,
-                                innerConditions.properties.field
-                              )
-                            }}</span>
-                            {{
-                              innerConditions.properties.target +
-                              "," +
-                              innerConditions.properties.field
-                            }}
-                          </div>
-                        </span>
-                      </div>
-
-                      <div
-                        class="comparison"
-                        v-if="condition.type == 'comparison'"
-                      >
-                        <span class="field">{{
-                          getFieldLabel(condition.properties.field)
-                        }}</span>
-                        is
-                        <!-- <span class="operator">{{
-                operator(condition.properties.type)
-              }}</span>
-              <span class="target">{{
-                getFieldTarget(
-                  condition.properties.target,
-                  condition.properties.field
-                )
-              }}</span> -->
-                      </div>
-                    </div>
-                  </div>
-                </template>
-              </div>
-            </v-tab-item>
-            <v-tab-item>
-              <div class="summary__content">
-                <span
-                  style="color: #19283dcc; font-size: 16px"
-                  class="mb-2 mt-1 d-block"
-                >
-                  To trigger this workflow using an external API or webhook
-                  service, make a POST request to the endpoint below
-                </span>
-
-                <div class="api-cover">
-                  <button class="api-cover__req">POST</button>
-                  <div class="api-cover__url">
-                    http://flow.hypn.so/{{ selectedWorkflow.workflow_id }}
-                  </div>
-                  <v-btn icon style="margin-right: 15px"
-                    ><v-icon>mdi-content-copy</v-icon></v-btn
-                  >
-                </div>
-
-                <span
-                  class="mt-1 d-block"
-                  style="color: #8f96a1; font-size: 14px"
-                >
-                  <b>Note:</b> This endpoint is unique to this workflow and
-                  serves as a trigger. The payload must match the fields used in
-                  your workflow composition
-                </span>
-
-                <span
-                  style="color: #19283dcc; font-size: 16px"
-                  class="mb-2 mt-10 d-block"
-                  >Workflow trigger data format (show this to your developer or
-                  IT support)</span
-                >
-
-                <pre class="schema-structure">
-                {{ selectedWorkflow.workflow_schema }}
-              </pre
-                >
-              </div>
-            </v-tab-item>
-            <v-tab-item>
-              <div class="summary__content">
-                <span class="titlex">Update workflow name below</span>
-                <div class="text-wrapper">
-                  <v-text-field
-                    outlined
-                    color="primary"
-                    v-model="selectedWorkflow.workflow_title"
-                    hide-details="auto"
-                    label="Workflow name"
-                  ></v-text-field>
-                </div>
-
-                <div class="desc">
-                  <b>Note:</b> Updating the name will not change the workflow
-                  trigger or ID
-                </div>
-
-                <div class="d-flex mt-10" style="justify-content: end">
-                  <v-btn
-                    color="primary"
-                    @click="updateWorkflowName(selectedWorkflow)"
-                    :loading="isUpdatingWorkflowName"
-                    elevation="0"
-                    large
-                  >
-                    <v-icon>mdi-chevron-right</v-icon> Update
-                  </v-btn>
-                </div>
-              </div>
-            </v-tab-item>
-          </v-tabs>
-        </div>
-      </v-dialog>
-    </div>
-
     <div class="workflow">
       <div class="workflow__header">
-        <span class="titlex">Workflow</span>
+        <span
+          class="titlex"
+          :style="{
+            fontSize: `${$vuetify.breakpoint.mdAndDown ? '24px' : '32px'}`,
+            marginTop: `${$vuetify.breakpoint.mdAndDown ? '58px' : '48px'}`,
+          }"
+          >Workflow</span
+        >
 
         <v-dialog
           elevation="0"
@@ -614,9 +19,46 @@
           overlay-opacity="0.282397"
         >
           <template v-slot:activator="{ on, attrs }">
-            <v-btn v-on="on" v-bind="attrs" color="primary" large elevation="1">
-              <v-icon left>mdi-vector-link</v-icon> New Workflow</v-btn
+            <v-btn
+              dark
+              v-bind="attrs"
+              v-on="on"
+              class="text-capitalize"
+              style="
+                width: 209px;
+                height: 54px;
+                margin-top: 30px;
+                background: var(--v-primary-base);
+                box-shadow: 0px 12px 22px rgba(0, 0, 0, 0.24);
+                border-radius: 4px;
+              "
+              :style="{
+                width: `${$vuetify.breakpoint.mdAndDown ? '150px' : '209px'}`,
+                marginTop: `${$vuetify.breakpoint.mdAndDown ? '58px' : '48px'}`,
+              }"
             >
+              <img :src="require('@/assets/pbot_icons/workflow_btn.svg')" />
+              <span
+                style="
+                  padding-left: 8px;
+                  font-family: Inter;
+                  font-style: normal;
+                  font-weight: 500;
+                  font-size: 14px;
+                  line-height: 17px;
+                  text-align: center;
+                  letter-spacing: 0.636364px;
+                  color: #ffffff;
+                "
+                :style="{
+                  fontSize: `${
+                    $vuetify.breakpoint.mdAndDown ? '12px' : '14px'
+                  }`,
+                }"
+              >
+                New Workflow
+              </span>
+            </v-btn>
           </template>
           <v-card
             max-width=""
@@ -713,7 +155,7 @@
           class="mb-16"
           width="100%"
           min-height="990"
-          elevation="4"
+          elevation="1"
           style="margin-top: 40px"
         >
           <template v-if="$vuetify.breakpoint.mdAndUp">
@@ -974,21 +416,21 @@
               >
             </div>
 
-            <v-btn @click="close" icon color="primary">
+            <v-btn @click="settingsDialog = false" icon color="primary">
               <v-icon>mdi-close</v-icon>
             </v-btn>
           </div>
           <v-tabs
-            background-color="#F6F3EE"
-            slider-size="4"
-            style="margin:0px auto auto auto;width:100% mix-blend-mode: normal;padding:10px 0"
+            background-color="#f8f7f4"
+            slider-size="5"
+            style="margin:0px auto auto auto;width:100% mix-blend-mode: normal;padding:10px 50px"
           >
             <v-tab>SUMMARY</v-tab>
             <v-tab>TRIGGERS</v-tab>
             <v-tab>SETTINGS</v-tab>
             <v-tab-item>
               <div class="summary__content">
-                <template v-if="1 == 2">
+                <template>
                   <div v-if="selectedWorkflow.workflow_schema" class="schema">
                     <div v-if="selectedWorkflow.workflow_schema">
                       When
@@ -996,66 +438,75 @@
                       the following is <span class="operator">TRUE</span>
                     </div>
 
-                    <div
-                      style="margin-top: 10px"
-                      v-for="(condition, index) in selectedConditions"
-                      :key="index"
-                    >
-                      <div class="group" v-if="condition.type == 'group'">
-                        With
-                        <span class="type">{{
-                          groupType(condition.properties.type)
-                        }}</span>
-                        of the following
+                    <div>
+                      <div
+                        style="margin-top: 10px"
+                        v-for="(condition, index) in selectedConditions"
+                        :key="index"
+                      >
+                        <div class="group" v-if="condition.type == 'group'">
+                          With
+                          <span class="type">{{
+                            groupType(condition.properties.type)
+                          }}</span>
+                          of the following
 
-                        <span
-                          v-for="(innerConditions, index) in condition
-                            .properties.conditions"
-                          :key="index"
-                        >
-                          <div
-                            class="comparison"
-                            v-if="innerConditions.type == 'comparison'"
+                          <span
+                            v-for="(innerConditions, index) in condition
+                              .properties.conditions"
+                            :key="index"
                           >
-                            <span class="field">{{
-                              getFieldLabel(innerConditions.properties.field)
-                            }}</span>
-                            is {{ innerConditions.properties.type }}
-                            <span class="operator">{{
-                              operator(innerConditions.properties.type)
-                            }}</span>
-                            <span class="target">{{
-                              getFieldTarget(
-                                innerConditions.properties.target,
-                                innerConditions.properties.field
-                              )
-                            }}</span>
-                            {{
+                            <div
+                              class="comparison"
+                              v-if="innerConditions.type == 'comparison'"
+                            >
+                              <span class="field">
+                                {{
+                                  getFieldLabel(
+                                    innerConditions.properties.field
+                                  )
+                                }}
+                                <!-- {{ innerConditions.properties.field }} -->
+                              </span>
+                              is
+                              <span class="operator">{{
+                                operator(innerConditions.properties.type)
+                              }}</span>
+                              <span class="target">
+                                {{
+                                  getFieldTarget(
+                                    innerConditions.properties.target,
+                                    innerConditions.properties.field
+                                  )
+                                }}
+                              </span>
+                              <!-- {{
                               innerConditions.properties.target +
                               "," +
                               innerConditions.properties.field
-                            }}
-                          </div>
-                        </span>
-                      </div>
+                            }} -->
+                            </div>
+                          </span>
+                        </div>
 
-                      <div
-                        class="comparison"
-                        v-if="condition.type == 'comparison'"
-                      >
-                        <span class="field">{{
-                          getFieldLabel(condition.properties.field)
-                        }}</span>
-                        is
-                        <!-- <span class="operator">{{
-                operator(condition.properties.type)
-              }}</span>
-              <span class="target">{{
-                getFieldTarget(
-                  condition.properties.target,
-                  condition.properties.field
-                )
-              }}</span> -->
+                        <div
+                          class="comparison"
+                          v-if="condition.type == 'comparison'"
+                        >
+                          <span class="field">{{
+                            getFieldLabel(condition.properties.field)
+                          }}</span>
+                          is
+                          <span class="operator">{{
+                            operator(condition.properties.type)
+                          }}</span>
+                          <span class="target">{{
+                            getFieldTarget(
+                              condition.properties.target,
+                              condition.properties.field
+                            )
+                          }}</span>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -1098,10 +549,25 @@
                   IT support)</span
                 >
 
-                <pre class="schema-structure">
-                {{ selectedWorkflow.workflow_schema }}
-              </pre
+                <pre
+                  class="schema-structure"
+                  :class="{ 'schema-structure--expand': expandSchema }"
+                  v-html="JSON.stringify(getTriggerSchema, null, 2)"
+                ></pre>
+                <div
+                  v-if="!expandSchema"
+                  class="d-flex"
+                  style="justify-content: end"
                 >
+                  <v-btn
+                    @click="expandSchema = true"
+                    color="primary"
+                    style="padding: 0"
+                    text
+                  >
+                    <v-icon>mdi-plus</v-icon> expand
+                  </v-btn>
+                </div>
               </div>
             </v-tab-item>
             <v-tab-item>
@@ -1164,11 +630,16 @@ export default {
       tabIndex: 0,
       operators: [],
       isUpdatingWorkflowName: false,
+      expandSchema: false,
+      invoiceEntries: [],
+      paymentEntries: [],
     };
   },
   mounted() {
     this.getWorkflows();
     this.fetchOperators();
+    this.fetchInvoiceEntries();
+    this.fetchPaymentEntries();
   },
   methods: {
     ...mapActions({ showToast: "ui/showToast" }),
@@ -1263,8 +734,38 @@ export default {
     },
 
     summary(workflow) {
+      // console.log(JSON.stringify(workflow, null, 2));
       this.selectedWorkflow = workflow;
       this.settingsDialog = true;
+    },
+
+    async fetchInvoiceEntries() {
+      try {
+        this.isLoadingEntries = true;
+        const { data } = await this.$store.dispatch(
+          "workflow/getAllInvoiceFieldsOptions"
+        );
+        this.invoiceEntries = data;
+      } catch (err) {
+        this.isLoadingEntries = false;
+      } finally {
+        this.isLoadingEntries = false;
+      }
+    },
+
+    async fetchPaymentEntries() {
+      try {
+        this.isLoadingEntries = true;
+        const data = await this.$store.dispatch(
+          "workflow/getPaymentFieldsOptions",
+          this.triggerData
+        );
+        this.paymentEntries = data;
+      } catch (err) {
+        this.isLoadingEntries = false;
+      } finally {
+        this.isLoadingEntries = false;
+      }
     },
 
     groupType(type) {
@@ -1328,32 +829,51 @@ export default {
     },
 
     getFieldLabel(inputField) {
-      if (this.selectedWorkflow.form.field_names) {
+      if (
+        (this.selectedWorkflow.form && this.selectedWorkflow.form.names) ||
+        this.invoiceEntries ||
+        this.paymentEntries
+      ) {
         return (
-          this.selectedWorkflow.form.field_names.find(
-            (field) => field.key === inputField
-          )?.label || inputField
+          (this.selectedWorkflow.source == "form"
+            ? this.selectedWorkflow?.form?.field_names || []
+            : this.selectedWorkflow.source == "invoice"
+            ? this.invoiceEntries
+            : this.paymentEntries
+          ).find((field) => field.key === inputField)?.label || inputField
         );
       }
       return inputField;
     },
 
     getFieldTarget(inputTarget, inputField) {
-      const target = this.selectedWorkflow.form.field_names.find(
-        (field) => field.key === inputField
-      );
+      const target = [
+        this.selectedWorkflow.source == "form"
+          ? this.selectedWorkflow?.form?.field_names || []
+          : this.selectedWorkflow.source == "invoice"
+          ? this.invoiceEntries
+          : this.paymentEntries,
+      ].find((field) => field.key === inputField);
 
       if (target) {
         if (target.type === "dropDown" || target.type === "checkbox") {
           // multi values
-          return inputTarget
-            .map((item) => {
-              return (
-                target.options.find((option) => option.value === item).text ||
-                item
-              );
-            })
-            .join(", ");
+
+          if (typeof inputTarget === "string") {
+            return (
+              target.options.find((option) => option.value === inputTarget)
+                .text || inputTarget
+            );
+          } else {
+            return inputTarget
+              .map((item) => {
+                return (
+                  target.options.find((option) => option.value === item).text ||
+                  item
+                );
+              })
+              .join(", ");
+          }
         } else if (target.type === "radio") {
           // filter out just one
           return (
@@ -1373,38 +893,102 @@ export default {
     }),
 
     parentGroup() {
-      if (this.selectedWorkflow.workflow_schema)
+      if (this.selectedWorkflow && this.selectedWorkflow.workflow_schema)
         return this.selectedWorkflow.workflow_schema.condition.properties.type;
       else return null;
     },
 
     selectedConditions() {
-      if (this.selectedWorkflow.workflow_schema)
+      if (this.selectedWorkflow && this.selectedWorkflow.workflow_schema)
         return this.selectedWorkflow.workflow_schema.condition.properties
           .conditions;
       else return null;
     },
+
+    selectedFieldNames() {
+      if (this.selectedWorkflow && this.selectedWorkflow.form)
+        return this.selectedWorkflow.form.field_names;
+      else return null;
+    },
+
+    getTriggerSchema() {
+      if (this.selectedConditions) {
+        let fields = [];
+        this.selectedConditions.forEach((condition) => {
+          if (condition.type === "comparison") {
+            fields.push({
+              field: condition.properties.field,
+              value: condition.properties.target,
+            });
+          }
+
+          if (condition.type === "group") {
+            condition.properties.conditions.forEach((condition2) => {
+              if (condition2.type === "comparison") {
+                fields.push({
+                  field: condition2.properties.field,
+                  value: condition2.properties.target,
+                });
+              }
+            });
+          }
+        });
+
+        const xx = fields.map((obj) => {
+          return {
+            [obj.field]: obj.value,
+            //  [this.selectedFieldNames.find(fd=>fd.key === obj.field ).label || obj.field]:[obj.value]
+            // [this.getFieldLabel(obj.field)]: this.getFieldTarget(
+            //   obj.value,
+            //   this.field
+            // ),
+          };
+        });
+
+        var cu = {};
+
+        xx.map((va) => {
+          Object.assign(cu, va);
+        });
+
+        return cu;
+      } else return {};
+    },
   },
   watch: {
-    selectedWorkflow: {
-      deep: true,
-      handler(val) {
-        console.log(JSON.stringify(val.form.field_names, null, 2));
-      },
+    // selectedWorkflow: {
+    //   deep: true,
+    //   handler(val) {
+    //     //  console.log(JSON.stringify(val.form.field_names, null, 2));
+    //   },
+    // },
+
+    settingsDialog() {
+      this.expandSchema = false;
     },
+
+    // getTriggerSchema: {
+    //   deep: true,
+    //   immediate: true,
+    //   handler(val) {
+    //     console.log("trigger");
+    //     console.log(JSON.stringify(val, null, 2));
+    //   },
+    // },
   },
 };
 </script>
 
 <style lang="scss" scoped>
 .workflow {
-  padding: 20px;
+  padding: 0px 40px 20px 20px;
 
   &__header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 30px;
+    padding-left: 20px;
 
     .titlex {
       font-size: 21px;
@@ -1446,12 +1030,13 @@ export default {
 
 .summary {
   border-radius: 8px;
-  background-color: #fff;
+  background-color: #f8f7f4;
 
   &__header {
     padding: 20px;
     width: 100%;
     display: flex;
+    background-color: white;
     justify-content: space-between;
     align-items: center;
 
@@ -1475,11 +1060,12 @@ export default {
   }
 
   &__content {
-    padding: 35px;
+    padding: 20px 0px;
     width: 100%;
     min-height: 400px;
     max-height: 90vh;
     background-color: #f8f7f4;
+    margin-top: 1px solid grey;
 
     .titlex {
       color: #19283dcc;
@@ -1845,6 +1431,7 @@ export default {
 
 .schema-structure {
   max-height: 170px;
+  height: auto;
   padding: 15px;
   overflow: auto;
   background-color: #fff;
