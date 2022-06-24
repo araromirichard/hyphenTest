@@ -11,7 +11,7 @@
                 Inbox
                 <span
                   class="transTotal align-center"
-                  v-if="invoiceArray.length > 0"
+                  v-if="invoiceArray && invoiceArray.length > 0"
                   >{{ totalInvoice }} Transaction(s)</span
                 >
               </h3>
@@ -177,7 +177,7 @@
     </v-row>
 
     <!-- inbox table for desktop screen -->
-    <v-row v-if="invoiceArray.length > 0" class="px-2 px-md-0">
+    <v-row v-if="invoiceArray && invoiceArray.length > 0" class="px-2 px-md-0">
       <v-col cols="12">
         <v-card
           flat
@@ -477,7 +477,7 @@
 
     <!-- tabs for mobile devices -->
     <v-container class="pa-0" v-if="$vuetify.breakpoint.mdAndDown">
-      <v-row v-if="invoiceArray.length > 0">
+      <v-row v-if="invoiceArray && invoiceArray.length > 0">
         <v-col cols="12">
           <v-bottom-navigation fixed class="pa-0" dark>
             <v-tabs
