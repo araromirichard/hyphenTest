@@ -8,7 +8,7 @@
 
     <div class="trigger__content">
       <div
-        @click=" disabled ? undefined :  selected = trigger.value"
+        @click="disabled ? undefined : (selected = trigger.value)"
         class="option"
         :disabled="disabled"
         v-for="(trigger, index) in triggers"
@@ -28,10 +28,10 @@ export default {
     value: {
       default: "",
     },
-    disabled:{
+    disabled: {
       type: Boolean,
       default: false,
-    }
+    },
   },
   data() {
     return {
@@ -110,7 +110,7 @@ export default {
       padding: 10px;
       gap: 10px;
 
-      &[disabled]{
+      &[disabled] {
         opacity: 0.5;
         cursor: not-allowed;
       }

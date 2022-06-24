@@ -56,7 +56,6 @@
             "
             v-model="form.target"
             :items="target.options"
-            
             item-text="text"
             item-value="value"
             max-height="60px"

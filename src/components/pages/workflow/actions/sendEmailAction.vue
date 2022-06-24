@@ -203,7 +203,7 @@ export default {
         );
         this.workers = response.map((worker) => worker.email);
 
-      //  this.sendOutChannel()
+        //  this.sendOutChannel()
       } catch (err) {
         console.log(JSON.stringify(err, null, 2));
       } finally {
@@ -214,9 +214,7 @@ export default {
 
   computed: {
     canAddToWorkflow() {
-      return (
-        this.data.subject && this.data.message && this.data.to
-      );
+      return this.data.subject && this.data.message && this.data.to;
     },
   },
   watch: {

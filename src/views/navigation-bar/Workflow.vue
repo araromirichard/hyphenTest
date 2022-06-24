@@ -927,8 +927,7 @@
         </v-card>
       </v-row>
 
-
-          <v-dialog
+      <v-dialog
         v-model="deleteWorkflowDialog"
         :persistent="isDeletingWorkflow"
         max-width="550px"

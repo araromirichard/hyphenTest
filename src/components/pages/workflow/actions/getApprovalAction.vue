@@ -44,7 +44,13 @@
             <v-icon left>mdi-close</v-icon> Cancel
           </v-btn>
 
-          <v-btn @click="addToWorkflow" :disabled="!worker" large color="primary" elevation="0">
+          <v-btn
+            @click="addToWorkflow"
+            :disabled="!worker"
+            large
+            color="primary"
+            elevation="0"
+          >
             <v-icon left>mdi-chevron-right</v-icon> Add to workflow
           </v-btn>
         </div>
@@ -94,16 +100,16 @@ export default {
         );
         this.workers = response.map((worker) => {
           return {
-            id:worker.id,
-            name:worker.first_name +' '+ worker.last_name,
-            email:worker.email
+            id: worker.id,
+            name: worker.first_name + " " + worker.last_name,
+            email: worker.email,
           };
         });
 
         this.sendOutChannel();
       } catch (err) {
         console.log(JSON.stringify(err, null, 2));
-      }finally{
+      } finally {
         this.isLoadingWorkers = false;
       }
     },
@@ -122,10 +128,10 @@ export default {
     },
     sendOutChannel() {
       let channel =
-        this.workers.find((worker) => worker.email == this.worker)?.name  ||
+        this.workers.find((worker) => worker.email == this.worker)?.name ||
         "N/A";
 
-      this.$emit("channel",channel);
+      this.$emit("channel", channel);
     },
     mapForm() {
       if (this.value) {
@@ -146,7 +152,7 @@ export default {
       } else {
         this.$emit("close");
       }
-    }
+    },
   },
 };
 </script>

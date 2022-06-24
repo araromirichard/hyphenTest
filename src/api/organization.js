@@ -156,8 +156,8 @@ export default {
     });
   },
 
-   getCoWorkers(organizationId) {
-    return  api().get(`/organizations/${organizationId}/members`, {
+  getCoWorkers(organizationId) {
+    return api().get(`/organizations/${organizationId}/members`, {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("token"),
       },

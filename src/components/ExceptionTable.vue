@@ -15,8 +15,8 @@
         :color="index % 2 ? '#f6f6f6' : ''"
       >
         <v-layout row wrap class="align-center">
-          <v-flex md2>
-            <div class="d-flex align-center">
+          <v-flex md1>
+            <div class="d-flex justify-center align-center">
               <span
                 class="mb-0 mx-4"
                 style="
@@ -27,8 +27,12 @@
                   line-height: 14px;
                   color: #596a73;
                 "
-                >{{ index }}</span
+                >{{ id }}</span
               >
+            </div>
+          </v-flex>
+          <v-flex md1>
+            <div class="d-flex justify-center align-center">
               <v-chip
                 class="mx-4"
                 :color="chipcolor"
@@ -40,7 +44,7 @@
           </v-flex>
 
           <v-flex md1>
-            <div class="d-flex align-center">
+            <div class="d-flex justify-center align-center">
               <span
                 class="mb-0"
                 style="
@@ -71,7 +75,7 @@
               >
             </div>
           </v-flex>
-          <v-flex md2>
+          <v-flex md1>
             <div class="d-flex align-center">
               <span
                 class="mb-0"
@@ -103,7 +107,7 @@
               >
             </div>
           </v-flex>
-          <v-flex md1>
+          <v-flex md2>
             <div class="d-flex align-center">
               <span
                 class="mb-0"
@@ -137,14 +141,58 @@
           </v-flex>
           <v-flex md2>
             <div class="d-flex align-center">
+              <v-hover v-slot="{ hover }">
+                <v-btn
+                  @click="
+                    $router.push({
+                      name: 'inbox.invoice',
+                      params: { id: index },
+                      query: { exception: true },
+                    })
+                  "
+                  :style="{
+                    'background-color': hover ? '#2bd5ae' : '',
+                    border: hover ? 'none' : '',
+                  }"
+                  exact-path
+                  depressed
+                  outlined
+                  dark
+                  small
+                  color="#2BD5AE"
+                  class="text-capitalize px-1 my-1 mr-1 rounded"
+                  style="color: var(--v-primary-base)"
+                >
+                  view
+                </v-btn>
+              </v-hover>
+              <v-hover v-slot="{ hover }">
+                <v-btn
+                  @click="
+                    $router.push({
+                      name: 'inbox.invoice',
+                      query: { review: false },
+                    })
+                  "
+                  dark
+                  outlined
+                  depressed
+                  small
+                  color="primary"
+                  :style="{
+                    'background-color': hover ? '#c4c9cf' : '',
+                    border: hover ? 'none' : '',
+                    color: hover ? 'white' : '#ffffff',
+                  }"
+                  class="text-capitalize px-2 my-1 rounded"
+                  >review</v-btn
+                >
+              </v-hover>
+            </div>
+            <!--  -->
+            <!-- <div class="d-flex align-center">
               <v-btn
-                @click="
-                  $router.push({
-                    name: 'inbox.invoice',
-                    params: { id: index },
-                    query: { exception: true },
-                  })
-                "
+               
                 exact-path
                 rounded
                 depressed
@@ -171,7 +219,7 @@
                 class="text-lowercase px-2 my-1"
                 >review</v-btn
               >
-            </div>
+            </div> -->
           </v-flex>
         </v-layout>
       </v-card>
@@ -183,6 +231,9 @@
 export default {
   props: {
     index: {
+      type: Number,
+    },
+    id: {
       type: Number,
     },
     type: {

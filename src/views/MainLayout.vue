@@ -444,7 +444,7 @@ export default {
         "forgot-password",
         "reset-password",
         "organizationList",
-        "Approval"
+        "Approval",
       ],
     };
   },

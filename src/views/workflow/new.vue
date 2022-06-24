@@ -208,12 +208,7 @@
           </div>
 
           <div class="mt-5 cta">
-            <v-btn
-              color="primary"
-             to="/workflow"
-              elevation="0"
-              large
-            >
+            <v-btn color="primary" to="/workflow" elevation="0" large>
               <v-icon left>mdi-chevron-right</v-icon> close</v-btn
             >
           </div>
@@ -491,7 +486,7 @@ export default {
         source: this.workflow.trigger,
         organization: this.orgId,
         workflow_schema: {
-          condition:this.workflow.conditions,
+          condition: this.workflow.conditions,
           actions: this.workflow.actions,
         },
         trigger_schema: this.workflow.fields,
