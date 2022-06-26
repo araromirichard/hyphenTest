@@ -13,7 +13,7 @@
     <v-layout
       row
       wrap
-      class="align-center my-2 px-8"
+      class="align-center my-2 px-6"
       v-if="$vuetify.breakpoint.mdAndUp"
     >
       <v-flex md1>
@@ -85,6 +85,7 @@
         <ExceptionTable
           v-if="$vuetify.breakpoint.mdAndUp"
           :index="invoice.id"
+          :id="i + 1"
           :invoiceRef="invoice.invoicenumber"
           :type="invoice.invoicetype"
           :requester="invoice.vendor.vendorname"

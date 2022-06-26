@@ -231,9 +231,9 @@ const routes = [
     name: "Approval",
     components: {
       default: () => import("@/views/approval.vue"),
-      Formlayout
-         } 
-   },
+      Formlayout,
+    },
+  },
   {
     path: "/settings",
     props: true,

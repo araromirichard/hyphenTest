@@ -192,7 +192,8 @@
           >
             <DataTable
               v-if="$vuetify.breakpoint.mdAndUp"
-              :index="id"
+              :index="i + 1"
+              :id="id"
               :invoiceRef="invoicenumber"
               :type="invoicetype"
               :requester="vendor.vendorname || ''"
@@ -288,12 +289,15 @@ export default {
             invoice.amount.toString().match(this.search)
           );
         });
-      } else {
-        return this.allInvoices;
-      }
+      } else
+        return this.allInvoices.filter((invoice) => {
+          if (invoice.exception != 1) {
+            return invoice;
+          }
+        });
     },
   },
-  mounted() {
+  async mounted() {
     //make skeleton loader stop
     this.isLoading = true;
     setTimeout(
@@ -303,12 +307,15 @@ export default {
       3000,
       this.allInvoices
     );
-    const response = this.$store.dispatch(
+    const response = await this.$store.dispatch(
       "invoices/FetchAllInvoices",
       this.organisationId
     );
     this.invoiceArray = response.data;
     //console.log(JSON.stringify(this.user, null, 2));
+
+    const workflow = await this.$store.dispatch("workflow/getAllWorkflows");
+    console.log(JSON.stringify(workflow.data, null, 2));
   },
   watch: {
     allInvoices: {
@@ -326,7 +333,7 @@ export default {
       },
     },
   },
-}; 
+};
 </script>
 
 <style>

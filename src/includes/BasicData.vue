@@ -1,13 +1,9 @@
 <template>
   <div>
-    <!-- <pre>
-    {{ singleInvoice }}
-  </pre
-    > -->
     <!-- for desktop screen -->
     <div v-if="$vuetify.breakpoint.mdAndUp">
-      <validation-observer v-slot="{ handleSubmit }">
-        <form @submit.prevent="handleSubmit(submitInput)">
+      <validation-observer>
+        <form>
           <div>
             <p
               class="py-md-10 py-5"
@@ -250,6 +246,7 @@
                     rules="required|alpha"
                   >
                     <v-text-field
+                      v-if="singleInvoice.vendor"
                       :error-messages="errors"
                       v-model="singleInvoice.vendor.vendorname"
                       hide-details="auto"
@@ -291,6 +288,7 @@
                     rules="required"
                   >
                     <v-text-field
+                      v-if="singleInvoice.vendor"
                       :error-messages="errors"
                       v-model="singleInvoice.vendor.address"
                       hide-details="auto"
@@ -332,6 +330,7 @@
                     rules="required"
                   >
                     <v-text-field
+                      v-if="singleInvoice.vendor"
                       :error-messages="errors"
                       v-model="singleInvoice.vendor.taxid"
                       hide-details="auto"
@@ -373,6 +372,7 @@
                     rules="required|email"
                   >
                     <v-text-field
+                      v-if="singleInvoice.vendor"
                       :error-messages="errors"
                       v-model="singleInvoice.vendor.email"
                       hide-details="auto"
@@ -418,6 +418,7 @@
                     }"
                   >
                     <v-text-field
+                      v-if="payableData.vendor"
                       :error-messages="errors"
                       v-model="payableData.vendor.phone"
                       hide-details="auto"
@@ -454,7 +455,7 @@
             <div class="text-center pt-14" style="padding-bottom: 20px">
               <v-btn
                 :disabled="$route.query.exception"
-                @click="submitInput"
+                @click="triggerAddToPayables"
                 large
                 elevation="10"
                 :loading="isSending"
@@ -477,8 +478,8 @@
     <!-- for mobile screen -->
     <v-row v-if="$vuetify.breakpoint.mdAndDown">
       <v-col cols="10" offset="1" class="d-flex flex-column align-center">
-        <validation-observer v-slot="{ handleSubmit }">
-          <form @submit.prevent="handleSubmit(submitInput)">
+        <validation-observer>
+          <form>
             <v-subheader
               class="py-md-10 py-5"
               style="
@@ -804,7 +805,12 @@
             </validation-provider>
 
             <div class="text-center pt-14" style="padding-bottom: 20px">
-              <v-btn @click="submitInput" large elevation="10" color="primary">
+              <v-btn
+                @click="triggerAddToPayables"
+                large
+                elevation="10"
+                color="primary"
+              >
                 <simple-line-icons
                   style="width: 15.98px; height: 15.97px"
                   class="m-0 text--white pl-14"
@@ -819,6 +825,8 @@
         </validation-observer>
       </v-col>
     </v-row>
+    <!-- add to payables modal -->
+    <AddToPayModal ref="addtopayable" />
   </div>
 </template>
 
@@ -826,6 +834,7 @@
 import SimpleLineIcons from "vue-simple-line";
 import InvoiceBtn from "./InvoiceBtn.vue";
 import { mapActions, mapGetters } from "vuex";
+import AddToPayModal from "./overlays/AddToPayModal.vue";
 
 export default {
   name: "BasicData",
@@ -866,6 +875,7 @@ export default {
   components: {
     SimpleLineIcons,
     InvoiceBtn,
+    AddToPayModal,
   },
 
   methods: {
@@ -873,54 +883,10 @@ export default {
     activateField() {
       return (this.changeState = !this.changeState);
     },
-    async submitInput(e) {
-      // {
-      //   "amount_due": "40000",
-      //   "date_due": "2022,04,03",
-      //   "document_id": "ADE/ZARON/250118004",
-      //   "description": "",
-      //   "payee": "",
-      //   "total": "7300.00",
-      //   "organization": "3",
-      //   "currency": "",
-      // }
-      const formatted_due_date = this.basicDataInput.dueDate.replaceAll(
-        "-",
-        ","
-      );
-      const payload = {
-        amount_due: this.singleInvoice.total,
-        date_due: formatted_due_date,
-        document_id: this.singleInvoice.invoicenumber,
-        description: "",
-        payee: "",
-        total: this.singleInvoice.total,
-        organization: this.singleInvoice.organization.id.toString(),
-        currency: "",
-      };
 
-      this.isSending = true;
-      e.preventDefault();
-      console.log(JSON.stringify(payload, null, 2));
-
-       try {
-        if (payload.amount_due > payload.total) return;
-        const response = await this.$store.dispatch(
-          "payables/addToPayables",
-          payload
-        );
-        console.log(JSON.stringify(response, null, 2));
-        this.showToast({
-          sclass: "success",
-          show: true,
-          message: "Sent data to Payables succesfully",
-          timeout: 3000,
-        });
-        this.isSending = false;
-        this.changeState = true;
-      } catch (error) {
-        console.log(JSON.stringify(error, null, 2));
-      }
+    triggerAddToPayables() {
+      // this.$refs.addtopayable.openDialog();
+      console.log(this.$refs.addtopayable.openDialog());
     },
   },
 
@@ -949,10 +915,10 @@ export default {
       return day + "/" + month + "/" + year;
     },
 
-    completePayableData() {
-      let invoiceData = { ...this.basicDataInput, ...this.vendorData };
-      return console.log(JSON.stringify(invoiceData, null, 2));
-    },
+    // completePayableData() {
+    //   let invoiceData = { ...this.basicDataInput, ...this.vendorData };
+    //   return console.log(JSON.stringify(invoiceData, null, 2));
+    // },
   },
 
   watch: {

@@ -5,7 +5,7 @@
         @click="
           $router.push({
             name: 'inbox.invoice',
-            params: { id: index },
+            params: { id: id },
           })
         "
         class="px-6 py-4 my-1"
@@ -105,7 +105,7 @@
           <v-flex md2>
             <div class="d-flex align-center justify-right">
               <span
-                class="mb-0 text-right"
+                class="mb-0 text-right text-capitalize text-truncate"
                 style="
                   font-family: Lato;
                   font-style: normal;
@@ -113,6 +113,7 @@
                   font-size: 12px;
                   line-height: 14px;
                   color: #596a73;
+                  max-width: 150px;
                 "
                 >{{ requester }}</span
               >
@@ -141,7 +142,7 @@
                   @click="
                     $router.push({
                       name: 'inbox.invoice',
-                      params: { id: index },
+                      params: { id: id },
                     })
                   "
                   :style="{
@@ -189,6 +190,9 @@
 export default {
   props: {
     index: {
+      type: Number,
+    },
+    id: {
       type: Number,
     },
 

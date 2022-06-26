@@ -84,33 +84,32 @@
               </v-avatar>
               In 30 Days
             </v-chip>
-
           </div>
 
           <div v-if="paymentType == 'part'">
-            <div  class="fullPayment">
-            <v-chip> 20% </v-chip>
+            <div class="fullPayment">
+              <v-chip> 20% </v-chip>
 
-            <v-chip> 50% </v-chip>
+              <v-chip> 50% </v-chip>
 
-            <v-chip> Custom </v-chip>
-          </div>
-           <v-divider></v-divider>
-            <div  class="fullPayment">
-            <v-chip>
-              <v-avatar>
-                <v-icon>mdi-clock</v-icon>
-              </v-avatar>
-              Instant
-            </v-chip>
+              <v-chip> Custom </v-chip>
+            </div>
+            <v-divider></v-divider>
+            <div class="fullPayment">
+              <v-chip>
+                <v-avatar>
+                  <v-icon>mdi-clock</v-icon>
+                </v-avatar>
+                Instant
+              </v-chip>
 
-            <v-chip>
-              <v-avatar>
-                <v-icon>mdi-clock</v-icon>
-              </v-avatar>
-              In 30 Days
-            </v-chip>
-          </div>
+              <v-chip>
+                <v-avatar>
+                  <v-icon>mdi-clock</v-icon>
+                </v-avatar>
+                In 30 Days
+              </v-chip>
+            </div>
           </div>
         </div>
 

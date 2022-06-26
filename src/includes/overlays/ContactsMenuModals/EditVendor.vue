@@ -27,8 +27,9 @@
             mdi-close
           </v-icon>
         </v-card-title>
-        <div class="px-8 d-flex" style="background: #fdfaf2">
+        <div class="px-0 px-md-8 d-flex" style="background: #fdfaf2">
           <v-tabs
+            mobile-breakpoint="50"
             @change="viewActiveTab"
             v-model="tab"
             background-color="#fdfaf2"
@@ -41,15 +42,15 @@
         <v-tabs-items v-model="tab">
           <v-tab-item>
             <v-card style="background-color: transparent" flat>
-              <div class="my-7 mx-10">
+              <div class="my-7 mx-4 mx-md-10">
                 <p class="pa-0 ma-0 text--disabled text-subtitle-2">
                   Include details about this vendor, contact person, business
                   address, default payment terms, etc
                 </p>
               </div>
               <v-form ref="form" lazy-validation>
-                <v-row class="mx-10">
-                  <v-col cols="12"
+                <v-row class="mx-4 mx-md-10">
+                  <v-col cols="12" class="px-0 px-0 pr-md-0"
                     ><v-text-field
                       v-model="vendorDetails.address"
                       background-color="#ffffff"
@@ -58,7 +59,7 @@
                       placeholder="Company Street Address"
                     ></v-text-field
                   ></v-col>
-                  <v-col cols="6" class="pl-0"
+                  <v-col cols="12" md="6" class="px-0 pl-md-0"
                     ><v-text-field
                       v-model="vendorDetails.contact.first_name"
                       background-color="#ffffff"
@@ -67,7 +68,7 @@
                       placeholder="First Name"
                     ></v-text-field
                   ></v-col>
-                  <v-col cols="6"
+                  <v-col cols="12" md="6" class="px-0 px-0 pr-md-0"
                     ><v-text-field
                       v-model="vendorDetails.contact.last_name"
                       background-color="#ffffff"
@@ -76,7 +77,7 @@
                       placeholder="Last Name"
                     ></v-text-field
                   ></v-col>
-                  <v-col cols="6" class="pl-0"
+                  <v-col cols="12" md="6" class="px-0 pl-md-0"
                     ><v-text-field
                       :rules="email"
                       v-model="vendorDetails.email"
@@ -87,7 +88,7 @@
                       placeholder="Email"
                     ></v-text-field
                   ></v-col>
-                  <v-col cols="6"
+                  <v-col cols="12" md="6" class="px-0 pr-md-0"
                     ><v-text-field
                       v-model="vendorDetails.contact.phone"
                       background-color="#ffffff"
@@ -96,7 +97,7 @@
                       placeholder="Phone"
                     ></v-text-field
                   ></v-col>
-                  <v-col cols="6" class="pl-0"
+                  <v-col cols="12" md="6" class="px-0 pl-md-0"
                     ><v-select
                       :rules="[(v) => !!v || 'Item is required']"
                       v-model="vendorDetails.contact.role"
@@ -108,9 +109,9 @@
                     ></v-select
                   ></v-col>
                 </v-row>
-                <v-card-actions class="justify-end pa-8">
+                <v-card-actions class="justify-end py-8 px-4">
                   <v-btn
-                    class="mr-5"
+                    class="mx-0 mr-md-5"
                     @click="switchTabs('next')"
                     dark
                     width="121"
@@ -157,8 +158,8 @@
           <v-tab-item>
             <v-card style="background-color: transparent" flat>
               <v-form class="mt-7">
-                <v-row class="mx-10">
-                  <v-col cols="12"
+                <v-row class="mx-4 mx-md-10">
+                  <v-col cols="12" class="px-0 pr-md-0"
                     ><v-text-field
                       v-model="vendorDetails.vendorname"
                       background-color="#ffffff"
@@ -167,7 +168,7 @@
                       placeholder="Company Name"
                     ></v-text-field
                   ></v-col>
-                  <v-col cols="6" class="pl-0"
+                  <v-col cols="12" md="6" class="px-0 pl-md-0"
                     ><v-select
                       :items="accountingCode"
                       background-color="#ffffff"
@@ -176,7 +177,7 @@
                       placeholder="Accounting Code"
                     ></v-select
                   ></v-col>
-                  <v-col cols="6"
+                  <v-col cols="12" md="6" class="px-0 pr-md-0"
                     ><v-select
                       :rules="[(v) => !!v || 'Item is required']"
                       v-model="vendorDetails.terms"
@@ -187,7 +188,7 @@
                       placeholder="Payment Terms"
                     ></v-select
                   ></v-col>
-                  <v-col cols="6" class="pl-0"
+                  <!-- <v-col cols="12" md="6" class="px-0 pl-md-0"
                     ><v-text-field
                       v-model="vendorDetails.address"
                       background-color="#ffffff"
@@ -195,10 +196,10 @@
                       hide-details="auto"
                       placeholder="Address"
                     ></v-text-field
-                  ></v-col>
-                  <v-col cols="6"
+                  ></v-col> -->
+                  <v-col cols="12" md="6" class="px-0 pl-md-0"
                     ><v-text-field
-                      :rules="tin"
+                      :rules="digit"
                       v-model.number="vendorDetails.zip"
                       background-color="#ffffff"
                       outlined
@@ -206,7 +207,7 @@
                       placeholder="Post Code"
                     ></v-text-field
                   ></v-col>
-                  <v-col cols="6" class="pl-0"
+                  <v-col cols="12" md="6" class="px-0 pr-md-0"
                     ><v-text-field
                       v-model="vendorDetails.city"
                       background-color="#ffffff"
@@ -215,7 +216,7 @@
                       placeholder="City"
                     ></v-text-field
                   ></v-col>
-                  <v-col cols="6"
+                  <v-col cols="12" md="6" class="px-0 pl-md-0"
                     ><v-text-field
                       v-model="vendorDetails.state"
                       background-color="#ffffff"
@@ -224,7 +225,7 @@
                       placeholder="State"
                     ></v-text-field
                   ></v-col>
-                  <v-col cols="6" class="pl-0"
+                  <v-col cols="12" md="6" class="px-0 pr-md-0"
                     ><v-select
                       :rules="[(v) => !!v || 'Item is required']"
                       v-model="vendorDetails.country"
@@ -235,7 +236,7 @@
                       placeholder="Country"
                     ></v-select
                   ></v-col>
-                  <v-col cols="6"
+                  <v-col cols="12" md="6" class="px-0 pl-md-0"
                     ><v-select
                       :rules="[(v) => !!v || 'Item is required']"
                       v-model="vendorDetails.category"
@@ -246,7 +247,7 @@
                       placeholder="Business Category"
                     ></v-select
                   ></v-col>
-                  <v-col cols="6" class="pl-0"
+                  <v-col cols="12" md="6" class="px-0 pr-md-0"
                     ><v-select
                       :rules="[(v) => !!v || 'Item is required']"
                       v-model="vendorDetails.WHT.category"
@@ -257,7 +258,7 @@
                       placeholder="Tax Category"
                     ></v-select
                   ></v-col>
-                  <v-col cols="6"
+                  <v-col cols="12" md="6" class="px-0 pl-md-0"
                     ><v-select
                       :rules="[(v) => !!v || 'Item is required']"
                       v-model="vendorDetails.apply_tax"
@@ -269,13 +270,13 @@
                     ></v-select
                   ></v-col>
                 </v-row>
-                <v-card-actions class="justify-end pa-8 mb-8">
+                <v-card-actions class="justify-end py-8 px-4 mb-8">
                   <v-btn
                     @click="switchTabs('next')"
                     dark
                     width="121"
                     height="45"
-                    class="mr-5"
+                    class="mx-0 mr-md-5"
                     style="
                       background: var(--v-primary-base);
                       box-shadow: 0px 12px 22px rgba(0, 0, 0, 0.24);
@@ -318,8 +319,8 @@
           <v-tab-item>
             <v-card style="background-color: transparent" flat>
               <v-form class="mt-10" ref="form" lazy-validation>
-                <v-row class="mx-10">
-                  <v-col cols="12"
+                <v-row class="mx-4 mx-md-10">
+                  <v-col cols="12" class="px-0 pr-md-0"
                     ><v-text-field
                       v-model="vendorDetails.bankname"
                       background-color="#ffffff"
@@ -328,7 +329,7 @@
                       placeholder="Enter Bank Name"
                     ></v-text-field
                   ></v-col>
-                  <v-col cols="6" class="pl-0"
+                  <v-col cols="12" md="6" class="px-0 pl-md-0"
                     ><v-text-field
                       v-model="vendorDetails.bankaccount"
                       background-color="#ffffff"
@@ -337,7 +338,7 @@
                       placeholder="Bank Acccount Number"
                     ></v-text-field
                   ></v-col>
-                  <v-col cols="6"
+                  <v-col cols="12" md="6" class="px-0 pr-md-0"
                     ><v-text-field
                       v-model.number="vendorDetails.taxid"
                       :rules="tin"
@@ -347,7 +348,7 @@
                       placeholder="TIN"
                     ></v-text-field
                   ></v-col>
-                  <v-col cols="6" class="pl-md-0"
+                  <v-col cols="12" md="6" class="px-0 pl-md-0"
                     ><v-select
                       :rules="[(v) => !!v || 'Item is required']"
                       v-model="vendorDetails.currency"
@@ -370,13 +371,13 @@
                     </p>
                   </v-col>
                 </v-row>
-                <v-card-actions class="justify-end pa-8">
+                <v-card-actions class="justify-end py-md-8 px-md-4">
                   <v-btn
                     @click="saveAction"
                     dark
                     width="121"
                     height="45"
-                    class="mr-5"
+                    class="mx-0 mr-md-5"
                     style="
                       background: var(--v-primary-base);
                       box-shadow: 0px 12px 22px rgba(0, 0, 0, 0.24);
@@ -497,10 +498,11 @@ export default {
         //(v) => !!v || "E-mail is required",
         (v) => /.+@.+\..+/.test(v) || "E-mail must be valid",
       ],
-      tin: [
+      digit: [
         (v) =>
           Number.isInteger(Number(v)) || "The value must be an integer number",
       ],
+      tin: [[(v) => !!v || "This field is required"]],
     };
   },
   methods: {

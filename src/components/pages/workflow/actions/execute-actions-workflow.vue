@@ -70,7 +70,7 @@
                     :isBeenDragged="drag"
                     :index="index"
                     v-model="selectedActions[index]"
-                    @channel="channels.splice(index,1,$event)"
+                    @channel="channels.splice(index, 1, $event)"
                     @add-new-action="showActionModal"
                     @remove-action="removeAction(index)"
                   />
@@ -82,7 +82,12 @@
       </div>
 
       <div style="margin-top: 25px; width: 150px">
-        <v-btn color="primary" elevation="0" :disabled="!canPublish" large @click="$emit('publish')"
+        <v-btn
+          color="primary"
+          elevation="0"
+          :disabled="!canPublish"
+          large
+          @click="$emit('publish')"
           ><v-icon>mdi-chevron-right</v-icon> publish</v-btn
         >
       </div>
@@ -156,7 +161,7 @@ export default {
       actionModal: false,
       searchQuery: "",
       selectedActions: [],
-      channels:[],
+      channels: [],
       drag: false,
       scrollOptions: {
         duration: 500,
@@ -225,9 +230,11 @@ export default {
       };
     },
 
-    canPublish(){
-      return this.channels.every(action => action) && this.channels.length > 0
-    }
+    canPublish() {
+      return (
+        this.channels.every((action) => action) && this.channels.length > 0
+      );
+    },
   },
   watch: {
     value: {
