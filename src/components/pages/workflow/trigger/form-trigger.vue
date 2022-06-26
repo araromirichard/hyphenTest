@@ -13,6 +13,7 @@
         <div style="width: 220px">
           <v-select
             outlined
+            :disabled="isEdit"
             :items="items"
             item-text="form_title"
             item-value="id"
@@ -46,6 +47,9 @@ export default {
       type: Boolean,
       default: false,
     },
+    isEdit:{
+      default:false
+    }
   },
   data() {
     return {

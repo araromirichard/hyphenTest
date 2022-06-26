@@ -82,11 +82,13 @@
             ref="paymentTrigger"
             v-model="workflow.payment"
             :isVisable="isPaymentTrigger"
+             :isEdit="true"
             v-if="isPaymentTrigger"
           />
           <form-trigger
             ref="formTrigger"
             v-model="workflow.form"
+             :isEdit="true"
             :isVisable="isFormTrigger"
             v-if="isFormTrigger"
           />
