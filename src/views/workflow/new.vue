@@ -87,6 +87,7 @@
           <execute-actions-workflow
             v-if="canShowActions"
             ref="actions"
+            :trigger="workflow.trigger"
             @publish="publishDialog = true"
             :isVisable="canShowActions"
             v-model="workflow.actions"
@@ -698,6 +699,9 @@ export default {
       padding: 0px 25px;
       flex: 1;
       color: #596a73;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
     }
   }
 }

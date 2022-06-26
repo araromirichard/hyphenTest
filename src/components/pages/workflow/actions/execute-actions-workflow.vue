@@ -66,6 +66,7 @@
                     v-for="(action, index) in selectedActions"
                     :isLast="index == selectedActions.length - 1"
                     :key="index"
+                    :trigger="trigger"
                     :isBeenDragged="drag"
                     :index="index"
                     v-model="selectedActions[index]"
@@ -150,6 +151,9 @@ export default {
     value: {
       default: [],
     },
+    trigger:{
+      default:null
+    }
   },
   data() {
     return {

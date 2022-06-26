@@ -36,7 +36,7 @@
       </div>
 
       <div class="flow-setup">
-        <div class="d-flex pr-5" style="align-items: center; width: 100%">
+           <div class="d-flex pr-5" style="align-items: center;width:100%">
           <v-breadcrumbs :items="breadcrumbs" style="font-weight: 600">
             <template v-slot:divider>
               <v-icon class="px-0">mdi-chevron-right</v-icon>
@@ -113,6 +113,7 @@
           <execute-actions-workflow
             v-if="canShowActions"
             ref="actions"
+            :trigger="workflow.trigger"
             @publish="publishDialog = true"
             :isVisable="canShowActions"
             v-model="workflow.actions"
@@ -233,7 +234,12 @@
           </div>
 
           <div class="mt-5 cta">
-            <v-btn color="primary" to="/workflow" elevation="0" large>
+            <v-btn
+              color="primary"
+              to="/workflow"
+              elevation="0"
+              large
+            >
               <v-icon left>mdi-chevron-right</v-icon> close</v-btn
             >
           </div>
@@ -294,7 +300,7 @@ export default {
         showAdvance: false,
         hypn_id: "",
         workflow: {
-          title: "",
+          title: '',
           trigger: "",
           runs: 0,
           conditions: null,
@@ -320,10 +326,10 @@ export default {
     async UPDATE_WORKFLOW() {
       this.isPublishingWorkflow = true;
       try {
-        const { data } = await this.$store.dispatch("workflow/updateWorkflow", {
-          id: this.$route.params.id,
-          ...this.workflowPayload,
-        });
+        const { data } = await this.$store.dispatch(
+          "workflow/updateWorkflow",
+          {id:this.$route.params.id,...this.workflowPayload}
+        );
         this.workflow.webhook = "http://flow.hypn.so/" + data.workflow_id;
         console.log(JSON.stringify(data, null, 2));
         this.publishDialog = false;
@@ -356,19 +362,19 @@ export default {
         );
         //console.log(JSON.stringify(data, null, 2));
 
-        const workflowx = data.data;
+        const workflowx = data.data
         this.breadcrumbs[2].text = workflowx.workflow_title;
         this.workflow.title = workflowx.workflow_title;
         this.workflow.trigger = workflowx.source;
         this.workflow.form = workflowx.form?.id;
         this.workflow.actions = workflowx.workflow_schema.actions;
 
-        let condition = workflowx.workflow_schema.condition;
+        let condition = workflowx.workflow_schema.condition
 
-        console.log(JSON.stringify("conditon...", condition, null, 2));
-
+         console.log(JSON.stringify('conditon...',condition, null, 2));
+        
         this.workflow.conditions = condition;
-
+        
         this.showTriggers = true;
       } catch (error) {
         this.errorFetchingWorkflow = true;

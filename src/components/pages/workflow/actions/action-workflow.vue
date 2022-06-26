@@ -52,6 +52,7 @@
       v-show="actionModal == 'PbotApproval'"
       @channel="channel = $event"
       v-model="data"
+      :trigger="trigger"
       ref="PbotApproval"
     />
 
@@ -161,6 +162,10 @@ export default {
     isBeenDragged: {
       default: false,
     },
+
+    trigger:{
+      default:null
+    }
   },
   data() {
     return {
