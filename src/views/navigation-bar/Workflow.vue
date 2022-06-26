@@ -257,21 +257,29 @@
                             v-for="(workflow, index) in workflows"
                             :key="index"
                           >
-                            <span class="titlex">{{
-                              workflow.workflow_title
-                            }}</span>
-                            <span class="trigger">{{ workflow.source }}</span>
-
-                            <div
-                              class="d-flex justify-space-between align-center"
-                            >
-                              <span class="runs">{{
-                                Intl.NumberFormat().format(Number(workflow.run))
+                            <div style="padding: 0px 20px">
+                              <span class="titlex">{{
+                                workflow.workflow_title
                               }}</span>
-                              <v-switch
-                                @change="toggleWorkflow(workflow)"
-                                v-model="workflow.is_active"
-                              ></v-switch>
+                              <span class="trigger">{{ workflow.source }}</span>
+
+                              <div
+                                class="
+                                  d-flex
+                                  justify-space-between
+                                  align-center
+                                "
+                              >
+                                <span class="runs">{{
+                                  Intl.NumberFormat().format(
+                                    Number(workflow.run)
+                                  )
+                                }}</span>
+                                <v-switch
+                                  @change="toggleWorkflow(workflow)"
+                                  v-model="workflow.is_active"
+                                ></v-switch>
+                              </div>
                             </div>
                             <v-divider></v-divider>
                             <div class="footerx">
@@ -341,11 +349,13 @@
                           v-for="(workflow, index) in workflows"
                           :key="index"
                         >
+                         <div style="padding: 0px 20px">
                           <span class="titlex">{{
                             workflow.workflow_title
                           }}</span>
                           <span class="trigger">{{ workflow.source }}</span>
                           <div class="description">template description</div>
+                         </div>
                           <v-divider></v-divider>
                           <div class="footerx">
                             <span class="footerx__state">Template </span>
@@ -425,10 +435,11 @@
             slider-size="5"
             style="margin:0px auto auto auto;width:100% mix-blend-mode: normal;padding:10px 50px"
           >
-            <v-tab>SUMMARY</v-tab>
+            <v-tab>CONDITIONS</v-tab>
             <v-tab>TRIGGERS</v-tab>
             <v-tab>SETTINGS</v-tab>
             <v-tab-item>
+              <v-divider></v-divider>
               <div class="summary__content">
                 <template>
                   <div v-if="selectedWorkflow.workflow_schema" class="schema">
@@ -514,6 +525,7 @@
               </div>
             </v-tab-item>
             <v-tab-item>
+              <v-divider></v-divider>
               <div class="summary__content">
                 <span
                   style="color: #19283dcc; font-size: 16px"
@@ -571,6 +583,7 @@
               </div>
             </v-tab-item>
             <v-tab-item>
+              <v-divider></v-divider>
               <div class="summary__content">
                 <span class="titlex">Update workflow name below</span>
                 <div class="text-wrapper">
@@ -687,8 +700,7 @@ export default {
         this.showToast({
           sclass: "success",
           show: true,
-          message:
-            "Workflow" + workflow.is_active ? "deactivated!" : "activated!",
+          message: "Workflow status updated!",
           timeout: 3000,
         });
       } catch (err) {
@@ -1181,9 +1193,9 @@ export default {
         display: inline-block;
         border: 1px solid #d9dee1;
         border-radius: 8px;
-
+        padding: 20px 0px;
         box-sizing: border-box;
-        padding: 20px;
+
         cursor: pointer;
 
         .titlex {
@@ -1223,6 +1235,7 @@ export default {
           align-items: center;
           margin-top: 20px;
           color: var(--v-primary-base);
+          padding: 0px 20px;
 
           &__icon {
             &--draft {
@@ -1289,7 +1302,7 @@ export default {
         background-color: #fff;
 
         box-sizing: border-box;
-        padding: 20px;
+        padding: 20px 0px;
         cursor: pointer;
 
         .titlex {
@@ -1331,6 +1344,7 @@ export default {
           align-items: center;
           margin-top: 20px;
           color: var(--v-primary-base);
+          padding: 0px 20px;
 
           &__state {
             color: #8f96a1;
@@ -1426,6 +1440,9 @@ export default {
     padding: 0px 25px;
     flex: 1;
     color: #596a73;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 }
 

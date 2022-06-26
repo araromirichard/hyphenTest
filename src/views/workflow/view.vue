@@ -113,6 +113,7 @@
           <execute-actions-workflow
             v-if="canShowActions"
             ref="actions"
+            :trigger="workflow.trigger"
             @publish="publishDialog = true"
             :isVisable="canShowActions"
             v-model="workflow.actions"
