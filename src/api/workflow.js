@@ -9,6 +9,22 @@ export default {
     });
   },
 
+  fetchOTP(token) {
+    return api().get(`/approvals/confirm/${token}`);
+  },
+
+  verifyApprovalOTP(payload) {
+    return api().post(`/approvals/confirm/${payload.token}`, {
+      otp: payload.otp,
+    });
+  },
+
+  approvalUrl(payload){
+    return api().post(payload.url, {
+      action: payload.action,
+    });
+  },
+
   updateworkflow(payload) {
     return api().put(`/workflows/${payload.id}`, payload, {
       headers: {
@@ -48,6 +64,16 @@ export default {
       },
     });
   },
+
+  getAllWorkflowActions() {
+    return api().get("/workflows/options?type=action", {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    });
+  },
+
+
 
   getAllWorkflows() {
     return api().get("/workflows", {

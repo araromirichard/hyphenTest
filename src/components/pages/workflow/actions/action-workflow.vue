@@ -71,6 +71,7 @@
     />
     <send-payment-action
       v-show="actionModal == 'hyphenSendPayment'"
+      :trigger="trigger"
       @channel="channel = $event"
       v-model="data"
       ref="hyphenSendPayment"
@@ -163,9 +164,9 @@ export default {
       default: false,
     },
 
-    trigger:{
-      default:null
-    }
+    trigger: {
+      default: null,
+    },
   },
   data() {
     return {

@@ -13,6 +13,7 @@
         <div style="width: 220px">
           <v-select
             outlined
+            :disabled="isEdit"
             :items="items"
             v-model="selectedPayment"
             item-text="label"
@@ -46,6 +47,10 @@ export default {
       type: Boolean,
       default: false,
     },
+
+    isEdit:{
+      default:false
+    }
   },
   data() {
     return {
