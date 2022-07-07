@@ -47,9 +47,9 @@ export default {
       type: Boolean,
       default: false,
     },
-    isEdit:{
-      default:false
-    }
+    isEdit: {
+      default: false,
+    },
   },
   data() {
     return {
@@ -66,7 +66,9 @@ export default {
         const { data } = await this.$store.dispatch(
           "formBuilder/FetchAllForms"
         );
-        this.items = data;
+        this.items = this.isEdit
+          ? data
+          : data.filter((form) => !form.has_workflow);
       } catch (err) {
         console.log(err);
       } finally {
