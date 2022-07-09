@@ -1,22 +1,16 @@
 <template>
   <v-container class="pa-0">
-    <div>
-      <v-row class="mx-14 primary--text">
+    <div class="workflow">
+      <div class="workflow__header">
         <span
-          style="
-            margin-top: 35px;
-            font-family: Inter;
-            font-style: normal;
-            font-weight: bold;
-            line-height: 39px;
-          "
+          class="titlex"
           :style="{
             fontSize: `${$vuetify.breakpoint.mdAndDown ? '24px' : '32px'}`,
             marginTop: `${$vuetify.breakpoint.mdAndDown ? '58px' : '48px'}`,
           }"
           >Workflow</span
         >
-        <v-spacer></v-spacer>
+
         <v-dialog
           elevation="0"
           v-model="dialog"
@@ -154,17 +148,18 @@
             </template>
           </v-card>
         </v-dialog>
-      </v-row>
-      <v-row class="mx-14">
+      </div>
+
+      <v-row class="mx-8">
         <v-card
           class="mb-16"
           width="100%"
           min-height="990"
-          elevation="4"
+          elevation="1"
           style="margin-top: 40px"
         >
           <template v-if="$vuetify.breakpoint.mdAndUp">
-            <v-card width="100%" height="46">
+            <v-card width="100%" elevation="1" height="46">
               <template>
                 <v-tabs v-model="tabIndex" slider-size="4">
                   <v-tab>WORKFLOWS</v-tab>
@@ -262,21 +257,29 @@
                             v-for="(workflow, index) in workflows"
                             :key="index"
                           >
-                            <span class="titlex">{{
-                              workflow.workflow_title
-                            }}</span>
-                            <span class="trigger">{{ workflow.source }}</span>
-
-                            <div
-                              class="d-flex justify-space-between align-center"
-                            >
-                              <span class="runs">{{
-                                Intl.NumberFormat().format(Number(workflow.run))
+                            <div style="padding: 0px 20px">
+                              <span class="titlex">{{
+                                workflow.workflow_title
                               }}</span>
-                              <v-switch
-                                @change="toggleWorkflow(workflow)"
-                                v-model="workflow.is_active"
-                              ></v-switch>
+                              <span class="trigger">{{ workflow.source }}</span>
+
+                              <div
+                                class="
+                                  d-flex
+                                  justify-space-between
+                                  align-center
+                                "
+                              >
+                                <span class="runs">{{
+                                  Intl.NumberFormat().format(
+                                    Number(workflow.run)
+                                  )
+                                }}</span>
+                                <v-switch
+                                  @change="toggleWorkflow(workflow)"
+                                  v-model="workflow.is_active"
+                                ></v-switch>
+                              </div>
                             </div>
                             <v-divider></v-divider>
                             <div class="footerx">
@@ -300,7 +303,11 @@
                                   color="#8F96A1"
                                   ><v-icon>mdi-pencil-outline</v-icon></v-btn
                                 >
-                                <v-btn icon small color="#8F96A1"
+                                <v-btn
+                                  @click="summary(workflow)"
+                                  icon
+                                  small
+                                  color="#8F96A1"
                                   ><v-icon
                                     >mdi-format-list-bulleted</v-icon
                                   ></v-btn
@@ -342,11 +349,13 @@
                           v-for="(workflow, index) in workflows"
                           :key="index"
                         >
+                         <div style="padding: 0px 20px">
                           <span class="titlex">{{
                             workflow.workflow_title
                           }}</span>
                           <span class="trigger">{{ workflow.source }}</span>
                           <div class="description">template description</div>
+                         </div>
                           <v-divider></v-divider>
                           <div class="footerx">
                             <span class="footerx__state">Template </span>
@@ -369,145 +378,252 @@
           </template>
         </v-card>
       </v-row>
-    </div>
 
-    <v-dialog
-      v-model="deleteWorkflowDialog"
-      :persistent="isDeletingWorkflow"
-      max-width="550px"
-      transition="dialog-transition"
-    >
-      <div class="delete">
-        <div class="delete__header">
-          <span class="t">Delete Workflow</span>
-          <v-btn @click="deleteWorkflowDialog = false" icon color="primary">
-            <v-icon>mdi-close</v-icon>
-          </v-btn>
-        </div>
-        <div class="delete__content">
-          <span class="msg"
-            >Are you sure you want to delete this workflow?</span
-          >
-
-          <v-btn
-            color="primary"
-            @click="confirmDeleteWorkflow"
-            elevation="1"
-            x-large
-            :loading="isDeletingWorkflow"
-          >
-            <v-icon left>mdi-chevron-right</v-icon> Proceed</v-btn
-          >
-        </div>
-      </div>
-    </v-dialog>
-
-    <v-dialog v-if="selectedWorkflow && settingsDialog"
-      v-model="settingsDialog"
-      max-width="650px"
-      transition="dialog-transition"
-    >
-      <div class="summary">
-        <div class="summary__header">
-          <div class="b">
-             <v-icon color="primary">mdi-vector-link</v-icon>
-            <span class="t">Workflow:</span>
+      <v-dialog
+        v-model="deleteWorkflowDialog"
+        :persistent="isDeletingWorkflow"
+        max-width="550px"
+        transition="dialog-transition"
+      >
+        <div class="delete">
+          <div class="delete__header">
+            <span class="t">Delete Workflow</span>
+            <v-btn @click="deleteWorkflowDialog = false" icon color="primary">
+              <v-icon>mdi-close</v-icon>
+            </v-btn>
           </div>
+          <div class="delete__content">
+            <span class="msg"
+              >Are you sure you want to delete this workflow?</span
+            >
 
-          <v-btn @click="close" icon color="primary">
-            <v-icon>mdi-close</v-icon>
-          </v-btn>
-        </div>
-        <v-tabs background-color="#F8F7F4">
-          <v-tab>SUMMARY</v-tab>
-          <v-tab>TRIGGERS</v-tab>
-          <v-tab>SETTINGS</v-tab>
-          <v-tab-item>
-           <div class="summary__content">
-
-            <div v-if="selectedWorkflow.workflow_schema" class="schema">
-          <div v-if="selectedWorkflow.workflow_schema">
-            When <span class="type">{{ groupType(parentGroup) }}</span> of the
-            following is <span class="operator">TRUE</span>
+            <v-btn
+              color="primary"
+              @click="confirmDeleteWorkflow"
+              elevation="1"
+              x-large
+              :loading="isDeletingWorkflow"
+            >
+              <v-icon left>mdi-chevron-right</v-icon> Proceed</v-btn
+            >
           </div>
+        </div>
+      </v-dialog>
 
-          <div
-            style="margin-top: 10px"
-            v-for="(condition, index) in conditions"
-            :key="index"
-          >
-            <div class="group" v-if="condition.type == 'group'">
-              With
-              <span class="type">{{
-                groupType(condition.properties.type)
-              }}</span>
-              of the following
-
-              <span
-                v-for="(innerConditions, index) in condition.properties
-                  .conditions"
-                :key="index"
+      <v-dialog
+        v-if="selectedWorkflow && settingsDialog"
+        v-model="settingsDialog"
+        max-width="650px"
+        transition="dialog-transition"
+        :persistent="isUpdatingWorkflowName"
+      >
+        <div class="summary">
+          <div class="summary__header">
+            <div class="b">
+              <v-icon color="primary">mdi-vector-link</v-icon>
+              <span class="t"
+                >Workflow: {{ selectedWorkflow.workflow_title }}</span
               >
-                <div
-                  class="comparison"
-                  v-if="innerConditions.type == 'comparison'"
-                >
-                  <span class="field">{{
-                    getFieldLabel(innerConditions.properties.field)
-                  }}</span>
-                  is
-                  <span class="operator">{{
-                    operator(innerConditions.properties.type)
-                  }}</span>
-                  <span class="target">{{
-                    getFieldTarget(
-                      innerConditions.properties.target,
-                      innerConditions.properties.field
-                    )
-                  }}</span>
-                </div>
-              </span>
             </div>
 
-            <div class="comparison" v-if="condition.type == 'comparison'">
-              <span class="field">{{
-                getFieldLabel(condition.properties.field)
-              }}</span>
-              is
-              <span class="operator">{{
-                operator(condition.properties.type)
-              }}</span>
-              <span class="target">{{
-                getFieldTarget(
-                  condition.properties.target,
-                  condition.properties.field
-                )
-              }}</span>
-            </div>
+            <v-btn @click="settingsDialog = false" icon color="primary">
+              <v-icon>mdi-close</v-icon>
+            </v-btn>
           </div>
+          <v-tabs
+            background-color="#f8f7f4"
+            slider-size="5"
+            style="margin:0px auto auto auto;width:100% mix-blend-mode: normal;padding:10px 50px"
+          >
+            <v-tab>CONDITIONS</v-tab>
+            <v-tab>TRIGGERS</v-tab>
+            <v-tab>SETTINGS</v-tab>
+            <v-tab-item>
+              <v-divider></v-divider>
+              <div class="summary__content">
+                <template>
+                  <div v-if="selectedWorkflow.workflow_schema" class="schema">
+                    <div v-if="selectedWorkflow.workflow_schema">
+                      When
+                      <span class="type">{{ groupType(parentGroup) }}</span> of
+                      the following is <span class="operator">TRUE</span>
+                    </div>
+
+                    <div>
+                      <div
+                        style="margin-top: 10px"
+                        v-for="(condition, index) in selectedConditions"
+                        :key="index"
+                      >
+                        <div class="group" v-if="condition.type == 'group'">
+                          With
+                          <span class="type">{{
+                            groupType(condition.properties.type)
+                          }}</span>
+                          of the following
+
+                          <span
+                            v-for="(innerConditions, index) in condition
+                              .properties.conditions"
+                            :key="index"
+                          >
+                            <div
+                              class="comparison"
+                              v-if="innerConditions.type == 'comparison'"
+                            >
+                              <span class="field">
+                                {{
+                                  getFieldLabel(
+                                    innerConditions.properties.field
+                                  )
+                                }}
+                                <!-- {{ innerConditions.properties.field }} -->
+                              </span>
+                              is
+                              <span class="operator">{{
+                                operator(innerConditions.properties.type)
+                              }}</span>
+                              <span class="target">
+                                {{
+                                  getFieldTarget(
+                                    innerConditions.properties.target,
+                                    innerConditions.properties.field
+                                  )
+                                }}
+                              </span>
+                              <!-- {{
+                              innerConditions.properties.target +
+                              "," +
+                              innerConditions.properties.field
+                            }} -->
+                            </div>
+                          </span>
+                        </div>
+
+                        <div
+                          class="comparison"
+                          v-if="condition.type == 'comparison'"
+                        >
+                          <span class="field">{{
+                            getFieldLabel(condition.properties.field)
+                          }}</span>
+                          is
+                          <span class="operator">{{
+                            operator(condition.properties.type)
+                          }}</span>
+                          <span class="target">{{
+                            getFieldTarget(
+                              condition.properties.target,
+                              condition.properties.field
+                            )
+                          }}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </template>
+              </div>
+            </v-tab-item>
+            <v-tab-item>
+              <v-divider></v-divider>
+              <div class="summary__content">
+                <span
+                  style="color: #19283dcc; font-size: 16px"
+                  class="mb-2 mt-1 d-block"
+                >
+                  To trigger this workflow using an external API or webhook
+                  service, make a POST request to the endpoint below
+                </span>
+
+                <div class="api-cover">
+                  <button class="api-cover__req">POST</button>
+                  <div class="api-cover__url">
+                    http://flow.hypn.so/{{ selectedWorkflow.workflow_id }}
+                  </div>
+                  <v-btn icon style="margin-right: 15px"
+                    ><v-icon>mdi-content-copy</v-icon></v-btn
+                  >
+                </div>
+
+                <span
+                  class="mt-1 d-block"
+                  style="color: #8f96a1; font-size: 14px"
+                >
+                  <b>Note:</b> This endpoint is unique to this workflow and
+                  serves as a trigger. The payload must match the fields used in
+                  your workflow composition
+                </span>
+
+                <span
+                  style="color: #19283dcc; font-size: 16px"
+                  class="mb-2 mt-10 d-block"
+                  >Workflow trigger data format (show this to your developer or
+                  IT support)</span
+                >
+
+                <pre
+                  class="schema-structure"
+                  :class="{ 'schema-structure--expand': expandSchema }"
+                  v-html="JSON.stringify(getTriggerSchema, null, 2)"
+                ></pre>
+                <div
+                  v-if="!expandSchema"
+                  class="d-flex"
+                  style="justify-content: end"
+                >
+                  <v-btn
+                    @click="expandSchema = true"
+                    color="primary"
+                    style="padding: 0"
+                    text
+                  >
+                    <v-icon>mdi-plus</v-icon> expand
+                  </v-btn>
+                </div>
+              </div>
+            </v-tab-item>
+            <v-tab-item>
+              <v-divider></v-divider>
+              <div class="summary__content">
+                <span class="titlex">Update workflow name below</span>
+                <div class="text-wrapper">
+                  <v-text-field
+                    outlined
+                    color="primary"
+                    v-model="selectedWorkflow.workflow_title"
+                    hide-details="auto"
+                    label="Workflow name"
+                  ></v-text-field>
+                </div>
+
+                <div class="desc">
+                  <b>Note:</b> Updating the name will not change the workflow
+                  trigger or ID
+                </div>
+
+                <div class="d-flex mt-10" style="justify-content: end">
+                  <v-btn
+                    color="primary"
+                    @click="updateWorkflowName(selectedWorkflow)"
+                    :loading="isUpdatingWorkflowName"
+                    elevation="0"
+                    large
+                  >
+                    <v-icon>mdi-chevron-right</v-icon> Update
+                  </v-btn>
+                </div>
+              </div>
+            </v-tab-item>
+          </v-tabs>
         </div>
-
-           </div>
-          </v-tab-item>
-          <v-tab-item>
-            <div class="summary__content">
-
-           </div>
-          </v-tab-item>
-          <v-tab-item>
-            <div class="summary__content">
-
-           </div>
-          </v-tab-item>
-        </v-tabs>
-      </div>
-    </v-dialog>
+      </v-dialog>
+    </div>
   </v-container>
 </template>
 
 <script>
 import { format } from "date-fns";
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 export default {
   data() {
     return {
@@ -525,10 +641,18 @@ export default {
       isLoadingWorkflows: false,
       errorLoadingWorkflow: true,
       tabIndex: 0,
+      operators: [],
+      isUpdatingWorkflowName: false,
+      expandSchema: false,
+      invoiceEntries: [],
+      paymentEntries: [],
     };
   },
   mounted() {
     this.getWorkflows();
+    this.fetchOperators();
+    this.fetchInvoiceEntries();
+    this.fetchPaymentEntries();
   },
   methods: {
     ...mapActions({ showToast: "ui/showToast" }),
@@ -540,6 +664,18 @@ export default {
     },
     toggleSearch() {
       this.isClicked = false;
+    },
+
+    async fetchOperators() {
+      try {
+        this.isLoadingEntries = true;
+        const { data } = await this.$store.dispatch("workflow/getAllOperators");
+        this.operators = data;
+      } catch (err) {
+        this.isLoadingEntries = false;
+      } finally {
+        this.isLoadingEntries = false;
+      }
     },
 
     startWorkflow() {
@@ -564,8 +700,7 @@ export default {
         this.showToast({
           sclass: "success",
           show: true,
-          message:
-            "Workflow" + workflow.is_active ? "deactivated!" : "activated!",
+          message: "Workflow status updated!",
           timeout: 3000,
         });
       } catch (err) {
@@ -578,9 +713,80 @@ export default {
       }
     },
 
+    async updateWorkflowName(workflow) {
+      try {
+        this.isUpdatingWorkflowName = true;
+
+        await this.$store.dispatch("workflow/updateWorkflow", {
+          id: workflow.id,
+          workflow_title: workflow.workflow_title,
+        });
+        this.settingsDialog = false;
+        this.showToast({
+          sclass: "success",
+          show: true,
+          message: "Workflow updated!",
+          timeout: 3000,
+        });
+      } catch (err) {
+        this.showToast({
+          sclass: "error",
+          show: true,
+          message: err.msg || "An error occurred",
+          timeout: 3000,
+        });
+      } finally {
+        this.isUpdatingWorkflowName = false;
+      }
+    },
+
     deleteWorkflow(workflow) {
       this.deleteWorkflowDialog = true;
       this.selectedWorkflow = workflow;
+    },
+
+    summary(workflow) {
+      // console.log(JSON.stringify(workflow, null, 2));
+      this.selectedWorkflow = workflow;
+      this.settingsDialog = true;
+    },
+
+    async fetchInvoiceEntries() {
+      try {
+        this.isLoadingEntries = true;
+        const { data } = await this.$store.dispatch(
+          "workflow/getAllInvoiceFieldsOptions"
+        );
+        this.invoiceEntries = data;
+      } catch (err) {
+        this.isLoadingEntries = false;
+      } finally {
+        this.isLoadingEntries = false;
+      }
+    },
+
+    async fetchPaymentEntries() {
+      try {
+        this.isLoadingEntries = true;
+        const data = await this.$store.dispatch(
+          "workflow/getPaymentFieldsOptions",
+          this.triggerData
+        );
+        this.paymentEntries = data;
+      } catch (err) {
+        this.isLoadingEntries = false;
+      } finally {
+        this.isLoadingEntries = false;
+      }
+    },
+
+    groupType(type) {
+      if (this.comparisonType) {
+        return (
+          this.comparisonType.find((groupType) => groupType.val === type)
+            ?.string || type
+        );
+      }
     },
 
     async confirmDeleteWorkflow() {
@@ -623,47 +829,226 @@ export default {
         this.isLoadingWorkflows = false;
       }
     },
+
+    operator(operand) {
+      if (this.operators) {
+        return (
+          this.operators.find((operator) => operator.key == operand)?.label ||
+          operand
+        );
+      }
+      return operand;
+    },
+
+    getFieldLabel(inputField) {
+      if (
+        (this.selectedWorkflow.form && this.selectedWorkflow.form.names) ||
+        this.invoiceEntries ||
+        this.paymentEntries
+      ) {
+        return (
+          (this.selectedWorkflow.source == "form"
+            ? this.selectedWorkflow?.form?.field_names || []
+            : this.selectedWorkflow.source == "invoice"
+            ? this.invoiceEntries
+            : this.paymentEntries
+          ).find((field) => field.key === inputField)?.label || inputField
+        );
+      }
+      return inputField;
+    },
+
+    getFieldTarget(inputTarget, inputField) {
+      const target = [
+        this.selectedWorkflow.source == "form"
+          ? this.selectedWorkflow?.form?.field_names || []
+          : this.selectedWorkflow.source == "invoice"
+          ? this.invoiceEntries
+          : this.paymentEntries,
+      ].find((field) => field.key === inputField);
+
+      if (target) {
+        if (target.type === "dropDown" || target.type === "checkbox") {
+          // multi values
+
+          if (typeof inputTarget === "string") {
+            return (
+              target.options.find((option) => option.value === inputTarget)
+                .text || inputTarget
+            );
+          } else {
+            return inputTarget
+              .map((item) => {
+                return (
+                  target.options.find((option) => option.value === item).text ||
+                  item
+                );
+              })
+              .join(", ");
+          }
+        } else if (target.type === "radio") {
+          // filter out just one
+          return (
+            target.options.find((option) => option.value === inputTarget)
+              .text || inputTarget
+          );
+        } else if (target.type === "number") {
+          return Intl.NumberFormat().format(inputTarget);
+        } else return inputTarget;
+      } else return inputTarget;
+    },
+  },
+
+  computed: {
+    ...mapGetters({
+      comparisonType: "workflow/comparisonType",
+    }),
+
+    parentGroup() {
+      if (this.selectedWorkflow && this.selectedWorkflow.workflow_schema)
+        return this.selectedWorkflow.workflow_schema.condition.properties.type;
+      else return null;
+    },
+
+    selectedConditions() {
+      if (this.selectedWorkflow && this.selectedWorkflow.workflow_schema)
+        return this.selectedWorkflow.workflow_schema.condition.properties
+          .conditions;
+      else return null;
+    },
+
+    selectedFieldNames() {
+      if (this.selectedWorkflow && this.selectedWorkflow.form)
+        return this.selectedWorkflow.form.field_names;
+      else return null;
+    },
+
+    getTriggerSchema() {
+      if (this.selectedConditions) {
+        let fields = [];
+        this.selectedConditions.forEach((condition) => {
+          if (condition.type === "comparison") {
+            fields.push({
+              field: condition.properties.field,
+              value: condition.properties.target,
+            });
+          }
+
+          if (condition.type === "group") {
+            condition.properties.conditions.forEach((condition2) => {
+              if (condition2.type === "comparison") {
+                fields.push({
+                  field: condition2.properties.field,
+                  value: condition2.properties.target,
+                });
+              }
+            });
+          }
+        });
+
+        const xx = fields.map((obj) => {
+          return {
+            [obj.field]: obj.value,
+            //  [this.selectedFieldNames.find(fd=>fd.key === obj.field ).label || obj.field]:[obj.value]
+            // [this.getFieldLabel(obj.field)]: this.getFieldTarget(
+            //   obj.value,
+            //   this.field
+            // ),
+          };
+        });
+
+        var cu = {};
+
+        xx.map((va) => {
+          Object.assign(cu, va);
+        });
+
+        return cu;
+      } else return {};
+    },
+  },
+  watch: {
+    // selectedWorkflow: {
+    //   deep: true,
+    //   handler(val) {
+    //     //  console.log(JSON.stringify(val.form.field_names, null, 2));
+    //   },
+    // },
+
+    settingsDialog() {
+      this.expandSchema = false;
+    },
+
+    // getTriggerSchema: {
+    //   deep: true,
+    //   immediate: true,
+    //   handler(val) {
+    //     console.log("trigger");
+    //     console.log(JSON.stringify(val, null, 2));
+    //   },
+    // },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.noWorkFlowTitle {
-  display: block;
-  margin-left: 0px;
-  margin-top: 0px;
-  font-family: "Inter", sans-serif;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 16px;
-  line-height: 24px;
+.workflow {
+  padding: 0px 40px 20px 20px;
 
-  color: var(--v-primary-base);
-}
-.noWorkFlowText {
-  margin-left: 0px;
-  margin-top: 0px;
-  font-family: "Inter", sans-serif;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 16px;
-  line-height: 24px;
-  color: #596a73;
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding-left: 20px;
+
+    .titlex {
+      font-size: 21px;
+      font-family: Inter;
+      font-style: normal;
+      font-weight: bold;
+      line-height: 39px;
+    }
+  }
 }
 
-.v-application .elevation-4 {
-  box-shadow: 0px 3px 5px -1px rgb(0 0 0 / 3%), 0px 6px 10px 0px rgb(0 0 0 / 3%),
-    0px 1px 18px 0px rgb(0 0 0 / 3%) !important;
-}
+// .noWorkFlowTitle {
+//   display: block;
+//   margin-left: 0px;
+//   margin-top: 0px;
+//   font-family: "Inter", sans-serif;
+//   font-style: normal;
+//   font-weight: bold;
+//   font-size: 16px;
+//   line-height: 24px;
+
+//   color: var(--v-primary-base);
+// }
+// .noWorkFlowText {
+//   margin-left: 0px;
+//   margin-top: 0px;
+//   font-family: "Inter", sans-serif;
+//   font-style: normal;
+//   font-weight: normal;
+//   font-size: 16px;
+//   line-height: 24px;
+//   color: #596a73;
+// }
+
+// .v-application .elevation-4 {
+//   box-shadow: 0px 3px 5px -1px rgb(0 0 0 / 3%), 0px 6px 10px 0px rgb(0 0 0 / 3%),
+//     0px 1px 18px 0px rgb(0 0 0 / 3%) !important;
+// }
 
 .summary {
   border-radius: 8px;
-  background-color: #fff;
+  background-color: #f8f7f4;
 
   &__header {
     padding: 20px;
     width: 100%;
     display: flex;
+    background-color: white;
     justify-content: space-between;
     align-items: center;
 
@@ -687,10 +1072,31 @@ export default {
   }
 
   &__content {
-    padding: 20px;
+    padding: 20px 0px;
     width: 100%;
-    height: 400px;
-    background-color: #F8F7F4;
+    min-height: 400px;
+    max-height: 90vh;
+    background-color: #f8f7f4;
+    margin-top: 1px solid grey;
+
+    .titlex {
+      color: #19283dcc;
+      display: block;
+      font-weight: 500;
+      padding-bottom: 20px;
+    }
+
+    .desc {
+      color: #8f96a1;
+      display: block;
+      margin-top: 10px;
+      margin-bottom: 50px;
+    }
+
+    .text-wrapper {
+      background-color: #fff;
+      border-radius: 4px;
+    }
   }
 }
 
@@ -787,9 +1193,9 @@ export default {
         display: inline-block;
         border: 1px solid #d9dee1;
         border-radius: 8px;
-
+        padding: 20px 0px;
         box-sizing: border-box;
-        padding: 20px;
+
         cursor: pointer;
 
         .titlex {
@@ -829,6 +1235,7 @@ export default {
           align-items: center;
           margin-top: 20px;
           color: var(--v-primary-base);
+          padding: 0px 20px;
 
           &__icon {
             &--draft {
@@ -895,7 +1302,7 @@ export default {
         background-color: #fff;
 
         box-sizing: border-box;
-        padding: 20px;
+        padding: 20px 0px;
         cursor: pointer;
 
         .titlex {
@@ -937,6 +1344,7 @@ export default {
           align-items: center;
           margin-top: 20px;
           color: var(--v-primary-base);
+          padding: 0px 20px;
 
           &__state {
             color: #8f96a1;
@@ -944,6 +1352,115 @@ export default {
         }
       }
     }
+  }
+}
+
+.schema {
+  margin-top: 30px;
+  background-color: transparent;
+  font-size: 16px;
+  color: #596a73;
+
+  .type {
+    color: var(--v-primary-base);
+    font-weight: bold;
+    background-color: #301f7812;
+    padding: 0px 8px;
+    border-radius: 10px;
+    display: inline-block;
+    margin: 0px 4px;
+  }
+
+  .operator {
+    color: #16be98;
+    font-weight: bold;
+    background-color: #fff;
+    padding: 0px 8px;
+    border-radius: 10px;
+    display: inline-block;
+    margin: 0px 4px;
+  }
+
+  .group {
+    padding: 15px 0px;
+    border-bottom: 1px dashed #d5dcec;
+  }
+
+  .comparison {
+    margin-top: 3px;
+    display: block;
+    margin-left: 15px;
+    line-height: 35px;
+
+    .operator {
+      background-color: #d4f6ef;
+      white-space: nowrap;
+      display: inline-block;
+      margin: 0px 4px;
+    }
+
+    .field {
+      font-weight: bold;
+      color: #8f96a1;
+    }
+
+    .target {
+      color: #e3aa1c;
+      font-weight: bold;
+      background-color: #f9eed2;
+      padding: 0px 8px;
+      border-radius: 10px;
+      display: inline-block;
+      margin: 0px 4px;
+    }
+  }
+}
+
+.api-cover {
+  display: flex;
+  align-items: center;
+  border: 1px solid #19283d1a;
+  box-sizing: border-box;
+  background: #ffffff;
+  border: 1px solid rgba(25, 40, 61, 0.1);
+  border-radius: 3px;
+  margin: 10px 0px;
+
+  &__req {
+    height: 55px;
+    padding: 0px 20px;
+    background-color: #f4f5f6;
+    color: #00233880;
+    font-weight: bold;
+    border-radius: 3px;
+    font-family: "Inter";
+  }
+
+  &__url {
+    padding: 0px 25px;
+    flex: 1;
+    color: #596a73;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+.schema-structure {
+  max-height: 170px;
+  height: auto;
+  padding: 15px;
+  overflow: auto;
+  background-color: #fff;
+  color: #00233880;
+  font-weight: bold;
+  border-radius: 3px;
+  font-family: "Inter";
+  border: 1px solid #19283d1a;
+
+  &--expand {
+    max-height: auto;
+    overflow: auto;
   }
 }
 </style>

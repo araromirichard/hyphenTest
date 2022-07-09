@@ -87,6 +87,7 @@
           <execute-actions-workflow
             v-if="canShowActions"
             ref="actions"
+            :trigger="workflow.trigger"
             @publish="publishDialog = true"
             :isVisable="canShowActions"
             v-model="workflow.actions"
@@ -208,12 +209,7 @@
           </div>
 
           <div class="mt-5 cta">
-            <v-btn
-              color="primary"
-             to="/workflow"
-              elevation="0"
-              large
-            >
+            <v-btn color="primary" to="/workflow" elevation="0" large>
               <v-icon left>mdi-chevron-right</v-icon> close</v-btn
             >
           </div>
@@ -491,7 +487,7 @@ export default {
         source: this.workflow.trigger,
         organization: this.orgId,
         workflow_schema: {
-          condition:this.workflow.conditions,
+          condition: this.workflow.conditions,
           actions: this.workflow.actions,
         },
         trigger_schema: this.workflow.fields,
@@ -703,6 +699,9 @@ export default {
       padding: 0px 25px;
       flex: 1;
       color: #596a73;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
     }
   }
 }

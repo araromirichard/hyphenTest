@@ -8,12 +8,12 @@ import contacts from "./contacts";
 import payables from "./payables";
 
 export default {
-    ui,
-    workflow,
-    auth,
-    organizations,
-    formBuilder,
-    invoices,
-    contacts,
-    payables,
+  ui,
+  workflow,
+  auth,
+  organizations,
+  formBuilder,
+  invoices,
+  contacts,
+  payables,
 };

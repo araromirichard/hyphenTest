@@ -36,7 +36,13 @@
             <v-icon left>mdi-close</v-icon> Cancel
           </v-btn>
 
-          <v-btn @click="addToWorkflow" large  :disabled="!webhook" color="primary" elevation="0">
+          <v-btn
+            @click="addToWorkflow"
+            large
+            :disabled="!webhook"
+            color="primary"
+            elevation="0"
+          >
             <v-icon left>mdi-chevron-right</v-icon> Add to workflow
           </v-btn>
         </div>
@@ -79,7 +85,7 @@ export default {
         type: "hyphenToWebhook",
         properties: {
           keys: ["webhook_url", "organization", "name"],
-          values: [this.webhook, this.orgId, "webhook"],
+          values: [this.webhook, this.orgId.toString(), "webhook"],
         },
       };
 

@@ -61,32 +61,32 @@
               ></v-select>
             </v-col>
 
-             <v-col cols="12" v-if="selectedAttribute == 'Balance'">
-                 <v-row>
-                   <v-col cols="6">
-                        <v-select
-                outlined
-                color="primary"
-                label="Update Type"
-                :items="updateTypes"
-                v-model="selectedUpdateType"
-                hide-details="auto"
-                placeholder="Update Type"
-                        ></v-select>
-                       </v-col>
-                       <v-col cols="6">
-                      <v-text-field
-                outlined
-                color="primary"
-                label="Update Value"
-                v-model="updateValue"
-                type="number"
-                hide-details="auto"
-                placeholder="Enter amount"
-                       ></v-text-field>
-                      </v-col>
-                 </v-row>
-             </v-col>
+            <v-col cols="12" v-if="selectedAttribute == 'Balance'">
+              <v-row>
+                <v-col cols="6">
+                  <v-select
+                    outlined
+                    color="primary"
+                    label="Update Type"
+                    :items="updateTypes"
+                    v-model="selectedUpdateType"
+                    hide-details="auto"
+                    placeholder="Update Type"
+                  ></v-select>
+                </v-col>
+                <v-col cols="6">
+                  <v-text-field
+                    outlined
+                    color="primary"
+                    label="Update Value"
+                    v-model="updateValue"
+                    type="number"
+                    hide-details="auto"
+                    placeholder="Enter amount"
+                  ></v-text-field>
+                </v-col>
+              </v-row>
+            </v-col>
           </v-row>
         </div>
 
@@ -132,7 +132,7 @@ export default {
       selectedTags: "",
       terms: ["Net 30", "Net 45", "Net 60", "Net 90"],
       selectedTerms: "",
-       updateTypes: ["Add", "Subtract"],
+      updateTypes: ["Add", "Subtract"],
       selectedUpdateType: "",
       updateValue: "",
     };
@@ -158,7 +158,7 @@ export default {
             this.selectedAttribute,
             this.selectedTags,
             this.selectedTerms,
-            this.orgId,
+            this.orgId.toString(),
             "customer",
           ],
         },
@@ -192,9 +192,9 @@ export default {
   },
   computed: {
     canAddToWorkflow() {
-      if (this.selectedAttribute === "Balance"){
+      if (this.selectedAttribute === "Balance") {
         return this.selectedUpdateType && this.updateValue;
-      };
+      }
       return (
         this.selectedAttribute && (this.selectedTerms || this.selectedTags)
       );

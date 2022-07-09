@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-dialog v-model="dialog" max-width="574">
-      <v-card height="722" color="#f8f7f4" class="rounded-lg">
+      <v-card color="#f8f7f4" class="rounded-lg">
         <v-card-title
           class="mb-8"
           style="background: #ffffff; border-radius: 8px 8px 0px 0px"
@@ -37,24 +37,24 @@
         <v-tabs-items v-model="tab">
           <v-tab-item>
             <v-card style="background-color: transparent" flat>
-              <div class="my-7 mx-10">
+              <div class="my-7 mx-4 mx-md-10 mb-6">
                 <p class="pa-0 ma-0 text--disabled text-subtitle-2">
                   Include details about this customer, contact person, business
                   address, default payment terms, etc
                 </p>
               </div>
               <v-form>
-                <v-row class="mx-10">
-                  <v-col cols="12"
+                <v-row class="mx-4 mx-md-10">
+                  <!-- <v-col cols="12"
                     ><v-text-field
                       v-model="contactDetails.companyAddress"
                       background-color="#ffffff"
                       outlined
                       hide-details="auto"
                       placeholder="Company Street Address"
-                    ></v-text-field
-                  ></v-col>
-                  <v-col cols="6" class="pl-0"
+                    ></v-text-fieldP
+                  ></v-col> -->
+                  <v-col cols="12" sm="6" class="pl-0"
                     ><v-text-field
                       v-model="contactDetails.firstName"
                       background-color="#ffffff"
@@ -151,7 +151,7 @@
           <v-tab-item>
             <v-card style="background-color: transparent" flat>
               <v-form class="mt-7">
-                <v-row class="mx-10">
+                <v-row class="mx-4 mx-md-10">
                   <v-col cols="12"
                     ><v-text-field
                       v-model="businessDetails.companyName"

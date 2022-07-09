@@ -101,7 +101,7 @@ export default {
         type: "hyphenToWorkFlow",
         properties: {
           keys: ["workflow", "organization"],
-          values: [this.workflow, this.orgId],
+          values: [this.workflow, this.orgId.toString()],
         },
       };
 
@@ -149,7 +149,7 @@ export default {
       } else {
         this.$emit("close");
       }
-    }
+    },
   },
 };
 </script>

@@ -34,7 +34,7 @@
                 "
                 :style="{
                   fontSize: `${
-                    $vuetify.breakpoint.mdAndDown ? '9  px' : '11px'
+                    $vuetify.breakpoint.smAndDown ? '9  px' : '11px'
                   }`,
                 }"
                 >Export</span

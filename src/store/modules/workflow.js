@@ -17,6 +17,8 @@ const state = () => ({
       val: "or",
     },
   ],
+  allWorkflow: null,
+  allActions: [],
 });
 
 const getters = {
@@ -39,6 +41,10 @@ const getters = {
     return {};
   },
 
+  allActions(state) {
+    return state.allActions;
+  },
+
   trigger(state) {
     return state.trigger;
   },
@@ -54,11 +60,34 @@ const getters = {
   comparisonType(state) {
     return state.comparisonType;
   },
+
+  invoiceWorkflow(state) {
+    if (state.allWorkflow != null) {
+      const invoicearray = state.allWorkflow.filter(
+        (obj) => obj.source == "invoice"
+      );
+
+      console.log(JSON.stringify(invoicearray, null, 2));
+      return invoicearray.map((object) => object.workflow_title);
+    }
+  },
 };
 
 const mutations = {
   SET_SCHEMA(state, payload) {
     state.schema = payload;
+  },
+
+  SET_ALL_ACTIONS(state, payload) {
+    state.allActions = payload.map((action) => {
+      return {
+        icon: require(`@/assets/${action.icon.split('/').pop()}`),
+        text: action.text,
+        type: action.type,
+        active: action.active,
+        meta: action.meta,
+      };
+    });
   },
 
   SET_TRIGGER(state, payload) {
@@ -75,6 +104,10 @@ const mutations = {
 
   NEW_WORKFLOW(state, payload) {
     state.newWorkflow = payload;
+  },
+  workflowMutate(state, data) {
+    state.allWorkflow = data;
+    //console.log(JSON.stringify(data, null, 2));
   },
 };
 
@@ -173,9 +206,21 @@ const actions = {
     }
   },
 
-  async getAllWorkflows() {
+  async getAllWorkflows({ commit }) {
     try {
       const data = await Workflow.getAllWorkflows();
+      commit("workflowMutate", data.data);
+
+      return data;
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  },
+
+  async getAllWorkflowActions({ commit }) {
+    try {
+      const { data } = await Workflow.getAllWorkflowActions();
+      commit("SET_ALL_ACTIONS", data.data);
       return data;
     } catch (error) {
       return Promise.reject(error);
@@ -185,6 +230,36 @@ const actions = {
   async getAllWorkflowById({ commit }, id) {
     try {
       const data = await Workflow.getWorkflowById(id);
+      commit("NEW_WORKFLOW", data);
+      return data;
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  },
+
+  async fetchApprovalOTP({ commit }, token) {
+    try {
+      const data = await Workflow.fetchOTP(token);
+      commit("NEW_WORKFLOW", data);
+      return data;
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  },
+
+  async verifyApprovalOTP({ commit }, payload) {
+    try {
+      const data = await Workflow.verifyApprovalOTP(payload);
+      commit("NEW_WORKFLOW", data);
+      return data;
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  },
+
+  async approvalStatus({ commit }, payload) {
+    try {
+      const data = await Workflow.approvalUrl(payload);
       commit("NEW_WORKFLOW", data);
       return data;
     } catch (error) {

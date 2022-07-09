@@ -91,7 +91,13 @@
             <v-icon left>mdi-close</v-icon> Cancel
           </v-btn>
 
-          <v-btn large color="primary" elevation="0" :disabled="!canAddToWorkflow" @click="addToWorkflow">
+          <v-btn
+            large
+            color="primary"
+            elevation="0"
+            :disabled="!canAddToWorkflow"
+            @click="addToWorkflow"
+          >
             <v-icon left>mdi-chevron-right</v-icon> SAVE
           </v-btn>
         </div>
@@ -155,7 +161,7 @@ export default {
             this.invoice_no,
             this.amount_due,
             this.due_date,
-            this.orgId,
+            this.orgId.toString(),
             "payables",
           ],
         },
@@ -206,10 +212,10 @@ export default {
     },
   },
 
-  computed:{
+  computed: {
     canAddToWorkflow() {
       return this.invoice_no && this.amount_due && this.due_date;
-    }
+    },
   },
 
   watch: {
@@ -221,6 +227,14 @@ export default {
         this.$emit("close");
       }
     },
+
+    // value:{
+    //   handler() {
+    //     this.mapForm();
+    //   },
+    //   deep: true,
+    //   immediate: true
+    // },
 
     due_date(val) {
       this.dateFormatted = this.formatDate(val);

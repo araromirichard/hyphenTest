@@ -66,10 +66,11 @@
                     v-for="(action, index) in selectedActions"
                     :isLast="index == selectedActions.length - 1"
                     :key="index"
+                    :trigger="trigger"
                     :isBeenDragged="drag"
                     :index="index"
                     v-model="selectedActions[index]"
-                    @channel="channels.splice(index,1,$event)"
+                    @channel="channels.splice(index, 1, $event)"
                     @add-new-action="showActionModal"
                     @remove-action="removeAction(index)"
                   />
@@ -81,7 +82,12 @@
       </div>
 
       <div style="margin-top: 25px; width: 150px">
-        <v-btn color="primary" elevation="0" :disabled="!canPublish" large @click="$emit('publish')"
+        <v-btn
+          color="primary"
+          elevation="0"
+          :disabled="!canPublish"
+          large
+          @click="$emit('publish')"
           ><v-icon>mdi-chevron-right</v-icon> publish</v-btn
         >
       </div>
@@ -115,9 +121,7 @@
         <div class="content">
           <div
             class="content__action"
-            v-for="(action, index) in searchQuery == ''
-              ? actionsMeta
-              : filteredActions"
+            v-for="(action, index) in filteredActions"
             :key="index"
             @click="addAction(action)"
           >
@@ -145,6 +149,9 @@ export default {
     value: {
       default: [],
     },
+    trigger: {
+      default: null,
+    },
   },
   data() {
     return {
@@ -152,7 +159,7 @@ export default {
       actionModal: false,
       searchQuery: "",
       selectedActions: [],
-      channels:[],
+      channels: [],
       drag: false,
       scrollOptions: {
         duration: 500,
@@ -161,6 +168,10 @@ export default {
         container: ".flows",
       },
     };
+  },
+
+  mounted() {
+    this.getAllActions();
   },
   methods: {
     onUpdate: function (event) {
@@ -173,19 +184,11 @@ export default {
     showActionModal() {
       this.actionModal = true;
     },
-    /// this is still very buggy
-    // reOrder(event) {
-    //   this.selectedActions.splice(
-    //     event.newIndex,
-    //     0,
-    //     this.selectedActions.splice(event.oldIndex, 1)[0]
-    //   );
-    //   this.selectedActions.splice(
-    //     event.newIndex,
-    //     0,
-    //     this.selectedActions.splice(event.oldIndex, 1)[0]
-    //   );
-    // },
+
+    getAllActions() {
+      this.$store.dispatch("workflow/getAllWorkflowActions");
+    },
+
     addAction(action) {
       if (!action.active) {
         return;
@@ -205,11 +208,23 @@ export default {
   },
   computed: {
     filteredActions() {
-      return this.actionsMeta.filter((action) => {
-        return action.text
-          .toLowerCase()
-          .includes(this.searchQuery.toLowerCase());
-      });
+      if (this.searchQuery !== "") {
+        return this.actionsMeta
+          .filter(
+            (action) =>
+              action?.meta?.trigger?.includes(this.trigger) && action != null
+          )
+          .filter((action) => {
+            return action.text
+              .toLowerCase()
+              .includes(this.searchQuery.toLowerCase());
+          });
+      } else {
+        return this.actionsMeta.filter(
+          (action) =>
+            action?.meta?.trigger?.includes(this.trigger) && action != null
+        );
+      }
     },
 
     dragOptions() {
@@ -221,9 +236,11 @@ export default {
       };
     },
 
-    canPublish(){
-      return this.channels.every(action => action) && this.channels.length > 0
-    }
+    canPublish() {
+      return (
+        this.channels.every((action) => action) && this.channels.length > 0
+      );
+    },
   },
   watch: {
     value: {
@@ -240,7 +257,6 @@ export default {
       immediate: true,
       handler(newVal) {
         this.$emit("input", newVal);
-        //  console.log(JSON.stringify(newVal, null, 2));
       },
     },
     showTriggers: {

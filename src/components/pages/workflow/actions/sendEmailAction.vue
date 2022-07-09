@@ -116,7 +116,7 @@ export default {
         meta: {
           type: "hyphenEmail",
           properties: {
-            keys: ["subject", "message", "to", "cc", "organization id", "name"],
+            keys: ["subject", "message", "to", "cc", "organization", "name"],
             values: ["", "", "", "", "", ""],
           },
         },
@@ -151,13 +151,13 @@ export default {
       const payload = {
         type: "hyphenEmail",
         properties: {
-          keys: ["subject", "message", "to", "cc", "organization id", "name"],
+          keys: ["subject", "message", "to", "cc", "organization", "name"],
           values: [
             this.data.subject,
             this.data.message,
             this.data.to,
             this.data.cc,
-            this.orgId,
+            this.orgId.toString(),
             "email",
           ],
         },
@@ -202,6 +202,8 @@ export default {
           "organizations/fetchCoWorkers"
         );
         this.workers = response.map((worker) => worker.email);
+
+        //  this.sendOutChannel()
       } catch (err) {
         console.log(JSON.stringify(err, null, 2));
       } finally {
@@ -212,9 +214,7 @@ export default {
 
   computed: {
     canAddToWorkflow() {
-      return (
-        this.data.subject && this.data.message && this.data.to
-      );
+      return this.data.subject && this.data.message && this.data.to;
     },
   },
   watch: {

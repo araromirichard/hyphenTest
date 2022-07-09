@@ -39,7 +39,7 @@
         <v-row>
           <v-col cols="12" class="px-8 px-md-0 align-center">
             <!-- contact title for Mobile screens -->
-            <div class="d-flex" v-if="$vuetify.breakpoint.mdAndDown">
+            <div class="d-flex" v-if="$vuetify.breakpoint.smAndDown">
               <p
                 :style="{ display: `${isClicked != true ? 'none' : ''}` }"
                 class="pt-7 pl-2 primary--text"
@@ -181,7 +181,7 @@
       </v-col>
     </v-row>
     <!-- tabs for mobile devices -->
-    <v-row class="px-0 mx-0" v-if="$vuetify.breakpoint.mdAndDown">
+    <v-row class="px-0 mx-0" v-if="$vuetify.breakpoint.smAndDown">
       <v-col class="ma-0 pa-0" cols="12">
         <v-bottom-navigation fixed class="pa-0 mx-0" dark>
           <v-tabs

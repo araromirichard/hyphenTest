@@ -31,8 +31,8 @@
                 v-model="data.form"
                 :items="forms"
                 :loading="isLoadingForms"
-                 item-text="form_title"
-                 item-value="id"
+                item-text="form_title"
+                item-value="id"
                 hide-details="auto"
                 placeholder="Form"
               ></v-select>
@@ -65,7 +65,13 @@
             <v-icon left>mdi-close</v-icon> Cancel
           </v-btn>
 
-          <v-btn @click="addToWorkflow" :disabled="!canAddToWorkflow" large color="primary" elevation="0">
+          <v-btn
+            @click="addToWorkflow"
+            :disabled="!canAddToWorkflow"
+            large
+            color="primary"
+            elevation="0"
+          >
             <v-icon left>mdi-chevron-right</v-icon> Add to FLow
           </v-btn>
         </div>
@@ -90,22 +96,20 @@ export default {
   data() {
     return {
       dialog: false,
-      forms: [
-       
-      ],
+      forms: [],
       data: {
         form: "",
         recipient: "",
       },
-      emailLists:[],
+      emailLists: [],
       isLoadingEmails: false,
-      isLoadingForms:false
+      isLoadingForms: false,
     };
   },
   mounted() {
     this.mapForm();
-    this.fetchOrgForms()
-    this.getCoworkers()
+    this.fetchOrgForms();
+    this.getCoworkers();
   },
   methods: {
     open() {
@@ -124,7 +128,7 @@ export default {
             this.data.form,
             this.forms.find((form) => form.id == this.data.form).form_title,
             this.data.recipient,
-            this.orgId,
+            this.orgId.toString(),
             "form",
           ],
         },
@@ -152,12 +156,12 @@ export default {
 
     sendOutChannel() {
       let channel =
-        this.forms.find((form) => form.id == this.data.form)?.form_title || "N/A";
+        this.forms.find((form) => form.id == this.data.form)?.form_title ||
+        "N/A";
       this.$emit("channel", channel);
     },
 
-
-     async fetchOrgForms() {
+    async fetchOrgForms() {
       try {
         this.isLoadingForms = true;
         const { data } = await this.$store.dispatch(
@@ -171,7 +175,7 @@ export default {
       }
     },
 
-      async getCoworkers() {
+    async getCoworkers() {
       try {
         this.isLoadingEmails = true;
         const response = await this.$store.dispatch(
@@ -188,7 +192,10 @@ export default {
   computed: {
     canAddToWorkflow() {
       return (
-        this.data.form && this.data.recipient && this.data.form != "" && this.data.recipient != ""
+        this.data.form &&
+        this.data.recipient &&
+        this.data.form != "" &&
+        this.data.recipient != ""
       );
     },
   },

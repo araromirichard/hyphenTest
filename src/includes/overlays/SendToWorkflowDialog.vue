@@ -9,13 +9,12 @@
         dense
         hide-details="true"
         :value="dialog"
-        :true-value="tValue"
+        :true-value="selectedWorkflow ? true : tValue"
         class="px-4 mb-md-1"
         :color="`${(hasColor = true ? '#16BE98' : '')}`"
         label="Send to workflow"
       >
       </v-switch>
-
       <!-- checkbox for mobile devices -->
       <v-checkbox
         v-if="$vuetify.breakpoint.mdAndDown"
@@ -25,7 +24,7 @@
         dense
         hide-details="true"
         :value="dialog"
-        :true-value="tValue"
+        :true-value="selectedWorkflow"
         class="px-4 py-0"
         :color="`${(hasColor = true ? '#16BE98' : '')}`"
       >
@@ -46,7 +45,7 @@
             font-weight: 600;
             font-size: 16px;
             line-height: 19px;
-            color: #301f78;
+            color: #19283d;
           "
           >Add to workflow</span
         >
@@ -60,6 +59,7 @@
           mdi-close
         </v-icon>
       </v-card-title>
+
       <div class="pa-md-0 ma-md-0 px-6">
         <template>
           <v-select
@@ -141,23 +141,26 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   props: {
     tValue: {
       type: Boolean,
+      default: false,
     },
   },
   data() {
     return {
-      dialog: false,
+      dialog: this.tValue,
       selectedWorkflow: null,
-      workflowSelected: [
-        "Approval by MD & Snr. Managers",
-        "Dynamic discount by location and...",
-        "Online sales bank account recon…",
-        "Match Invoice PO to records…",
-      ],
     };
+  },
+
+  computed: {
+    ...mapGetters({
+      workflowSelected: "workflow/invoiceWorkflow",
+    }),
   },
   methods: {
     closeDialog() {

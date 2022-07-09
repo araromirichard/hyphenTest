@@ -44,7 +44,13 @@
             <v-icon left>mdi-close</v-icon> Cancel
           </v-btn>
 
-          <v-btn @click="addToWorkflow" :disabled="!worker" large color="primary" elevation="0">
+          <v-btn
+            @click="addToWorkflow"
+            :disabled="!worker"
+            large
+            color="primary"
+            elevation="0"
+          >
             <v-icon left>mdi-chevron-right</v-icon> Add to workflow
           </v-btn>
         </div>
@@ -60,10 +66,20 @@ export default {
       default: {
         type: "PbotApproval",
         properties: {
-          keys: ["identity", "organization id", "type", "name"],
-          values: ["", "", "human", "approval"],
+          keys: [
+            "identity",
+            "organization",
+            "trigger",
+            "identity_name",
+            "type",
+            "name",
+          ],
+          values: ["", "", "", "", "human", "approval"],
         },
       },
+    },
+    trigger: {
+      default: null,
     },
   },
   data() {
@@ -94,16 +110,16 @@ export default {
         );
         this.workers = response.map((worker) => {
           return {
-            id:worker.id,
-            name:worker.first_name +' '+ worker.last_name,
-            email:worker.email
+            id: worker.id,
+            name: worker.first_name + " " + worker.last_name,
+            email: worker.email,
           };
         });
 
         this.sendOutChannel();
       } catch (err) {
         console.log(JSON.stringify(err, null, 2));
-      }finally{
+      } finally {
         this.isLoadingWorkers = false;
       }
     },
@@ -112,8 +128,23 @@ export default {
       const payload = {
         type: "PbotApproval",
         properties: {
-          keys: ["identity", "organization", "type", "name"],
-          values: [this.worker, this.orgId, "human", "approval"],
+          keys: [
+            "identity",
+            "identity_name",
+            "organization",
+            "trigger",
+            "type",
+            "name",
+          ],
+          values: [
+            this.worker,
+            this.workers.find((worker) => worker.email === this.worker).name ||
+              "...",
+            this.orgId.toString(),
+            this.trigger,
+            "human",
+            "approval",
+          ],
         },
       };
       this.$emit("input", payload);
@@ -122,10 +153,10 @@ export default {
     },
     sendOutChannel() {
       let channel =
-        this.workers.find((worker) => worker.email == this.worker)?.name  ||
+        this.workers.find((worker) => worker.email == this.worker)?.name ||
         "N/A";
 
-      this.$emit("channel",channel);
+      this.$emit("channel", channel);
     },
     mapForm() {
       if (this.value) {
@@ -146,7 +177,7 @@ export default {
       } else {
         this.$emit("close");
       }
-    }
+    },
   },
 };
 </script>
