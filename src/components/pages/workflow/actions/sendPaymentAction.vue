@@ -269,13 +269,13 @@ export default {
         this.$emit("close");
       }
     },
-    value: {
-      immediate: true,
-      deep: true,
-      handler(val) {
-        console.log(JSON.stringify(val, null, 2));
-      },
-    },
+    // value: {
+    //   immediate: true,
+    //   deep: true,
+    //   handler(val) {
+    //     console.log(JSON.stringify(val, null, 2));
+    //   },
+    // },
   },
 };
 </script>

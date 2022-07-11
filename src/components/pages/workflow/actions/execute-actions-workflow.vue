@@ -155,7 +155,7 @@ export default {
   },
   data() {
     return {
-      showTriggers: true,
+      showTriggers: false,
       actionModal: false,
       searchQuery: "",
       selectedActions: [],
@@ -185,8 +185,12 @@ export default {
       this.actionModal = true;
     },
 
-    getAllActions() {
-      this.$store.dispatch("workflow/getAllWorkflowActions");
+    async getAllActions() {
+      await this.$store.dispatch("workflow/getAllWorkflowActions");
+
+      if (this.selectedActions.length > 0 && this.actionsMeta.length > 0) {
+        this.showTriggers = true;
+      }
     },
 
     addAction(action) {
@@ -249,6 +253,9 @@ export default {
       handler(val) {
         if (JSON.stringify(val) !== JSON.stringify(this.selectedActions)) {
           this.selectedActions = val;
+          if (val.length > 0 && this.actionsMeta.length > 0) {
+            this.showTriggers = true;
+          }
         }
       },
     },
