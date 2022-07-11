@@ -37,7 +37,7 @@
                     </v-text-field>
                   </v-col>
                 </v-row>
-                <div class="py-5 px-4 mt-4 mb-11" style="position: relative; background: #f6f3ee">
+                <div class="py-4 px-4 mt-4 mb-8" style="position: relative; background: #f6f3ee">
                   <v-row v-for="(fieldRow, index) in fieldRows" :key="index">
                     <v-col class="" cols="12" md="5">
                       <v-text-field hide-details="auto" background-color="white" label="Amount Due" outlined
@@ -353,7 +353,7 @@ export default {
 
   .field__title {
     margin-bottom: 20px;
-    margin-top: 30px;
+    margin-top: 24px;
     margin-left: 67px;
     font-family: "Inter";
     font-style: normal;
