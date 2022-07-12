@@ -31,7 +31,7 @@
           </v-flex>
           <v-flex md2 class="d-flex justify-start">
             <span
-              class="mb-0 ml-5"
+              class="mb-0 ml-2"
               style="
                 font-family: Lato;
                 font-style: normal;
@@ -43,7 +43,7 @@
               >{{ vendorname }}</span
             >
           </v-flex>
-          <v-flex md1>
+          <v-flex md2>
             <div class="d-flex justify-start align-center">
               <div
                 class="ms-1"
@@ -110,7 +110,7 @@
               >
             </div>
           </v-flex>
-          <v-flex md1>
+          <!-- <v-flex md1>
             <div class="d-flex justify-center">
               <span
                 class="mx-auto"
@@ -125,7 +125,7 @@
                 >{{ state }}</span
               >
             </div>
-          </v-flex>
+          </v-flex> -->
           <v-flex md2>
             <div class="d-flex justify-center align-center">
               <v-hover v-slot="{ hover }">

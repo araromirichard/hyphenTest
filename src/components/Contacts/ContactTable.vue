@@ -41,7 +41,7 @@
               >{{ company }}</span
             >
           </v-flex>
-          <v-flex md1>
+          <v-flex md2>
             <div class="d-flex justify-start align-center">
               <div
                 class="ms-1"
@@ -58,8 +58,8 @@
               </div>
             </div>
           </v-flex>
-          <v-flex md1>
-            <div class="d-flex justify-start align-center">
+          <v-flex md2>
+            <div class="d-flex justify-start">
               <div
                 class="ms-2"
                 style="
@@ -124,7 +124,7 @@
               >
             </div>
           </v-flex>
-          <v-flex md2>
+          <!-- <v-flex md2>
             <div class="d-flex justify-center">
               <span
                 class="mx-auto"
@@ -139,7 +139,7 @@
                 >{{ outstanding }}</span
               >
             </div>
-          </v-flex>
+          </v-flex> -->
           <v-flex md2>
             <div class="d-flex justify-center align-center">
               <v-hover v-slot="{ hover }">

@@ -66,9 +66,9 @@
                     <th class="px-0 text-center primary--text text-subtitle-2">
                       Phone
                     </th>
-                    <th class="px-0 text-center primary--text text-subtitle-2">
+                    <!-- <th class="px-0 text-center primary--text text-subtitle-2">
                       State
-                    </th>
+                    </th> -->
                   </tr>
                 </thead>
                 <tbody class="px-2">
