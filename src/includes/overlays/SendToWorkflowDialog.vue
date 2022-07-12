@@ -8,8 +8,8 @@
         flat
         dense
         hide-details="true"
-        :value="dialog"
-        :true-value="selectedWorkflow ? true : tValue"
+        :value="tValue"
+        :true-value="tValue"
         class="px-4 mb-md-1"
         :color="`${(hasColor = true ? '#16BE98' : '')}`"
         label="Send to workflow"
@@ -24,7 +24,7 @@
         dense
         hide-details="true"
         :value="dialog"
-        :true-value="selectedWorkflow"
+        :true-value="tValue"
         class="px-4 py-0"
         :color="`${(hasColor = true ? '#16BE98' : '')}`"
       >
