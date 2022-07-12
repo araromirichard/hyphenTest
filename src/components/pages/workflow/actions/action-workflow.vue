@@ -1,5 +1,5 @@
 <template>
-  <div v-if="value != null">
+  <div v-if="value != null && actionMeta">
     <div
       class="selected-action"
       :style="
