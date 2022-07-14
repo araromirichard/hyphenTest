@@ -60,9 +60,7 @@
       </v-flex>
       <v-flex md2>
         <div class="d-flex align-center pa-0 ma-0">
-          <p class="mb-0 mx-1 pa-0 primary--text font-weight-bold">
-            vendor
-          </p>
+          <p class="mb-0 mx-1 pa-0 primary--text font-weight-bold">vendor</p>
           <v-btn class="" color="grey lighten-1" icon>
             <v-icon>mdi-chevron-down</v-icon>
           </v-btn>

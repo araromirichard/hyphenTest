@@ -163,7 +163,7 @@ export default {
       if (target) {
         if (target.type === "dropDown" || target.type === "checkbox") {
           // multi values
-            if (typeof inputTarget === "string") {
+          if (typeof inputTarget === "string") {
             return (
               target.options.find((option) => option.value === inputTarget)
                 .text || inputTarget

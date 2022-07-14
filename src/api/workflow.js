@@ -19,7 +19,7 @@ export default {
     });
   },
 
-  approvalUrl(payload){
+  approvalUrl(payload) {
     return api().post(payload.url, {
       action: payload.action,
     });
@@ -72,8 +72,6 @@ export default {
       },
     });
   },
-
-
 
   getAllWorkflows() {
     return api().get("/workflows", {

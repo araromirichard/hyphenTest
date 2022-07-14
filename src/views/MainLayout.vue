@@ -28,7 +28,7 @@
               <img class="logo" :src="require('@/assets/icons/newLogo.svg')" />
             </div>
           </template>
-          <v-list nav dense flat class="py-4 pl-10">
+          <v-list nav dense flat class="py-2 pl-10">
             <v-list-item-group
               v-model="model"
               active-class="primary--text text--accent-4 link-text"
@@ -231,7 +231,7 @@
           <img class="logo" :src="require('@/assets/icons/newLogo.svg')" />
         </div>
       </template>
-      <v-list flat class="pt-4 pb-2 pl-10">
+      <v-list flat class="pt-2 pb-2 pl-10">
         <v-list-item-group
           v-model="model"
           color="primary"
@@ -393,7 +393,7 @@
 
       <template v-slot:append absolute>
         <!-- logOutBtn/change organization button starts here  -->
-        <div class="px-8 py-8">
+        <div class="px-8 py-6">
           <!-- <v-btn
             :to="{ name: 'organizationList' }"
             outlined
@@ -403,7 +403,7 @@
             <v-icon> mdi-menu-down </v-icon>
           </v-btn> -->
         </div>
-        <div class="ml-12 mb-13" v-if="$vuetify.breakpoint.mdAndUp">
+        <div class="ml-12 mb-10" v-if="$vuetify.breakpoint.mdAndUp">
           <v-menu open-on-hover offset-y>
             <template v-slot:activator="{ on, attrs }">
               <v-avatar
@@ -481,7 +481,7 @@ export default {
 
 <style scoped>
 .v-application--is-ltr .v-list-item__avatar:first-child {
-  margin-right: 10px;
+  margin-right: 8px;
   justify-content: center;
 }
 .logo {
@@ -501,8 +501,8 @@ export default {
   font-family: "Inter";
   font-style: normal;
   font-weight: normal;
-  font-size: 14px;
-  line-height: 15px;
+  font-size: 12px;
+  line-height: 12px;
   color: #7f919b;
 }
 

@@ -349,13 +349,13 @@
                           v-for="(workflow, index) in workflows"
                           :key="index"
                         >
-                         <div style="padding: 0px 20px">
-                          <span class="titlex">{{
-                            workflow.workflow_title
-                          }}</span>
-                          <span class="trigger">{{ workflow.source }}</span>
-                          <div class="description">template description</div>
-                         </div>
+                          <div style="padding: 0px 20px">
+                            <span class="titlex">{{
+                              workflow.workflow_title
+                            }}</span>
+                            <span class="trigger">{{ workflow.source }}</span>
+                            <div class="description">template description</div>
+                          </div>
                           <v-divider></v-divider>
                           <div class="footerx">
                             <span class="footerx__state">Template </span>

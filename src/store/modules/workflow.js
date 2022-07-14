@@ -81,7 +81,7 @@ const mutations = {
   SET_ALL_ACTIONS(state, payload) {
     state.allActions = payload.map((action) => {
       return {
-        icon: require(`@/assets/${action.icon.split('/').pop()}`),
+        icon: require(`@/assets/${action.icon.split("/").pop()}`),
         text: action.text,
         type: action.type,
         active: action.active,

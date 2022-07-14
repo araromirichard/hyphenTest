@@ -2,13 +2,30 @@
   <div>
     <v-container class="pa-0">
       <div>
-        <v-card v-if="$vuetify.breakpoint.mdAndUp" width="100%" flat class="d-flex"
-          style="background: rgba(127, 145, 155, 0.052607)">
-         
-          <v-switch flat dense disabled class="pl-4 mb-2" color="#16be98" v-model="autoProcess" label="Auto process">
+        <v-card
+          v-if="$vuetify.breakpoint.mdAndUp"
+          width="100%"
+          flat
+          class="d-flex"
+          style="background: rgba(127, 145, 155, 0.052607)"
+        >
+          <v-switch
+            flat
+            dense
+            disabled
+            class="pl-4 mb-2"
+            color="#16be98"
+            v-model="autoProcess"
+            label="Auto process"
+          >
           </v-switch>
-          <SendToWorkflowDialog @closeDialog="closeModal" :tValue="switchState" />
-          <v-chip class="mt-5" small><span class="
+          <SendToWorkflowDialog
+            @closeDialog="closeModal"
+            :tValue="switchState"
+          />
+          <v-chip class="mt-5" small
+            ><span
+              class="
                 font-family:
                 Inter;
                 font-style:
@@ -21,17 +38,27 @@
                 10px;
                 color:
                 #7F919B;
-              ">
+              "
+            >
               {{ workflowName || "workflow name…" }}
             </span>
           </v-chip>
           <v-spacer></v-spacer>
           <download-csv class="btn btn-default" :data="filteredInvoices">
             <v-hover v-slot="{ hover }">
-              <v-btn outlined @click="alertCSVDownload" color="primary" class="my-4 export-btn mr-9 hover-btn" :style="{
-                'background-color': hover ? '#2bd5ae' : '',
-                border: hover ? 'none' : '',
-              }" elevation="2"><span class="material-icons pr-1"> import_export </span><span class="primary--text"
+              <v-btn
+                outlined
+                @click="alertCSVDownload"
+                color="primary"
+                class="my-4 export-btn mr-9 hover-btn"
+                :style="{
+                  'background-color': hover ? '#2bd5ae' : '',
+                  border: hover ? 'none' : '',
+                }"
+                elevation="2"
+                ><span class="material-icons pr-1"> import_export </span
+                ><span
+                  class="primary--text"
                   style="
                     font-family: Inter;
                     font-style: normal;
@@ -40,29 +67,48 @@
                     line-height: 12px;
                     text-align: center;
                     letter-spacing: 0.636364px;
-                  ">Export</span>
+                  "
+                  >Export</span
+                >
               </v-btn>
             </v-hover>
           </download-csv>
         </v-card>
-        <div v-if="$vuetify.breakpoint.mdAndDown" class="d-flex flex-column justify-center align-center">
+        <div
+          v-if="$vuetify.breakpoint.mdAndDown"
+          class="d-flex flex-column justify-center align-center"
+        >
           <div class="py-3 ma-0 text-subtitle-1 text-center primary--text">
             {{ workflowName || "workflow name…" }}
           </div>
           <div class="pa-0 ma-0 d-flex justify-center align-center">
-            <v-checkbox class="pl-2 mb-0 py-0" color="#16be98" v-model="autoProcess">
+            <v-checkbox
+              class="pl-2 mb-0 py-0"
+              color="#16be98"
+              v-model="autoProcess"
+            >
               <template v-slot:label>
-                <span class="mb-0 py-0" style="font-size: 12px">Auto process</span>
+                <span class="mb-0 py-0" style="font-size: 12px"
+                  >Auto process</span
+                >
               </template>
             </v-checkbox>
-            <SendToWorkflowDialog @closeDialog="closeModal" :tValue="switchState" />
+            <SendToWorkflowDialog
+              @closeDialog="closeModal"
+              :tValue="switchState"
+            />
           </div>
         </div>
       </div>
 
       <!-- inbox tabs for desktop screens -->
       <v-skeleton-loader type="table" :loading="isLoading">
-        <v-layout row wrap class="align-center my-2 px-8" v-if="$vuetify.breakpoint.mdAndUp">
+        <v-layout
+          row
+          wrap
+          class="align-center my-2 px-8"
+          v-if="$vuetify.breakpoint.mdAndUp"
+        >
           <v-flex md1>
             <div class="d-flex align-center justify-center">
               <p class="mb-0 primary--text font-weight-bold text-center">ID</p>
@@ -127,27 +173,51 @@
           </v-flex>
         </v-layout>
         <v-row>
-          <v-col cols="12" v-for="(
+          <v-col
+            cols="12"
+            v-for="(
               {
-              id,
-              invoicenumber,
-              invoicetype,
-              vendor,
-              created_at,
-              total,
-              status,
-              category,
-            },
+                id,
+                invoicenumber,
+                invoicetype,
+                vendor,
+                created_at,
+                total,
+                status,
+                category,
+              },
               i
-            ) in filteredInvoices" :key="i" class="py-0 ma-md-0">
-            <DataTable v-if="$vuetify.breakpoint.mdAndUp" :index="i + 1" :id="id" :invoiceRef="invoicenumber"
-              :type="invoicetype" :requester="vendor.vendorname || ''" :date="created_at | date" :amount="total"
-              :status="status" :category="category" :textColor="invoicetype === 'expense' ? '#E3AA1C' : '#2BD5AE'" />
+            ) in filteredInvoices"
+            :key="i"
+            class="py-0 ma-md-0"
+          >
+            <DataTable
+              v-if="$vuetify.breakpoint.mdAndUp"
+              :index="i + 1"
+              :id="id"
+              :invoiceRef="invoicenumber"
+              :type="invoicetype"
+              :requester="vendor.vendorname || ''"
+              :date="created_at | date"
+              :amount="total"
+              :status="status"
+              :category="category"
+              :textColor="invoicetype === 'expense' ? '#E3AA1C' : '#2BD5AE'"
+            />
 
             <!-- Data table for mobile -->
-            <DataTableCard v-if="$vuetify.breakpoint.smAndDown" :index="id" :invoiceRef="invoicenumber"
-              :type="invoicetype" :requester="vendor.vendorname || ''" :date="created_at | date" :amount="total"
-              :status="status" :category="category" :chipColor="invoicetype === 'expense' ? '#2BD5AE' : '#E3AA1C'" />
+            <DataTableCard
+              v-if="$vuetify.breakpoint.smAndDown"
+              :index="id"
+              :invoiceRef="invoicenumber"
+              :type="invoicetype"
+              :requester="vendor.vendorname || ''"
+              :date="created_at | date"
+              :amount="total"
+              :status="status"
+              :category="category"
+              :chipColor="invoicetype === 'expense' ? '#2BD5AE' : '#E3AA1C'"
+            />
           </v-col>
         </v-row>
       </v-skeleton-loader>
@@ -184,10 +254,10 @@ export default {
       if (!value) {
         //this.dialog = true;
         this.switchState = false;
-      } else if( value){
+      } else if (value) {
         this.switchState = true;
       }
-      
+
       this.dialog = false;
 
       this.workflowName = value;
@@ -321,8 +391,18 @@ tbody tr:nth-of-type(odd) {
   background-color: #f8f9fc;
 }
 
-.theme--light.v-data-table>.v-data-table__wrapper>table>tbody>tr:not(:last-child)>td:not(.v-data-table__mobile-row),
-.theme--light.v-data-table>.v-data-table__wrapper>table>tbody>tr:not(:last-child)>th:not(.v-data-table__mobile-row) {
+.theme--light.v-data-table
+  > .v-data-table__wrapper
+  > table
+  > tbody
+  > tr:not(:last-child)
+  > td:not(.v-data-table__mobile-row),
+.theme--light.v-data-table
+  > .v-data-table__wrapper
+  > table
+  > tbody
+  > tr:not(:last-child)
+  > th:not(.v-data-table__mobile-row) {
   border-bottom: none;
 }
 
@@ -331,16 +411,21 @@ table th {
   height: 40px;
 }
 
-.theme--light.v-data-table>.v-data-table__wrapper>table>thead>tr:last-child>th {
+.theme--light.v-data-table
+  > .v-data-table__wrapper
+  > table
+  > thead
+  > tr:last-child
+  > th {
   border-bottom: none;
 }
 
-.v-data-table>.v-data-table__wrapper>table>tbody>tr>td,
-.v-data-table>.v-data-table__wrapper>table>tbody>tr>th,
-.v-data-table>.v-data-table__wrapper>table>thead>tr>td,
-.v-data-table>.v-data-table__wrapper>table>thead>tr>th,
-.v-data-table>.v-data-table__wrapper>table>tfoot>tr>td,
-.v-data-table>.v-data-table__wrapper>table>tfoot>tr>th {
+.v-data-table > .v-data-table__wrapper > table > tbody > tr > td,
+.v-data-table > .v-data-table__wrapper > table > tbody > tr > th,
+.v-data-table > .v-data-table__wrapper > table > thead > tr > td,
+.v-data-table > .v-data-table__wrapper > table > thead > tr > th,
+.v-data-table > .v-data-table__wrapper > table > tfoot > tr > td,
+.v-data-table > .v-data-table__wrapper > table > tfoot > tr > th {
   padding: 0 36px;
   transition: height 0.2s cubic-bezier(0.4, 0, 0.6, 1);
 }
