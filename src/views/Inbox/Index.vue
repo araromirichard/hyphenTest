@@ -81,7 +81,7 @@
               </v-col>
               <v-col class="pa-0 mx-0" cols="9">
                 <div style="width: 100%; height: 100%">
-                  <div class="pr-8 pl-4">
+                  <div class="pr-5 pl-4">
                     <p class="pt-8 my-0 h-card-title">Incoming invoice/bill</p>
 
                     <p
@@ -176,9 +176,9 @@
               </v-col>
               <v-col class="pa-0 mx-0" cols="9">
                 <div style="width: 100%; height: 100%">
-                  <div class="pr-8 pl-4">
-                    <p class="pt-8 my-0 h-card-title">Exceptions</p>
-                    <p class="pt-6 text-wrap h-card-body">
+                  <div class="pr-5 pl-4">
+                    <p class="pt-4 my-0 h-card-title">Exceptions</p>
+                    <p class="pt-3 text-wrap h-card-body">
                       Total number of invoices/bills that require manual
                       oversight
                     </p>
@@ -778,7 +778,7 @@ export default {
   font-family: "Inter";
   font-style: normal;
   font-weight: bold;
-  font-size: 18px;
+  font-size: 16px;
   line-height: 22px;
   color: rgba(0, 35, 56, 0.5);
 }
