@@ -44,10 +44,10 @@
           </v-tabs>
         </template>
         <v-tabs-items v-model="tab" style="background-color: #f8f7f4">
-          <v-tab-item class="mt-13">
-            <div class="d-block mx-4 mx-md-10">
-              <p class="card__supertitle py-0">invoice total</p>
-              <p class="card__title pt-0">{{ singleInvoice.total }} NGN</p>
+          <v-tab-item class="mt-10">
+            <div class="d-block mx-4 mx-md-8">
+              <p class="card__supertitle py-0 mb-1">invoice total</p>
+              <p class="card__title pt-0 mb-2">{{ singleInvoice.total }} NGN</p>
             </div>
             <div class="mx-4 mx-md-10 mt-10">
               <v-form>
@@ -69,7 +69,7 @@
                   style="position: relative; background: #f6f3ee"
                 >
                   <v-row v-for="(fieldRow, index) in fieldRows" :key="index">
-                    <v-col class="" cols="12" md="5">
+                    <v-col class="py-0" cols="12" md="5">
                       <v-text-field
                         hide-details="auto"
                         background-color="white"
@@ -79,7 +79,7 @@
                         :rules="[rules.required]"
                       ></v-text-field>
                     </v-col>
-                    <v-col class="" cols="12" md="6">
+                    <v-col class="py-0" cols="12" md="6">
                       <v-menu
                         ref="menu"
                         v-model="fieldRows[index].menu"
@@ -105,6 +105,7 @@
                           v-model="fieldRows[index].payableData.due_date"
                           no-title
                           scrollable
+                          :min="minDate"
                         >
                         </v-date-picker>
                       </v-menu>
@@ -144,6 +145,7 @@
                 <v-row>
                   <v-col class="" cols="12">
                     <v-textarea
+                      rows="4"
                       hide-details="auto"
                       background-color="white"
                       label="Description"
@@ -218,6 +220,7 @@ export default {
       show: false,
       dialog: false,
       isSending: false,
+      date: new Date(),
       tab: 0,
       modal: false,
       fieldRows: [
@@ -236,6 +239,7 @@ export default {
         number: (v) =>
           Number.isInteger(Number(v)) || "The value must be an integer number",
       },
+      minDate: new Date().toISOString().slice(0, 10),
     };
   },
 
@@ -243,6 +247,15 @@ export default {
     ...mapGetters({
       singleInvoice: "invoices/getSingleInvoice",
     }),
+
+    // endDate() {
+    //   var endDate = new Date(
+    //     this.date.getFullYear(),
+    //     this.date.getMonth() + 1,
+    //     10
+    //   );
+    //   return endDate.toISOString().slice(0, 10);
+    // },
   },
   methods: {
     ...mapActions({ showToast: "ui/showToast" }),
@@ -289,23 +302,23 @@ export default {
 
       console.log(JSON.stringify(payload, null, 2));
 
-      try {
-        const response = await this.$store.dispatch(
-          "payables/addToPayables",
-          payload
-        );
-        console.log(JSON.stringify(response, null, 2));
-        this.showToast({
-          sclass: "success",
-          show: true,
-          message: "Sent data to Payables succesfully",
-          timeout: 3000,
-        });
-        this.isSending = false;
-        this.changeState = true;
-      } catch (error) {
-        console.log(JSON.stringify(error, null, 2));
-      }
+      // try {
+      //   const response = await this.$store.dispatch(
+      //     "payables/addToPayables",
+      //     payload
+      //   );
+      //   console.log(JSON.stringify(response, null, 2));
+      //   this.showToast({
+      //     sclass: "success",
+      //     show: true,
+      //     message: "Sent data to Payables succesfully",
+      //     timeout: 3000,
+      //   });
+      //   this.isSending = false;
+      //   this.changeState = true;
+      // } catch (error) {
+      //   console.log(JSON.stringify(error, null, 2));
+      // }
     },
   },
 };

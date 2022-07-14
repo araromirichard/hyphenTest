@@ -31,6 +31,18 @@
         <!-- instructions when there is no invoice -->
 
         <no-invoice v-if="invoiceArray == null" />
+        <div
+          style="max-width: 400px"
+          class="d-flex mx-auto my-10"
+          v-if="invoiceArray == null"
+        >
+          <v-progress-linear
+            color="primary"
+            indeterminate
+            rounded
+            height="8"
+          ></v-progress-linear>
+        </div>
       </v-col>
     </v-row>
 
@@ -695,15 +707,19 @@ export default {
     },
   },
   async mounted() {
-    await this.getOrganizationToken();
-    this.loading = true;
-    setTimeout(
-      () => {
-        this.loading = false;
-      },
-      3000,
-      this.getAllInvocies()
-    );
+    if (this.getInvoices) {
+      return (this.invoiceArray = this.getInvoices);
+    } else {
+      await this.getOrganizationToken();
+      this.loading = true;
+      setTimeout(
+        () => {
+          this.loading = false;
+        },
+        3000,
+        this.getAllInvocies()
+      );
+    }
     //await this.getAllInvocies();
     console.log(JSON.stringify(this.organizationToken, null, 2));
     console.log(JSON.stringify(this.user, null, 2));
@@ -715,6 +731,7 @@ export default {
       token: "auth/token",
       invoiceArrayStatus: "invoices/checkInvoiceArray",
       totalInvoice: "invoices/numOfInvoices",
+      getInvoices: "invoices/getAllInvoices",
       NumOfExceptions: "invoices/checkNumberOfExceptions",
       organizationToken: "organizations/OrganToken",
       //organizationEmail: "organizations/getOrganizationEmail",
