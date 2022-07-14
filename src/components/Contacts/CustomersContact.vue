@@ -59,7 +59,7 @@
           </v-btn>
         </div>
       </v-flex>
-      <v-flex md2 class="d-flex flex-row">
+      <v-flex md4 class="d-flex flex-row">
         <div class="d-flex align-center">
           <p class="mb-0 primary--text font-weight-bold">First Name</p>
           <v-btn class="" color="grey lighten-1" icon>
@@ -94,13 +94,13 @@
           </v-btn>
         </div>
       </v-flex>
-      <v-flex md2>
+      <!-- <v-flex md2>
         <div class="d-flex justify-center">
           <p class="mb-0 pl-md-4 primary--text font-weight-bold">
             Outstanding (N)
           </p>
         </div>
-      </v-flex>
+      </v-flex> -->
       <v-flex md2>
         <div class="d-flex justify-center align-center">
           <p class="mb-0 pl-md-8 primary--text font-weight-bold">Actions</p>

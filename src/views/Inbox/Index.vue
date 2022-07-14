@@ -31,12 +31,15 @@
         <!-- instructions when there is no invoice -->
 
         <no-invoice v-if="invoiceArray == null" />
+
+        <!-- an animated loader component -->
         <div
-          style="max-width: 400px"
-          class="d-flex mx-auto my-10"
+          class="mx-auto mt-8"
+          style="max-width: 250px"
           v-if="invoiceArray == null"
         >
           <v-progress-linear
+            width="100%"
             color="primary"
             indeterminate
             rounded
@@ -72,8 +75,8 @@
                   <v-avatar style="background: #d5f7ef" :size="56">
                     <v-icon :size="iconSizes[$vuetify.breakpoint.name]">
                       mdi-email-outline
-                    </v-icon></v-avatar
-                  >
+                    </v-icon>
+                  </v-avatar>
                 </div>
               </v-col>
               <v-col class="pa-0 mx-0" cols="9">
@@ -232,7 +235,8 @@
                       color="#ff6a6a"
                       small
                       class="pr-1 mr-0"
-                      >mdi-stop-circle-outline
+                    >
+                      mdi-stop-circle-outline
                     </v-icon>
                     <span
                       class="font-weight-bold"
@@ -240,8 +244,8 @@
                         color: `${item.tab == 'Exception' ? '#ff6a6a' : ''}`,
                       }"
                       >{{ item.tab }}</span
-                    ></v-tab
-                  >
+                    >
+                  </v-tab>
 
                   <v-spacer></v-spacer>
                   <v-btn
@@ -262,8 +266,8 @@
                         text-transform: uppercase;
                       "
                       >invite</b
-                    ></v-btn
-                  >
+                    >
+                  </v-btn>
                   <v-btn
                     v-if="isClicked"
                     @click="toggleSearch"
@@ -785,6 +789,7 @@ export default {
   font-size: 32px;
   line-height: 39px;
 }
+
 .h-card-body-bold {
   max-width: 16rem;
   font-family: "Inter";
@@ -795,6 +800,7 @@ export default {
   letter-spacing: 0.545455px;
   color: #19283d;
 }
+
 .h-card-body {
   max-width: 260px;
   font-family: "Inter";
@@ -805,11 +811,13 @@ export default {
   letter-spacing: 0.545455px;
   color: rgba(0, 35, 56, 0.5);
 }
+
 .v-input .search-field .v-input__slot:before,
 .v-input .search-field .v-input__slot:after {
   border: none !important;
   border-color: transparent !important;
 }
+
 .transTotal {
   font-family: "Inter" sans-serif;
   font-style: normal;
@@ -827,6 +835,7 @@ i.sli-font {
   font-size: 12px;
   display: inline-block;
 }
+
 .material-icons {
   font-family: "Material Icons";
   font-style: normal;
@@ -835,6 +844,7 @@ i.sli-font {
   line-height: 14px;
   color: #301f78;
 }
+
 th {
   font-family: "Inter" sans-serif;
   font-style: normal;
@@ -848,6 +858,7 @@ th {
   box-shadow: 0px 3px 5px -1px rgb(0 0 0 / 3%), 0px 6px 10px 0px rgb(0 0 0 / 3%),
     0px 1px 18px 0px rgb(0 0 0 / 3%) !important;
 }
+
 .v-application .elevation-3 {
   box-shadow: 0px 3px 5px -1px rgb(0 0 0 / 3%), 0px 6px 10px 0px rgb(0 0 0 / 3%),
     0px 1px 18px 0px rgb(0 0 0 / 3%) !important;

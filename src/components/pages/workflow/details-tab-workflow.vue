@@ -163,14 +163,21 @@ export default {
       if (target) {
         if (target.type === "dropDown" || target.type === "checkbox") {
           // multi values
-          return inputTarget
-            .map((item) => {
-              return (
-                target.options.find((option) => option.value === item).text ||
-                item
-              );
-            })
-            .join(", ");
+            if (typeof inputTarget === "string") {
+            return (
+              target.options.find((option) => option.value === inputTarget)
+                .text || inputTarget
+            );
+          } else {
+            return inputTarget
+              .map((item) => {
+                return (
+                  target.options.find((option) => option.value === item).text ||
+                  item
+                );
+              })
+              .join(", ");
+          }
         } else if (target.type === "radio") {
           // filter out just one
           return (

@@ -66,10 +66,20 @@ export default {
       default: {
         type: "PbotApproval",
         properties: {
-          keys: ["identity", "organization", "type", "name"],
-          values: ["", "", "human", "approval"],
+          keys: [
+            "identity",
+            "organization",
+            "trigger",
+            "identity_name",
+            "type",
+            "name",
+          ],
+          values: ["", "", "", "", "human", "approval"],
         },
       },
+    },
+    trigger: {
+      default: null,
     },
   },
   data() {
@@ -118,8 +128,23 @@ export default {
       const payload = {
         type: "PbotApproval",
         properties: {
-          keys: ["identity", "organization", "type", "name"],
-          values: [this.worker, this.orgId.toString(), "human", "approval"],
+          keys: [
+            "identity",
+            "identity_name",
+            "organization",
+            "trigger",
+            "type",
+            "name",
+          ],
+          values: [
+            this.worker,
+            this.workers.find((worker) => worker.email === this.worker).name ||
+              "...",
+            this.orgId.toString(),
+            this.trigger,
+            "human",
+            "approval",
+          ],
         },
       };
       this.$emit("input", payload);

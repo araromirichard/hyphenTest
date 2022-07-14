@@ -71,43 +71,72 @@
           </div>
 
           <div v-if="paymentType == 'full'" class="fullPayment">
-            <v-chip>
+            <v-chip @click="when = 0" :color="when === 0 ? 'primary' : ''">
               <v-avatar>
                 <v-icon>mdi-clock</v-icon>
               </v-avatar>
               Instant
             </v-chip>
 
-            <v-chip>
+            <v-chip
+              @click="customDaysDialog = true"
+              :color="when > 0 ? 'primary' : ''"
+            >
               <v-avatar>
                 <v-icon>mdi-clock</v-icon>
               </v-avatar>
-              In 30 Days
+              {{
+                when === 0 || when === null
+                  ? "set custom days"
+                  : `In ${when} ${when === 1 ? "day" : "days"}`
+              }}
             </v-chip>
           </div>
 
           <div v-if="paymentType == 'part'">
             <div class="fullPayment">
-              <v-chip> 20% </v-chip>
+              <v-chip @click="part = 20" :color="part === 20 ? 'primary' : ''">
+                20%
+              </v-chip>
 
-              <v-chip> 50% </v-chip>
+              <v-chip @click="part = 50" :color="part === 50 ? 'primary' : ''">
+                50%
+              </v-chip>
 
-              <v-chip> Custom </v-chip>
+              <v-chip
+                @click="partPaymentDialog = true"
+                :color="
+                  part === 20 || part === 50 || part === '' ? '' : 'primary'
+                "
+              >
+                {{
+                  part === 20 || part === 50 || part === ""
+                    ? "Custom"
+                    : part + "%"
+                }}
+              </v-chip>
             </div>
             <v-divider></v-divider>
             <div class="fullPayment">
-              <v-chip>
+              <v-chip @click="when = 0" :color="when === 0 ? 'primary' : ''">
                 <v-avatar>
                   <v-icon>mdi-clock</v-icon>
                 </v-avatar>
                 Instant
               </v-chip>
 
-              <v-chip>
+              <v-chip
+                @click="customDaysDialog = true"
+                :color="when > 0 ? 'primary' : ''"
+              >
                 <v-avatar>
                   <v-icon>mdi-clock</v-icon>
                 </v-avatar>
-                In 30 Days
+                {{
+                  when === 0 || when === null
+                    ? "set custom days"
+                    : `In ${when} ${when === 1 ? "day" : "days"}`
+                }}
               </v-chip>
             </div>
           </div>
@@ -123,12 +152,48 @@
             <v-icon left>mdi-close</v-icon> Cancel
           </v-btn>
 
-          <v-btn large color="primary" elevation="0">
+          <v-btn @click="addToWorkflow" large color="primary" elevation="0">
             <v-icon left>mdi-chevron-right</v-icon> Add to workflow
           </v-btn>
         </div>
       </div>
     </div>
+
+    <v-dialog
+      v-model="customDaysDialog"
+      max-width="400px"
+      transition="dialog-transition"
+    >
+      <div class="customDaysDialog">
+        <v-text-field
+          name="name"
+          prepend-inner-icon="mdi-calendar"
+          label="Number of days"
+          placeholder="Enter number of days"
+          type="number"
+          outlined
+          v-model="when"
+        ></v-text-field>
+      </div>
+    </v-dialog>
+
+    <v-dialog
+      v-model="partPaymentDialog"
+      max-width="400px"
+      transition="dialog-transition"
+    >
+      <div class="customDaysDialog">
+        <v-text-field
+          name="name"
+          label="Payment percentage"
+          placeholder="Enter percentage"
+          type="number"
+          prefix="%"
+          outlined
+          v-model="part"
+        ></v-text-field>
+      </div>
+    </v-dialog>
   </v-dialog>
 </template>
 
@@ -136,20 +201,10 @@
 export default {
   props: {
     value: {
-      default: {
-        type: "hyphenSendPayment",
-        properties: {
-          keys: [
-            "amount_due",
-            "payment",
-            "due_date",
-            "invoice",
-            "organization",
-            "name",
-          ],
-          values: ["", "", "", "", "", ""],
-        },
-      },
+      default: null,
+    },
+    trigger: {
+      default: null,
     },
   },
   data() {
@@ -157,6 +212,10 @@ export default {
       dialog: false,
       verified: "yes",
       paymentType: "full",
+      when: null,
+      partPaymentDialog: false,
+      customDaysDialog: false,
+      part: "",
     };
   },
   methods: {
@@ -172,19 +231,34 @@ export default {
         type: "hyphenSendPayment",
         properties: {
           keys: [
-            "amount_due",
-            "payment",
-            "due_date",
+            "trigger",
             "invoice",
             "organization",
+            "type",
+            "when",
+            "part",
             "name",
           ],
-          values: ["amount_due", this.paymentType, "", "", "", ""],
+          values: [
+            this.trigger,
+            "@invoice_total",
+            this.orgId.toString(),
+            this.paymentType,
+            this.when.toString(),
+            this.part.toString(),
+            "payment",
+          ],
         },
       };
 
       this.$emit("input", payload);
+      this.sendOutChannel();
       this.close();
+    },
+    sendOutChannel() {
+      let channel = this.paymentType === "full" ? "Full" : "Part" || "N/A";
+
+      this.$emit("channel", channel);
     },
   },
   watch: {
@@ -195,6 +269,13 @@ export default {
         this.$emit("close");
       }
     },
+    // value: {
+    //   immediate: true,
+    //   deep: true,
+    //   handler(val) {
+    //     console.log(JSON.stringify(val, null, 2));
+    //   },
+    // },
   },
 };
 </script>
@@ -335,5 +416,12 @@ export default {
     gap: 20px;
     padding: 20px;
   }
+}
+
+.customDaysDialog {
+  background-color: #f8f7f4;
+  padding: 50px;
+  border: 1px solid #d9dee1;
+  border-radius: 4px;
 }
 </style>

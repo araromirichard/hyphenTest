@@ -13,6 +13,7 @@
         <div style="width: 220px">
           <v-select
             outlined
+            :disabled="isEdit"
             :items="items"
             item-text="form_title"
             item-value="id"
@@ -46,6 +47,9 @@ export default {
       type: Boolean,
       default: false,
     },
+    isEdit: {
+      default: false,
+    },
   },
   data() {
     return {
@@ -62,7 +66,9 @@ export default {
         const { data } = await this.$store.dispatch(
           "formBuilder/FetchAllForms"
         );
-        this.items = data;
+        this.items = this.isEdit
+          ? data
+          : data.filter((form) => !form.has_workflow);
       } catch (err) {
         console.log(err);
       } finally {

@@ -2,16 +2,50 @@
   <div class="approval-page">
     <div class="approval-page__wrapper">
       <img class="approval-page__logo" src="@/assets/hyphen-logo.svg" alt="" />
+
       <template v-if="step == 1">
+        <div>{{ optData }}</div>
+        <br />
+        <br />
+
+        <v-progress-circular
+          v-if="optData === null"
+          indeterminate
+        ></v-progress-circular>
+
+        <template v-else>
+          <v-text-field
+            name="name"
+            label="OTP"
+            v-model="otp"
+            outlined
+            placeholder="OTP"
+          ></v-text-field>
+
+          <div class="d-flex mt-3" style="justify-content: end">
+            <v-btn
+              :loading="isVeryfying"
+              color="primary"
+              @click="confirm"
+              large
+              elevation="0"
+            >
+              <v-icon>mdi-chevron-right</v-icon> Confirm</v-btn
+            >
+          </div>
+        </template>
+      </template>
+
+      <template v-if="step == 2">
         <span class="approval-page__desc"
-          ><b>Brand Name</b> has an Invoice from [vendor] with Total Value
-          234,500 NGN awaiting your approval</span
+          >{{approvalMsg}}</span
         >
         <div class="d-flex" style="gap: 20px; margin: 0px 30px">
           <v-btn
             style="background-color: #f4f5f6; flex: 1"
             large
             elevation="0"
+            :loading="denying"
             @click="denyA"
           >
             <v-icon left>mdi-chevron-right</v-icon> Deny</v-btn
@@ -21,25 +55,11 @@
             color="primary"
             style="flex: 1"
             large
+            :loading="approving"
             elevation="0"
             left
           >
             <v-icon left>mdi-chevron-right</v-icon> Approve</v-btn
-          >
-        </div>
-      </template>
-
-      <template v-if="step == 2">
-        <v-text-field
-          name="name"
-          label="OTP"
-          outlined
-          placeholder="OTP"
-        ></v-text-field>
-
-        <div class="d-flex mt-3" style="justify-content: end">
-          <v-btn color="primary" @click="confirm" large elevation="0">
-            <v-icon>mdi-chevron-right</v-icon> Confirm</v-btn
           >
         </div>
       </template>
@@ -53,7 +73,7 @@
           <span
             style="margin-top: 30px; padding: 0 65px"
             class="approval-page__desc"
-            >Thank you, your selectd action <b>- APPROVE -</b> has been
+            >Thank you, your selected action <b>- APPROVE -</b> has been
             confirmed.</span
           >
         </div>
@@ -81,29 +101,117 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
   data() {
     return {
       step: 1,
+      otp: null,
       deny: false,
       approve: false,
+      approving: false,
+      denying: false,
+      optData: null,
+      approvalMsg:'',
+      isVeryfying: false,
+      approvalUrl: null,
     };
   },
+  mounted() {
+    this.fetchOtp();
+  },
+
   methods: {
-    denyA() {
+    ...mapActions({ showToast: "ui/showToast" }),
+    async fetchOtp() {
+      try {
+        const { data } = await this.$store.dispatch(
+          "workflow/fetchApprovalOTP",
+          this.$route.query.token
+        );
+        this.optData = data.data.message;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async denyA() {
       this.deny = true;
-      this.approve = false;
-      this.step = 3;
+      try {
+        this.denying = true;
+        await this.$store.dispatch("workflow/approvalStatus", {
+          url: this.approvalUrl,
+          action: 0,
+        });
+        this.step = 3;
+        this.approve = false;
+      } catch (error) {
+        this.showToast({
+          sclass: "error",
+          show: true,
+          message: error.msg || "An error occurred",
+          timeout: 3000,
+        });
+      } finally {
+        this.denying = false;
+      }
     },
 
-    approveA() {
+    async approveA() {
       this.deny = false;
-      this.approve = true;
-      this.step = 2;
+      try {
+        this.approving = true;
+        await this.$store.dispatch("workflow/approvalStatus", {
+          url: this.approvalUrl,
+          action: 1,
+        });
+        this.step = 3;
+        this.approve = true;
+      } catch (error) {
+        console.log(JSON.stringify(error, null, 2));
+        this.showToast({
+          sclass: "error",
+          show: true,
+          message: error.msg || "An error occurred",
+          timeout: 3000,
+        });
+      } finally {
+        this.approving = false;
+      }
     },
 
-    confirm() {
-      this.step = 3;
+    async confirm() {
+      try {
+        this.isVeryfying = true;
+        const { data } = await this.$store.dispatch(
+          "workflow/verifyApprovalOTP",
+          {
+            token: this.$route.query.token,
+            otp: this.otp,
+          }
+        );
+        this.step = 2;
+        this.approvalUrl = data.data;
+        this.approvalMsg = data.data.message;
+      } catch (error) {
+        console.log(JSON.stringify(error, null, 2));
+        this.showToast({
+          sclass: "error",
+          show: true,
+          message: error.msg || "An error occurred",
+          timeout: 3000,
+        });
+
+        if (
+          error.msg === "OTP failed verification, not valid or already used" ||
+          error.msg ===
+            "Invalid action: Approval already recorded, no further action required"
+        ) {
+          this.$router.replace("/workflow");
+        }
+      } finally {
+        this.isVeryfying = false;
+      }
     },
   },
 };

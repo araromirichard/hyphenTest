@@ -1,5 +1,5 @@
 <template>
-  <div v-if="value != null">
+  <div v-if="value != null && actionMeta">
     <div
       class="selected-action"
       :style="
@@ -52,6 +52,7 @@
       v-show="actionModal == 'PbotApproval'"
       @channel="channel = $event"
       v-model="data"
+      :trigger="trigger"
       ref="PbotApproval"
     />
 
@@ -70,6 +71,7 @@
     />
     <send-payment-action
       v-show="actionModal == 'hyphenSendPayment'"
+      :trigger="trigger"
       @channel="channel = $event"
       v-model="data"
       ref="hyphenSendPayment"
@@ -160,6 +162,10 @@ export default {
 
     isBeenDragged: {
       default: false,
+    },
+
+    trigger: {
+      default: null,
     },
   },
   data() {

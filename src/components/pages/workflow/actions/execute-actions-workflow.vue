@@ -66,6 +66,7 @@
                     v-for="(action, index) in selectedActions"
                     :isLast="index == selectedActions.length - 1"
                     :key="index"
+                    :trigger="trigger"
                     :isBeenDragged="drag"
                     :index="index"
                     v-model="selectedActions[index]"
@@ -120,9 +121,7 @@
         <div class="content">
           <div
             class="content__action"
-            v-for="(action, index) in searchQuery == ''
-              ? actionsMeta
-              : filteredActions"
+            v-for="(action, index) in filteredActions"
             :key="index"
             @click="addAction(action)"
           >
@@ -150,10 +149,13 @@ export default {
     value: {
       default: [],
     },
+    trigger: {
+      default: null,
+    },
   },
   data() {
     return {
-      showTriggers: true,
+      showTriggers: false,
       actionModal: false,
       searchQuery: "",
       selectedActions: [],
@@ -167,6 +169,10 @@ export default {
       },
     };
   },
+
+  mounted() {
+    this.getAllActions();
+  },
   methods: {
     onUpdate: function (event) {
       this.list.splice(
@@ -178,19 +184,15 @@ export default {
     showActionModal() {
       this.actionModal = true;
     },
-    /// this is still very buggy
-    // reOrder(event) {
-    //   this.selectedActions.splice(
-    //     event.newIndex,
-    //     0,
-    //     this.selectedActions.splice(event.oldIndex, 1)[0]
-    //   );
-    //   this.selectedActions.splice(
-    //     event.newIndex,
-    //     0,
-    //     this.selectedActions.splice(event.oldIndex, 1)[0]
-    //   );
-    // },
+
+    async getAllActions() {
+      await this.$store.dispatch("workflow/getAllWorkflowActions");
+
+      if (this.selectedActions.length > 0 && this.actionsMeta.length > 0) {
+        this.showTriggers = true;
+      }
+    },
+
     addAction(action) {
       if (!action.active) {
         return;
@@ -210,11 +212,23 @@ export default {
   },
   computed: {
     filteredActions() {
-      return this.actionsMeta.filter((action) => {
-        return action.text
-          .toLowerCase()
-          .includes(this.searchQuery.toLowerCase());
-      });
+      if (this.searchQuery !== "") {
+        return this.actionsMeta
+          .filter(
+            (action) =>
+              action?.meta?.trigger?.includes(this.trigger) && action != null
+          )
+          .filter((action) => {
+            return action.text
+              .toLowerCase()
+              .includes(this.searchQuery.toLowerCase());
+          });
+      } else {
+        return this.actionsMeta.filter(
+          (action) =>
+            action?.meta?.trigger?.includes(this.trigger) && action != null
+        );
+      }
     },
 
     dragOptions() {
@@ -239,6 +253,9 @@ export default {
       handler(val) {
         if (JSON.stringify(val) !== JSON.stringify(this.selectedActions)) {
           this.selectedActions = val;
+          if (val.length > 0 && this.actionsMeta.length > 0) {
+            this.showTriggers = true;
+          }
         }
       },
     },
@@ -247,7 +264,6 @@ export default {
       immediate: true,
       handler(newVal) {
         this.$emit("input", newVal);
-        //  console.log(JSON.stringify(newVal, null, 2));
       },
     },
     showTriggers: {
