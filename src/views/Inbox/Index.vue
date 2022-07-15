@@ -50,146 +50,69 @@
     </v-row>
 
     <!-- inbox summary Info cards -->
+    <InfoSummaryContainer class="mx-md-6" v-if="invoiceArray">
+      <template #cardOne>
+        <single-summary-card :loading="loading">
+          <template #avatar>
+            <card-avatar
+              :isText="false"
+              :style="{ background: avatarBC.one }"
+            />
+          </template>
+          <template #cardBody>
+            <div class="pr-2 pl-4">
+              <p class="pt-1 my-0 h-card-title">Incoming invoice/bill</p>
 
-    <v-row
-      class="mt-16 mx-2 mx-md-0"
-      align="center"
-      justify="center"
-      v-if="invoiceArray"
-    >
-      <v-col class="pa-0 my-4 my-md-0" cols="12" md="4">
-        <v-card
-          elevation="3"
-          class="ml-md-16 mr-md-2 mx-auto py-md-6"
-          flat
-          min-height="174"
-          :width="cardWidth[$vuetify.breakpoint.name]"
-        >
-          <v-skeleton-loader width="100%" type="card" :loading="loading">
-            <v-row class="mx-0" style="width: 100%; height: 100%">
-              <v-col class="mx-0 pa-0" cols="3">
-                <div
-                  class="d-flex align-center justify-center"
-                  style="width: 100%; height: 100%"
-                >
-                  <v-avatar style="background: #d5f7ef" :size="56">
-                    <v-icon :size="iconSizes[$vuetify.breakpoint.name]">
-                      mdi-email-outline
-                    </v-icon>
-                  </v-avatar>
-                </div>
-              </v-col>
-              <v-col class="pa-0 mx-0" cols="9">
-                <div style="width: 100%; height: 100%">
-                  <div class="pr-5 pl-4">
-                    <p class="pt-8 my-0 h-card-title">Incoming invoice/bill</p>
-
-                    <p
-                      v-if="organizationToken.data"
-                      class="pt-2 pr-1 my-md-1 text-wrap h-card-body-bold"
-                    >
-                      {{ organizationToken.data.hypn_email }}
-                    </p>
-                    <p class="pt-2 text-wrap h-card-body">
-                      Forward your incoming invoices/bills to this address
-                    </p>
-                  </div>
-                </div>
-              </v-col>
-            </v-row>
-          </v-skeleton-loader>
-        </v-card>
-      </v-col>
-      <v-col class="pa-0 my-4 my-md-0" cols="12" md="4">
-        <v-card
-          elevation="3"
-          class="mr-md-6 mx-auto ml-md-6 py-md-8"
-          flat
-          min-height="174"
-          :width="cardWidth[$vuetify.breakpoint.name]"
-        >
-          <v-skeleton-loader width="100%" type="card" :loading="loading">
-            <v-row class="mx-0" style="width: 100%; height: 100%">
-              <v-col class="mx-0 pa-0" cols="3">
-                <div
-                  class="d-flex align-center justify-center"
-                  style="width: 100%; height: 100%"
-                >
-                  <v-avatar style="background: #eef3fb" size="56">
-                    <span
-                      style="
-                        font-family: Inter;
-                        font-style: normal;
-                        font-weight: bold;
-                        font-size: 1.2em;
-                        line-height: 24px;
-                        color: #19283d;
-                      "
-                      >{{ totalInvoice }}</span
-                    >
-                  </v-avatar>
-                </div>
-              </v-col>
-              <v-col class="pa-0 mx-0" cols="9">
-                <div style="width: 100%; height: 100%">
-                  <div class="pr-8 pl-4">
-                    <p class="pt-8 my-0 h-card-title">Volume this month</p>
-                    <p class="pt-6 h-card-body">
-                      Total invoices/bills received in the last 30days
-                    </p>
-                  </div>
-                </div>
-              </v-col>
-            </v-row>
-          </v-skeleton-loader>
-        </v-card>
-      </v-col>
-      <v-col class="pa-0 my-4 my-md-0" cols="12" md="4">
-        <v-card
-          elevation="3"
-          class="ml-md-4 mr-md-16 mr-md-6 mx-auto py-md-8"
-          flat
-          min-height="174"
-          :width="cardWidth[$vuetify.breakpoint.name]"
-        >
-          <v-skeleton-loader width="100%" type="card" :loading="loading">
-            <v-row class="mx-0" style="width: 100%; height: 100%">
-              <v-col class="mx-0 pa-0" cols="3">
-                <div
-                  class="d-flex align-center justify-center"
-                  style="width: 100%; height: 100%"
-                >
-                  <v-avatar style="background: #f8f7f4" :size="56">
-                    <span
-                      style="
-                        font-family: Inter;
-                        font-style: normal;
-                        font-weight: bold;
-                        font-size: 1.2em;
-                        line-height: 24px;
-                        color: #19283d;
-                      "
-                      >{{ NumOfExceptions }}</span
-                    >
-                  </v-avatar>
-                </div>
-              </v-col>
-              <v-col class="pa-0 mx-0" cols="9">
-                <div style="width: 100%; height: 100%">
-                  <div class="pr-5 pl-4">
-                    <p class="pt-4 my-0 h-card-title">Exceptions</p>
-                    <p class="pt-3 text-wrap h-card-body">
-                      Total number of invoices/bills that require manual
-                      oversight
-                    </p>
-                  </div>
-                </div>
-              </v-col>
-            </v-row>
-          </v-skeleton-loader>
-        </v-card>
-      </v-col>
-    </v-row>
+              <p
+                v-if="organizationToken.data"
+                class="pt-1 pr-1 my-md-1 text-wrap h-card-body-bold"
+              >
+                {{ organizationToken.data.hypn_email }}
+              </p>
+              <p class="pt-1 text-wrap h-card-body">
+                Forward your incoming invoices/bills to this address
+              </p>
+            </div>
+          </template>
+        </single-summary-card>
+      </template>
+      <template #cardTwo>
+        <single-summary-card :loading="loading">
+          <template #avatar>
+            <card-avatar
+              :aContent="totalInvoice"
+              :style="{ background: avatarBC.two }"
+            />
+          </template>
+          <template #cardBody>
+            <div class="pr-8 pl-4">
+              <p class="pt-6 my-0 h-card-title">Volume this month</p>
+              <p class="pt-2 h-card-body">
+                Total invoices/bills received in the last 30days
+              </p>
+            </div>
+          </template>
+        </single-summary-card>
+      </template>
+      <template #cardThree>
+        <single-summary-card :loading="loading">
+          <template #avatar>
+            <card-avatar
+              :aContent="NumOfExceptions"
+              :style="{ background: avatarBC.three }"
+            />
+          </template>
+          <template #cardBody>
+            <div class="pr-8 pl-4">
+              <p class="pt-6 my-0 h-card-title">Exceptions</p>
+              <p class="pt-2 text-wrap h-card-body">
+                Total number of invoices/bills that require manual oversight
+              </p>
+            </div>
+          </template>
+        </single-summary-card>
+      </template>
+    </InfoSummaryContainer>
 
     <!-- inbox table for desktop screen -->
     <v-row v-if="invoiceArray && invoiceArray.length > 0" class="px-2 px-md-0">
@@ -554,6 +477,9 @@ import TabDataTableReviews from "../../components/TabDataTableReviews.vue";
 import DropDownMenu from "../../includes/DropDownMenu.vue";
 import SimpleLineIcons from "vue-simple-line";
 import NoInvoice from "../../components/noInvoice.vue";
+import InfoSummaryContainer from "../../components/InfoSummaryContainer.vue";
+import SingleSummaryCard from "../../components/SingleSummaryCard.vue";
+import CardAvatar from "../../components/CardAvatar.vue";
 
 export default {
   name: "Inbox",
@@ -622,6 +548,11 @@ export default {
 
         md: "630px",
       },
+      avatarBC: {
+        one: "#d5f7ef",
+        two: "#eef3fb",
+        three: "#f8f7f4",
+      },
     };
   },
   components: {
@@ -633,6 +564,9 @@ export default {
     ValidationProvider,
     ValidationObserver,
     NoInvoice,
+    InfoSummaryContainer,
+    SingleSummaryCard,
+    CardAvatar,
   },
   methods: {
     ...mapActions({ showToast: "ui/showToast" }),
@@ -779,7 +713,7 @@ export default {
   font-style: normal;
   font-weight: bold;
   font-size: 16px;
-  line-height: 22px;
+  line-height: 16px;
   color: rgba(0, 35, 56, 0.5);
 }
 
@@ -796,7 +730,7 @@ export default {
   font-style: normal;
   font-weight: bold;
   font-size: 0.8rem;
-  line-height: 14px;
+  line-height: 12px;
   letter-spacing: 0.545455px;
   color: #19283d;
 }
@@ -806,8 +740,8 @@ export default {
   font-family: "Inter";
   font-style: normal;
   font-weight: normal;
-  font-size: 12px;
-  line-height: 20px;
+  font-size: 10px;
+  line-height: 14px;
   letter-spacing: 0.545455px;
   color: rgba(0, 35, 56, 0.5);
 }

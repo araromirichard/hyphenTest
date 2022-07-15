@@ -77,124 +77,63 @@
     </div>
 
     <!-- inbox summary Info cards -->
-    <v-row
-      class="mt-16 mx-2 px-2 mx-md-0 pl-md-8 pr-md-4"
-      align="center"
-      justify="center"
-    >
-      <v-col class="pa-0 my-4 my-md-0 mx-0" cols="12" md="4">
-        <v-card
-          elevation="3"
-          class="ml-md-5 mr-md-2 mx-auto py-md-6 px-4"
-          flat
-          min-height="174"
-          :width="cardWidth[$vuetify.breakpoint.name]"
-        >
-          <v-skeleton-loader width="100%" type="card" :loading="loading">
-            <v-row class="mx-0" style="width: 100%; height: 100%">
-              <v-col class="mx-0 pa-0 py-auto" cols="3">
-                <div
-                  class="d-flex align-center justify-center"
-                  style="width: 100%; height: 100%"
-                >
-                  <v-avatar style="background: #d5f7ef" size="70">
-                    <span class="avatar__txt">
-                      {{ entriesCount.total_entries }}
-                    </span>
-                  </v-avatar>
-                </div>
-              </v-col>
-              <v-col class="pa-0 mx-0" cols="9">
-                <div style="width: 100%; height: 100%">
-                  <div class="pr-8 pl-4">
-                    <p class="pt-8 my-0 h-card-title">Total Entries</p>
+    <InfoSummaryContainer>
+      <template #cardOne>
+        <single-summary-card :loading="loading">
+          <template #avatar>
+            <card-avatar
+              :aContent="entriesCount.total_entries"
+              :style="{ background: avatarBC.one }"
+            />
+          </template>
+          <template #cardBody>
+            <div class="pr-8 pl-4">
+              <p class="pt-6 my-0 h-card-title">Total Entries</p>
+              <p class="pt-2 text-wrap h-card-body">
+                All entries recieved across all your forms
+              </p>
+            </div>
+          </template>
+        </single-summary-card>
+      </template>
+      <template #cardTwo>
+        <single-summary-card :loading="loading">
+          <template #avatar>
+            <card-avatar
+              :aContent="entriesCount.this_month"
+              :style="{ background: avatarBC.two }"
+            />
+          </template>
+          <template #cardBody>
+            <div class="pr-8 pr-md-2 pl-4">
+              <p class="pt-6 my-0 h-card-title">Entries this month</p>
+              <p class="pt-2 h-card-body">
+                Total entries submitted to your forms in the last 30 days
+              </p>
+            </div>
+          </template>
+        </single-summary-card>
+      </template>
+      <template #cardThree>
+        <single-summary-card :loading="loading">
+          <template #avatar>
+            <card-avatar
+              :aContent="entriesCount.total_forms"
+              :style="{ background: avatarBC.three }"
+            />
+          </template>
+          <template #cardBody>
+            <div class="pr-4 pl-4">
+              <p class="pt-6 my-0 h-card-title">Total Forms</p>
+              <p class="pt-2 text-wrap h-card-body">
+                Total number of forms you have created
+              </p>
+            </div>
+          </template>
+        </single-summary-card>
+      </template>
+    </InfoSummaryContainer>
 
-                    <!-- <p class="pt-2 pr-1 my-md-1 text-wrap h-card-body-bold">
-                      xxxxxxxxxxxx
-                    </p>  -->
-                    <p class="pt-6 text-wrap h-card-body">
-                      All entries recieved across all your forms
-                    </p>
-                  </div>
-                </div>
-              </v-col>
-            </v-row>
-          </v-skeleton-loader>
-        </v-card>
-      </v-col>
-      <v-col class="pa-0 my-4 my-md-0" cols="12" md="4">
-        <v-card
-          elevation="3"
-          class="mr-md-6 mx-auto ml-md-6 py-md-6 px-4"
-          flat
-          min-height="174"
-          :width="cardWidth[$vuetify.breakpoint.name]"
-        >
-          <v-skeleton-loader width="100%" type="card" :loading="loading">
-            <v-row class="mx-0" style="width: 100%; height: 100%">
-              <v-col class="mx-0 pa-0" cols="3">
-                <div
-                  class="d-flex align-center justify-center"
-                  style="width: 100%; height: 100%"
-                >
-                  <v-avatar style="background: #eef3fb" size="70">
-                    <span class="avatar__txt">
-                      {{ entriesCount.this_month }}
-                    </span>
-                  </v-avatar>
-                </div>
-              </v-col>
-              <v-col class="pa-0 mx-0" cols="9">
-                <div style="width: 100%; height: 100%">
-                  <div class="pr-8 pl-4">
-                    <p class="pt-8 my-0 h-card-title">Entries this month</p>
-                    <p class="pt-6 h-card-body">
-                      Total entries submitted to your forms in the last 30 days
-                    </p>
-                  </div>
-                </div>
-              </v-col>
-            </v-row>
-          </v-skeleton-loader>
-        </v-card>
-      </v-col>
-      <v-col class="pa-0 my-4 my-md-0" cols="12" md="4">
-        <v-card
-          elevation="3"
-          class="ml-md-4 mr-md-10 mr-md-6 mx-auto py-md-6 px-4"
-          flat
-          min-height="174"
-          :width="cardWidth[$vuetify.breakpoint.name]"
-        >
-          <v-skeleton-loader width="100%" type="card" :loading="loading">
-            <v-row class="mx-0" style="width: 100%; height: 100%">
-              <v-col class="mx-0 pa-0" cols="3">
-                <div
-                  class="d-flex align-center justify-center"
-                  style="width: 100%; height: 100%"
-                >
-                  <v-avatar style="background: #f8f7f4" size="70">
-                    <span class="avatar__txt">
-                      {{ entriesCount.total_forms }}
-                    </span>
-                  </v-avatar>
-                </div>
-              </v-col>
-              <v-col class="pa-0 mx-0" cols="9">
-                <div style="width: 100%; height: 100%">
-                  <div class="pr-8 pl-4">
-                    <p class="pt-8 my-0 h-card-title">Total Forms</p>
-                    <p class="pt-6 text-wrap h-card-body">
-                      Total number of forms you have created
-                    </p>
-                  </div>
-                </div>
-              </v-col>
-            </v-row>
-          </v-skeleton-loader>
-        </v-card>
-      </v-col>
-    </v-row>
     <!-- inbox summary Info cards -->
     <div class="py-6">
       <v-card
@@ -283,9 +222,18 @@
 import { mapGetters } from "vuex";
 import FormEntriesCards from "../../components/FormEntriesCards.vue";
 import CreateFormModal from "../../includes/overlays/createFormModal.vue";
+import InfoSummaryContainer from "../../components/InfoSummaryContainer.vue";
+import CardAvatar from "../../components/CardAvatar.vue";
+import SingleSummaryCard from "../../components/SingleSummaryCard.vue";
 
 export default {
-  components: { FormEntriesCards, CreateFormModal },
+  components: {
+    FormEntriesCards,
+    CreateFormModal,
+    InfoSummaryContainer,
+    CardAvatar,
+    SingleSummaryCard,
+  },
   name: "Form",
   data() {
     return {
@@ -313,6 +261,11 @@ export default {
         xs: "100%",
 
         md: "630px",
+      },
+      avatarBC: {
+        one: "#d5f7ef",
+        two: "#eef3fb",
+        three: "#f8f7f4",
       },
     };
   },
@@ -381,8 +334,8 @@ export default {
   font-family: "Inter";
   font-style: normal;
   font-weight: bold;
-  font-size: 18px;
-  line-height: 22px;
+  font-size: 16px;
+  line-height: 16px;
   color: rgba(0, 35, 56, 0.5);
 }
 
@@ -407,8 +360,8 @@ export default {
   font-family: "Inter";
   font-style: normal;
   font-weight: normal;
-  font-size: 12px;
-  line-height: 20px;
+  font-size: 10px;
+  line-height: 14px;
   letter-spacing: 0.545455px;
   color: rgba(0, 35, 56, 0.5);
 }
