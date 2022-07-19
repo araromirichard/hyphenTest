@@ -190,7 +190,7 @@ export default {
         );
         this.step = 2;
         this.approvalUrl = data.data;
-        this.approvalMsg = data.data.message;
+        this.approvalMsg = data.message;
       } catch (error) {
         console.log(JSON.stringify(error, null, 2));
         this.showToast({
