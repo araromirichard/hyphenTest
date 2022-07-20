@@ -5,12 +5,10 @@
         <v-btn
           elevation="3"
           dark
-          v-bind="attrs"
+          v-bind="{ attrs, size }"
           v-on="on"
-          class="mr-md-16"
+          class="mr-md-16 py-md-6 px-md-8"
           color="primary"
-          :width="width"
-          :height="height"
           style="
             margin-top: 25px;
             background: var(--v-primary-base);
@@ -26,14 +24,13 @@
             style="
               font-family: Inter;
               font-style: normal;
-              font-weight: 500;
-              font-size: 14px;
+              font-weight: 400;
               line-height: 17px;
               text-align: center;
               letter-spacing: 0.636364px;
             "
             :style="{
-              fontSize: `${$vuetify.breakpoint.mdAndDown ? '11px' : '17px'}`,
+              fontSize: `${$vuetify.breakpoint.mdAndDown ? '11px' : '12px'}`,
             }"
             class="text-capitalize"
           >
@@ -73,18 +70,18 @@
         </v-list-item-group>
       </v-card>
     </v-menu>
-    <EditVendor ref="EditVendor" />
+    <AddVendor ref="AddVendor" />
     <AddCustomer ref="AddCustomer" />
   </div>
 </template>
 
 <script>
-import EditVendor from "./overlays/ContactsMenuModals/EditVendor.vue";
-import AddCustomer from "./overlays/ContactsMenuModals/EditCustomer.vue";
+import AddVendor from "./overlays/ContactsMenuModals/AddVendor.vue";
+import AddCustomer from "./overlays/ContactsMenuModals/AddCustomer.vue";
 export default {
   name: "ContactDropDown",
   components: {
-    EditVendor,
+    AddVendor,
     AddCustomer,
 
     //
@@ -92,8 +89,6 @@ export default {
   props: {
     icon: String,
     btnText: String,
-    width: String,
-    height: String,
   },
   data() {
     return {
@@ -102,9 +97,9 @@ export default {
 
       contactMenus: [
         {
-          title: "Edit Vendor",
+          title: "Add Vendor",
           path: "#",
-          modalKey: "EditVendor",
+          modalKey: "AddVendor",
         },
 
         {
@@ -124,6 +119,20 @@ export default {
   computed: {
     btnIcon() {
       return require(`@/assets/pbot_icons/${this.icon}.svg`);
+    },
+
+    //dynamic button size and icon
+    size() {
+      const size = { xs: "x-small", sm: "small", lg: "large" }[
+        this.$vuetify.breakpoint.name
+      ];
+      return size ? { [size]: true } : {};
+    },
+    iconSize() {
+      const size = { xs: "x-small", sm: "small" }[
+        this.$vuetify.breakpoint.name
+      ];
+      return size ? { [size]: true } : {};
     },
   },
 

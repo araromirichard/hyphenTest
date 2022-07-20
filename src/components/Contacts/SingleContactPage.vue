@@ -1046,6 +1046,7 @@ export default {
       tab: 0,
       earliestDueDate: new Date(),
       isVendor: true,
+      isEditVendor: true,
       disabledField: true,
       contactRecord: "234 Records",
       totalOutstanding: "460,000.00",
@@ -1073,6 +1074,8 @@ export default {
         date_added: null,
         approved: null,
       },
+      contact_first_name: "",
+      contact_last_name: "",
 
       items: [
         { tab1: "Invoices", content: "CustomerInvoice" },
@@ -1118,22 +1121,30 @@ export default {
     },
   },
   mounted() {
+    console.log(this.$route);
+    if (this.$route.query.vendor && this.$route.query.edit) {
+      this.editForm();
+    }
+
     const id = this.$route.params.id;
     this.isVendor = this.$route.query.vendor || false;
     this.$store.dispatch("contacts/getSingleVendor", id).then((response) => {
       if (response.status == 200) {
-        this.singleVendorDetails.company_name = response.data.vendorname;
+        this.singleVendorDetails.company_name = response.data.vendorname || "";
         this.singleVendorDetails.contact_full_name =
           response.data.contact.first_name +
-          " " +
-          response.data.contact.last_name;
-        this.singleVendorDetails.contact_email = response.data.contact.email;
-        this.singleVendorDetails.contact_phone = response.data.contact.phone;
+            " " +
+            response.data.contact.last_name || "";
+        this.singleVendorDetails.contact_email =
+          response.data.contact.email || "";
+        this.singleVendorDetails.contact_phone =
+          response.data.contact.phone || "";
         this.singleVendorDetails.accounting_code = "";
-        this.singleVendorDetails.default_payment_terms = response.data.terms;
-        this.singleVendorDetails.tags = response.data.tags;
-        this.singleVendorDetails.bankname = response.data.bankname;
-        this.singleVendorDetails.bank_account = response.data.bankaccount;
+        this.singleVendorDetails.default_payment_terms =
+          response.data.terms || "";
+        this.singleVendorDetails.tags = response.data.tags || "";
+        this.singleVendorDetails.bankname = response.data.bankname || "";
+        this.singleVendorDetails.bank_account = response.data.bankaccount || "";
       }
       this.singleVendorDetails.date_added = this.formatDate(
         response.data.created_at

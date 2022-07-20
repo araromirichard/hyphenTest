@@ -150,7 +150,7 @@
 <script>
 import ContactTable from "./ContactTable.vue";
 
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 import ContactTableCard from "./ContactTableCard.vue";
 export default {
   name: "CustomersContact",
@@ -162,85 +162,7 @@ export default {
   data() {
     return {
       dialog: false,
-      customers: [
-        {
-          id: 1,
-          company: "Run Town Energy",
-          firstName: "Random",
-          lastName: "Joe",
-          due: 4,
-          email: "null@mailinator.com",
-          phone: "+2348029293938",
-          outstanding: "3,495,900",
-          action: "",
-        },
-        {
-          id: 2,
-          company: "Okumu Oil Palm",
-          firstName: "Better",
-          lastName: "Human",
-          due: 1,
-          email: "nulleeee@mailinator.com",
-          phone: "+2348029293938",
-          outstanding: "3,495,900",
-          action: "",
-        },
-        {
-          id: 3,
-          company: "Zapphaire events",
-          firstName: "Old",
-          lastName: "Soul",
-          due: 4,
-          email: "null@mailinator.com",
-          phone: "+2348029293938",
-          outstanding: "3,495,900",
-          action: "",
-        },
-        {
-          id: 4,
-          company: "Run Town Energy",
-          firstName: "Random",
-          lastName: "Joe",
-          due: 4,
-          email: "null@mailinator.com",
-          phone: "+2348029293938",
-          outstanding: "3,495,900",
-          action: "",
-        },
-        {
-          id: 1,
-          company: "Run Town Energy",
-          firstName: "Random",
-          lastName: "Joe",
-          due: 4,
-          email: "null@mailinator.com",
-          phone: "+2348029293938",
-          outstanding: "3,495,900",
-          action: "",
-        },
-        {
-          id: 5,
-          company: "Run Town Energy",
-          firstName: "Random",
-          lastName: "Joe",
-          due: 4,
-          email: "null@mailinator.com",
-          phone: "+2348029293938",
-          outstanding: "3,495,900",
-          action: "",
-        },
-        {
-          id: 6,
-          company: "Run Town Energy",
-          firstName: "Random",
-          lastName: "Joe",
-          due: 4,
-          email: "null@mailinator.com",
-          phone: "+2348029293938",
-          outstanding: "3,495,900",
-          action: "",
-        },
-      ],
+      // customers: [],
     };
   },
   methods: {
@@ -271,6 +193,10 @@ export default {
     },
   },
   computed: {
+    ...mapGetters({
+      customers: "contacts/getAllCustomers",
+    }),
+    //TODO: make final filter a reversed array so that the last filter is applied first
     filteredCustomers() {
       if (this.search) {
         return this.customers.filter((customer) => {
@@ -283,6 +209,17 @@ export default {
         });
       } else return this.customers;
     },
+  },
+
+  //
+  //TODO: confirm the request in this mounted function that pulls all customers from the database  for this authenticated user.
+  //
+  async mounted() {
+    try {
+      return await this.$store.dispatch("contacts/fetchAllCustomers");
+    } catch (error) {
+      console.log(error);
+    }
   },
 };
 </script>

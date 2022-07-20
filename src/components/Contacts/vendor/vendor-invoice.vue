@@ -51,7 +51,7 @@
       <v-row>
         <v-col
           cols="12"
-          v-for="(invoice, i) in customerInvoices"
+          v-for="(invoice, i) in vendorInvoices"
           :key="i"
           class="py-0 ma-0"
         >
@@ -60,7 +60,7 @@
             :index="i"
             :id="i + 1"
             :outstanding="invoice.outstanding"
-            :RefNumber="invoice.ref"
+            :RefNumber="invoice.invoicenumber"
             :status="invoice.status"
             :dueDate="invoice.date | date"
             :iconColor="invoice.iconColor"
@@ -70,7 +70,7 @@
             :index="i"
             :id="i + 1"
             :outstanding="invoice.outstanding"
-            :refNumber="invoice.ref"
+            :refNumber="invoice.invoicenumber"
             :cardTitle="cardTitle"
             :status="invoice.status"
             :dueDate="invoice.date | date"
@@ -103,9 +103,16 @@ export default {
   },
   computed: {
     ...mapGetters({
-      customerInvoices: "contacts/getVendorInvoices",
+      vendorInvoices: "contacts/getVendorInvoices",
     }),
   },
+//  async mounted() {
+//    try {
+//       await this.$store.dispatch("contacts/getSingleVendor");
+//     } catch (error) {
+//       console.log(error);
+//     }
+//   }
 };
 </script>
 

@@ -15,7 +15,7 @@
               line-height: 19px;
               color: #19283d;
             "
-            >Edit Vendor</span
+            >Add Vendor</span
           >
           <v-spacer></v-spacer>
           <v-icon
@@ -467,7 +467,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import {  mapActions } from "vuex";
 
 //import { mapActions } from "vuex";
 export default {
@@ -500,7 +500,7 @@ export default {
         bankaccount: "",
         taxid: "",
         currency: "",
-        approved: null,
+        approved: false,
       },
 
       role: ["Admin", "Member"],
@@ -633,10 +633,6 @@ export default {
   },
 
   computed: {
-    ...mapGetters({
-      singleVendor: "contacts/getVendor",
-    }),
-
     //dynamic button size and icon
     size() {
       const size = { xs: "x-small", sm: "small", xl: "x-large" }[
@@ -651,33 +647,7 @@ export default {
       return size ? { [size]: true } : {};
     },
   },
-  mounted() {
-    const id = this.$route.params.id;
-    this.$store.dispatch("contacts/getSingleVendor", id).then((response) => {
-      if (response.status == 200) {
-        this.vendorDetails.vendorname = response.data.vendorname;
-        this.vendorDetails.contact.first_name =
-          response.data.contact.first_name;
-        this.vendorDetails.contact.last_name = response.data.contact.last_name;
-        this.vendorDetails.email = response.data.email;
-        this.vendorDetails.address = response.data.address;
-        this.vendorDetails.contact.phone = response.data.contact.phone;
-        this.vendorDetails.contact.role = response.data.contact.role;
-        this.vendorDetails.terms = response.data.terms;
-        this.vendorDetails.zip = response.data.zip;
-        this.vendorDetails.city = response.data.city;
-        this.vendorDetails.state = response.data.state;
-        this.vendorDetails.category = response.data.category;
-        this.vendorDetails.WHT.category = response.data.WHT.category;
-        this.vendorDetails.apply_tax = response.data.apply_tax;
-        this.vendorDetails.bankname = response.data.bankname;
-        this.vendorDetails.taxid = response.data.taxid;
-        this.vendorDetails.bankaccount = response.data.bankaccount;
-        this.vendorDetails.currency = response.data.currency;
-        this.vendorDetails.approved = response.data.approved;
-      }
-    });
-  },
+  
 };
 </script>
 
