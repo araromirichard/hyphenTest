@@ -121,7 +121,7 @@
           >
             <VendorTable
               :index="i"
-              :id="i + 1"
+              :id="vendor.id"
               :bankAccount="vendor.bankaccount"
               :vendorname="vendor.vendorname"
               :hyphnId="vendor.hypn_id"

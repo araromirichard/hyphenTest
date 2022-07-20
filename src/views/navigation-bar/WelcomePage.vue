@@ -96,7 +96,9 @@
                 ></v-card-text
               >
               <div class="px-2 pt-md-4 pb-5 mx-6">
-                <v-btn large elevation="10" color="primary">Connect Bank</v-btn>
+                <v-btn @click="launchMono" large elevation="10" color="primary"
+                  >Connect Bank</v-btn
+                >
               </div>
               <v-card-text
                 class="pb-5 text-break text-center mx-auto justify-center"
@@ -245,6 +247,33 @@ export default {
     showDialog() {
       this.$refs.company.show(true);
       //console.log(this.$refs[ref]);
+    },
+
+    async submitBankCode(response) {
+      const { data } = await this.$store.dispatch(
+        "organizations/addBank",
+        response
+      );
+      console.log(JSON.stringify(data, null, 2));
+    },
+
+    //method to launch the Mono app
+    launchMono() {
+      const options = {
+        onSuccess: (response) => {
+          console.log(JSON.stringify(response));
+
+          this.submitBankCode(response);
+
+          // let resp =
+          // console.log(JSON.stringify(resp, null, 2));
+        },
+
+        onClose: function () {
+          console.log("user closed the widget.");
+        },
+      };
+      this.$launchMono(options);
     },
   },
 };

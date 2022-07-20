@@ -503,7 +503,14 @@ export default {
         approved: null,
       },
 
-      role: ["Admin", "Member"],
+      role: [
+        "IT Admin",
+        "Accountant/Finance",
+        "Management",
+        "CEO",
+        "Consultant",
+        "Developer",
+      ],
       accountingCode: [],
       paymentTerms: ["Net 30", "Net 45", "Net 60", "Net 90"],
       country: ["Nigeria", "Ghana", "USA"],
