@@ -15,7 +15,7 @@
               line-height: 19px;
               color: #19283d;
             "
-            >Edit Customer</span
+            >Add Customer</span
           >
           <v-spacer></v-spacer>
           <v-icon
@@ -34,28 +34,19 @@
             </v-tab>
           </v-tabs>
         </div>
-        <v-tabs-items v-model="tab">
+        <v-tabs-items v-model="tab" slider-size="4">
           <v-tab-item>
             <v-card style="background-color: transparent" flat>
               <div class="my-7 mx-4 mx-md-10 mb-6">
-                <p class="pa-0 ma-0 text--disabled text-subtitle-2">
+                <p class="py-0 px-md-2 ma-0 text--disabled text-subtitle-2">
                   Include details about this customer, contact person, business
                   address, default payment terms, etc
                 </p>
               </div>
               <v-form>
                 <v-row class="mx-4 mx-md-10">
-                  <!-- <v-col cols="12"
-                    ><v-text-field
-                      v-model="contactDetails.companyAddress"
-                      background-color="#ffffff"
-                      outlined
-                      hide-details="auto"
-                      placeholder="Company Street Address"
-                    ></v-text-fieldP
-                  ></v-col> -->
-                  <v-col cols="12" sm="6" class="pl-0"
-                    ><v-text-field
+                  <v-col cols="12" class="pl-3">
+                    <v-text-field
                       v-model="contactDetails.firstName"
                       background-color="#ffffff"
                       outlined

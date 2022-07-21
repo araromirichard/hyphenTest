@@ -106,6 +106,7 @@ export default {
     //   this.$router.push("/login");
     // }
     console.log(this.$route.query.code);
+    console.log(typeof this.$route.query.code);
   },
 
   data() {
@@ -115,7 +116,7 @@ export default {
       password: "",
       confirm_password: "",
       isSending: false,
-      token: this.$route.query.code,
+      code: this.$route.query.code,
 
       errorMsg: "",
       rules: {
@@ -146,29 +147,37 @@ export default {
     ...mapActions({ showToast: "ui/showToast" }),
     submitForm() {
       this.$refs.form.validate();
-      // const payload = JSON.stringify(this.email, null, 2);
-      console.log(JSON.stringify(this.form, null, 2));
+      let payload = {
+        password: this.password,
+        passwordConfirmation: this.confirm_password,
+        code: this.code,
+      };
+      console.log(JSON.stringify(payload, null, 2));
       try {
         this.isSending = true;
         auth
           .resetPassword({
             password: this.password,
             passwordComfirmation: this.confirm_password,
-            token: this.token,
+            code: this.code,
           })
           .then(
             this.showToast({
               sclass: "success",
               show: true,
-              message: "",
+              message: "Your Password has been Reset",
               timeout: 5000,
             })
-          );
+          )
+          .then(() => {
+            this.$router.push("/login");
+            this.isSending = false;
+          });
       } catch (error) {
         this.showToast({
           sclass: "error",
           show: true,
-          message: error.msg,
+          message: error.msg || "Unable to Reset Password",
           timeout: 3000,
         });
       } finally {
@@ -177,17 +186,17 @@ export default {
     },
   },
 
-  computed: {
-    //
+  // computed: {
+  //   //
 
-    form() {
-      return {
-        password: this.password,
-        passwordComfirmation: this.confirm_password,
-        code: this.token,
-      };
-    },
-  },
+  //   form() {
+  //     return {
+  //       password: this.password,
+  //       passwordComfirmation: this.confirm_password,
+  //       code: this.token,
+  //     };
+  //   },
+  // },
 };
 </script>
 

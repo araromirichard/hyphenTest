@@ -2,13 +2,6 @@
   <div>
     <v-hover v-slot:default="{ hover }">
       <v-card
-        @click="
-          $router.push({
-            name: 'contact.customer',
-            params: { id: id },
-            query: { vendor: true },
-          })
-        "
         class="px-6 py-4 my-1"
         style="cursor: pointer; transition: all 0.3s ease"
         :elevation="hover ? 2 : 0"
@@ -31,7 +24,7 @@
           </v-flex>
           <v-flex md2 class="d-flex justify-start">
             <span
-              class="mb-0 ml-5"
+              class="mb-0 ml-2"
               style="
                 font-family: Lato;
                 font-style: normal;
@@ -43,7 +36,7 @@
               >{{ vendorname }}</span
             >
           </v-flex>
-          <v-flex md1>
+          <v-flex md2>
             <div class="d-flex justify-start align-center">
               <div
                 class="ms-1"
@@ -110,7 +103,7 @@
               >
             </div>
           </v-flex>
-          <v-flex md1>
+          <!-- <v-flex md1>
             <div class="d-flex justify-center">
               <span
                 class="mx-auto"
@@ -125,11 +118,18 @@
                 >{{ state }}</span
               >
             </div>
-          </v-flex>
+          </v-flex> -->
           <v-flex md2>
             <div class="d-flex justify-center align-center">
               <v-hover v-slot="{ hover }">
                 <v-btn
+                  @click="
+                    $router.push({
+                      name: 'contact.customer',
+                      params: { id: id },
+                      query: { vendor: true, edit: true },
+                    })
+                  "
                   :style="{
                     'background-color': hover ? '#2bd5ae' : '',
                     border: hover ? 'none' : '',
@@ -210,6 +210,12 @@ export default {
     return {
       //
     };
+  },
+
+  methods: {
+    //   editVendor(id) {
+    // this.$refs.editVendor.open();
+    //   },
   },
 };
 </script>

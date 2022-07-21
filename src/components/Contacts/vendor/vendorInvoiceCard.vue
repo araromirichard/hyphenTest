@@ -25,7 +25,7 @@
           <v-flex md3>
             <div class="d-flex justify-start align-center">
               <div
-                class=""
+                class="text-truncate"
                 style="
                   font-family: Lato;
                   font-style: normal;

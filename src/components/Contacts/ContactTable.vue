@@ -2,12 +2,6 @@
   <div>
     <v-hover v-slot:default="{ hover }">
       <v-card
-        @click="
-          $router.push({
-            name: 'contact.customer',
-            params: { id: id },
-          })
-        "
         class="px-6 py-4 my-1"
         style="cursor: pointer; transition: all 0.3s ease"
         :elevation="hover ? 2 : 0"
@@ -41,7 +35,7 @@
               >{{ company }}</span
             >
           </v-flex>
-          <v-flex md1>
+          <v-flex md2>
             <div class="d-flex justify-start align-center">
               <div
                 class="ms-1"
@@ -58,8 +52,8 @@
               </div>
             </div>
           </v-flex>
-          <v-flex md1>
-            <div class="d-flex justify-start align-center">
+          <v-flex md2>
+            <div class="d-flex justify-start">
               <div
                 class="ms-2"
                 style="
@@ -124,7 +118,7 @@
               >
             </div>
           </v-flex>
-          <v-flex md2>
+          <!-- <v-flex md2>
             <div class="d-flex justify-center">
               <span
                 class="mx-auto"
@@ -139,11 +133,19 @@
                 >{{ outstanding }}</span
               >
             </div>
-          </v-flex>
+          </v-flex> -->
           <v-flex md2>
             <div class="d-flex justify-center align-center">
               <v-hover v-slot="{ hover }">
+                <!-- TODO: confirm if this is the correct way to do this -->
                 <v-btn
+                  @click="
+                    $router.push({
+                      name: 'contact',
+                      params: { id: id },
+                      query: { edit: true },
+                    })
+                  "
                   :style="{
                     'background-color': hover ? '#2bd5ae' : '',
                     border: hover ? 'none' : '',

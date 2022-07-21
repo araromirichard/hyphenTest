@@ -17,7 +17,8 @@
             color="#16be98"
             v-model="autoProcess"
             label="Auto process"
-          ></v-switch>
+          >
+          </v-switch>
           <SendToWorkflowDialog
             @closeDialog="closeModal"
             :tValue="switchState"
@@ -249,14 +250,18 @@ export default {
   },
   methods: {
     ...mapActions({ showToast: "ui/showToast" }),
-    closeModal(e) {
-      if (e) {
+    closeModal(value) {
+      if (!value) {
         //this.dialog = true;
+        this.switchState = false;
+      } else if (value) {
         this.switchState = true;
-      } else this.switchState = false;
+      }
+
       this.dialog = false;
-      this.workflowName = e;
-      console.log(e);
+
+      this.workflowName = value;
+      console.log(value);
     },
     setSearchText(value) {
       this.search = value;
@@ -340,6 +345,7 @@ export default {
 .v-input__slot {
   margin-bottom: 0px;
 }
+
 .switch-card {
   height: 53px;
   background: rgba(127, 145, 155, 0.052607);
@@ -354,6 +360,7 @@ hover-btn:hover {
   background-color: lightseagreen;
   color: midnightblue;
 }
+
 .export-btn {
   font-family: "Inter" sans-serif;
   font-style: normal;
@@ -365,10 +372,12 @@ hover-btn:hover {
 
   color: #301f78;
 }
+
 i.sli-font {
   font-size: 12px;
   display: inline-block;
 }
+
 .material-icons {
   font-family: "Material Icons";
   font-style: normal;
@@ -377,9 +386,11 @@ i.sli-font {
   line-height: 14px;
   color: #301f78;
 }
+
 tbody tr:nth-of-type(odd) {
   background-color: #f8f9fc;
 }
+
 .theme--light.v-data-table
   > .v-data-table__wrapper
   > table
@@ -394,10 +405,12 @@ tbody tr:nth-of-type(odd) {
   > th:not(.v-data-table__mobile-row) {
   border-bottom: none;
 }
+
 table td,
 table th {
   height: 40px;
 }
+
 .theme--light.v-data-table
   > .v-data-table__wrapper
   > table
@@ -406,6 +419,7 @@ table th {
   > th {
   border-bottom: none;
 }
+
 .v-data-table > .v-data-table__wrapper > table > tbody > tr > td,
 .v-data-table > .v-data-table__wrapper > table > tbody > tr > th,
 .v-data-table > .v-data-table__wrapper > table > thead > tr > td,

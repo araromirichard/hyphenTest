@@ -54,12 +54,16 @@
                     height="66px"
                     width="100%"
                     flat
-                    class="d-flex my-auto"
+                    class="d-flex justify-center align-center my-auto"
                     style="background: rgba(127, 145, 155, 0.052607)"
                   >
                     <v-spacer></v-spacer>
                     <Settings-btn :btnTitle="btnTitle2" class="mx-2 my-auto" />
-                    <Settings-btn :btnTitle="btnTitle1" class="mr-8 my-auto" />
+                    <Settings-btn
+                      :btnTitle="btnTitle1"
+                      class="mr-8 my-auto"
+                      @click="launchMono"
+                    />
                   </v-card>
                 </div>
                 <v-card width="100%" class="pb-12" flat>
@@ -95,6 +99,34 @@ export default {
     bankTab,
     BtnCard,
     SettingsBtn,
+  },
+  methods: {
+    async submitBankCode(response) {
+      const { data } = await this.$store.dispatch(
+        "organizations/addBank",
+        response
+      );
+      console.log(JSON.stringify(data, null, 2));
+    },
+
+    //method to launch the Mono app
+    launchMono() {
+      const options = {
+        onSuccess: (response) => {
+          console.log(JSON.stringify(response));
+
+          this.submitBankCode(response);
+
+          // let resp =
+          // console.log(JSON.stringify(resp, null, 2));
+        },
+
+        onClose: function () {
+          console.log("user closed the widget.");
+        },
+      };
+      this.$launchMono(options);
+    },
   },
 };
 </script>

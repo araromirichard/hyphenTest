@@ -15,6 +15,10 @@ import VueSkeletonLoader from "skeleton-loader-vue";
 import Clipboard from "v-clipboard";
 
 import SimpleLineIcons from "vue-simple-line";
+
+//import mono 
+import Mono from "vue-mono";
+
 Vue.config.productionTip = false;
 
 //imported components
@@ -33,14 +37,15 @@ Vue.component("vue-skeleton-loader", VueSkeletonLoader);
 // install now
 Vue.use(VueFormBuilderPlugin);
 Vue.use(Clipboard);
+Vue.use(Mono, { publicKey: "test_pk_vqlprYphldAVnGCnCAOC" });
 //register date filter
 Vue.filter("date", DateFilter);
 
 Vue.mixin(appMixin);
 
 new Vue({
-  router,
-  store,
-  vuetify,
-  render: (h) => h(App),
+    router,
+    store,
+    vuetify,
+    render: (h) => h(App),
 }).$mount("#app");

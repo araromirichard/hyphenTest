@@ -1,17 +1,6 @@
 <template>
   <div class="d-flex align-center justify-center">
-    <v-card
-      @click="
-        $router.push({
-          name: 'contact.customer',
-          params: { id: id },
-          query: { vendor: true },
-        })
-      "
-      min-width="90%"
-      elevation="3"
-      class="my-4 rounded-lg"
-    >
+    <v-card min-width="90%" elevation="3" class="my-4 rounded-lg">
       <h5
         class="
           px-auto
@@ -66,9 +55,9 @@
                     <th class="px-0 text-center primary--text text-subtitle-2">
                       Phone
                     </th>
-                    <th class="px-0 text-center primary--text text-subtitle-2">
+                    <!-- <th class="px-0 text-center primary--text text-subtitle-2">
                       State
-                    </th>
+                    </th> -->
                   </tr>
                 </thead>
                 <tbody class="px-2">

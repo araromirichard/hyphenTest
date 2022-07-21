@@ -5,7 +5,7 @@
         height="60px"
         width="100%"
         flat
-        class="d-flex"
+        class="d-flex align-center"
         style="background: rgba(127, 145, 155, 0.052607)"
       >
         <v-spacer></v-spacer>
@@ -60,17 +60,15 @@
       </v-flex>
       <v-flex md2>
         <div class="d-flex align-center pa-0 ma-0">
-          <p class="mb-0 mx-1 pa-0 primary--text font-weight-bold">
-            vendor Name
-          </p>
+          <p class="mb-0 mx-1 pa-0 primary--text font-weight-bold">vendor</p>
           <v-btn class="" color="grey lighten-1" icon>
             <v-icon>mdi-chevron-down</v-icon>
           </v-btn>
         </div>
       </v-flex>
-      <v-flex md1 class="d-flex flex-row">
+      <v-flex md2 class="d-flex flex-row">
         <div class="d-flex align-center">
-          <p class="mb-0 primary--text font-weight-bold">Hyphn Id</p>
+          <p class="mb-0 primary--text font-weight-bold">Ref</p>
           <v-btn class="" color="grey lighten-1" icon>
             <v-icon>mdi-chevron-down</v-icon>
           </v-btn>
@@ -78,7 +76,7 @@
       </v-flex>
       <v-flex md2>
         <div class="d-flex align-center">
-          <p class="mb-0 primary--text font-weight-bold">Bank Account</p>
+          <p class="mb-0 primary--text font-weight-bold">Open Balance</p>
         </div>
       </v-flex>
       <v-flex md2>
@@ -97,11 +95,11 @@
           </v-btn>
         </div>
       </v-flex>
-      <v-flex md1>
+      <!-- <v-flex md1>
         <div class="d-flex justify-center">
           <p class="mb-0 pl-md-4 primary--text font-weight-bold">State</p>
         </div>
-      </v-flex>
+      </v-flex> -->
       <v-flex md2>
         <div class="d-flex justify-center align-center">
           <p class="mb-0 pl-md-8 primary--text font-weight-bold">Actions</p>
@@ -128,7 +126,6 @@
               :vendorname="vendor.vendorname"
               :hyphnId="vendor.hypn_id"
               :email="vendor.email"
-              :state="vendor.state"
               :phone="vendor.phone"
             />
           </v-skeleton-loader>
@@ -140,7 +137,6 @@
                 :id="vendor.id"
                 :bankAccount="vendor.bankaccount"
                 :vendorname="vendor.vendorname"
-                :state="vendor.state"
                 :email="vendor.email"
                 :phone="vendor.phone"
                 :hyphnId="vendor.hypn_id"

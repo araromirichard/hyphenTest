@@ -37,9 +37,7 @@
       </template>
 
       <template v-if="step == 2">
-        <span class="approval-page__desc"
-          >{{approvalMsg}}</span
-        >
+        <span class="approval-page__desc">{{ approvalMsg }}</span>
         <div class="d-flex" style="gap: 20px; margin: 0px 30px">
           <v-btn
             style="background-color: #f4f5f6; flex: 1"
@@ -113,7 +111,7 @@ export default {
       approving: false,
       denying: false,
       optData: null,
-      approvalMsg:'',
+      approvalMsg: "",
       isVeryfying: false,
       approvalUrl: null,
     };
@@ -192,7 +190,7 @@ export default {
         );
         this.step = 2;
         this.approvalUrl = data.data;
-        this.approvalMsg = data.data.message;
+        this.approvalMsg = data.message;
       } catch (error) {
         console.log(JSON.stringify(error, null, 2));
         this.showToast({

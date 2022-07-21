@@ -75,7 +75,6 @@ export default {
       //       },
       //     },
       //   },
-
       //   {
       //     text: "Update Vendor",
       //     type: "hyphenUpdateVendor",
@@ -170,7 +169,7 @@ export default {
     ...mapGetters({
       user: "auth/user",
       orgId: "auth/organizationId",
-      actionsMeta:"workflow/allActions",
+      actionsMeta: "workflow/allActions",
     }),
   },
 };

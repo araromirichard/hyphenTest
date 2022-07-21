@@ -48,9 +48,9 @@ export default {
       default: false,
     },
 
-    isEdit:{
-      default:false
-    }
+    isEdit: {
+      default: false,
+    },
   },
   data() {
     return {
