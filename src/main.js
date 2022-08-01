@@ -37,7 +37,7 @@ Vue.component("vue-skeleton-loader", VueSkeletonLoader);
 // install now
 Vue.use(VueFormBuilderPlugin);
 Vue.use(Clipboard);
-Vue.use(Mono, { publicKey: "test_pk_vqlprYphldAVnGCnCAOC" });
+Vue.use(Mono, { publicKey: process.env.MONO_TEST_KEY });
 //register date filter
 Vue.filter("date", DateFilter);
 
